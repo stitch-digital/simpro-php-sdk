@@ -44,17 +44,13 @@ $connector = new SimproApiKeyConnector(
     apiKey: 'your-api-key'
 );
 
-// Make API requests
-$clients = $connector->clients()->list();
-
-// Iterate over clients
-foreach ($clients->items() as $client) {
-    $clientId = $client->id;
-    $clientName = $client->attributes->name;
-}
+// The connector is now ready to make API requests
+// Resources will be added as the SDK develops
 ```
 
-Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev) to make the HTTP requests.
+Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev/) v3 to make HTTP requests.
+
+**Note:** This SDK is in early development. API resources and endpoints are being actively developed. Check the `CLAUDE.md` file for information on adding new resources.
 
 ## Authentication Methods
 
@@ -91,8 +87,8 @@ $connector->authenticate($authenticator);
 // Store $authenticator->serialize() securely (encrypted in database)
 // so you can reuse it later
 
-// Step 4: Make API requests
-$clients = $connector->clients()->list();
+// Step 4: Make API requests (resources will be added as SDK develops)
+// $response = $connector->someResource()->list();
 
 // Step 5: Check for expired tokens and refresh when needed
 if ($authenticator->hasExpired()) {
@@ -135,10 +131,12 @@ $connector = new SimproApiKeyConnector(
 );
 
 // Make API requests - authentication is handled automatically
-$clients = $connector->clients()->list();
+// $response = $connector->someResource()->list();
 ```
 
 **That's it!** No token management, no refresh logic - just simple, straightforward authentication.
+
+**Note:** API resources and endpoints are being actively developed. The connector is ready to use - resources will be added as development progresses.
 
 ## Usage
 
@@ -172,7 +170,7 @@ $connector = new SimproApiKeyConnector(
 );
 ```
 
-### Handling errors
+### Handling Errors
 
 The SDK uses Saloon's `AlwaysThrowOnErrors` trait on the connector, which means exceptions will automatically be thrown whenever a request fails (4xx or 5xx response status codes). You don't need to manually check if a request failed or call `throw()` on responses - exceptions are thrown automatically.
 
@@ -212,24 +210,26 @@ use Saloon\Exceptions\Request\ServerException;
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 
 try {
-    $paginator = $simpro->clients()->list();
+    // Make an API request
+    $response = $connector->send($request);
 } catch (ValidationException $exception) {
+    // Handle validation errors (422)
     // Get a string describing all errors
     $message = $exception->getMessage();
-    
+
     // Get all validation errors as an array
     $errors = $exception->getErrors();
     // ['field_name' => ['Error message 1', 'Error message 2']]
-    
+
     // Get errors for a specific field
     $fieldErrors = $exception->getErrorsForField('field_name');
-    
+
     // Check if a specific field has errors
     $hasErrors = $exception->hasErrorsForField('field_name');
-    
+
     // Get all error messages as a flat array
     $allMessages = $exception->getAllErrorMessages();
-    
+
     // Access the Saloon Response object for debugging
     $response = $exception->getResponse();
 } catch (ClientException $exception) {
@@ -251,7 +251,7 @@ If Saloon cannot connect to the API, it will throw a `FatalRequestException`:
 use Saloon\Exceptions\Request\FatalRequestException;
 
 try {
-    $paginator = $simpro->clients()->list();
+    $response = $connector->send($request);
 } catch (FatalRequestException $exception) {
     // Handle connection errors (network issues, DNS failures, etc.)
     $message = $exception->getMessage();
@@ -260,367 +260,66 @@ try {
 
 ## Resources
 
-The SDK provides resource-based APIs for working with different entities. Each resource is accessed through a method on the main SDK instance.
-
-### Client Resource
-
-The client resource provides methods for working with clients. Access it through the `clients()` method:
-
-```php
-$simpro = Simpro::make(...);
-$clients = $simpro->clients();
-```
-
-Methods that return lists of clients (like `list()`, `findById()`, etc.) return a `SimproPaginator` instance. See the [Pagination](#pagination) section for details on working with paginated results. Future methods like `create()`, `update()`, and `delete()` will return different response types.
-
-#### Listing Clients
-
-The following methods return a `SimproPaginator` instance:
-
-**List all clients:**
-
-```php
-$paginator = $simpro->clients()->list();
-```
-
-**List active clients:**
-
-```php
-$paginator = $simpro->clients()->listActive();
-```
-
-**List inactive clients:**
-
-```php
-$paginator = $simpro->clients()->listInactive();
-```
-
-#### Finding Clients
-
-**Find by ID:**
-
-```php
-$paginator = $simpro->clients()->findById(123);
-```
-
-**Find by name:**
-
-```php
-// Exact match
-$paginator = $simpro->clients()->findByName('Acme Corp', strict: true);
-
-// Contains match (default)
-$paginator = $simpro->clients()->findByName('Acme');
-```
-
-**Search clients:**
-
-```php
-// Search across multiple fields
-$paginator = $simpro->clients()->search('construction');
-```
-
-#### Filtering Clients
-
-The client resource provides many filtering methods. All filtering methods return a `SimproPaginator` instance. You can chain multiple filters together, or pass filters directly to the `list()` method for better performance.
-
-**Filtering by Account Manager:**
-
-```php
-// Single or multiple account manager IDs
-$paginator = $simpro->clients()->whereAccountManager(5);
-$paginator = $simpro->clients()->whereAccountManager([5, 10, 15]);
-
-// Exclude account managers
-$paginator = $simpro->clients()->whereNotAccountManager(5);
-```
-
-**Filtering by Billing Card:**
-
-```php
-$paginator = $simpro->clients()->whereBillingCard(3);
-$paginator = $simpro->clients()->whereBillingCard([3, 7]);
-$paginator = $simpro->clients()->whereNotBillingCard(3);
-```
-
-**Filtering by Date:**
-
-```php
-// Created dates
-$paginator = $simpro->clients()->createdBefore('2024-01-01T00:00:00Z');
-$paginator = $simpro->clients()->createdAfter('2024-01-01T00:00:00Z');
-
-// Updated dates
-$paginator = $simpro->clients()->updatedBefore('2024-01-01T00:00:00Z');
-$paginator = $simpro->clients()->updatedAfter('2024-01-01T00:00:00Z');
-$paginator = $simpro->clients()->updatedSince('2024-01-01T00:00:00Z'); // alias
-```
-
-**Filtering by Sector:**
-
-```php
-use Simpro\PhpSdk\Simpro\Data\Clients\Sector;
-
-// Using Sector enum
-$paginator = $simpro->clients()->whereSector(Sector::Construction);
-$paginator = $simpro->clients()->whereSector([Sector::Construction, Sector::RetailTrade]);
-
-// Using string (backward compatibility)
-$paginator = $simpro->clients()->whereSector('Construction');
-
-// Exclude sectors
-$paginator = $simpro->clients()->whereNotSector(Sector::Construction);
-```
-
-**Filtering by Price Tier:**
-
-```php
-$paginator = $simpro->clients()->wherePriceTier(2);
-$paginator = $simpro->clients()->wherePriceTier([2, 4, 6]);
-$paginator = $simpro->clients()->whereNotPriceTier(2);
-```
-
-**Filtering by Active Status:**
-
-```php
-$paginator = $simpro->clients()->whereIsActive(true);
-$paginator = $simpro->clients()->whereIsActive(false);
-```
-
-**Filtering by Report Settings:**
-
-```php
-$paginator = $simpro->clients()->whereReportWhitelabel(true);
-$paginator = $simpro->clients()->whereReportManual(true);
-```
-
-**Filtering by Billing Settings:**
-
-```php
-$paginator = $simpro->clients()->whereBillingManual(true);
-$paginator = $simpro->clients()->whereBillingFixedPrice(true);
-```
-
-**Filtering by Quoting Settings:**
-
-```php
-$paginator = $simpro->clients()->whereQuotingAutoRemindersEnabled(true);
-```
-
-**Filtering by Properties:**
-
-```php
-$paginator = $simpro->clients()->whereHasProperties(true);
-$paginator = $simpro->clients()->whereHasActiveProperty(true);
-```
-
-**Filtering by Duplicate Status:**
-
-```php
-$paginator = $simpro->clients()->whereIsDuplicated(true);
-```
-
-**Filtering by Client Group:**
-
-```php
-$paginator = $simpro->clients()->whereParentClientGroup(10);
-$paginator = $simpro->clients()->whereClientGroup(10);
-$paginator = $simpro->clients()->whereNotClientGroup(10);
-```
-
-**Filtering by Branch:**
-
-```php
-$paginator = $simpro->clients()->whereBranch(5);
-$paginator = $simpro->clients()->whereBranch([5, 10]);
-$paginator = $simpro->clients()->whereNotBranch(5);
-```
-
-**Filtering by Account:**
-
-```php
-$paginator = $simpro->clients()->whereHasAccount(true);
-```
-
-**Filtering by Tags:**
-
-```php
-$paginator = $simpro->clients()->whereTags(1);
-$paginator = $simpro->clients()->whereTags([1, 2, 3]);
-$paginator = $simpro->clients()->whereNotTags(1);
-```
-
-**Filtering by Business Hours:**
-
-```php
-$paginator = $simpro->clients()->whereHasBusinessHours(true);
-```
-
-**Filtering by Phone Number:**
-
-```php
-$paginator = $simpro->clients()->wherePhoneNumberContains('555');
-```
-
-**Filtering by Extra Fields:**
-
-```php
-$paginator = $simpro->clients()->whereExtraFields([
-    'custom_field_1' => 'value1',
-    'custom_field_2' => 'value2',
-]);
-```
-
-**Custom Filters:**
-
-You can pass custom filters directly to the `list()` method for better performance when using multiple filters:
-
-```php
-$paginator = $simpro->clients()->list([
-    'is_active' => true,
-    'sector' => Sector::Construction->value,
-    'account_manager' => [5, 10],
-    'created_after' => '2024-01-01T00:00:00Z',
-]);
-```
-
-**Chaining Filters:**
-
-You can also chain filter methods together, though using `list()` with an array is more efficient:
-
-```php
-$paginator = $simpro->clients()
-    ->whereIsActive(true)
-    ->whereSector(Sector::Construction)
-    ->whereAccountManager(5)
-    ->createdAfter('2024-01-01T00:00:00Z');
-```
-
-#### Client Object Structure
-
-Each client returned from listing methods is a `Client` DTO with the following structure:
-
-```php
-$client->id;                    // string - Client ID
-$client->type;                  // string - Always "Client"
-$client->attributes->name;       // string|null - Client name
-$client->attributes->isActive;   // bool|null - Active status
-$client->attributes->sector;     // Sector|null - Sector enum
-$client->attributes->created;    // DateTimeImmutable|null - Creation date
-$client->attributes->updated;    // DateTimeImmutable|null - Last update date
-$client->attributes->ref;        // string|null - Reference number
-$client->attributes->contactName; // string|null - Contact name
-$client->attributes->contactEmail; // string|null - Contact email
-// ... and many more properties (see ClientAttributes class)
-$client->relationships;         // array - Related resources
-```
+The SDK will provide resource-based APIs for working with different Simpro entities. Resources are currently under development.
+
+**Coming Soon:**
+- Companies (Customers/Clients)
+- Jobs
+- Quotes
+- Invoices
+- And more...
+
+See `CLAUDE.md` for detailed information on how to add new resources to the SDK.
 
 ## Pagination
 
-Many resource methods return a `SimproPaginator` instance for working with paginated API responses. The SDK uses Saloon's pagination plugin to handle pagination automatically. The Simpro API uses limit/offset pagination, where results are divided into pages. The SDK's paginator handles all of this for you, allowing you to iterate through every result across every page in one loop.
+Resource methods that return lists will use a `SimproPaginator` instance for working with paginated API responses. The SDK uses Saloon's pagination plugin to handle pagination automatically. The Simpro API uses limit/offset pagination, where results are divided into pages. The SDK's paginator handles all of this for you, allowing you to iterate through every result across every page in one loop.
 
 The paginator is a custom PHP iterator, meaning it can be used in foreach loops. It's also memory efficient - it only keeps one page in memory at a time, so you can iterate through thousands of pages and millions of results without running out of memory.
 
 ### Iterating Over Items
 
-The simplest way to use the paginator is to iterate over items using the `items()` method. This will give you each item across multiple pages:
+The simplest way to use the paginator is to iterate over items using the `items()` method:
 
 ```php
-$paginator = $simpro->clients()->list();
+// Example (once resources are implemented):
+$paginator = $connector->someResource()->list();
 
-foreach ($paginator->items() as $client) {
-    $clientId = $client->id;
-    $clientName = $client->attributes->name;
-    $isActive = $client->attributes->isActive;
-    $sector = $client->attributes->sector?->value;
-    $createdAt = $client->attributes->created?->format('Y-m-d H:i:s');
+foreach ($paginator->items() as $item) {
+    $itemId = $item->id;
+    $itemName = $item->attributes->name;
 }
 ```
 
 ### Using Laravel Collections
 
-If you're using Laravel (or have `illuminate/collections` installed), you can use the `collect()` method to get a `LazyCollection`. This allows you to use powerful collection methods like `filter()`, `map()`, `sort()`, and more while keeping memory consumption low:
+If you're using Laravel (or have `illuminate/collections` installed), you can use the `collect()` method to get a `LazyCollection`:
 
 ```php
-use Simpro\PhpSdk\Simpro\Data\Clients\Sector;
-
-$paginator = $simpro->clients()->list();
+$paginator = $connector->someResource()->list();
 $collection = $paginator->collect();
 
-$activeConstructionClients = $collection
-    ->filter(function ($client) {
-        return $client->attributes->isActive === true 
-            && $client->attributes->sector === Sector::Construction;
-    })
-    ->map(function ($client) {
-        return [
-            'id' => $client->id,
-            'name' => $client->attributes->name,
-            'sector' => $client->attributes->sector?->value,
-        ];
-    })
+$filtered = $collection
+    ->filter(fn($item) => $item->attributes->isActive === true)
+    ->map(fn($item) => ['id' => $item->id, 'name' => $item->attributes->name])
     ->sortBy('name');
-
-foreach ($activeConstructionClients as $client) {
-    $clientName = $client['name'];
-}
-```
-
-### Collecting All Items
-
-You can collect all items into an array if you need to work with the complete dataset:
-
-```php
-$paginator = $simpro->clients()->list();
-$allClients = $paginator->collect()->all();
-
-// Now you have an array of all clients
-$clientCount = count($allClients);
-$firstClient = $allClients[0];
-```
-
-### Accessing Pagination Metadata
-
-The paginator provides methods to access pagination information:
-
-```php
-$paginator = $simpro->clients()->list();
-
-// Get the total number of pages
-$totalPages = $paginator->getTotalPages();
-
-// Get the first item without iterating
-$firstClient = $paginator->items()->current();
 ```
 
 ### Controlling Page Size
 
-By default, 50 items are fetched per page. You can control pagination by setting the per-page limit:
+By default, 30 items are fetched per page. You can control pagination by setting the per-page limit:
 
 ```php
-$paginator = $simpro->clients()->list();
 $paginator->setPerPageLimit(100); // Fetch 100 items per page
-
-foreach ($paginator->items() as $client) {
-    $clientName = $client->attributes->name;
-}
 ```
 
-The paginator will automatically handle fetching subsequent pages as you iterate through the results. You don't need to worry about managing page numbers or offsets - just iterate and the SDK handles the rest.
+### Pagination Metadata
 
-## Using Saloon requests directly
+The Simpro API returns pagination information in response headers:
+- `Result-Total`: Total number of results
+- `Result-Pages`: Total number of pages
 
-You can use the request classes directly for full control:
-
-```php
-use Simpro\PhpSdk\Simpro\Simpro;
-use Simpro\PhpSdk\Simpro\Requests\Clients\ListClientsRequest;
-
-$simpro = Simpro::make(...);
-$request = new ListClientsRequest();
-
-$response = $simpro->send($request)->dto();
-```
+The paginator automatically reads these headers and handles pagination for you.
 
 ## Security
 
