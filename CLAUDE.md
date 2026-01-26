@@ -37,6 +37,22 @@ composer baseline
 composer review
 ```
 
+## API Reference
+
+### Swagger Specification
+The complete Simpro API specification is available in `swagger 2.json` in the root directory. This OpenAPI 2.0 spec contains:
+- All available endpoints with request/response schemas
+- Field types, constraints, and descriptions
+- Example values for each field
+
+When implementing new endpoints:
+1. Search the swagger file for the endpoint path (e.g., `/api/v1.0/jobs/`)
+2. Locate the response schema in the `definitions` section (e.g., `Jobs.GET_Entity`)
+3. Map the PascalCase field names to camelCase for PHP DTOs
+4. Use the field types and required/optional flags to create DTO properties
+
+**Example**: For `/api/v1.0/info/`, the swagger shows `Version` (string, required) maps to `public string $version` in the DTO.
+
 ## Architecture
 
 ### Authentication Layer
@@ -69,13 +85,13 @@ AbstractSimproConnector (shared functionality)
 
 ### Resource Layer
 
-Resources provide fluent, chainable methods for API interactions. **Currently, no resources are implemented yet.** When adding resources, follow the pattern in "Adding New Resources" below.
+Resources provide fluent, chainable methods for API interactions. **Implemented resources**: InfoResource. When adding resources, follow the pattern in "Adding New Resources" below.
 
-**Pattern**: Resources extend `BaseResource`, build query parameters, and delegate to request classes. All list methods should return `SimproPaginator` instances.
+**Pattern**: Resources extend `BaseResource`, build query parameters, and delegate to request classes. All list methods should return `SimproPaginator` instances. Single-entity methods return DTOs directly.
 
 ### Request Layer
 
-Request classes define HTTP endpoints and response DTOs. **Currently, no request classes are implemented yet.**
+Request classes define HTTP endpoints and response DTOs. **Implemented requests**: InfoRequest.
 
 **Pattern**: Each API endpoint has a corresponding request class that extends `Saloon\Http\Request`. See "Adding New Resources" for the complete structure.
 
@@ -83,7 +99,7 @@ Request classes define HTTP endpoints and response DTOs. **Currently, no request
 
 **DTOs** (`src/Data/`):
 - Immutable data objects using readonly properties
-- Currently empty - DTOs will be added as resources are implemented
+- **Implemented DTOs**: Info
 
 **Pattern**: DTOs are created automatically by Saloon from API responses. Each resource should have its own DTO classes matching the API response structure.
 
@@ -133,6 +149,14 @@ All classes under `Simpro\PhpSdk\Simpro\` namespace.
 
 This section provides the complete structure for adding a new Simpro API resource (e.g., Jobs, Quotes, Customers, etc.). Follow this pattern exactly to maintain consistency.
 
+### Single-Entity Endpoints (Non-Paginated)
+
+Some endpoints like `/info/` return a single object rather than a paginated list. For these:
+- Skip the ListResponse wrapper DTO
+- Resource method returns the DTO directly, not a paginator
+- No pagination headers needed in test fixtures
+- Example: `$connector->info()->info()` returns `Info` DTO
+
 ### Step 1: Create Request Classes
 
 Request classes define the HTTP method, endpoint, and response DTO.
@@ -148,6 +172,7 @@ namespace Simpro\PhpSdk\Simpro\Requests\Jobs;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Data\Jobs\JobListResponse;
 
 final class ListJobsRequest extends Request
@@ -166,9 +191,9 @@ final class ListJobsRequest extends Request
         ];
     }
 
-    public function resolveResponseDto(): string
+    public function createDtoFromResponse(Response $response): JobListResponse
     {
-        return JobListResponse::class;
+        return JobListResponse::fromResponse($response);
     }
 }
 ```
@@ -178,7 +203,8 @@ final class ListJobsRequest extends Request
 - Use `declare(strict_types=1);`
 - Method is defined using Saloon's `Method` enum
 - Endpoint starts with `/v1.0/` (adjust based on actual Simpro API version)
-- `resolveResponseDto()` returns the DTO class name
+- `createDtoFromResponse()` method creates the DTO from the response
+- Import `Saloon\Http\Response` for the response parameter
 - Query parameters are added by the resource layer, not hardcoded here
 
 ### Step 2: Create Data Transfer Objects (DTOs)
@@ -201,7 +227,16 @@ final readonly class Job
         public string $type,
         public JobAttributes $attributes,
         public array $relationships = [],
-    ) {
+    ) {}
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            id: $data['id'],
+            type: $data['type'],
+            attributes: JobAttributes::fromArray($data['attributes'] ?? []),
+            relationships: $data['relationships'] ?? [],
+        );
     }
 }
 ```
@@ -228,7 +263,17 @@ final readonly class JobAttributes
         // Add all properties from the API response
         // Use nullable types for optional fields
         // Use DateTimeImmutable for datetime fields
-    ) {
+    ) {}
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            name: $data['Name'] ?? null,
+            description: $data['Description'] ?? null,
+            status: $data['Status'] ?? null,
+            created: isset($data['Created']) ? new DateTimeImmutable($data['Created']) : null,
+            updated: isset($data['Updated']) ? new DateTimeImmutable($data['Updated']) : null,
+        );
     }
 }
 ```
@@ -242,6 +287,8 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Data\Jobs;
 
+use Saloon\Http\Response;
+
 final readonly class JobListResponse
 {
     /**
@@ -249,7 +296,18 @@ final readonly class JobListResponse
      */
     public function __construct(
         public array $jobs,
-    ) {
+    ) {}
+
+    public static function fromResponse(Response $response): self
+    {
+        $data = $response->json();
+
+        $jobs = array_map(
+            fn(array $item) => Job::fromArray($item),
+            $data['jobs'] ?? []
+        );
+
+        return new self(jobs: $jobs);
     }
 }
 ```
@@ -257,12 +315,14 @@ final readonly class JobListResponse
 **Pattern Notes**:
 - All DTOs are `final readonly`
 - Use constructor property promotion
+- Each DTO must have a static factory method: `fromResponse()` for top-level DTOs or `fromArray()` for nested DTOs
 - The list response DTO has a single array property named after the resource (e.g., `$jobs`, `$quotes`, `$customers`)
 - This property name MUST match the resource name for the paginator to work correctly
 - Attributes class contains all the actual data fields
 - Use `?Type` for nullable/optional fields
-- Use `DateTimeImmutable` for datetime fields (Saloon handles conversion)
+- Use `DateTimeImmutable` for datetime fields and manually construct from strings in fromArray
 - Use enums for fields with fixed values (like status, sector, etc.)
+- Map PascalCase API field names to camelCase PHP property names in the factory methods
 
 ### Step 3: Create Enums (if needed)
 

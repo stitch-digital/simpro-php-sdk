@@ -1,0 +1,19 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "Version": "99.0.0.0.1.1",
+    "Country": "Australia",
+    "MaintenancePlanner": true,
+    "MultiCompany": false,
+    "SharedCatalog": false,
+    "SharedStock": false,
+    "SharedClients": false,
+    "SharedSetup": false,
+    "SharedDefaults": false,
+    "SharedAccountsIntegration": false,
+    "SharedVoip": false
+  }
+}
