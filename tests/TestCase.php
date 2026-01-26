@@ -6,22 +6,19 @@ namespace Simpro\PhpSdk\Simpro\Tests;
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\MockConfig;
-use Simpro\PhpSdk\Simpro\Simpro;
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected Simpro $sdk;
+    protected SimproApiKeyConnector $sdk;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->sdk = new Simpro(
-            'https://api.simpro.test',
-            'test_user',
-            'test_password',
-            'test_client_id',
-            'test_client_secret'
+        $this->sdk = new SimproApiKeyConnector(
+            baseUrl: 'https://api.simpro.test',
+            apiKey: 'test-api-key'
         );
 
         MockConfig::setFixturePath(__DIR__.'/Fixtures/Saloon');

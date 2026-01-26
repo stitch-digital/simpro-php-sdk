@@ -54,7 +54,7 @@ AbstractSimproConnector (shared functionality)
 - Uses Saloon traits: `AcceptsJson`, `AlwaysThrowOnErrors`, `HasTimeout`
 - Implements `HasPagination` for automatic pagination support
 - Handles validation errors (422 status) via custom `ValidationException`
-- Provides `clients()` method through `SupportsClientsEndpoints` trait
+- Resource methods are added via traits (e.g., `SupportsJobsEndpoints`)
 
 **SimproOAuthConnector** (`src/Connectors/SimproOAuthConnector.php`):
 - Uses Saloon's `AuthorizationCodeGrant` trait
@@ -69,38 +69,23 @@ AbstractSimproConnector (shared functionality)
 
 ### Resource Layer
 
-Resources provide fluent, chainable methods for API interactions.
+Resources provide fluent, chainable methods for API interactions. **Currently, no resources are implemented yet.** When adding resources, follow the pattern in "Adding New Resources" below.
 
-**ClientResource** (`src/Resources/ClientResource.php`):
-- Extends Saloon's `BaseResource`
-- All methods return `SimproPaginator` instances
-- Core method: `list(array $filters = [])` - accepts any filter parameters
-- Convenience methods: `listActive()`, `findById()`, `findByName()`, `search()`
-- Filter methods: `whereAccountManager()`, `whereSector()`, `createdAfter()`, etc.
-- Filter methods internally call `list()` with appropriate parameters
-
-**Pattern**: Resource methods build query parameters and delegate to request classes.
+**Pattern**: Resources extend `BaseResource`, build query parameters, and delegate to request classes. All list methods should return `SimproPaginator` instances.
 
 ### Request Layer
 
-**ListClientsRequest** (`src/Requests/Clients/ListClientsRequest.php`):
-- Defines the HTTP method (GET) and endpoint (`/v1.0/companies/clients/`)
-- Specifies the response DTO (`ClientListResponse`)
-- Query parameters are added by the resource layer
+Request classes define HTTP endpoints and response DTOs. **Currently, no request classes are implemented yet.**
 
-**Pattern**: Each API endpoint has a corresponding request class. New endpoints should follow this structure.
+**Pattern**: Each API endpoint has a corresponding request class that extends `Saloon\Http\Request`. See "Adding New Resources" for the complete structure.
 
 ### Data Layer
 
 **DTOs** (`src/Data/`):
 - Immutable data objects using readonly properties
-- `Client`: Represents a single client with `id`, `type`, `attributes`, `relationships`
-- `ClientAttributes`: Contains all client properties (name, isActive, sector, etc.)
-- `ClientListResponse`: Response wrapper containing array of `Client` DTOs
-- `Sector`: Enum for client industry sectors
-- `PaginationMeta` and `PaginationLinks`: Pagination metadata
+- Currently empty - DTOs will be added as resources are implemented
 
-**Pattern**: DTOs are created automatically by Saloon from API responses.
+**Pattern**: DTOs are created automatically by Saloon from API responses. Each resource should have its own DTO classes matching the API response structure.
 
 ### Pagination
 
@@ -108,10 +93,11 @@ Resources provide fluent, chainable methods for API interactions.
 - Extends Saloon's `PagedPaginator`
 - Uses limit/offset pagination (query params: `page`, `pageSize`)
 - Reads pagination metadata from response headers: `Result-Total`, `Result-Pages`
+- Automatically extracts items from list response DTOs
 - Memory efficient: loads one page at a time
 - Usage: `foreach ($paginator->items() as $item)` or `$paginator->collect()` for Laravel collections
 
-**Pattern**: Pagination is automatic. Resources return paginators, not arrays.
+**Pattern**: Pagination is automatic. Resources return paginators, not arrays. The paginator intelligently extracts arrays from response DTOs.
 
 ### Exception Handling
 
@@ -145,29 +131,490 @@ All classes under `Simpro\PhpSdk\Simpro\` namespace.
 
 ## Adding New Resources
 
-To add support for a new Simpro API endpoint (e.g., Jobs):
+This section provides the complete structure for adding a new Simpro API resource (e.g., Jobs, Quotes, Customers, etc.). Follow this pattern exactly to maintain consistency.
 
-1. **Create Request class**: `src/Requests/Jobs/ListJobsRequest.php`
-   - Define method (GET/POST/etc.) and endpoint
-   - Specify response DTO class
+### Step 1: Create Request Classes
 
-2. **Create DTOs**: `src/Data/Jobs/Job.php`, `JobAttributes.php`, `JobListResponse.php`
-   - Use readonly properties
-   - Match API response structure
+Request classes define the HTTP method, endpoint, and response DTO.
 
-3. **Create Resource class**: `src/Resources/JobResource.php`
-   - Extend `BaseResource`
-   - Implement `list()` method and any convenience methods
-   - Return `SimproPaginator` instances
+**File**: `src/Requests/Jobs/ListJobsRequest.php`
 
-4. **Create Trait**: `src/Concerns/SupportsJobsEndpoints.php`
-   - Add `jobs(): JobResource` method
+```php
+<?php
 
-5. **Add trait to AbstractSimproConnector**:
-   - `use SupportsJobsEndpoints;`
+declare(strict_types=1);
 
-6. **Write tests**: `tests/Resources/JobResourceTest.php`, `tests/Requests/Jobs/ListJobsRequestTest.php`
-   - Create mock fixtures in `tests/Fixtures/Saloon/`
+namespace Simpro\PhpSdk\Simpro\Requests\Jobs;
+
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Simpro\PhpSdk\Simpro\Data\Jobs\JobListResponse;
+
+final class ListJobsRequest extends Request
+{
+    protected Method $method = Method::GET;
+
+    public function resolveEndpoint(): string
+    {
+        return '/v1.0/jobs/';
+    }
+
+    protected function defaultQuery(): array
+    {
+        return [
+            // Default query params if needed
+        ];
+    }
+
+    public function resolveResponseDto(): string
+    {
+        return JobListResponse::class;
+    }
+}
+```
+
+**Pattern Notes**:
+- Class is `final`
+- Use `declare(strict_types=1);`
+- Method is defined using Saloon's `Method` enum
+- Endpoint starts with `/v1.0/` (adjust based on actual Simpro API version)
+- `resolveResponseDto()` returns the DTO class name
+- Query parameters are added by the resource layer, not hardcoded here
+
+### Step 2: Create Data Transfer Objects (DTOs)
+
+DTOs represent the API response structure. Create three files per resource:
+
+**File**: `src/Data/Jobs/Job.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Simpro\PhpSdk\Simpro\Data\Jobs;
+
+final readonly class Job
+{
+    public function __construct(
+        public string $id,
+        public string $type,
+        public JobAttributes $attributes,
+        public array $relationships = [],
+    ) {
+    }
+}
+```
+
+**File**: `src/Data/Jobs/JobAttributes.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Simpro\PhpSdk\Simpro\Data\Jobs;
+
+use DateTimeImmutable;
+
+final readonly class JobAttributes
+{
+    public function __construct(
+        public ?string $name = null,
+        public ?string $description = null,
+        public ?string $status = null,
+        public ?DateTimeImmutable $created = null,
+        public ?DateTimeImmutable $updated = null,
+        // Add all properties from the API response
+        // Use nullable types for optional fields
+        // Use DateTimeImmutable for datetime fields
+    ) {
+    }
+}
+```
+
+**File**: `src/Data/Jobs/JobListResponse.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Simpro\PhpSdk\Simpro\Data\Jobs;
+
+final readonly class JobListResponse
+{
+    /**
+     * @param  array<Job>  $jobs
+     */
+    public function __construct(
+        public array $jobs,
+    ) {
+    }
+}
+```
+
+**Pattern Notes**:
+- All DTOs are `final readonly`
+- Use constructor property promotion
+- The list response DTO has a single array property named after the resource (e.g., `$jobs`, `$quotes`, `$customers`)
+- This property name MUST match the resource name for the paginator to work correctly
+- Attributes class contains all the actual data fields
+- Use `?Type` for nullable/optional fields
+- Use `DateTimeImmutable` for datetime fields (Saloon handles conversion)
+- Use enums for fields with fixed values (like status, sector, etc.)
+
+### Step 3: Create Enums (if needed)
+
+If the API returns fields with fixed values, create enums:
+
+**File**: `src/Data/Jobs/JobStatus.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Simpro\PhpSdk\Simpro\Data\Jobs;
+
+enum JobStatus: string
+{
+    case Pending = 'Pending';
+    case InProgress = 'In Progress';
+    case Completed = 'Completed';
+    case Cancelled = 'Cancelled';
+}
+```
+
+**Pattern Notes**:
+- Use backed enums with string values
+- Values should match exactly what the API returns
+- Use enums in the attributes class: `public ?JobStatus $status = null`
+
+### Step 4: Create Resource Class
+
+Resources provide the public API for interacting with endpoints.
+
+**File**: `src/Resources/JobResource.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Simpro\PhpSdk\Simpro\Resources;
+
+use Saloon\Http\BaseResource;
+use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Paginators\SimproPaginator;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\ListJobsRequest;
+
+/**
+ * @property AbstractSimproConnector $connector
+ */
+final class JobResource extends BaseResource
+{
+    /**
+     * List jobs with any supported filters.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function list(array $filters = []): SimproPaginator
+    {
+        $request = new ListJobsRequest;
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return $this->connector->paginate($request);
+    }
+
+    // Convenience methods that call list() with specific filters
+
+    public function listActive(): SimproPaginator
+    {
+        return $this->list(['is_active' => true]);
+    }
+
+    public function listByStatus(string $status): SimproPaginator
+    {
+        return $this->list(['status' => $status]);
+    }
+
+    public function findById(int|string $jobId): SimproPaginator
+    {
+        return $this->list(['id' => $jobId]);
+    }
+
+    public function search(string $query): SimproPaginator
+    {
+        return $this->list(['text_contains' => $query]);
+    }
+
+    // Filter methods - all call list() internally
+
+    public function whereCustomerId(int|string $customerId): SimproPaginator
+    {
+        return $this->list(['customer_id' => $customerId]);
+    }
+
+    public function createdAfter(string $isoDateTime): SimproPaginator
+    {
+        return $this->list(['created_after' => $isoDateTime]);
+    }
+
+    public function updatedSince(string $isoDateTime): SimproPaginator
+    {
+        return $this->list(['updated_after' => $isoDateTime]);
+    }
+}
+```
+
+**Pattern Notes**:
+- Class is `final` and extends `BaseResource`
+- Add `@property AbstractSimproConnector $connector` for IDE support
+- Core method is `list(array $filters = [])` which accepts any filter parameters
+- Convenience methods call `list()` with specific filters
+- Array values are converted to comma-separated strings (API convention)
+- All values are cast to strings before being added to query
+- All methods return `SimproPaginator` (never arrays)
+- Method names should be descriptive: `whereX()`, `findByX()`, `listX()`
+
+### Step 5: Create Concerns Trait
+
+Traits add resource methods to the connector.
+
+**File**: `src/Concerns/SupportsJobsEndpoints.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Simpro\PhpSdk\Simpro\Concerns;
+
+use Simpro\PhpSdk\Simpro\Resources\JobResource;
+
+trait SupportsJobsEndpoints
+{
+    public function jobs(): JobResource
+    {
+        return new JobResource($this);
+    }
+}
+```
+
+**Pattern Notes**:
+- Simple trait with a single method
+- Method name is plural, lowercase, matches the resource name
+- Returns new instance of the resource class
+- Passes `$this` (the connector) to the resource constructor
+
+### Step 6: Add Trait to AbstractSimproConnector
+
+**File**: `src/Connectors/AbstractSimproConnector.php`
+
+```php
+use Simpro\PhpSdk\Simpro\Concerns\SupportsJobsEndpoints;
+
+abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements HasPagination
+{
+    use AcceptsJson;
+    use AlwaysThrowOnErrors;
+    use HasTimeout;
+    use SupportsJobsEndpoints;  // Add this line
+
+    // ... rest of class
+}
+```
+
+### Step 7: Create Tests
+
+**File**: `tests/Requests/Jobs/ListJobsRequestTest.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\ListJobsRequest;
+
+it('sends list jobs request to correct endpoint', function () {
+    MockClient::global([
+        ListJobsRequest::class => MockResponse::fixture('list_jobs'),
+    ]);
+
+    $request = new ListJobsRequest();
+    $response = $this->sdk->send($request);
+
+    expect($response->status())->toBe(200);
+});
+
+it('parses job response correctly', function () {
+    MockClient::global([
+        ListJobsRequest::class => MockResponse::fixture('list_jobs'),
+    ]);
+
+    $request = new ListJobsRequest();
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto)->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Data\Jobs\JobListResponse::class)
+        ->and($dto->jobs)->toBeArray()
+        ->and($dto->jobs[0])->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Data\Jobs\Job::class);
+});
+```
+
+**File**: `tests/Fixtures/Saloon/list_jobs.json`
+
+```json
+{
+  "statusCode": 200,
+  "headers": {
+    "Result-Total": "100",
+    "Result-Pages": "10"
+  },
+  "data": {
+    "jobs": [
+      {
+        "id": "123",
+        "type": "Job",
+        "attributes": {
+          "name": "Test Job",
+          "status": "Pending",
+          "created": "2024-01-01T00:00:00Z"
+        },
+        "relationships": {}
+      }
+    ]
+  }
+}
+```
+
+**Pattern Notes**:
+- Test fixtures are JSON files named after the request class (snake_case)
+- Fixtures include `statusCode`, `headers`, `data`, and optional `context`
+- Headers should include `Result-Total` and `Result-Pages` for pagination
+- The `data` structure should match the expected API response
+- Test that the request hits the correct endpoint
+- Test that DTOs are parsed correctly
+- Test pagination if applicable
+
+### Step 8: Update Tests to Use Resource
+
+**File**: `tests/Resources/JobResourceTest.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\ListJobsRequest;
+
+it('lists jobs via resource method', function () {
+    MockClient::global([
+        ListJobsRequest::class => MockResponse::fixture('list_jobs'),
+    ]);
+
+    $paginator = $this->sdk->jobs()->list();
+
+    expect($paginator)->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Paginators\SimproPaginator::class);
+});
+
+it('iterates over paginated jobs', function () {
+    MockClient::global([
+        ListJobsRequest::class => MockResponse::fixture('list_jobs'),
+    ]);
+
+    $jobs = $this->sdk->jobs()->list();
+    $firstJob = $jobs->items()->current();
+
+    expect($firstJob)->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Data\Jobs\Job::class)
+        ->and($firstJob->id)->toBe('123')
+        ->and($firstJob->attributes->name)->toBe('Test Job');
+});
+
+it('filters jobs using convenience methods', function () {
+    MockClient::global([
+        ListJobsRequest::class => MockResponse::fixture('list_jobs'),
+    ]);
+
+    $paginator = $this->sdk->jobs()->listActive();
+
+    expect($paginator)->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Paginators\SimproPaginator::class);
+});
+```
+
+### Complete File Structure
+
+After following all steps, you should have:
+
+```
+src/
+├── Concerns/
+│   └── SupportsJobsEndpoints.php
+├── Connectors/
+│   └── AbstractSimproConnector.php (updated)
+├── Data/
+│   └── Jobs/
+│       ├── Job.php
+│       ├── JobAttributes.php
+│       ├── JobListResponse.php
+│       └── JobStatus.php (if needed)
+├── Requests/
+│   └── Jobs/
+│       └── ListJobsRequest.php
+└── Resources/
+    └── JobResource.php
+
+tests/
+├── Fixtures/
+│   └── Saloon/
+│       └── list_jobs.json
+├── Requests/
+│   └── Jobs/
+│       └── ListJobsRequestTest.php
+└── Resources/
+    └── JobResourceTest.php
+```
+
+### Usage After Implementation
+
+```php
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
+
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key'
+);
+
+// List all jobs
+$jobs = $connector->jobs()->list();
+
+// Filter jobs
+$activeJobs = $connector->jobs()->listActive();
+$customerJobs = $connector->jobs()->whereCustomerId(123);
+$recentJobs = $connector->jobs()->createdAfter('2024-01-01T00:00:00Z');
+
+// Iterate over results
+foreach ($jobs->items() as $job) {
+    echo $job->attributes->name;
+}
+
+// Use Laravel collections
+$jobNames = $jobs->collect()
+    ->map(fn($job) => $job->attributes->name)
+    ->toArray();
+```
 
 ## Important Notes
 

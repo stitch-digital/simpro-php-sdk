@@ -28,7 +28,33 @@ final class SimproPaginator extends PagedPaginator
 
     protected function getPageItems(Response $response, Request $request): array
     {
-        return $response->dto();
+        $dto = $response->dto();
+
+        // If the DTO is already an array, return it
+        if (is_array($dto)) {
+            return $dto;
+        }
+
+        // If the DTO is an object with an array property containing items,
+        // extract that property. This handles list response DTOs like:
+        // - ClientListResponse with ->clients
+        // - JobListResponse with ->jobs
+        // The specific response DTO should have a property matching the resource name
+        if (is_object($dto)) {
+            // Get all public properties
+            $properties = get_object_vars($dto);
+
+            // If there's only one property and it's an array, use it
+            if (count($properties) === 1) {
+                $value = reset($properties);
+                if (is_array($value)) {
+                    return $value;
+                }
+            }
+        }
+
+        // Fallback: wrap single item in array
+        return [$dto];
     }
 
     protected function getTotalPages(Response $response): int

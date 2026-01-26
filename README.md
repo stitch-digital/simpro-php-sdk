@@ -3,7 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/stitch-digital/simpro-php-sdk.svg?style=flat-square)](https://packagist.org/packages/stitch-digital/simpro-php-sdk)
 [![Total Downloads](https://img.shields.io/packagist/dt/stitch-digital/simpro-php-sdk.svg?style=flat-square)](https://packagist.org/packages/stitch-digital/simpro-php-sdk)
 
-This package is an unofficial PHP SDK for the Simpro API, built with [Saloon](https://docs.saloon.dev/) v3.
+This package is an unofficial PHP SDK for the Simpro API, built with [Saloon](https://docs.saloon.dev/).
 
 ⚠️ **Active Development Notice**
 
@@ -33,65 +33,141 @@ composer require stitch-digital/simpro-php-sdk
 
 ## Quick Start
 
-```php
-use Simpro\PhpSdk\Simpro\Simpro;
+Choose the authentication method that fits your use case. See the [Authentication Methods](#authentication-methods) section below for details.
 
-// Create an SDK instance
-$simpro = Simpro::make(
-    baseUrl: 'https://api.simpro.example.com',
-    username: 'your_username',
-    password: 'your_password',
-    clientId: 'your_client_id',
-    clientSecret: 'your_client_secret'
+```php
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
+
+// For server-to-server integrations
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key'
 );
 
-// List clients (paginated)
-$paginator = $simpro->clients()->list();
+// Make API requests
+$clients = $connector->clients()->list();
 
-// Iterate over all clients
-foreach ($paginator->items() as $client) {
+// Iterate over clients
+foreach ($clients->items() as $client) {
     $clientId = $client->id;
     $clientName = $client->attributes->name;
 }
-
-// Or collect all items into an array
-$allClients = $paginator->collect()->all();
 ```
 
 Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev) to make the HTTP requests.
+
+## Authentication Methods
+
+Simpro's API supports two authentication methods. Choose the one that best fits your use case:
+
+### OAuth (Authorization Code Grant)
+
+**Best for:** Web applications where users can be redirected to Simpro's authorization page.
+
+This flow requires users to approve access to your application. After approval, they're redirected back with a code you exchange for an access token.
+
+```php
+use Simpro\PhpSdk\Simpro\Connectors\SimproOAuthConnector;
+
+// Create the connector
+$connector = new SimproOAuthConnector(
+    baseUrl: 'https://example.simprosuite.com',
+    clientId: 'your-client-id',
+    clientSecret: 'your-client-secret',
+    redirectUri: 'https://yourapp.com/oauth/callback'
+);
+
+// Step 1: Redirect user to authorization URL
+$authUrl = $connector->getAuthorizationUrl();
+// Redirect user to $authUrl
+
+// Step 2: In your callback handler, exchange the code for a token
+$code = $_GET['code']; // From the callback URL
+$authenticator = $connector->getAccessToken($code);
+
+// Step 3: Authenticate your connector and store the authenticator
+$connector->authenticate($authenticator);
+
+// Store $authenticator->serialize() securely (encrypted in database)
+// so you can reuse it later
+
+// Step 4: Make API requests
+$clients = $connector->clients()->list();
+
+// Step 5: Check for expired tokens and refresh when needed
+if ($authenticator->hasExpired()) {
+    $newAuthenticator = $connector->refreshAccessToken($authenticator);
+    // Update stored authenticator
+}
+```
+
+**Token Management:**
+
+The `AccessTokenAuthenticator` returned by `getAccessToken()` contains:
+- Access token
+- Refresh token  
+- Expiry timestamp
+
+You should securely store this (encrypted) in your database and check for expiration before each request.
+
+```php
+// Serializing for storage
+$serialized = $authenticator->serialize();
+
+// Unserializing when retrieving
+use Saloon\Http\Auth\AccessTokenAuthenticator;
+$authenticator = AccessTokenAuthenticator::unserialize($serialized);
+```
+
+### API Key
+
+**Best for:** Server-to-server integrations, background jobs, and command-line tools.
+
+This is the simplest authentication method - just provide your API key and start making requests.
+
+```php
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
+
+// Create the connector
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key'
+);
+
+// Make API requests - authentication is handled automatically
+$clients = $connector->clients()->list();
+```
+
+**That's it!** No token management, no refresh logic - just simple, straightforward authentication.
 
 ## Usage
 
 ### Authentication
 
-The SDK handles OAuth2 authentication automatically. You provide your credentials when creating the SDK instance:
+The SDK supports two authentication methods. See the [Authentication Methods](#authentication-methods) section above for detailed information:
 
-```php
-$simpro = Simpro::make(
-    baseUrl: 'https://api.simpro.example.com',
-    username: 'your_username',
-    password: 'your_password',
-    clientId: 'your_client_id',
-    clientSecret: 'your_client_secret'
-);
-```
-
-The SDK will automatically:
-- Obtain an access token using the password grant
-- Refresh the token when it expires
-- Include the token in all API requests
+- **OAuth Authorization Code Grant**: For web applications with user redirects
+- **API Key**: For server-to-server integrations
 
 ### Setting a timeout
 
 By default, the SDK waits 10 seconds for a response. Override via the constructor:
 
 ```php
-$simpro = new Simpro(
-    baseUrl: 'https://api.simpro.example.com',
-    username: 'your_username',
-    password: 'your_password',
-    clientId: 'your_client_id',
-    clientSecret: 'your_client_secret',
+// OAuth
+$connector = new SimproOAuthConnector(
+    baseUrl: 'https://example.simprosuite.com',
+    clientId: 'your-client-id',
+    clientSecret: 'your-client-secret',
+    redirectUri: 'https://yourapp.com/oauth/callback',
+    scopes: [],
+    requestTimeout: 30
+);
+
+// API Key
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
     requestTimeout: 30
 );
 ```
