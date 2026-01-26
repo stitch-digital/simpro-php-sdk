@@ -44,13 +44,13 @@ $connector = new SimproApiKeyConnector(
     apiKey: 'your-api-key'
 );
 
-// The connector is now ready to make API requests
-// Resources will be added as the SDK develops
+// Get information about your Simpro instance
+$version = $connector->info()->version(); // Returns: '99.0.0.0.1.1'
 ```
 
 Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev/) v3 to make HTTP requests.
 
-**Note:** This SDK is in early development. API resources and endpoints are being actively developed. Check the `CLAUDE.md` file for information on adding new resources.
+**Note:** This SDK is in early development. API resources and endpoints are being actively developed.
 
 ## Authentication Methods
 
@@ -87,8 +87,8 @@ $connector->authenticate($authenticator);
 // Store $authenticator->serialize() securely (encrypted in database)
 // so you can reuse it later
 
-// Step 4: Make API requests (resources will be added as SDK develops)
-// $response = $connector->someResource()->list();
+// Step 4: Make API requests
+$version = $connector->info()->version();
 
 // Step 5: Check for expired tokens and refresh when needed
 if ($authenticator->hasExpired()) {
@@ -131,12 +131,10 @@ $connector = new SimproApiKeyConnector(
 );
 
 // Make API requests - authentication is handled automatically
-// $response = $connector->someResource()->list();
+$version = $connector->info()->version();
 ```
 
 **That's it!** No token management, no refresh logic - just simple, straightforward authentication.
-
-**Note:** API resources and endpoints are being actively developed. The connector is ready to use - resources will be added as development progresses.
 
 ## Usage
 
@@ -260,16 +258,13 @@ try {
 
 ## Resources
 
-The SDK will provide resource-based APIs for working with different Simpro entities. Resources are currently under development.
+The SDK provides resource-based APIs for working with different Simpro entities. Each resource has its own documentation page with detailed examples and usage instructions.
 
-**Coming Soon:**
-- Companies (Customers/Clients)
-- Jobs
-- Quotes
-- Invoices
-- And more...
+### Available Resources
 
-See `CLAUDE.md` for detailed information on how to add new resources to the SDK.
+- **[Info](docs/info-resource.md)** - Get information about your Simpro instance, including version, country, and enabled features
+
+More resources will be added as development continues.
 
 ## Pagination
 
@@ -282,8 +277,8 @@ The paginator is a custom PHP iterator, meaning it can be used in foreach loops.
 The simplest way to use the paginator is to iterate over items using the `items()` method:
 
 ```php
-// Example (once resources are implemented):
-$paginator = $connector->someResource()->list();
+// Example with a list endpoint (future resources):
+$paginator = $connector->resource()->list();
 
 foreach ($paginator->items() as $item) {
     $itemId = $item->id;
@@ -296,7 +291,7 @@ foreach ($paginator->items() as $item) {
 If you're using Laravel (or have `illuminate/collections` installed), you can use the `collect()` method to get a `LazyCollection`:
 
 ```php
-$paginator = $connector->someResource()->list();
+$paginator = $connector->resource()->list();
 $collection = $paginator->collect();
 
 $filtered = $collection

@@ -145,6 +145,32 @@ Uses Laravel Pint preset with `declare_strict_types` and `final_class` rules. Ru
 ### Namespacing
 All classes under `Simpro\PhpSdk\Simpro\` namespace.
 
+### Documentation Examples
+When writing code examples in documentation (README, resource docs, etc.):
+- **Prefer return statements over echo** - Return structured data (arrays, objects) rather than using echo statements
+- **Use arrays for multiple values** - When displaying multiple pieces of information, return an array instead of multiple echo statements
+- **Modern PHP style** - Avoid dated patterns like echo concatenation in favor of returning data that can be used programmatically
+
+**Good Example:**
+```php
+$info = $connector->info()->get();
+
+return [
+    'version' => $info->version,
+    'country' => $info->country,
+    'features' => [
+        'maintenancePlanner' => $info->maintenancePlanner,
+        'multiCompany' => $info->multiCompany,
+    ],
+];
+```
+
+**Avoid:**
+```php
+echo "Version: {$info->version}\n";
+echo "Country: {$info->country}\n";
+```
+
 ## Adding New Resources
 
 This section provides the complete structure for adding a new Simpro API resource (e.g., Jobs, Quotes, Customers, etc.). Follow this pattern exactly to maintain consistency.
@@ -665,12 +691,16 @@ $activeJobs = $connector->jobs()->listActive();
 $customerJobs = $connector->jobs()->whereCustomerId(123);
 $recentJobs = $connector->jobs()->createdAfter('2024-01-01T00:00:00Z');
 
-// Iterate over results
+// Iterate over results and collect data
+$jobData = [];
 foreach ($jobs->items() as $job) {
-    echo $job->attributes->name;
+    $jobData[] = [
+        'id' => $job->id,
+        'name' => $job->attributes->name,
+    ];
 }
 
-// Use Laravel collections
+// Or use Laravel collections
 $jobNames = $jobs->collect()
     ->map(fn($job) => $job->attributes->name)
     ->toArray();
