@@ -7,3 +7,4 @@
 /.vscode/
 /.claude/
 .DS_Store
+/swagger 2.json
