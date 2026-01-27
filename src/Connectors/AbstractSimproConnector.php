@@ -10,6 +10,7 @@ use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsInfoEndpoints;
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 use Simpro\PhpSdk\Simpro\Paginators\SimproPaginator;
@@ -25,6 +26,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use AcceptsJson;
     use AlwaysThrowOnErrors;
     use HasTimeout;
+    use SupportsCompaniesEndpoints;
     use SupportsInfoEndpoints;
 
     /**

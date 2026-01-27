@@ -5,3 +5,5 @@
 /.env
 /.idea/
 /.vscode/
+/.claude/
+.DS_Store

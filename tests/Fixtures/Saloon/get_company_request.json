@@ -1,0 +1,54 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 0,
+    "Name": "simPRO Software Australia",
+    "Phone": "+61 7 3147 8777",
+    "Fax": "+61 7 3147 8777",
+    "Email": "sales@simpro.com.au",
+    "Address": {
+      "Line1": "Ground floor",
+      "Line2": "31 McKechnie Drive"
+    },
+    "BillingAddress": {
+      "Line1": "Ground floor",
+      "Line2": "31 McKechnie Drive"
+    },
+    "EIN": "12345678",
+    "CompanyNo": "ACN123456",
+    "Licence": "LIC789",
+    "Website": "https://simpro.com.au",
+    "Banking": {
+      "Bank": "Test Bank",
+      "BranchCode": "123",
+      "AccountName": "Test Account",
+      "RoutingNo": "456789",
+      "AccountNo": "987654321",
+      "IBAN": "",
+      "SwiftCode": "TESTAU99"
+    },
+    "CISCertNo": "",
+    "EmployerTaxRefNo": "",
+    "Timezone": "Australia/Brisbane",
+    "TimezoneOffset": "+10:00",
+    "DefaultLanguage": "en_AU",
+    "Template": false,
+    "MultiCompanyLabel": null,
+    "MultiCompanyColor": null,
+    "Currency": "AUD",
+    "Country": "Australia",
+    "TaxName": "GST",
+    "UIDateFormat": "DD/MM/YYYY",
+    "UITimeFormat": "h:mm A",
+    "ScheduleFormat": 15,
+    "SingleCostCenterMode": true,
+    "DateModified": "2024-01-26T10:00:00+10:00",
+    "DefaultCostCenter": {
+      "ID": 1,
+      "Name": "Default Cost Center"
+    }
+  }
+}

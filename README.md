@@ -46,6 +46,12 @@ $connector = new SimproApiKeyConnector(
 
 // Get information about your Simpro instance
 $version = $connector->info()->version(); // Returns: '99.0.0.0.1.1'
+
+// List all companies
+$companies = $connector->companies()->list();
+foreach ($companies->items() as $company) {
+    echo "{$company->id}: {$company->name}\n";
+}
 ```
 
 Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev/) v3 to make HTTP requests.
@@ -263,49 +269,108 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 ### Available Resources
 
 - **[Info](docs/info-resource.md)** - Get information about your Simpro instance, including version, country, and enabled features
+- **[Companies](docs/companies-resource.md)** - Access company information and manage multi-company environments
 
 More resources will be added as development continues.
 
-## Pagination
+## Pagination and Querying
 
-Resource methods that return lists will use a `SimproPaginator` instance for working with paginated API responses. The SDK uses Saloon's pagination plugin to handle pagination automatically. The Simpro API uses limit/offset pagination, where results are divided into pages. The SDK's paginator handles all of this for you, allowing you to iterate through every result across every page in one loop.
+Resource methods that return lists use a `QueryBuilder` instance that provides fluent search, filtering, and ordering capabilities. The query builder wraps Saloon's pagination plugin and handles pagination automatically.
 
-The paginator is a custom PHP iterator, meaning it can be used in foreach loops. It's also memory efficient - it only keeps one page in memory at a time, so you can iterate through thousands of pages and millions of results without running out of memory.
-
-### Iterating Over Items
-
-The simplest way to use the paginator is to iterate over items using the `items()` method:
+### Basic Usage
 
 ```php
-// Example with a list endpoint (future resources):
-$paginator = $connector->resource()->list();
+// List all companies (returns QueryBuilder)
+$companies = $connector->companies()->list();
 
-foreach ($paginator->items() as $item) {
-    $itemId = $item->id;
-    $itemName = $item->attributes->name;
+// Iterate over all items across all pages
+foreach ($companies->items() as $company) {
+    echo "{$company->id}: {$company->name}\n";
 }
+
+// Or get the first result
+$first = $connector->companies()->list()->first();
+
+// Or get all results as an array
+$all = $connector->companies()->list()->all();
 ```
+
+### Fluent Search API
+
+The SDK provides a fluent search API for building complex queries:
+
+```php
+use Simpro\PhpSdk\Simpro\Query\Search;
+
+// Simple wildcard search
+$result = $connector->companies()->listDetailed()
+    ->search(Search::make()->column('Name')->find('Test'))
+    ->first();
+
+// Multiple search criteria with OR logic
+$results = $connector->companies()->list()
+    ->search([
+        Search::make()->column('Name')->find('Corp'),
+        Search::make()->column('ID')->greaterThan(5),
+    ])
+    ->matchAny()
+    ->orderByDesc('Name')
+    ->collect();
+
+// Alternative where() syntax
+$results = $connector->companies()->list()
+    ->where('Name', 'like', 'Acme')
+    ->where('ID', '>=', 10)
+    ->first();
+```
+
+### Search Methods
+
+The `Search` class provides these methods:
+
+| Method | Description | Example Value |
+|--------|-------------|---------------|
+| `equals($value)` | Exact match | `Test` |
+| `find($value)` | Wildcard search | `%25Test%25` |
+| `startsWith($value)` | Starts with | `Test%25` |
+| `endsWith($value)` | Ends with | `%25Test` |
+| `lessThan($value)` | Less than | `<10` |
+| `lessThanOrEqual($value)` | Less than or equal | `<=10` |
+| `greaterThan($value)` | Greater than | `>10` |
+| `greaterThanOrEqual($value)` | Greater than or equal | `>=10` |
+| `notEqual($value)` | Not equal | `!=Cancelled` |
+| `between($min, $max)` | Range | `1~100` |
+| `in($array)` | In list | `Active,Pending` |
+| `notIn($array)` | Not in list | `!=Cancelled,!=Deleted` |
 
 ### Using Laravel Collections
 
-If you're using Laravel (or have `illuminate/collections` installed), you can use the `collect()` method to get a `LazyCollection`:
+The `collect()` method returns a `LazyCollection` for powerful data transformations:
 
 ```php
-$paginator = $connector->resource()->list();
-$collection = $paginator->collect();
+$companies = $connector->companies()->list();
 
-$filtered = $collection
-    ->filter(fn($item) => $item->attributes->isActive === true)
-    ->map(fn($item) => ['id' => $item->id, 'name' => $item->attributes->name])
+$filtered = $companies->collect()
+    ->filter(fn($company) => $company->id > 0)
+    ->map(fn($company) => ['id' => $company->id, 'name' => $company->name])
     ->sortBy('name');
+```
+
+### Array Filters (Backward Compatible)
+
+You can also pass filters as an array to list methods:
+
+```php
+$companies = $connector->companies()->list(['Name' => 'Test Company']);
 ```
 
 ### Controlling Page Size
 
-By default, 30 items are fetched per page. You can control pagination by setting the per-page limit:
+By default, 30 items are fetched per page:
 
 ```php
-$paginator->setPerPageLimit(100); // Fetch 100 items per page
+$builder = $connector->companies()->list();
+$builder->getPaginator()->setPerPageLimit(100);
 ```
 
 ### Pagination Metadata
