@@ -1,0 +1,30 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Type": "Job",
+      "Subject": "Kitchen Install Day 1",
+      "Date": "2024-01-25",
+      "StartTime": "08:00",
+      "EndTime": "16:00",
+      "Staff": "John Smith",
+      "StaffID": "3"
+    },
+    {
+      "ID": 2,
+      "Type": "Job",
+      "Subject": "Kitchen Install Day 2",
+      "Date": "2024-01-26",
+      "StartTime": "08:00",
+      "EndTime": "16:00",
+      "Staff": "John Smith",
+      "StaffID": "3"
+    }
+  ]
+}

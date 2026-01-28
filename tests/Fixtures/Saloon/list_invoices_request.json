@@ -1,0 +1,32 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "InvoiceNo": "INV-001",
+      "Status": "Unpaid",
+      "Customer": "Acme Corp",
+      "CustomerID": "5",
+      "DateIssued": "2024-01-20",
+      "DateDue": "2024-02-19",
+      "Total": 5000.00,
+      "AmountDue": 5000.00
+    },
+    {
+      "ID": 2,
+      "InvoiceNo": "INV-002",
+      "Status": "Paid",
+      "Customer": "Smith Industries",
+      "CustomerID": "6",
+      "DateIssued": "2024-01-15",
+      "DateDue": "2024-02-14",
+      "Total": 2500.00,
+      "AmountDue": 0.00
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Type": "Project",
+      "Name": "Kitchen Renovation",
+      "Site": "123 Main St",
+      "SiteID": "10",
+      "Status": "Progress",
+      "Stage": "In Progress",
+      "Customer": "Acme Corp",
+      "CustomerID": "5",
+      "DateIssued": "2024-01-15",
+      "Total": 15000.00
+    },
+    {
+      "ID": 2,
+      "Type": "Service",
+      "Name": "Plumbing Repair",
+      "Site": "456 Oak Ave",
+      "SiteID": "11",
+      "Status": "Complete",
+      "Stage": "Completed",
+      "Customer": "Smith Industries",
+      "CustomerID": "6",
+      "DateIssued": "2024-01-20",
+      "Total": 500.00
+    }
+  ]
+}

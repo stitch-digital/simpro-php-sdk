@@ -1,0 +1,28 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "CompanyName": "Acme Corp",
+    "Type": "Company",
+    "GivenName": "John",
+    "FamilyName": "Doe",
+    "Email": "contact@acme.com",
+    "Phone": "555-0100",
+    "AltPhone": "555-0101",
+    "Fax": "555-0102",
+    "Address": {
+      "Address": "123 Business Park",
+      "City": "Sydney",
+      "State": "NSW",
+      "PostalCode": "2000",
+      "Country": "Australia"
+    },
+    "ABN": "12345678901",
+    "Website": "https://acme.com",
+    "IsArchived": false,
+    "DateModified": "2024-01-20T10:30:00Z"
+  }
+}

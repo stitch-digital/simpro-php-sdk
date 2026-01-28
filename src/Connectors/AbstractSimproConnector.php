@@ -11,7 +11,14 @@ use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsCurrentUserEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsCustomersEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsEmployeesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsInfoEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsInvoicesEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsJobsEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsQuotesEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsSchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 use Simpro\PhpSdk\Simpro\Paginators\SimproPaginator;
 use Throwable;
@@ -27,7 +34,14 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use AlwaysThrowOnErrors;
     use HasTimeout;
     use SupportsCompaniesEndpoints;
+    use SupportsCurrentUserEndpoints;
+    use SupportsCustomersEndpoints;
+    use SupportsEmployeesEndpoints;
     use SupportsInfoEndpoints;
+    use SupportsInvoicesEndpoints;
+    use SupportsJobsEndpoints;
+    use SupportsQuotesEndpoints;
+    use SupportsSchedulesEndpoints;
 
     /**
      * Request timeout in seconds.

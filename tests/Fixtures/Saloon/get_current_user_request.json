@@ -1,0 +1,24 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 42,
+    "Username": "jdoe",
+    "Email": "john.doe@example.com",
+    "GivenName": "John",
+    "FamilyName": "Doe",
+    "DisplayName": "John Doe",
+    "Companies": [
+      {
+        "ID": 1,
+        "Name": "Main Company"
+      },
+      {
+        "ID": 2,
+        "Name": "Secondary Company"
+      }
+    ]
+  }
+}

@@ -335,45 +335,48 @@ Complete company object returned by `get()`, `getDefault()`, `listDetailed()`, a
 $isMultiCompany = $connector->info()->multiCompany();
 
 if ($isMultiCompany) {
-    // List all companies with full details
-    $companies = $connector->companies()->listDetailed();
-
-    $companyList = [];
-    foreach ($companies->items() as $company) {
-        $companyList[] = [
+    $companies = $connector->companies()
+        ->listDetailed()
+        ->collect()
+        ->reject(fn ($company) => $company->template) // Exclude the template company
+        ->map(fn ($company) => [
             'id' => $company->id,
             'name' => $company->name,
             'email' => $company->email,
             'timezone' => $company->timezone,
-        ];
-    }
+        ])
+        ->values()
+        ->all();
 
-    return $companyList;
-} else {
-    // Just get the default company
-    $company = $connector->companies()->getDefault();
-
-    return [
-        'id' => $company->id,
-        'name' => $company->name,
-        'email' => $company->email,
-    ];
+    return $companies;
 }
+
+// Single-company environment
+$company = $connector->companies()->getDefault();
+
+return [
+    'id' => $company->id,
+    'name' => $company->name,
+    'email' => $company->email,
+];
 ```
 
 ### Build Company Selector Dropdown
 
 ```php
-// Use simple list for dropdown (lightweight)
-$companies = $connector->companies()->list();
-
-$options = [];
-foreach ($companies->items() as $company) {
-    $options[] = [
-        'value' => $company->id,
-        'label' => $company->name,
-    ];
-}
+$options = $connector
+  ->companies()
+  ->listDetailed()
+  ->collect()
+  ->reject(fn($company) => $company->template) // Exclude the template company
+  ->map(
+    fn($company) => [
+      "value" => $company->id,
+      "label" => $company->name
+    ]
+  )
+  ->values()
+  ->all();
 
 return $options;
 ```

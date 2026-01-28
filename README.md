@@ -270,6 +270,13 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 
 - **[Info](docs/info-resource.md)** - Get information about your Simpro instance, including version, country, and enabled features
 - **[Companies](docs/companies-resource.md)** - Access company information and manage multi-company environments
+- **[Jobs](docs/jobs-resource.md)** - Manage jobs with full CRUD operations (create, list, get, update, delete)
+- **[Customers](docs/customers-resource.md)** - Customer company management with full CRUD operations
+- **[Quotes](docs/quotes-resource.md)** - Quote management with full CRUD operations
+- **[Invoices](docs/invoices-resource.md)** - Invoice management with full CRUD operations
+- **[Schedules](docs/schedules-resource.md)** - View job and activity schedules (read-only)
+- **[Employees](docs/employees-resource.md)** - Employee management with full CRUD operations
+- **[CurrentUser](docs/current-user-resource.md)** - Get authenticated user information
 
 More resources will be added as development continues.
 

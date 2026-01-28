@@ -1,0 +1,180 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Type": "Project",
+    "Name": "Kitchen Renovation",
+    "Customer": {
+      "ID": 5,
+      "CompanyName": "Acme Corp",
+      "GivenName": "",
+      "FamilyName": ""
+    },
+    "CustomerContract": {
+      "ID": 100,
+      "Name": "Annual Maintenance",
+      "StartDate": "2024-01-01",
+      "EndDate": "2024-12-31",
+      "ContractNo": "CON-001"
+    },
+    "CustomerContact": {
+      "ID": 50,
+      "GivenName": "John",
+      "FamilyName": "Doe",
+      "Email": "john@acme.com",
+      "Phone": "555-0100"
+    },
+    "AdditionalContacts": [
+      {
+        "ID": 51,
+        "GivenName": "Jane",
+        "FamilyName": "Smith"
+      }
+    ],
+    "Site": {
+      "ID": 10,
+      "Name": "123 Main St"
+    },
+    "SiteContact": {
+      "ID": 52,
+      "GivenName": "Site",
+      "FamilyName": "Manager"
+    },
+    "OrderNo": "ORD-001",
+    "RequestNo": "REQ-001",
+    "Description": "Full kitchen renovation",
+    "Notes": "Customer requested completion by end of month",
+    "DateIssued": "2024-01-15",
+    "DueDate": "2024-02-28",
+    "DueTime": "17:00",
+    "Tags": [
+      {
+        "ID": 1,
+        "Name": "Urgent"
+      },
+      {
+        "ID": 2,
+        "Name": "Residential"
+      }
+    ],
+    "Salesperson": {
+      "ID": 3,
+      "Name": "Sales Rep"
+    },
+    "ProjectManager": {
+      "ID": 4,
+      "Name": "Project Lead"
+    },
+    "Technicians": [
+      {
+        "ID": 5,
+        "Name": "Tech One"
+      },
+      {
+        "ID": 6,
+        "Name": "Tech Two"
+      }
+    ],
+    "Technician": {
+      "ID": 5,
+      "Name": "Tech One"
+    },
+    "Stage": "In Progress",
+    "Status": {
+      "ID": 100,
+      "Name": "Job : In Progress",
+      "Color": "#3564b1"
+    },
+    "ResponseTime": "4 Hours",
+    "IsVariation": false,
+    "LinkedVariations": [],
+    "ConvertedFromQuote": {
+      "ID": 200,
+      "Name": "Kitchen Quote"
+    },
+    "Sections": [
+      {
+        "ID": 1,
+        "Name": "Phase 1",
+        "Description": "Demolition",
+        "DisplayOrder": 1,
+        "CostCenters": [
+          {
+            "ID": 101,
+            "Name": "Labor",
+            "CostCenter": {
+              "ID": 10,
+              "Name": "Labor"
+            },
+            "DisplayOrder": 1,
+            "Total": {
+              "ExTax": 5000,
+              "Tax": 500,
+              "IncTax": 5500,
+              "TaxCode": {
+                "ID": 1,
+                "Code": "GST",
+                "Type": "Single",
+                "Rate": 10
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "DateModified": "2024-01-20T10:30:00Z",
+    "AutoAdjustStatus": true,
+    "IsRetentionEnabled": false,
+    "Total": {
+      "ExTax": 13636.36,
+      "Tax": 1363.64,
+      "IncTax": 15000.00
+    },
+    "Totals": {
+      "MaterialsCost": {
+        "Actual": 5000,
+        "Committed": 0,
+        "Estimate": 5000,
+        "Revised": 5000
+      },
+      "ResourcesCost": {
+        "Total": {
+          "Actual": 5000,
+          "Committed": 0,
+          "Estimate": 5000,
+          "Revised": 5000
+        },
+        "Labor": {
+          "Actual": 5000,
+          "Committed": 0,
+          "Estimate": 5000,
+          "Revised": 5000
+        }
+      },
+      "InvoicedValue": 0,
+      "InvoicePercentage": 0
+    },
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 1,
+          "Name": "Project Code",
+          "Type": "Text",
+          "IsMandatory": false,
+          "ListItems": []
+        },
+        "Value": "PRJ-2024-001"
+      }
+    ],
+    "STC": {
+      "STCsEligible": false,
+      "VEECsEligible": false,
+      "STCValue": 0,
+      "VEECValue": 0
+    },
+    "CompletedDate": null
+  }
+}

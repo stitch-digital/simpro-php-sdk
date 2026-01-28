@@ -1,0 +1,24 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "CompanyName": "Acme Corp",
+      "Type": "Company",
+      "Email": "contact@acme.com",
+      "Phone": "555-0100"
+    },
+    {
+      "ID": 2,
+      "CompanyName": "Smith Industries",
+      "Type": "Company",
+      "Email": "info@smith.com",
+      "Phone": "555-0200"
+    }
+  ]
+}

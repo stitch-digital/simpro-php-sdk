@@ -1,0 +1,24 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Type": "Job",
+    "Subject": "Kitchen Install Day 1",
+    "Date": "2024-01-25",
+    "StartTime": "08:00",
+    "EndTime": "16:00",
+    "Staff": {
+      "ID": 3,
+      "Name": "John Smith"
+    },
+    "Job": {
+      "ID": 1,
+      "Name": "Kitchen Renovation"
+    },
+    "Notes": "Bring all tools and materials",
+    "DateModified": "2024-01-20T09:00:00Z"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Name": "John Smith",
+    "GivenName": "John",
+    "FamilyName": "Smith",
+    "Email": "john.smith@company.com",
+    "Phone": "555-1001",
+    "Mobile": "555-1011",
+    "Address": {
+      "Address": "456 Worker Lane",
+      "City": "Melbourne",
+      "State": "VIC",
+      "PostalCode": "3000",
+      "Country": "Australia"
+    },
+    "EmployeeNo": "EMP-001",
+    "DateOfBirth": "1985-06-15",
+    "StartDate": "2020-01-10",
+    "IsArchived": false,
+    "DateModified": "2024-01-10T08:00:00Z"
+  }
+}

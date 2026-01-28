@@ -1,0 +1,34 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Name": "Kitchen Quote",
+    "Site": {
+      "ID": 10,
+      "Name": "123 Main St"
+    },
+    "Customer": {
+      "ID": 5,
+      "CompanyName": "Acme Corp",
+      "Type": "Company"
+    },
+    "Status": "Approved",
+    "Stage": "Won",
+    "OrderNo": "QTE-001",
+    "Description": "Full kitchen renovation quote",
+    "Notes": "Valid for 30 days",
+    "DateIssued": "2024-01-10",
+    "DueDate": "2024-02-28",
+    "ExpiryDate": "2024-02-10",
+    "Totals": {
+      "TotalExTax": 13636.36,
+      "TotalIncTax": 15000.00,
+      "TotalTax": 1363.64,
+      "TotalCost": 10000.00
+    },
+    "DateModified": "2024-01-15T14:20:00Z"
+  }
+}

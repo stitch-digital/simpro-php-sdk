@@ -1,0 +1,19 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Trait Simpro\\PhpSdk\\Simpro\\Resources\\Concerns\\HasAttachments is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Resources/Concerns/HasAttachments.php
+
+		-
+			message: '#^Trait Simpro\\PhpSdk\\Simpro\\Resources\\Concerns\\HasCustomFields is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Resources/Concerns/HasCustomFields.php
+
+		-
+			message: '#^Trait Simpro\\PhpSdk\\Simpro\\Resources\\Concerns\\HasNotes is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Resources/Concerns/HasNotes.php

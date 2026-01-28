@@ -1,0 +1,24 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "John Smith",
+      "Email": "john.smith@company.com",
+      "Phone": "555-1001",
+      "IsArchived": false
+    },
+    {
+      "ID": 2,
+      "Name": "Jane Doe",
+      "Email": "jane.doe@company.com",
+      "Phone": "555-1002",
+      "IsArchived": false
+    }
+  ]
+}

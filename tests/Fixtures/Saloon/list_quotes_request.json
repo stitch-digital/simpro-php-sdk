@@ -1,0 +1,34 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "Kitchen Quote",
+      "Site": "123 Main St",
+      "SiteID": "10",
+      "Status": "Approved",
+      "Stage": "Won",
+      "Customer": "Acme Corp",
+      "CustomerID": "5",
+      "DateIssued": "2024-01-10",
+      "Total": 15000.00
+    },
+    {
+      "ID": 2,
+      "Name": "Bathroom Quote",
+      "Site": "456 Oak Ave",
+      "SiteID": "11",
+      "Status": "Pending",
+      "Stage": "Draft",
+      "Customer": "Smith Industries",
+      "CustomerID": "6",
+      "DateIssued": "2024-01-12",
+      "Total": 8000.00
+    }
+  ]
+}

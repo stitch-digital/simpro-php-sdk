@@ -24,6 +24,51 @@ describe('Search::column()', function () {
 
         expect($search->getColumn())->toBe('Address.City');
     });
+
+    it('normalizes camelCase to PascalCase', function () {
+        $search = Search::make()->column('name');
+
+        expect($search->getColumn())->toBe('Name');
+    });
+
+    it('normalizes id to ID', function () {
+        $search = Search::make()->column('id');
+
+        expect($search->getColumn())->toBe('ID');
+    });
+
+    it('preserves ID when already uppercase', function () {
+        $search = Search::make()->column('ID');
+
+        expect($search->getColumn())->toBe('ID');
+    });
+
+    it('normalizes nested fields with dot notation', function () {
+        $search = Search::make()->column('address.line1');
+
+        expect($search->getColumn())->toBe('Address.Line1');
+    });
+
+    it('normalizes common abbreviations', function () {
+        $abbreviations = [
+            'uuid' => 'UUID',
+            'ein' => 'EIN',
+            'iban' => 'IBAN',
+            'abn' => 'ABN',
+            'acn' => 'ACN',
+            'gst' => 'GST',
+            'vat' => 'VAT',
+            'url' => 'URL',
+            'uri' => 'URI',
+            'bsb' => 'BSB',
+            'stc' => 'STC',
+        ];
+
+        foreach ($abbreviations as $input => $expected) {
+            $search = Search::make()->column($input)->equals('Test');
+            expect($search->getColumn())->toBe($expected);
+        }
+    });
 });
 
 describe('Search::equals()', function () {

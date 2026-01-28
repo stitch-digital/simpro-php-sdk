@@ -132,7 +132,7 @@ final class QueryBuilder
     /**
      * Add ordering.
      *
-     * @param  string  $column  Column to order by
+     * @param  string  $column  Column to order by (accepts both camelCase and PascalCase)
      * @param  SortDirection|string  $direction  Sort direction
      */
     public function orderBy(string $column, SortDirection|string $direction = SortDirection::Ascending): self
@@ -145,9 +145,54 @@ final class QueryBuilder
             };
         }
 
-        $this->orderBy[] = ['column' => $column, 'direction' => $direction];
+        $this->orderBy[] = ['column' => $this->normalizeFieldName($column), 'direction' => $direction];
 
         return $this;
+    }
+
+    /**
+     * Normalize a field name to Simpro API format (PascalCase).
+     * Accepts both camelCase (DTO style) and PascalCase (API style).
+     *
+     * Examples:
+     *   'name' -> 'Name'
+     *   'Name' -> 'Name'
+     *   'id' -> 'ID'
+     *   'dateIssued' -> 'DateIssued'
+     */
+    private function normalizeFieldName(string $column): string
+    {
+        // Special cases - common abbreviations that should be uppercase
+        $specialCases = [
+            'id' => 'ID',
+            'uuid' => 'UUID',
+            'ein' => 'EIN',
+            'iban' => 'IBAN',
+            'abn' => 'ABN',
+            'acn' => 'ACN',
+            'gst' => 'GST',
+            'vat' => 'VAT',
+            'url' => 'URL',
+            'uri' => 'URI',
+            'bsb' => 'BSB',
+            'stc' => 'STC',
+        ];
+
+        // Split on dots for nested fields
+        $parts = explode('.', $column);
+        $normalized = [];
+
+        foreach ($parts as $part) {
+            $lowerPart = strtolower($part);
+            if (isset($specialCases[$lowerPart])) {
+                $normalized[] = $specialCases[$lowerPart];
+            } else {
+                // Convert to PascalCase (capitalize first letter)
+                $normalized[] = ucfirst($part);
+            }
+        }
+
+        return implode('.', $normalized);
     }
 
     /**

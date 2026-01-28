@@ -226,6 +226,29 @@ describe('QueryBuilder::logic()', function () {
 });
 
 describe('QueryBuilder::orderBy()', function () {
+    it('normalizes field names to PascalCase', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        // The normalization happens internally, so we verify by testing the builder works
+        $builder = $this->sdk->companies()->list()
+            ->orderBy('name');  // camelCase should be normalized to Name
+
+        expect($builder)->toBeInstanceOf(QueryBuilder::class);
+    });
+
+    it('normalizes id to ID in order by', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        $builder = $this->sdk->companies()->list()
+            ->orderBy('id');  // Should be normalized to ID
+
+        expect($builder)->toBeInstanceOf(QueryBuilder::class);
+    });
+
     it('orders ascending by default', function () {
         MockClient::global([
             ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),

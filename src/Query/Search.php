@@ -39,12 +39,59 @@ final class Search
     /**
      * Set the column/field name to search.
      * Supports dot notation for nested fields (e.g., 'Address.City').
+     * Accepts both camelCase (DTO style) and PascalCase (API style).
      */
     public function column(string $column): self
     {
-        $this->column = $column;
+        $this->column = $this->normalizeFieldName($column);
 
         return $this;
+    }
+
+    /**
+     * Normalize a field name to Simpro API format (PascalCase).
+     * Accepts both camelCase (DTO style) and PascalCase (API style).
+     *
+     * Examples:
+     *   'name' -> 'Name'
+     *   'Name' -> 'Name'
+     *   'id' -> 'ID'
+     *   'address.line1' -> 'Address.Line1'
+     *   'Address.Line2' -> 'Address.Line2'
+     */
+    private function normalizeFieldName(string $column): string
+    {
+        // Special cases - common abbreviations that should be uppercase
+        $specialCases = [
+            'id' => 'ID',
+            'uuid' => 'UUID',
+            'ein' => 'EIN',
+            'iban' => 'IBAN',
+            'abn' => 'ABN',
+            'acn' => 'ACN',
+            'gst' => 'GST',
+            'vat' => 'VAT',
+            'url' => 'URL',
+            'uri' => 'URI',
+            'bsb' => 'BSB',
+            'stc' => 'STC',
+        ];
+
+        // Split on dots for nested fields
+        $parts = explode('.', $column);
+        $normalized = [];
+
+        foreach ($parts as $part) {
+            $lowerPart = strtolower($part);
+            if (isset($specialCases[$lowerPart])) {
+                $normalized[] = $specialCases[$lowerPart];
+            } else {
+                // Convert to PascalCase (capitalize first letter)
+                $normalized[] = ucfirst($part);
+            }
+        }
+
+        return implode('.', $normalized);
     }
 
     /**
