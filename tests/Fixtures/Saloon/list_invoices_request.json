@@ -8,25 +8,57 @@
   "data": [
     {
       "ID": 1,
-      "InvoiceNo": "INV-001",
-      "Status": "Unpaid",
-      "Customer": "Acme Corp",
-      "CustomerID": "5",
-      "DateIssued": "2024-01-20",
-      "DateDue": "2024-02-19",
-      "Total": 5000.00,
-      "AmountDue": 5000.00
+      "Type": "TaxInvoice",
+      "Customer": {
+        "ID": 5,
+        "CompanyName": "Acme Corp",
+        "GivenName": "",
+        "FamilyName": ""
+      },
+      "Jobs": [
+        {
+          "ID": 100,
+          "Description": "Kitchen renovation",
+          "Total": {
+            "ExTax": 5000.00,
+            "Tax": 500.00,
+            "IncTax": 5500.00
+          }
+        }
+      ],
+      "Total": {
+        "ExTax": 5000.00,
+        "Tax": 500.00,
+        "IncTax": 5500.00
+      },
+      "IsPaid": false
     },
     {
       "ID": 2,
-      "InvoiceNo": "INV-002",
-      "Status": "Paid",
-      "Customer": "Smith Industries",
-      "CustomerID": "6",
-      "DateIssued": "2024-01-15",
-      "DateDue": "2024-02-14",
-      "Total": 2500.00,
-      "AmountDue": 0.00
+      "Type": "TaxInvoice",
+      "Customer": {
+        "ID": 6,
+        "CompanyName": "Smith Industries",
+        "GivenName": "",
+        "FamilyName": ""
+      },
+      "Jobs": [
+        {
+          "ID": 101,
+          "Description": "Plumbing repair",
+          "Total": {
+            "ExTax": 2500.00,
+            "Tax": 250.00,
+            "IncTax": 2750.00
+          }
+        }
+      ],
+      "Total": {
+        "ExTax": 2500.00,
+        "Tax": 250.00,
+        "IncTax": 2750.00
+      },
+      "IsPaid": true
     }
   ]
 }

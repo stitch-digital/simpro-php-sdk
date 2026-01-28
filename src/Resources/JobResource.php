@@ -12,8 +12,10 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CreateJobRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\DeleteJobRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\GetJobRequest;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\ListJobsDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\ListJobsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\UpdateJobRequest;
+use Simpro\PhpSdk\Simpro\Scopes\Jobs\JobScope;
 
 /**
  * @property AbstractSimproConnector $connector
@@ -36,10 +38,10 @@ final class JobResource extends BaseResource
      *
      * @example
      * // Simple list
-     * $jobs = $connector->jobs(0)->list()->all();
+     * $jobs = $connector->jobs(companyId: 0)->list()->all();
      *
      * // With fluent search
-     * $result = $connector->jobs(0)->list()
+     * $result = $connector->jobs(companyId: 0)->list()
      *     ->search(Search::make()->column('Name')->find('Project'))
      *     ->orderByDesc('DateIssued')
      *     ->first();
@@ -57,6 +59,56 @@ final class JobResource extends BaseResource
         }
 
         return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all jobs with detailed information.
+     *
+     * Returns full Job DTOs with all available columns.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     *
+     * @example
+     * // Get all jobs with full details
+     * $jobs = $connector->jobs(companyId: 0)->listDetailed()->all();
+     *
+     * // With fluent search
+     * $result = $connector->jobs(companyId: 0)->listDetailed()
+     *     ->search(Search::make()->column('Name')->find('Project'))
+     *     ->orderByDesc('DateIssued')
+     *     ->collect();
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListJobsDetailedRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * Get a scope for a specific job to access nested resources.
+     *
+     * @example
+     * // Access job sections
+     * $connector->jobs(companyId: 0)->job(jobId: 123)->sections()->list();
+     *
+     * // Access job notes
+     * $connector->jobs(companyId: 0)->job(jobId: 123)->notes()->list();
+     *
+     * // Navigate to a specific section
+     * $connector->jobs(companyId: 0)->job(jobId: 123)->section(sectionId: 1)->costCenters()->list();
+     */
+    public function job(int|string $jobId): JobScope
+    {
+        return new JobScope($this->connector, $this->companyId, $jobId);
     }
 
     /**

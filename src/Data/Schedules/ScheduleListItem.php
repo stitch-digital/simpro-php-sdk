@@ -6,28 +6,35 @@ namespace Simpro\PhpSdk\Simpro\Data\Schedules;
 
 final readonly class ScheduleListItem
 {
+    /**
+     * @param  array<ScheduleBlock>  $blocks
+     */
     public function __construct(
         public int $id,
-        public ?string $type,
-        public ?string $subject,
+        public string $type,
+        public ?string $reference,
+        public float $totalHours,
+        public ?ScheduleListStaff $staff,
         public ?string $date,
-        public ?string $startTime,
-        public ?string $endTime,
-        public ?string $staff,
-        public ?string $staffId,
+        public array $blocks,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public static function fromArray(array $data): self
     {
         return new self(
             id: $data['ID'],
-            type: $data['Type'] ?? null,
-            subject: $data['Subject'] ?? null,
+            type: $data['Type'] ?? '',
+            reference: $data['Reference'] ?? null,
+            totalHours: (float) ($data['TotalHours'] ?? 0),
+            staff: isset($data['Staff']) ? ScheduleListStaff::fromArray($data['Staff']) : null,
             date: $data['Date'] ?? null,
-            startTime: $data['StartTime'] ?? null,
-            endTime: $data['EndTime'] ?? null,
-            staff: $data['Staff'] ?? null,
-            staffId: $data['StaffID'] ?? null,
+            blocks: isset($data['Blocks']) ? array_map(
+                fn (array $block) => ScheduleBlock::fromArray($block),
+                $data['Blocks']
+            ) : [],
         );
     }
 }

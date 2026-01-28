@@ -8,17 +8,11 @@
   "data": [
     {
       "ID": 1,
-      "Name": "John Smith",
-      "Email": "john.smith@company.com",
-      "Phone": "555-1001",
-      "IsArchived": false
+      "Name": "John Smith"
     },
     {
       "ID": 2,
-      "Name": "Jane Doe",
-      "Email": "jane.doe@company.com",
-      "Phone": "555-1002",
-      "IsArchived": false
+      "Name": "Jane Doe"
     }
   ]
 }

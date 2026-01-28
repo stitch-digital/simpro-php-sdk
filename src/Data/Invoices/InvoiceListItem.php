@@ -6,30 +6,33 @@ namespace Simpro\PhpSdk\Simpro\Data\Invoices;
 
 final readonly class InvoiceListItem
 {
+    /**
+     * @param  array<InvoiceListJob>  $jobs
+     */
     public function __construct(
         public int $id,
-        public ?string $invoiceNo,
-        public ?string $status,
-        public ?string $customer,
-        public ?string $customerId,
-        public ?string $dateIssued,
-        public ?string $dateDue,
-        public ?float $total,
-        public ?float $amountDue,
+        public string $type,
+        public ?InvoiceListCustomer $customer,
+        public array $jobs,
+        public ?InvoiceTotal $total,
+        public bool $isPaid,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public static function fromArray(array $data): self
     {
         return new self(
             id: $data['ID'],
-            invoiceNo: $data['InvoiceNo'] ?? null,
-            status: $data['Status'] ?? null,
-            customer: $data['Customer'] ?? null,
-            customerId: $data['CustomerID'] ?? null,
-            dateIssued: $data['DateIssued'] ?? null,
-            dateDue: $data['DateDue'] ?? null,
-            total: isset($data['Total']) ? (float) $data['Total'] : null,
-            amountDue: isset($data['AmountDue']) ? (float) $data['AmountDue'] : null,
+            type: $data['Type'] ?? '',
+            customer: isset($data['Customer']) ? InvoiceListCustomer::fromArray($data['Customer']) : null,
+            jobs: isset($data['Jobs']) ? array_map(
+                fn (array $job) => InvoiceListJob::fromArray($job),
+                $data['Jobs']
+            ) : [],
+            total: isset($data['Total']) ? InvoiceTotal::fromArray($data['Total']) : null,
+            isPaid: $data['IsPaid'] ?? false,
         );
     }
 }

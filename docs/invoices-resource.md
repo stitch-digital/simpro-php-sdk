@@ -9,7 +9,7 @@ The Invoices resource provides full CRUD operations for managing customer invoic
 Returns all invoices with pagination support:
 
 ```php
-$invoices = $connector->invoices(0)->list();
+$invoices = $connector->invoices(companyId: 0)->list();
 
 foreach ($invoices->items() as $invoice) {
     echo "{$invoice->invoiceNo}: {$invoice->customer} - \${$invoice->total}\n";
@@ -26,29 +26,29 @@ Use the fluent search API or array-based filters:
 use Simpro\PhpSdk\Simpro\Query\Search;
 
 // Search by invoice number
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search(Search::make()->column('InvoiceNo')->equals('INV-001234'))
     ->first();
 
 // Search by customer
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->where('CustomerID', '=', 456)
     ->items();
 
 // Search by status
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->where('Status', '=', 'Pending')
     ->items();
 
 // Find invoices within a date range
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->orderByDesc('DateIssued')
     ->items();
 
 // Find overdue invoices
 $today = date('Y-m-d');
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search([
         Search::make()->column('DateDue')->lessThan($today),
         Search::make()->column('AmountDue')->greaterThan(0),
@@ -61,30 +61,30 @@ $invoices = $connector->invoices(0)->list()
 
 ```php
 // Search by invoice number
-$invoices = $connector->invoices(0)->list(['InvoiceNo' => 'INV-001234']);
+$invoices = $connector->invoices(companyId: 0)->list(['InvoiceNo' => 'INV-001234']);
 
 // Filter by status
-$invoices = $connector->invoices(0)->list(['Status' => 'Pending']);
+$invoices = $connector->invoices(companyId: 0)->list(['Status' => 'Pending']);
 
 // Order by date issued descending
-$invoices = $connector->invoices(0)->list(['orderby' => '-DateIssued']);
+$invoices = $connector->invoices(companyId: 0)->list(['orderby' => '-DateIssued']);
 ```
 
 ### Ordering Results
 
 ```php
 // Order by date issued (newest first)
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->orderByDesc('DateIssued')
     ->items();
 
 // Order by amount due (highest first)
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->orderByDesc('AmountDue')
     ->items();
 
 // Order by due date
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->orderBy('DateDue')
     ->items();
 ```
@@ -96,7 +96,7 @@ $invoices = $connector->invoices(0)->list()
 Returns complete information for a specific invoice:
 
 ```php
-$invoice = $connector->invoices(0)->get(123);
+$invoice = $connector->invoices(companyId: 0)->get(invoiceId: 123);
 
 return [
     'id' => $invoice->id,
@@ -119,7 +119,7 @@ return [
 Optionally specify which columns to return:
 
 ```php
-$invoice = $connector->invoices(0)->get(123, ['ID', 'InvoiceNo', 'Status', 'Total']);
+$invoice = $connector->invoices(companyId: 0)->get(invoiceId: 123, columns: ['ID', 'InvoiceNo', 'Status', 'Total']);
 ```
 
 ## Creating an Invoice
@@ -127,7 +127,7 @@ $invoice = $connector->invoices(0)->get(123, ['ID', 'InvoiceNo', 'Status', 'Tota
 Create a new invoice:
 
 ```php
-$invoiceId = $connector->invoices(0)->create([
+$invoiceId = $connector->invoices(companyId: 0)->create(data: [
     'Customer' => ['ID' => 456],
     'DateIssued' => '2024-01-15',
     'DateDue' => '2024-02-15',
@@ -141,7 +141,7 @@ echo "Created invoice with ID: {$invoiceId}\n";
 ### Create Invoice from Job
 
 ```php
-$invoiceId = $connector->invoices(0)->create([
+$invoiceId = $connector->invoices(companyId: 0)->create(data: [
     'Job' => ['ID' => 789],
     'Customer' => ['ID' => 456],
     'DateIssued' => date('Y-m-d'),
@@ -154,7 +154,7 @@ $invoiceId = $connector->invoices(0)->create([
 Update an existing invoice:
 
 ```php
-$response = $connector->invoices(0)->update(123, [
+$response = $connector->invoices(companyId: 0)->update(invoiceId: 123, data: [
     'DateDue' => '2024-03-15',
     'Description' => 'Updated description',
 ]);
@@ -167,7 +167,7 @@ if ($response->successful()) {
 ### Update Invoice Status
 
 ```php
-$response = $connector->invoices(0)->update(123, [
+$response = $connector->invoices(companyId: 0)->update(invoiceId: 123, data: [
     'Status' => 'Sent',
 ]);
 ```
@@ -177,7 +177,7 @@ $response = $connector->invoices(0)->update(123, [
 Delete an invoice:
 
 ```php
-$response = $connector->invoices(0)->delete(123);
+$response = $connector->invoices(companyId: 0)->delete(invoiceId: 123);
 
 if ($response->successful()) {
     echo "Invoice deleted successfully\n";
@@ -248,7 +248,7 @@ Complete invoice object returned by `get()`:
 ### List Pending Invoices
 
 ```php
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->where('Status', '=', 'Pending')
     ->orderByDesc('DateIssued')
     ->all();
@@ -265,7 +265,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $today = date('Y-m-d');
 
-$overdueInvoices = $connector->invoices(0)->list()
+$overdueInvoices = $connector->invoices(companyId: 0)->list()
     ->search([
         Search::make()->column('DateDue')->lessThan($today),
         Search::make()->column('AmountDue')->greaterThan(0),
@@ -289,7 +289,7 @@ echo "Total overdue: \${$totalOverdue}\n";
 ```php
 $customerId = 456;
 
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->where('CustomerID', '=', $customerId)
     ->orderByDesc('DateIssued')
     ->all();
@@ -321,7 +321,7 @@ return $summary;
 
 ```php
 $invoiceId = 123;
-$invoice = $connector->invoices(0)->get($invoiceId);
+$invoice = $connector->invoices(companyId: 0)->get(invoiceId: $invoiceId);
 
 $details = [
     'invoice' => [
@@ -370,7 +370,7 @@ $month = 1;
 $startDate = sprintf('%04d-%02d-01', $year, $month);
 $endDate = date('Y-m-t', strtotime($startDate));
 
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between($startDate, $endDate))
     ->all();
 
@@ -397,7 +397,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $today = date('Y-m-d');
 
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search(Search::make()->column('AmountDue')->greaterThan(0))
     ->all();
 
@@ -443,7 +443,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $startDate = '2024-01-01';
 $endDate = '2024-12-31';
 
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between($startDate, $endDate))
     ->orderBy('DateIssued')
     ->all();
@@ -473,7 +473,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $reminderDays = 7; // Days before due to send reminder
 $reminderDate = date('Y-m-d', strtotime("+{$reminderDays} days"));
 
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search([
         Search::make()->column('DateDue')->equals($reminderDate),
         Search::make()->column('AmountDue')->greaterThan(0),
@@ -484,7 +484,7 @@ $invoices = $connector->invoices(0)->list()
 
 foreach ($invoices as $invoice) {
     // Get full invoice details
-    $full = $connector->invoices(0)->get($invoice->id);
+    $full = $connector->invoices(companyId: 0)->get(invoiceId: $invoice->id);
 
     // Prepare reminder data
     $reminderData = [
@@ -508,7 +508,7 @@ foreach ($invoices as $invoice) {
 Invoice lists are paginated automatically. The default page size is 30:
 
 ```php
-$builder = $connector->invoices(0)->list();
+$builder = $connector->invoices(companyId: 0)->list();
 
 // Change page size if needed
 $builder->getPaginator()->setPerPageLimit(100);
@@ -525,12 +525,12 @@ Always filter by date range when possible to reduce the result set:
 
 ```php
 // Good - filtered query
-$invoices = $connector->invoices(0)->list()
+$invoices = $connector->invoices(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->items();
 
 // Less efficient - no date filter
-$invoices = $connector->invoices(0)->list()->items();
+$invoices = $connector->invoices(companyId: 0)->list()->items();
 ```
 
 ### Caching Strategy
@@ -543,7 +543,7 @@ use Illuminate\Support\Facades\Cache;
 // Cache overdue invoice count for 15 minutes
 $overdueCount = Cache::remember('simpro.invoices.overdue_count', 900, function () use ($connector) {
     $today = date('Y-m-d');
-    return $connector->invoices(0)->list()
+    return $connector->invoices(companyId: 0)->list()
         ->search([
             Search::make()->column('DateDue')->lessThan($today),
             Search::make()->column('AmountDue')->greaterThan(0),
@@ -563,7 +563,7 @@ Handle validation errors when creating or updating invoices:
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 
 try {
-    $invoiceId = $connector->invoices(0)->create([
+    $invoiceId = $connector->invoices(companyId: 0)->create(data: [
         'Customer' => ['ID' => 99999], // Invalid customer
         'DateIssued' => '2024-01-15',
     ]);
@@ -584,7 +584,7 @@ Handle cases where an invoice doesn't exist:
 use Saloon\Exceptions\Request\ClientException;
 
 try {
-    $invoice = $connector->invoices(0)->get(99999);
+    $invoice = $connector->invoices(companyId: 0)->get(invoiceId: 99999);
 } catch (ClientException $e) {
     if ($e->getResponse()->status() === 404) {
         echo "Invoice not found\n";

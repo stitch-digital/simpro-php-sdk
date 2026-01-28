@@ -8,27 +8,21 @@
   "data": [
     {
       "ID": 1,
-      "Name": "Kitchen Quote",
-      "Site": "123 Main St",
-      "SiteID": "10",
-      "Status": "Approved",
-      "Stage": "Won",
-      "Customer": "Acme Corp",
-      "CustomerID": "5",
-      "DateIssued": "2024-01-10",
-      "Total": 15000.00
+      "Description": "Kitchen renovation quote",
+      "Total": {
+        "ExTax": 15000.00,
+        "Tax": 1500.00,
+        "IncTax": 16500.00
+      }
     },
     {
       "ID": 2,
-      "Name": "Bathroom Quote",
-      "Site": "456 Oak Ave",
-      "SiteID": "11",
-      "Status": "Pending",
-      "Stage": "Draft",
-      "Customer": "Smith Industries",
-      "CustomerID": "6",
-      "DateIssued": "2024-01-12",
-      "Total": 8000.00
+      "Description": "Bathroom renovation quote",
+      "Total": {
+        "ExTax": 8000.00,
+        "Tax": 800.00,
+        "IncTax": 8800.00
+      }
     }
   ]
 }

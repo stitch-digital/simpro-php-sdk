@@ -9,7 +9,7 @@ The Schedules resource provides read-only access to job and activity schedules i
 Returns all schedules with pagination support:
 
 ```php
-$schedules = $connector->schedules(0)->list();
+$schedules = $connector->schedules(companyId: 0)->list();
 
 foreach ($schedules->items() as $schedule) {
     echo "{$schedule->id}: {$schedule->subject} ({$schedule->date})\n";
@@ -26,23 +26,23 @@ Both `list()` accepts filter parameters. Use the fluent search API or array-base
 use Simpro\PhpSdk\Simpro\Query\Search;
 
 // Find schedules for a specific date
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->equals('2024-01-15'))
     ->items();
 
 // Find schedules for a specific staff member
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->where('StaffID', '=', 123)
     ->items();
 
 // Find schedules within a date range
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->between('2024-01-01', '2024-01-31'))
     ->orderBy('Date')
     ->items();
 
 // Find job schedules only (exclude activities)
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->where('Type', '=', 'Job')
     ->items();
 ```
@@ -51,13 +51,13 @@ $schedules = $connector->schedules(0)->list()
 
 ```php
 // Filter by date
-$schedules = $connector->schedules(0)->list(['Date' => '2024-01-15']);
+$schedules = $connector->schedules(companyId: 0)->list(['Date' => '2024-01-15']);
 
 // Filter by staff
-$schedules = $connector->schedules(0)->list(['StaffID' => 123]);
+$schedules = $connector->schedules(companyId: 0)->list(['StaffID' => 123]);
 
 // Multiple filters
-$schedules = $connector->schedules(0)->list([
+$schedules = $connector->schedules(companyId: 0)->list([
     'Date' => '2024-01-15',
     'Type' => 'Job',
 ]);
@@ -67,17 +67,17 @@ $schedules = $connector->schedules(0)->list([
 
 ```php
 // Order by date ascending (default)
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->orderBy('Date')
     ->items();
 
 // Order by date descending
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->orderByDesc('Date')
     ->items();
 
 // Order by start time
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->orderBy('StartTime')
     ->items();
 ```
@@ -89,7 +89,7 @@ $schedules = $connector->schedules(0)->list()
 Returns complete information for a specific schedule:
 
 ```php
-$schedule = $connector->schedules(0)->get(123);
+$schedule = $connector->schedules(companyId: 0)->get(scheduleId: 123);
 
 return [
     'id' => $schedule->id,
@@ -109,7 +109,7 @@ return [
 Optionally specify which columns to return:
 
 ```php
-$schedule = $connector->schedules(0)->get(123, ['ID', 'Subject', 'Date', 'StartTime', 'EndTime']);
+$schedule = $connector->schedules(companyId: 0)->get(scheduleId: 123, columns: ['ID', 'Subject', 'Date', 'StartTime', 'EndTime']);
 ```
 
 ## Response Structures
@@ -167,7 +167,7 @@ Complete schedule object returned by `get()`:
 ```php
 $today = date('Y-m-d');
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->equals($today))
     ->orderBy('StartTime')
     ->all();
@@ -186,7 +186,7 @@ foreach ($schedules as $schedule) {
 $startOfWeek = date('Y-m-d', strtotime('monday this week'));
 $endOfWeek = date('Y-m-d', strtotime('sunday this week'));
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->between($startOfWeek, $endOfWeek))
     ->orderBy('Date')
     ->collect()
@@ -205,7 +205,7 @@ foreach ($schedules as $date => $daySchedules) {
 ```php
 $staffId = 456;
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->where('StaffID', '=', $staffId)
     ->orderByDesc('Date')
     ->collect()
@@ -222,7 +222,7 @@ foreach ($schedules as $schedule) {
 ```php
 use Simpro\PhpSdk\Simpro\Query\Search;
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Type')->equals('Job'))
     ->items();
 
@@ -245,7 +245,7 @@ $month = 1;
 $startDate = sprintf('%04d-%02d-01', $year, $month);
 $endDate = date('Y-m-t', strtotime($startDate));
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->between($startDate, $endDate))
     ->orderBy('Date')
     ->all();
@@ -273,7 +273,7 @@ $checkDate = '2024-01-15';
 $checkStart = '09:00';
 $checkEnd = '12:00';
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->where('StaffID', '=', $staffId)
     ->where('Date', '=', $checkDate)
     ->all();
@@ -296,7 +296,7 @@ if ($isAvailable) {
 
 ```php
 $scheduleId = 789;
-$schedule = $connector->schedules(0)->get($scheduleId);
+$schedule = $connector->schedules(companyId: 0)->get(scheduleId: $scheduleId);
 
 $details = [
     'schedule' => [
@@ -333,7 +333,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $startDate = '2024-01-01';
 $endDate = '2024-01-31';
 
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->between($startDate, $endDate))
     ->orderBy('Date')
     ->all();
@@ -361,7 +361,7 @@ file_put_contents('schedules_export.csv', $csv);
 Schedule lists are paginated automatically. The default page size is 30:
 
 ```php
-$builder = $connector->schedules(0)->list();
+$builder = $connector->schedules(companyId: 0)->list();
 
 // Change page size if needed
 $builder->getPaginator()->setPerPageLimit(100);
@@ -378,12 +378,12 @@ Always filter by date range when possible to reduce the result set:
 
 ```php
 // Good - filtered query
-$schedules = $connector->schedules(0)->list()
+$schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->between('2024-01-01', '2024-01-31'))
     ->items();
 
 // Less efficient - no date filter
-$schedules = $connector->schedules(0)->list()->items();
+$schedules = $connector->schedules(companyId: 0)->list()->items();
 ```
 
 ### Caching Strategy
@@ -396,7 +396,7 @@ use Illuminate\Support\Facades\Cache;
 $cacheKey = "schedules.{$companyId}.{$date}";
 
 $schedules = Cache::remember($cacheKey, 300, function () use ($connector, $date) {
-    return $connector->schedules(0)->list()
+    return $connector->schedules(companyId: 0)->list()
         ->search(Search::make()->column('Date')->equals($date))
         ->all();
 });

@@ -31,9 +31,11 @@ it('parses list quotes response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(QuoteListItem::class)
         ->and($dto[0]->id)->toBe(1)
-        ->and($dto[0]->name)->toBe('Kitchen Quote')
-        ->and($dto[0]->status)->toBe('Approved')
+        ->and($dto[0]->description)->toBe('Kitchen renovation quote')
+        ->and($dto[0]->total->exTax)->toBe(15000.00)
+        ->and($dto[0]->total->tax)->toBe(1500.00)
+        ->and($dto[0]->total->incTax)->toBe(16500.00)
         ->and($dto[1])->toBeInstanceOf(QuoteListItem::class)
         ->and($dto[1]->id)->toBe(2)
-        ->and($dto[1]->name)->toBe('Bathroom Quote');
+        ->and($dto[1]->description)->toBe('Bathroom renovation quote');
 });

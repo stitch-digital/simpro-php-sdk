@@ -31,9 +31,11 @@ it('parses list jobs response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(JobListItem::class)
         ->and($dto[0]->id)->toBe(1)
-        ->and($dto[0]->type)->toBe('Project')
-        ->and($dto[0]->name)->toBe('Kitchen Renovation')
+        ->and($dto[0]->description)->toBe('Kitchen renovation project')
+        ->and($dto[0]->total->exTax)->toBe(15000.00)
+        ->and($dto[0]->total->tax)->toBe(1500.00)
+        ->and($dto[0]->total->incTax)->toBe(16500.00)
         ->and($dto[1])->toBeInstanceOf(JobListItem::class)
         ->and($dto[1]->id)->toBe(2)
-        ->and($dto[1]->type)->toBe('Service');
+        ->and($dto[1]->description)->toBe('Plumbing repair service call');
 });

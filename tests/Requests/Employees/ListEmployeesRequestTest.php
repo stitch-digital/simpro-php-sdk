@@ -32,7 +32,6 @@ it('parses list employees response correctly', function () {
         ->and($dto[0])->toBeInstanceOf(EmployeeListItem::class)
         ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('John Smith')
-        ->and($dto[0]->email)->toBe('john.smith@company.com')
         ->and($dto[1])->toBeInstanceOf(EmployeeListItem::class)
         ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->name)->toBe('Jane Doe');

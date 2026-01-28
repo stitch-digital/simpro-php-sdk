@@ -9,7 +9,7 @@ The Employees resource provides full CRUD operations for managing employees (sta
 Returns all employees with pagination support:
 
 ```php
-$employees = $connector->employees(0)->list();
+$employees = $connector->employees(companyId: 0)->list();
 
 foreach ($employees->items() as $employee) {
     echo "{$employee->id}: {$employee->name} ({$employee->email})\n";
@@ -26,17 +26,17 @@ Use the fluent search API or array-based filters:
 use Simpro\PhpSdk\Simpro\Query\Search;
 
 // Search by name
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->search(Search::make()->column('Name')->find('John'))
     ->items();
 
 // Search by email
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->where('Email', 'like', '@example.com')
     ->items();
 
 // Multiple criteria
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->search([
         Search::make()->column('Name')->find('Smith'),
         Search::make()->column('IsArchived')->equals(false),
@@ -46,7 +46,7 @@ $employees = $connector->employees(0)->list()
     ->items();
 
 // Find active employees only
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->where('IsArchived', '=', false)
     ->items();
 ```
@@ -55,30 +55,30 @@ $employees = $connector->employees(0)->list()
 
 ```php
 // Search by name
-$employees = $connector->employees(0)->list(['Name' => '%25John%25']);
+$employees = $connector->employees(companyId: 0)->list(['Name' => '%25John%25']);
 
 // Filter active employees
-$employees = $connector->employees(0)->list(['IsArchived' => 'false']);
+$employees = $connector->employees(companyId: 0)->list(['IsArchived' => 'false']);
 
 // Order by name
-$employees = $connector->employees(0)->list(['orderby' => 'Name']);
+$employees = $connector->employees(companyId: 0)->list(['orderby' => 'Name']);
 ```
 
 ### Ordering Results
 
 ```php
 // Order by name ascending
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->orderBy('Name')
     ->items();
 
 // Order by name descending
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->orderByDesc('Name')
     ->items();
 
 // Order by ID
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->orderBy('ID')
     ->items();
 ```
@@ -90,7 +90,7 @@ $employees = $connector->employees(0)->list()
 Returns complete information for a specific employee:
 
 ```php
-$employee = $connector->employees(0)->get(123);
+$employee = $connector->employees(companyId: 0)->get(employeeId: 123);
 
 return [
     'id' => $employee->id,
@@ -111,7 +111,7 @@ return [
 Optionally specify which columns to return:
 
 ```php
-$employee = $connector->employees(0)->get(123, ['ID', 'Name', 'Email', 'Phone']);
+$employee = $connector->employees(companyId: 0)->get(employeeId: 123, columns: ['ID', 'Name', 'Email', 'Phone']);
 ```
 
 ## Creating an Employee
@@ -119,7 +119,7 @@ $employee = $connector->employees(0)->get(123, ['ID', 'Name', 'Email', 'Phone'])
 Create a new employee with the required fields:
 
 ```php
-$employeeId = $connector->employees(0)->create([
+$employeeId = $connector->employees(companyId: 0)->create(data: [
     'GivenName' => 'John',
     'FamilyName' => 'Smith',
     'Email' => 'john.smith@example.com',
@@ -133,7 +133,7 @@ echo "Created employee with ID: {$employeeId}\n";
 ### Create with All Details
 
 ```php
-$employeeId = $connector->employees(0)->create([
+$employeeId = $connector->employees(companyId: 0)->create(data: [
     'GivenName' => 'Jane',
     'FamilyName' => 'Doe',
     'Email' => 'jane.doe@example.com',
@@ -157,7 +157,7 @@ $employeeId = $connector->employees(0)->create([
 Update an existing employee:
 
 ```php
-$response = $connector->employees(0)->update(123, [
+$response = $connector->employees(companyId: 0)->update(employeeId: 123, data: [
     'Phone' => '+61 7 9999 8888',
     'Mobile' => '+61 400 111 222',
 ]);
@@ -170,7 +170,7 @@ if ($response->successful()) {
 ### Update Multiple Fields
 
 ```php
-$response = $connector->employees(0)->update(123, [
+$response = $connector->employees(companyId: 0)->update(employeeId: 123, data: [
     'GivenName' => 'Jonathan',
     'Email' => 'jonathan.smith@example.com',
     'Address' => [
@@ -185,7 +185,7 @@ $response = $connector->employees(0)->update(123, [
 ### Archive an Employee
 
 ```php
-$response = $connector->employees(0)->update(123, [
+$response = $connector->employees(companyId: 0)->update(employeeId: 123, data: [
     'IsArchived' => true,
 ]);
 
@@ -197,7 +197,7 @@ echo "Employee archived\n";
 Delete an employee permanently:
 
 ```php
-$response = $connector->employees(0)->delete(123);
+$response = $connector->employees(companyId: 0)->delete(employeeId: 123);
 
 if ($response->successful()) {
     echo "Employee deleted successfully\n";
@@ -256,7 +256,7 @@ Complete employee object returned by `get()`:
 ### List All Active Employees
 
 ```php
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->where('IsArchived', '=', false)
     ->orderBy('Name')
     ->all();
@@ -269,7 +269,7 @@ foreach ($employees as $employee) {
 ### Build Employee Dropdown
 
 ```php
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->where('IsArchived', '=', false)
     ->orderBy('Name')
     ->all();
@@ -292,7 +292,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $searchTerm = 'Smith';
 
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->search(Search::make()->column('Name')->find($searchTerm))
     ->all();
 
@@ -308,7 +308,7 @@ if (count($employees) === 0) {
 ### Get Employee with Contact Details
 
 ```php
-$employee = $connector->employees(0)->get(123);
+$employee = $connector->employees(companyId: 0)->get(employeeId: 123);
 
 $contactInfo = [
     'name' => $employee->name,
@@ -350,7 +350,7 @@ function createEmployee(array $data): int
         throw new InvalidArgumentException("Invalid email format");
     }
 
-    return $this->connector->employees(0)->create($data);
+    return $this->connector->employees(companyId: 0)->create($data);
 }
 
 // Usage
@@ -375,7 +375,7 @@ $employeeIds = [101, 102, 103];
 
 foreach ($employeeIds as $id) {
     try {
-        $connector->employees(0)->update($id, [
+        $connector->employees(companyId: 0)->update(employeeId: $id, data: [
             'IsArchived' => true,
         ]);
         echo "Archived employee {$id}\n";
@@ -388,14 +388,14 @@ foreach ($employeeIds as $id) {
 ### Export Employees to Array
 
 ```php
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->orderBy('Name')
     ->all();
 
 $export = [];
 foreach ($employees as $employee) {
     // Get full details for each employee
-    $full = $connector->employees(0)->get($employee->id);
+    $full = $connector->employees(companyId: 0)->get(employeeId: $employee->id);
 
     $export[] = [
         'ID' => $full->id,
@@ -421,13 +421,13 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $cutoffDate = date('Y-m-d', strtotime('-7 days'));
 
-$employees = $connector->employees(0)->list()
+$employees = $connector->employees(companyId: 0)->list()
     ->search(Search::make()->column('DateModified')->greaterThanOrEqual($cutoffDate))
     ->orderByDesc('DateModified')
     ->all();
 
 foreach ($employees as $employee) {
-    $full = $connector->employees(0)->get($employee->id);
+    $full = $connector->employees(companyId: 0)->get(employeeId: $employee->id);
     echo "{$full->name} - Modified: {$full->dateModified?->format('Y-m-d H:i')}\n";
 }
 ```
@@ -439,7 +439,7 @@ foreach ($employees as $employee) {
 Employee lists are paginated automatically. The default page size is 30:
 
 ```php
-$builder = $connector->employees(0)->list();
+$builder = $connector->employees(companyId: 0)->list();
 
 // Change page size if needed
 $builder->getPaginator()->setPerPageLimit(100);
@@ -456,13 +456,13 @@ When you need full details for multiple employees, consider the performance trad
 
 ```php
 // Option 1: Multiple detailed requests (more data, more requests)
-$employees = $connector->employees(0)->list()->all();
+$employees = $connector->employees(companyId: 0)->list()->all();
 foreach ($employees as $employee) {
-    $full = $connector->employees(0)->get($employee->id); // N+1 requests
+    $full = $connector->employees(companyId: 0)->get(employeeId: $employee->id); // N+1 requests
 }
 
 // Option 2: Use list data when sufficient
-$employees = $connector->employees(0)->list()->all();
+$employees = $connector->employees(companyId: 0)->list()->all();
 foreach ($employees as $employee) {
     // Use list data directly when you only need basic info
     echo "{$employee->name}: {$employee->email}\n";
@@ -478,7 +478,7 @@ use Illuminate\Support\Facades\Cache;
 
 // Cache employee list for 15 minutes
 $employees = Cache::remember('simpro.employees.active', 900, function () use ($connector) {
-    return $connector->employees(0)->list()
+    return $connector->employees(companyId: 0)->list()
         ->where('IsArchived', '=', false)
         ->orderBy('Name')
         ->all();
@@ -495,7 +495,7 @@ Handle validation errors when creating or updating employees:
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 
 try {
-    $employeeId = $connector->employees(0)->create([
+    $employeeId = $connector->employees(companyId: 0)->create(data: [
         'GivenName' => 'John',
         // Missing FamilyName
         'Email' => 'invalid-email', // Invalid format
@@ -518,7 +518,7 @@ Handle cases where an employee doesn't exist:
 use Saloon\Exceptions\Request\ClientException;
 
 try {
-    $employee = $connector->employees(0)->get(99999);
+    $employee = $connector->employees(companyId: 0)->get(employeeId: 99999);
 } catch (ClientException $e) {
     if ($e->getResponse()->status() === 404) {
         echo "Employee not found\n";

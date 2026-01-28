@@ -9,16 +9,14 @@
     {
       "ID": 1,
       "CompanyName": "Acme Corp",
-      "Type": "Company",
-      "Email": "contact@acme.com",
-      "Phone": "555-0100"
+      "GivenName": "",
+      "FamilyName": ""
     },
     {
       "ID": 2,
-      "CompanyName": "Smith Industries",
-      "Type": "Company",
-      "Email": "info@smith.com",
-      "Phone": "555-0200"
+      "CompanyName": "",
+      "GivenName": "John",
+      "FamilyName": "Smith"
     }
   ]
 }

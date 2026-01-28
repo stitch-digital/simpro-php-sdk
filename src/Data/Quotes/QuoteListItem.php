@@ -8,30 +8,19 @@ final readonly class QuoteListItem
 {
     public function __construct(
         public int $id,
-        public ?string $name,
-        public ?string $site,
-        public ?string $siteId,
-        public ?string $status,
-        public ?string $stage,
-        public ?string $customer,
-        public ?string $customerId,
-        public ?string $dateIssued,
-        public ?float $total,
+        public ?string $description,
+        public ?QuoteTotal $total,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public static function fromArray(array $data): self
     {
         return new self(
             id: $data['ID'],
-            name: $data['Name'] ?? null,
-            site: $data['Site'] ?? null,
-            siteId: $data['SiteID'] ?? null,
-            status: $data['Status'] ?? null,
-            stage: $data['Stage'] ?? null,
-            customer: $data['Customer'] ?? null,
-            customerId: $data['CustomerID'] ?? null,
-            dateIssued: $data['DateIssued'] ?? null,
-            total: isset($data['Total']) ? (float) $data['Total'] : null,
+            description: $data['Description'] ?? null,
+            total: isset($data['Total']) ? QuoteTotal::fromArray($data['Total']) : null,
         );
     }
 }

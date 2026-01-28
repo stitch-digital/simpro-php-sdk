@@ -8,29 +8,21 @@
   "data": [
     {
       "ID": 1,
-      "Type": "Project",
-      "Name": "Kitchen Renovation",
-      "Site": "123 Main St",
-      "SiteID": "10",
-      "Status": "Progress",
-      "Stage": "In Progress",
-      "Customer": "Acme Corp",
-      "CustomerID": "5",
-      "DateIssued": "2024-01-15",
-      "Total": 15000.00
+      "Description": "Kitchen renovation project",
+      "Total": {
+        "ExTax": 15000.00,
+        "Tax": 1500.00,
+        "IncTax": 16500.00
+      }
     },
     {
       "ID": 2,
-      "Type": "Service",
-      "Name": "Plumbing Repair",
-      "Site": "456 Oak Ave",
-      "SiteID": "11",
-      "Status": "Complete",
-      "Stage": "Completed",
-      "Customer": "Smith Industries",
-      "CustomerID": "6",
-      "DateIssued": "2024-01-20",
-      "Total": 500.00
+      "Description": "Plumbing repair service call",
+      "Total": {
+        "ExTax": 500.00,
+        "Tax": 50.00,
+        "IncTax": 550.00
+      }
     }
   ]
 }

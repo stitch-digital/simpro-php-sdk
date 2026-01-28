@@ -6,13 +6,23 @@ The Jobs resource provides full CRUD operations for managing jobs in your Simpro
 
 ### Basic List
 
-Returns all jobs with pagination support:
+Returns all jobs with pagination support. The basic `list()` returns lightweight `JobListItem` objects with minimal fields:
 
 ```php
-$jobs = $connector->jobs(0)->list();
+$jobs = $connector->jobs(companyId: 0)->list();
 
 foreach ($jobs->items() as $job) {
-    echo "{$job->id}: {$job->name} - {$job->customer} ({$job->status})\n";
+    echo "{$job->id}: {$job->description}\n";
+}
+```
+
+**Note:** For full job details including customer, status, dates, etc., use `listDetailed()` instead:
+
+```php
+$jobs = $connector->jobs(companyId: 0)->listDetailed();
+
+foreach ($jobs->items() as $job) {
+    echo "{$job->id}: {$job->name} - {$job->customer?->companyName} ({$job->stage})\n";
 }
 ```
 
@@ -25,93 +35,89 @@ Use the fluent search API or array-based filters:
 ```php
 use Simpro\PhpSdk\Simpro\Query\Search;
 
-// Search by name
-$jobs = $connector->jobs(0)->list()
-    ->search(Search::make()->column('Name')->find('Kitchen'))
+// Search by description
+$jobs = $connector->jobs(companyId: 0)->list()
+    ->search(Search::make()->column('Description')->find('Kitchen'))
     ->items();
 
-// Search by customer
-$jobs = $connector->jobs(0)->list()
-    ->where('CustomerID', '=', 456)
+// Search by customer ID
+$jobs = $connector->jobs(companyId: 0)->list()
+    ->where('Customer.ID', '=', 456)
     ->items();
 
-// Search by status
-$jobs = $connector->jobs(0)->list()
-    ->where('Status', '=', 'In Progress')
-    ->items();
-
-// Search by stage
-$jobs = $connector->jobs(0)->list()
-    ->where('Stage', '=', 'Active')
+// Search by stage (Note: Stage is searchable, Status is not)
+$jobs = $connector->jobs(companyId: 0)->list()
+    ->where('Stage', '=', 'Progress')
     ->items();
 
 // Search by site
-$jobs = $connector->jobs(0)->list()
-    ->where('SiteID', '=', 789)
+$jobs = $connector->jobs(companyId: 0)->list()
+    ->where('Site.ID', '=', 789)
     ->items();
 
 // Find jobs within a date range
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->orderByDesc('DateIssued')
     ->items();
 
 // Multiple criteria with AND logic
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->search([
-        Search::make()->column('Status')->equals('In Progress'),
+        Search::make()->column('Stage')->equals('Progress'),
         Search::make()->column('Type')->equals('Service'),
     ])
     ->matchAll()
-    ->orderBy('DueDate')
     ->items();
 
 // Multiple criteria with OR logic
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->search([
-        Search::make()->column('Status')->equals('Pending'),
-        Search::make()->column('Status')->equals('In Progress'),
+        Search::make()->column('Stage')->equals('Pending'),
+        Search::make()->column('Stage')->equals('Progress'),
     ])
     ->matchAny()
     ->items();
 ```
 
+**Note:** The `Status` column does not support search queries in the Simpro API. Use `Stage` instead for filtering by job progress state.
+
 #### Array-Based Syntax
 
 ```php
-// Search by name
-$jobs = $connector->jobs(0)->list(['Name' => '%25Kitchen%25']);
+// Search by description
+$jobs = $connector->jobs(companyId: 0)->list(['Description' => '%25Kitchen%25']);
 
-// Filter by status
-$jobs = $connector->jobs(0)->list(['Status' => 'In Progress']);
+// Filter by stage (Note: Status is not searchable)
+$jobs = $connector->jobs(companyId: 0)->list(['Stage' => 'Progress']);
 
 // Filter by type
-$jobs = $connector->jobs(0)->list(['Type' => 'Service']);
+$jobs = $connector->jobs(companyId: 0)->list(['Type' => 'Service']);
 
 // Order by date issued descending
-$jobs = $connector->jobs(0)->list(['orderby' => '-DateIssued']);
+$jobs = $connector->jobs(companyId: 0)->list(['orderby' => '-DateIssued']);
 ```
 
 ### Ordering Results
 
 ```php
 // Order by date issued (newest first)
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->orderByDesc('DateIssued')
     ->items();
 
 // Order by due date
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->orderBy('DueDate')
     ->items();
 
 // Order by name
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->orderBy('Name')
     ->items();
 
 // Order by total value (highest first)
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->orderByDesc('Total')
     ->items();
 ```
@@ -123,7 +129,7 @@ $jobs = $connector->jobs(0)->list()
 Returns complete information for a specific job:
 
 ```php
-$job = $connector->jobs(0)->get(123);
+$job = $connector->jobs(companyId: 0)->get(jobId: 123);
 
 return [
     'id' => $job->id,
@@ -145,7 +151,7 @@ return [
 Optionally specify which columns to return:
 
 ```php
-$job = $connector->jobs(0)->get(123, ['ID', 'Name', 'Status', 'Total']);
+$job = $connector->jobs(companyId: 0)->get(jobId: 123, columns: ['ID', 'Name', 'Status', 'Total']);
 ```
 
 ## Creating a Job
@@ -153,7 +159,7 @@ $job = $connector->jobs(0)->get(123, ['ID', 'Name', 'Status', 'Total']);
 Create a new job:
 
 ```php
-$jobId = $connector->jobs(0)->create([
+$jobId = $connector->jobs(companyId: 0)->create([
     'Name' => 'Kitchen Renovation',
     'Type' => 'Project',
     'Customer' => ['ID' => 456],
@@ -169,7 +175,7 @@ echo "Created job with ID: {$jobId}\n";
 ### Create Service Job
 
 ```php
-$jobId = $connector->jobs(0)->create([
+$jobId = $connector->jobs(companyId: 0)->create([
     'Name' => 'Emergency Plumbing Repair',
     'Type' => 'Service',
     'Customer' => ['ID' => 456],
@@ -183,7 +189,7 @@ $jobId = $connector->jobs(0)->create([
 ### Create Job from Quote
 
 ```php
-$jobId = $connector->jobs(0)->create([
+$jobId = $connector->jobs(companyId: 0)->create([
     'Name' => 'Office Fit-out',
     'Type' => 'Project',
     'Customer' => ['ID' => 456],
@@ -196,7 +202,7 @@ $jobId = $connector->jobs(0)->create([
 ### Create Job with Full Details
 
 ```php
-$jobId = $connector->jobs(0)->create([
+$jobId = $connector->jobs(companyId: 0)->create([
     'Name' => 'Commercial HVAC Installation',
     'Type' => 'Project',
     'Customer' => ['ID' => 456],
@@ -224,7 +230,7 @@ $jobId = $connector->jobs(0)->create([
 Update an existing job:
 
 ```php
-$response = $connector->jobs(0)->update(123, [
+$response = $connector->jobs(companyId: 0)->update(jobId: 123, data: [
     'Name' => 'Kitchen Renovation - Phase 2',
     'DueDate' => '2024-04-15',
 ]);
@@ -237,7 +243,7 @@ if ($response->successful()) {
 ### Update Job Status
 
 ```php
-$response = $connector->jobs(0)->update(123, [
+$response = $connector->jobs(companyId: 0)->update(jobId: 123, data: [
     'Status' => 'Complete',
 ]);
 ```
@@ -245,7 +251,7 @@ $response = $connector->jobs(0)->update(123, [
 ### Update Job Stage
 
 ```php
-$response = $connector->jobs(0)->update(123, [
+$response = $connector->jobs(companyId: 0)->update(jobId: 123, data: [
     'Stage' => 'In Progress',
 ]);
 ```
@@ -253,7 +259,7 @@ $response = $connector->jobs(0)->update(123, [
 ### Update Job Assignment
 
 ```php
-$response = $connector->jobs(0)->update(123, [
+$response = $connector->jobs(companyId: 0)->update(jobId: 123, data: [
     'ProjectManager' => ['ID' => 555],
     'Technician' => ['ID' => 666],
 ]);
@@ -264,7 +270,7 @@ $response = $connector->jobs(0)->update(123, [
 Delete a job:
 
 ```php
-$response = $connector->jobs(0)->delete(123);
+$response = $connector->jobs(companyId: 0)->delete(jobId: 123);
 
 if ($response->successful()) {
     echo "Job deleted successfully\n";
@@ -277,21 +283,15 @@ if ($response->successful()) {
 
 ### JobListItem (List Response)
 
-Lightweight object returned by `list()`:
+Lightweight object returned by `list()`. Contains only minimal fields:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Job ID |
-| `type` | `string` | Job type (Project, Service, etc.) |
-| `name` | `?string` | Job name |
-| `site` | `?string` | Site name |
-| `siteId` | `?string` | Site ID |
-| `status` | `?string` | Job status |
-| `stage` | `?string` | Job stage |
-| `customer` | `?string` | Customer name |
-| `customerId` | `?string` | Customer ID |
-| `dateIssued` | `?string` | Date issued (YYYY-MM-DD) |
-| `total` | `?float` | Job total value |
+| `description` | `?string` | Job description |
+| `total` | `?JobTotal` | Job total (object with exTax, tax, incTax) |
+
+**Note:** For full job details, use `listDetailed()` which returns full `Job` objects, or use `get()` to retrieve a single job by ID.
 
 ### Job (Detailed Response)
 
@@ -340,6 +340,7 @@ Complete job object returned by `get()`:
 ### Nested Objects
 
 **JobCustomer:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Customer ID |
@@ -347,6 +348,7 @@ Complete job object returned by `get()`:
 | `type` | `?string` | Customer type |
 
 **JobSite:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Site ID |
@@ -354,6 +356,7 @@ Complete job object returned by `get()`:
 | `address` | `?string` | Site address |
 
 **JobContact:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Contact ID |
@@ -362,18 +365,21 @@ Complete job object returned by `get()`:
 | `phone` | `?string` | Phone |
 
 **JobStaff:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Staff ID |
 | `name` | `?string` | Staff name |
 
 **JobTag:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Tag ID |
 | `name` | `?string` | Tag name |
 
 **JobSection:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Section ID |
@@ -381,12 +387,14 @@ Complete job object returned by `get()`:
 | `costCenters` | `?array<JobCostCenter>` | Cost centers |
 
 **JobStatus:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Status ID |
 | `name` | `?string` | Status name |
 
 **JobTotals:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `quoted` | `?JobTotal` | Quoted amounts |
@@ -394,6 +402,7 @@ Complete job object returned by `get()`:
 | `invoiced` | `?JobTotal` | Invoiced amounts |
 
 **JobTotal:**
+
 | Property | Type | Description |
 |----------|------|-------------|
 | `exTax` | `?float` | Amount excluding tax |
@@ -402,37 +411,36 @@ Complete job object returned by `get()`:
 
 ## Examples
 
-### List Active Jobs
+### List Jobs in Progress
 
 ```php
-$jobs = $connector->jobs(0)->list()
-    ->where('Status', '=', 'In Progress')
-    ->orderBy('DueDate')
+// Use listDetailed() to get full job information including name, dates, and customer
+$jobs = $connector->jobs(companyId: 0)->listDetailed()
+    ->where('Stage', '=', 'Progress')
     ->all();
 
 foreach ($jobs as $job) {
-    echo "{$job->name}: Due {$job->dueDate} ({$job->customer})\n";
+    echo "{$job->name}: Due {$job->dueDate?->format('Y-m-d')} ({$job->customer?->companyName})\n";
 }
 ```
 
 ### Find Overdue Jobs
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
+// Use listDetailed() and filter client-side for due date comparisons
+// Note: DueDate comparison operators are not supported in the API
+$today = new DateTimeImmutable();
 
-$today = date('Y-m-d');
+$jobs = $connector->jobs(companyId: 0)->listDetailed()
+    ->where('Stage', '!=', 'Complete')
+    ->collect();
 
-$overdueJobs = $connector->jobs(0)->list()
-    ->search([
-        Search::make()->column('DueDate')->lessThan($today),
-        Search::make()->column('Status')->notEqual('Complete'),
-    ])
-    ->matchAll()
-    ->orderBy('DueDate')
-    ->all();
+$overdueJobs = $jobs->filter(function ($job) use ($today) {
+    return $job->dueDate !== null && $job->dueDate < $today;
+});
 
 foreach ($overdueJobs as $job) {
-    $daysOverdue = (strtotime($today) - strtotime($job->dateIssued)) / 86400;
+    $daysOverdue = $today->diff($job->dueDate)->days;
     echo "{$job->name}: {$daysOverdue} days overdue\n";
 }
 ```
@@ -442,7 +450,7 @@ foreach ($overdueJobs as $job) {
 ```php
 $customerId = 456;
 
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->where('CustomerID', '=', $customerId)
     ->orderByDesc('DateIssued')
     ->all();
@@ -470,7 +478,7 @@ return $summary;
 
 ```php
 $jobId = 123;
-$job = $connector->jobs(0)->get($jobId);
+$job = $connector->jobs(companyId: 0)->get(jobId: $jobId);
 
 $details = [
     'job' => [
@@ -533,7 +541,7 @@ return $details;
 ### Job Pipeline Summary
 
 ```php
-$jobs = $connector->jobs(0)->list()->all();
+$jobs = $connector->jobs(companyId: 0)->list()->all();
 
 $pipeline = [
     'pending' => ['count' => 0, 'value' => 0],
@@ -569,7 +577,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $today = date('Y-m-d');
 
-$serviceJobs = $connector->jobs(0)->list()
+$serviceJobs = $connector->jobs(companyId: 0)->list()
     ->search([
         Search::make()->column('Type')->equals('Service'),
         Search::make()->column('DueDate')->equals($today),
@@ -590,7 +598,7 @@ foreach ($serviceJobs as $job) {
 
 ```php
 $jobId = 123;
-$job = $connector->jobs(0)->get($jobId);
+$job = $connector->jobs(companyId: 0)->get(jobId: $jobId);
 
 if ($job->totals !== null) {
     $quoted = $job->totals->quoted?->exTax ?? 0;
@@ -615,7 +623,7 @@ if ($job->totals !== null) {
 
 ```php
 $jobId = 123;
-$job = $connector->jobs(0)->get($jobId);
+$job = $connector->jobs(companyId: 0)->get(jobId: $jobId);
 
 if ($job->customFields !== null) {
     echo "Custom Fields for {$job->name}:\n";
@@ -633,7 +641,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $startDate = '2024-01-01';
 $endDate = '2024-12-31';
 
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between($startDate, $endDate))
     ->orderBy('DateIssued')
     ->all();
@@ -664,7 +672,7 @@ echo "Exported " . count($jobs) . " jobs\n";
 // Note: Tag filtering may need to be done client-side
 // as tag search varies by Simpro configuration
 
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->where('Status', '!=', 'Complete')
     ->all();
 
@@ -672,7 +680,7 @@ $targetTag = 'Urgent';
 $taggedJobs = [];
 
 foreach ($jobs as $job) {
-    $full = $connector->jobs(0)->get($job->id);
+    $full = $connector->jobs(companyId: 0)->get(jobId: $job->id);
     if ($full->tags !== null) {
         foreach ($full->tags as $tag) {
             if ($tag->name === $targetTag) {
@@ -696,7 +704,7 @@ foreach ($taggedJobs as $job) {
 Job lists are paginated automatically. The default page size is 30:
 
 ```php
-$builder = $connector->jobs(0)->list();
+$builder = $connector->jobs(companyId: 0)->list();
 
 // Change page size if needed
 $builder->getPaginator()->setPerPageLimit(100);
@@ -713,12 +721,12 @@ Always filter by date range when possible to reduce the result set:
 
 ```php
 // Good - filtered query
-$jobs = $connector->jobs(0)->list()
+$jobs = $connector->jobs(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->items();
 
 // Less efficient - no date filter
-$jobs = $connector->jobs(0)->list()->items();
+$jobs = $connector->jobs(companyId: 0)->list()->items();
 ```
 
 ### Caching Strategy
@@ -730,7 +738,7 @@ use Illuminate\Support\Facades\Cache;
 
 // Cache active job count for 5 minutes
 $activeJobCount = Cache::remember('simpro.jobs.active_count', 300, function () use ($connector) {
-    return $connector->jobs(0)->list()
+    return $connector->jobs(companyId: 0)->list()
         ->where('Status', '=', 'In Progress')
         ->getTotalResults();
 });
@@ -746,7 +754,7 @@ Handle validation errors when creating or updating jobs:
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 
 try {
-    $jobId = $connector->jobs(0)->create([
+    $jobId = $connector->jobs(companyId: 0)->create([
         'Name' => '', // Empty name
         'Customer' => ['ID' => 99999], // Invalid customer
     ]);
@@ -767,7 +775,7 @@ Handle cases where a job doesn't exist:
 use Saloon\Exceptions\Request\ClientException;
 
 try {
-    $job = $connector->jobs(0)->get(99999);
+    $job = $connector->jobs(companyId: 0)->get(99999);
 } catch (ClientException $e) {
     if ($e->getResponse()->status() === 404) {
         echo "Job not found\n";
@@ -777,13 +785,66 @@ try {
 }
 ```
 
-## Future Enhancements
+## Nested Resources
 
-The following features are planned for future SDK releases:
+Jobs support a complete hierarchy of nested resources accessible through a scope-based fluent API. This allows clean navigation up to 6 levels deep.
 
-- **Job Sections**: Managing sections within jobs
-- **Job Cost Centers**: Cost center management
-- **Job Attachments**: File and folder attachments
-- **Job Notes**: Notes and comments
-- **Job Schedules**: Scheduling work blocks
-- **Job Custom Fields**: Custom field management
+For detailed documentation on each nested resource, see the [Jobs Nested Resources](./jobs/README.md) directory.
+
+### Quick Start
+
+Use the `job()` method to get a scope for accessing nested resources:
+
+```php
+// Access job-level resources
+$connector->jobs(companyId: 0)->job(jobId: 123)->sections()->list();
+$connector->jobs(companyId: 0)->job(jobId: 123)->notes()->list();
+
+// Navigate deeper
+$connector->jobs(companyId: 0)
+    ->job(jobId: 123)
+    ->section(sectionId: 1)
+    ->costCenter(costCenterId: 5)
+    ->labor()
+    ->list();
+```
+
+### Job-Level Resources
+
+| Resource | Documentation | Operations |
+|----------|---------------|------------|
+| Attachments | [attachments-resource.md](./jobs/attachments-resource.md) | Files and folders |
+| Custom Fields | [custom-fields-resource.md](./jobs/custom-fields-resource.md) | List, Get, Update |
+| Lock | [lock-resource.md](./jobs/lock-resource.md) | Lock/unlock job |
+| Notes | [notes-resource.md](./jobs/notes-resource.md) | List, Get, Create, Update |
+| Sections | [sections-resource.md](./jobs/sections-resource.md) | Full CRUD |
+| Tasks | [tasks-resource.md](./jobs/tasks-resource.md) | List, Get |
+| Timelines | [timelines-resource.md](./jobs/timelines-resource.md) | List |
+
+### Section & Cost Center Resources
+
+| Resource | Documentation | Description |
+|----------|---------------|-------------|
+| Cost Centers | [cost-centers-resource.md](./jobs/cost-centers-resource.md) | Cost center management |
+| Labor | [labor-resource.md](./jobs/labor-resource.md) | Labor line items |
+| Work Orders | [work-orders-resource.md](./jobs/work-orders-resource.md) | Work orders with deep nesting |
+
+See [Jobs Nested Resources](./jobs/README.md) for the complete resource hierarchy and documentation links.
+
+### Detailed List
+
+Use `listDetailed()` to get full Job DTOs with all available columns:
+
+```php
+// Get all jobs with full details
+$jobs = $connector->jobs(companyId: 0)->listDetailed()->all();
+
+// With search and ordering
+$jobs = $connector->jobs(companyId: 0)
+    ->listDetailed()
+    ->search(Search::make()->column('Name')->find('Kitchen'))
+    ->orderByDesc('DateIssued')
+    ->collect();
+```
+
+**Note:** `listDetailed()` returns full `Job` objects (same as `get()`) rather than lightweight `JobListItem` objects.

@@ -9,7 +9,7 @@ The Quotes resource provides full CRUD operations for managing quotes in your Si
 Returns all quotes with pagination support:
 
 ```php
-$quotes = $connector->quotes(0)->list();
+$quotes = $connector->quotes(companyId: 0)->list();
 
 foreach ($quotes->items() as $quote) {
     echo "{$quote->id}: {$quote->name} - {$quote->customer} (\${$quote->total})\n";
@@ -26,33 +26,33 @@ Use the fluent search API or array-based filters:
 use Simpro\PhpSdk\Simpro\Query\Search;
 
 // Search by name
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('Name')->find('Kitchen Renovation'))
     ->items();
 
 // Search by customer
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->where('CustomerID', '=', 456)
     ->items();
 
 // Search by status
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->where('Status', '=', 'Approved')
     ->items();
 
 // Search by stage
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->where('Stage', '=', 'Draft')
     ->items();
 
 // Find quotes within a date range
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->orderByDesc('DateIssued')
     ->items();
 
 // Multiple criteria with OR logic
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search([
         Search::make()->column('Status')->equals('Pending'),
         Search::make()->column('Status')->equals('Draft'),
@@ -65,35 +65,35 @@ $quotes = $connector->quotes(0)->list()
 
 ```php
 // Search by name
-$quotes = $connector->quotes(0)->list(['Name' => '%25Kitchen%25']);
+$quotes = $connector->quotes(companyId: 0)->list(['Name' => '%25Kitchen%25']);
 
 // Filter by status
-$quotes = $connector->quotes(0)->list(['Status' => 'Approved']);
+$quotes = $connector->quotes(companyId: 0)->list(['Status' => 'Approved']);
 
 // Order by date issued descending
-$quotes = $connector->quotes(0)->list(['orderby' => '-DateIssued']);
+$quotes = $connector->quotes(companyId: 0)->list(['orderby' => '-DateIssued']);
 ```
 
 ### Ordering Results
 
 ```php
 // Order by date issued (newest first)
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->orderByDesc('DateIssued')
     ->items();
 
 // Order by total value (highest first)
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->orderByDesc('Total')
     ->items();
 
 // Order by name
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->orderBy('Name')
     ->items();
 
 // Order by expiry date
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->orderBy('ExpiryDate')
     ->items();
 ```
@@ -105,7 +105,7 @@ $quotes = $connector->quotes(0)->list()
 Returns complete information for a specific quote:
 
 ```php
-$quote = $connector->quotes(0)->get(123);
+$quote = $connector->quotes(companyId: 0)->get(quoteId: 123);
 
 return [
     'id' => $quote->id,
@@ -130,7 +130,7 @@ return [
 Optionally specify which columns to return:
 
 ```php
-$quote = $connector->quotes(0)->get(123, ['ID', 'Name', 'Status', 'Total']);
+$quote = $connector->quotes(companyId: 0)->get(quoteId: 123, columns: ['ID', 'Name', 'Status', 'Total']);
 ```
 
 ## Creating a Quote
@@ -138,7 +138,7 @@ $quote = $connector->quotes(0)->get(123, ['ID', 'Name', 'Status', 'Total']);
 Create a new quote:
 
 ```php
-$quoteId = $connector->quotes(0)->create([
+$quoteId = $connector->quotes(companyId: 0)->create(data: [
     'Name' => 'Kitchen Renovation Project',
     'Customer' => ['ID' => 456],
     'Site' => ['ID' => 789],
@@ -154,7 +154,7 @@ echo "Created quote with ID: {$quoteId}\n";
 ### Create Quote with Full Details
 
 ```php
-$quoteId = $connector->quotes(0)->create([
+$quoteId = $connector->quotes(companyId: 0)->create(data: [
     'Name' => 'Office Fit-out Q1 2024',
     'Customer' => ['ID' => 456],
     'Site' => ['ID' => 789],
@@ -173,7 +173,7 @@ $quoteId = $connector->quotes(0)->create([
 Update an existing quote:
 
 ```php
-$response = $connector->quotes(0)->update(123, [
+$response = $connector->quotes(companyId: 0)->update(quoteId: 123, data: [
     'Name' => 'Kitchen Renovation - Updated',
     'DueDate' => '2024-03-01',
 ]);
@@ -186,7 +186,7 @@ if ($response->successful()) {
 ### Update Quote Status
 
 ```php
-$response = $connector->quotes(0)->update(123, [
+$response = $connector->quotes(companyId: 0)->update(quoteId: 123, data: [
     'Status' => 'Approved',
 ]);
 ```
@@ -194,7 +194,7 @@ $response = $connector->quotes(0)->update(123, [
 ### Update Quote Stage
 
 ```php
-$response = $connector->quotes(0)->update(123, [
+$response = $connector->quotes(companyId: 0)->update(quoteId: 123, data: [
     'Stage' => 'Sent',
 ]);
 ```
@@ -204,7 +204,7 @@ $response = $connector->quotes(0)->update(123, [
 Delete a quote:
 
 ```php
-$response = $connector->quotes(0)->delete(123);
+$response = $connector->quotes(companyId: 0)->delete(quoteId: 123);
 
 if ($response->successful()) {
     echo "Quote deleted successfully\n";
@@ -279,7 +279,7 @@ Complete quote object returned by `get()`:
 ### List Pending Quotes
 
 ```php
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->where('Status', '=', 'Pending')
     ->orderByDesc('DateIssued')
     ->all();
@@ -297,7 +297,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $today = date('Y-m-d');
 $nextWeek = date('Y-m-d', strtotime('+7 days'));
 
-$expiringQuotes = $connector->quotes(0)->list()
+$expiringQuotes = $connector->quotes(companyId: 0)->list()
     ->search([
         Search::make()->column('ExpiryDate')->between($today, $nextWeek),
         Search::make()->column('Status')->notEqual('Approved'),
@@ -314,7 +314,7 @@ foreach ($expiringQuotes as $quote) {
 ### Get Quote Pipeline Summary
 
 ```php
-$quotes = $connector->quotes(0)->list()->all();
+$quotes = $connector->quotes(companyId: 0)->list()->all();
 
 $pipeline = [
     'Draft' => ['count' => 0, 'value' => 0],
@@ -342,7 +342,7 @@ foreach ($pipeline as $stage => $data) {
 
 ```php
 $quoteId = 123;
-$quote = $connector->quotes(0)->get($quoteId);
+$quote = $connector->quotes(companyId: 0)->get(quoteId: $quoteId);
 
 $details = [
     'quote' => [
@@ -387,7 +387,7 @@ return $details;
 ### Calculate Conversion Rate
 
 ```php
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-12-31'))
     ->all();
 
@@ -420,7 +420,7 @@ echo "  Total Value Won: \$" . number_format($approvedValue, 2) . "\n";
 ```php
 $customerId = 456;
 
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->where('CustomerID', '=', $customerId)
     ->orderByDesc('DateIssued')
     ->all();
@@ -458,7 +458,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $startDate = '2024-01-01';
 $endDate = '2024-12-31';
 
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between($startDate, $endDate))
     ->orderBy('DateIssued')
     ->all();
@@ -491,7 +491,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $followUpDays = 7;
 $followUpDate = date('Y-m-d', strtotime("-{$followUpDays} days"));
 
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search([
         Search::make()->column('Status')->equals('Pending'),
         Search::make()->column('Stage')->equals('Sent'),
@@ -501,7 +501,7 @@ $quotes = $connector->quotes(0)->list()
     ->all();
 
 foreach ($quotes as $quote) {
-    $full = $connector->quotes(0)->get($quote->id);
+    $full = $connector->quotes(companyId: 0)->get(quoteId: $quote->id);
 
     $followUpData = [
         'quoteId' => $full->id,
@@ -526,7 +526,7 @@ foreach ($quotes as $quote) {
 Quote lists are paginated automatically. The default page size is 30:
 
 ```php
-$builder = $connector->quotes(0)->list();
+$builder = $connector->quotes(companyId: 0)->list();
 
 // Change page size if needed
 $builder->getPaginator()->setPerPageLimit(100);
@@ -543,12 +543,12 @@ Always filter by date range when possible to reduce the result set:
 
 ```php
 // Good - filtered query
-$quotes = $connector->quotes(0)->list()
+$quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->items();
 
 // Less efficient - no date filter
-$quotes = $connector->quotes(0)->list()->items();
+$quotes = $connector->quotes(companyId: 0)->list()->items();
 ```
 
 ### Caching Strategy
@@ -560,7 +560,7 @@ use Illuminate\Support\Facades\Cache;
 
 // Cache quote pipeline summary for 15 minutes
 $pipeline = Cache::remember('simpro.quotes.pipeline', 900, function () use ($connector) {
-    $quotes = $connector->quotes(0)->list()
+    $quotes = $connector->quotes(companyId: 0)->list()
         ->where('Status', 'in', ['Draft', 'Sent', 'Pending'])
         ->all();
 
@@ -584,7 +584,7 @@ Handle validation errors when creating or updating quotes:
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 
 try {
-    $quoteId = $connector->quotes(0)->create([
+    $quoteId = $connector->quotes(companyId: 0)->create(data: [
         'Name' => '', // Empty name
         'Customer' => ['ID' => 99999], // Invalid customer
     ]);
@@ -605,7 +605,7 @@ Handle cases where a quote doesn't exist:
 use Saloon\Exceptions\Request\ClientException;
 
 try {
-    $quote = $connector->quotes(0)->get(99999);
+    $quote = $connector->quotes(companyId: 0)->get(quoteId: 99999);
 } catch (ClientException $e) {
     if ($e->getResponse()->status() === 404) {
         echo "Quote not found\n";

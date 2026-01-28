@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2025-01-28 | **Progress:** 32/1325 endpoints (2.4%)
+> **Last Updated:** 2026-01-28 | **Progress:** 148/1325 endpoints (11.2%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -24,7 +24,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Category | Implemented | Remaining | Total |
 |----------|-------------|-----------|-------|
 | Companies | 2 | ~200 | ~202 |
-| Jobs | 5 | ~55 | ~60 |
+| Jobs | 121 | ~0 | ~121 |
 | Customers | 6 | ~44 | ~50 |
 | Quotes | 5 | ~35 | ~40 |
 | Invoices | 5 | ~20 | ~25 |
@@ -33,7 +33,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | CurrentUser | 1 | 0 | 1 |
 | Info | 1 | 0 | 1 |
 | **Other** | 0 | ~891 | ~891 |
-| **Total** | **32** | **1293** | **1325** |
+| **Total** | **148** | **1177** | **1325** |
 
 ### Implemented Resources Summary
 
@@ -41,7 +41,7 @@ This file serves as the single source of truth for SDK development progress, arc
 |----------|---------|-----------------|------|
 | Info | `get()` + 9 convenience methods | 1 | 1 |
 | Companies | `list()`, `listDetailed()`, `get()`, `getDefault()`, `findByName()` | 3 | 6 |
-| Jobs | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 16+ |
+| Jobs | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 126 | 47+ |
 | Customers | `list()`, `listCompanies()`, `getCompany()`, `createCompany()`, `updateCompany()`, `deleteCompany()` | 6 | 3 |
 | Quotes | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 5 |
 | Invoices | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 5 |
@@ -266,13 +266,20 @@ This section outlines the phased approach for implementing the remaining endpoin
 - [x] PathBuilder utility
 - [x] CurrentUser endpoint (1 endpoint)
 
-#### Phase 2: Jobs (~60 endpoints)
-- [x] Core Jobs CRUD (List, Get, Create, Update, Delete)
-- [ ] Job Sections with CostCenters
-- [ ] Job Attachments (files + folders)
-- [ ] Job CustomFields
-- [ ] Job Notes
-- [ ] Job Schedules
+#### Phase 2: Jobs (~121 endpoints) ✅ COMPLETE
+- [x] Core Jobs CRUD (List, ListDetailed, Get, Create, Update, Delete)
+- [x] Job Sections with CostCenters (5 endpoints each)
+- [x] Job Attachments (files + folders) - 10 endpoints
+- [x] Job CustomFields - 3 endpoints
+- [x] Job Notes - 4 endpoints
+- [x] Job Lock - 2 endpoints
+- [x] Job Tasks - 2 endpoints
+- [x] Job Timelines - 1 endpoint
+- [x] Cost Center sub-resources (assets, catalogs, contractorJobs, labor, oneOffs, prebuilds, schedules, serviceFees, stock, tasks, workOrders, lock) - 57 endpoints
+- [x] Deep nesting (ContractorJobs nested, WorkOrders nested, Test Results, Mobile Signatures) - 30 endpoints
+- [x] Scope-based fluent API for navigation up to 6 levels deep
+
+**Note:** Job Invoices (5 endpoints) and Customer Invoices (2 endpoints) are DEPRECATED and intentionally NOT implemented. Use `/accounts/receivable/invoices/` instead.
 
 #### Phase 3: Schedules & Employees (~55 endpoints)
 - [ ] ActivitySchedules

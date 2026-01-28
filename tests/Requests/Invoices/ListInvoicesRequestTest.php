@@ -31,10 +31,15 @@ it('parses list invoices response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(InvoiceListItem::class)
         ->and($dto[0]->id)->toBe(1)
-        ->and($dto[0]->invoiceNo)->toBe('INV-001')
-        ->and($dto[0]->status)->toBe('Unpaid')
+        ->and($dto[0]->type)->toBe('TaxInvoice')
+        ->and($dto[0]->customer->id)->toBe(5)
+        ->and($dto[0]->customer->companyName)->toBe('Acme Corp')
+        ->and($dto[0]->jobs)->toHaveCount(1)
+        ->and($dto[0]->jobs[0]->id)->toBe(100)
+        ->and($dto[0]->jobs[0]->description)->toBe('Kitchen renovation')
+        ->and($dto[0]->total->exTax)->toBe(5000.00)
+        ->and($dto[0]->isPaid)->toBeFalse()
         ->and($dto[1])->toBeInstanceOf(InvoiceListItem::class)
         ->and($dto[1]->id)->toBe(2)
-        ->and($dto[1]->invoiceNo)->toBe('INV-002')
-        ->and($dto[1]->status)->toBe('Paid');
+        ->and($dto[1]->isPaid)->toBeTrue();
 });

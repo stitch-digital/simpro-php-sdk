@@ -8,23 +8,47 @@
   "data": [
     {
       "ID": 1,
-      "Type": "Job",
-      "Subject": "Kitchen Install Day 1",
+      "Type": "job",
+      "Reference": "100",
+      "TotalHours": 8.0,
+      "Staff": {
+        "ID": 3,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 3
+      },
       "Date": "2024-01-25",
-      "StartTime": "08:00",
-      "EndTime": "16:00",
-      "Staff": "John Smith",
-      "StaffID": "3"
+      "Blocks": [
+        {
+          "Hrs": 8.0,
+          "StartTime": "08:00",
+          "ISO8601StartTime": "2024-01-25T08:00:00+00:00",
+          "EndTime": "16:00",
+          "ISO8601EndTime": "2024-01-25T16:00:00+00:00"
+        }
+      ]
     },
     {
       "ID": 2,
-      "Type": "Job",
-      "Subject": "Kitchen Install Day 2",
+      "Type": "job",
+      "Reference": "100",
+      "TotalHours": 8.0,
+      "Staff": {
+        "ID": 3,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 3
+      },
       "Date": "2024-01-26",
-      "StartTime": "08:00",
-      "EndTime": "16:00",
-      "Staff": "John Smith",
-      "StaffID": "3"
+      "Blocks": [
+        {
+          "Hrs": 8.0,
+          "StartTime": "08:00",
+          "ISO8601StartTime": "2024-01-26T08:00:00+00:00",
+          "EndTime": "16:00",
+          "ISO8601EndTime": "2024-01-26T16:00:00+00:00"
+        }
+      ]
     }
   ]
 }

@@ -202,7 +202,7 @@ $companies = $connector->companies()->list([
 Returns complete information for a specific company:
 
 ```php
-$company = $connector->companies()->get(0);
+$company = $connector->companies()->get(companyId: 0);
 
 return [
     'name' => $company->name,
@@ -226,7 +226,7 @@ $defaultCompany = $connector->companies()->getDefault();
 Optionally specify which columns to return:
 
 ```php
-$company = $connector->companies()->get(0, ['ID', 'Name', 'Email', 'Phone']);
+$company = $connector->companies()->get(companyId: 0, columns: ['ID', 'Name', 'Email', 'Phone']);
 ```
 
 ## Convenience Methods
@@ -417,7 +417,7 @@ $companies = $connector->companies()->listDetailed([
 ### Get Complete Company Profile
 
 ```php
-$company = $connector->companies()->get(0);
+$company = $connector->companies()->get(companyId: 0);
 
 return [
     'basic' => [
@@ -493,7 +493,7 @@ foreach ($companies->items() as $company) {
 ### Check Default Cost Center
 
 ```php
-$company = $connector->companies()->get(0);
+$company = $connector->companies()->get(companyId: 0);
 
 if ($company->defaultCostCenter !== null) {
     echo "Default Cost Center: {$company->defaultCostCenter->name} (ID: {$company->defaultCostCenter->id})\n";

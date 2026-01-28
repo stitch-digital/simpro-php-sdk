@@ -9,7 +9,7 @@ The Customers resource provides operations for managing customers in your Simpro
 Returns all customers (both companies and individuals) with pagination support:
 
 ```php
-$customers = $connector->customers(0)->list();
+$customers = $connector->customers(companyId: 0)->list();
 
 foreach ($customers->items() as $customer) {
     echo "{$customer->id}: {$customer->companyName} ({$customer->type})\n";
@@ -21,7 +21,7 @@ foreach ($customers->items() as $customer) {
 Returns only company-type customers:
 
 ```php
-$companies = $connector->customers(0)->listCompanies();
+$companies = $connector->customers(companyId: 0)->listCompanies();
 
 foreach ($companies->items() as $customer) {
     echo "{$customer->id}: {$customer->companyName}\n";
@@ -38,22 +38,22 @@ Use the fluent search API or array-based filters:
 use Simpro\PhpSdk\Simpro\Query\Search;
 
 // Search by company name
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->search(Search::make()->column('CompanyName')->find('Acme'))
     ->items();
 
 // Search by email
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->where('Email', 'like', '@acme.com')
     ->items();
 
 // Search by phone
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->where('Phone', 'like', '07')
     ->items();
 
 // Multiple criteria
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->search([
         Search::make()->column('CompanyName')->find('Corp'),
         Search::make()->column('IsArchived')->equals(false),
@@ -63,12 +63,12 @@ $customers = $connector->customers(0)->list()
     ->items();
 
 // Find active customers only
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->where('IsArchived', '=', false)
     ->items();
 
 // Search company customers specifically
-$customers = $connector->customers(0)->listCompanies()
+$customers = $connector->customers(companyId: 0)->listCompanies()
     ->search(Search::make()->column('CompanyName')->startsWith('Acme'))
     ->items();
 ```
@@ -77,16 +77,16 @@ $customers = $connector->customers(0)->listCompanies()
 
 ```php
 // Search by company name
-$customers = $connector->customers(0)->list(['CompanyName' => '%25Acme%25']);
+$customers = $connector->customers(companyId: 0)->list(['CompanyName' => '%25Acme%25']);
 
 // Filter by type
-$customers = $connector->customers(0)->list(['Type' => 'Company']);
+$customers = $connector->customers(companyId: 0)->list(['Type' => 'Company']);
 
 // Order by name
-$customers = $connector->customers(0)->list(['orderby' => 'CompanyName']);
+$customers = $connector->customers(companyId: 0)->list(['orderby' => 'CompanyName']);
 
 // Multiple filters
-$customers = $connector->customers(0)->list([
+$customers = $connector->customers(companyId: 0)->list([
     'CompanyName' => '%25Corp%25',
     'IsArchived' => 'false',
 ]);
@@ -96,17 +96,17 @@ $customers = $connector->customers(0)->list([
 
 ```php
 // Order by company name ascending
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->orderBy('CompanyName')
     ->items();
 
 // Order by company name descending
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->orderByDesc('CompanyName')
     ->items();
 
 // Order by ID
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->orderBy('ID')
     ->items();
 ```
@@ -118,7 +118,7 @@ $customers = $connector->customers(0)->list()
 Returns complete information for a specific company customer:
 
 ```php
-$customer = $connector->customers(0)->getCompany(123);
+$customer = $connector->customers(companyId: 0)->getCompany(customerId: 123);
 
 return [
     'id' => $customer->id,
@@ -140,7 +140,7 @@ return [
 Optionally specify which columns to return:
 
 ```php
-$customer = $connector->customers(0)->getCompany(123, ['ID', 'CompanyName', 'Email', 'Phone']);
+$customer = $connector->customers(companyId: 0)->getCompany(customerId: 123, columns: ['ID', 'CompanyName', 'Email', 'Phone']);
 ```
 
 ## Creating a Company Customer
@@ -148,7 +148,7 @@ $customer = $connector->customers(0)->getCompany(123, ['ID', 'CompanyName', 'Ema
 Create a new company customer:
 
 ```php
-$customerId = $connector->customers(0)->createCompany([
+$customerId = $connector->customers(companyId: 0)->createCompany(data: [
     'CompanyName' => 'Acme Corporation',
     'Email' => 'info@acme.com',
     'Phone' => '+61 7 1234 5678',
@@ -160,7 +160,7 @@ echo "Created customer with ID: {$customerId}\n";
 ### Create with Full Details
 
 ```php
-$customerId = $connector->customers(0)->createCompany([
+$customerId = $connector->customers(companyId: 0)->createCompany(data: [
     'CompanyName' => 'Acme Corporation',
     'Email' => 'info@acme.com',
     'Phone' => '+61 7 1234 5678',
@@ -183,7 +183,7 @@ $customerId = $connector->customers(0)->createCompany([
 Update an existing company customer:
 
 ```php
-$response = $connector->customers(0)->updateCompany(123, [
+$response = $connector->customers(companyId: 0)->updateCompany(customerId: 123, data: [
     'Phone' => '+61 7 9999 8888',
     'Email' => 'new.email@acme.com',
 ]);
@@ -196,7 +196,7 @@ if ($response->successful()) {
 ### Update Multiple Fields
 
 ```php
-$response = $connector->customers(0)->updateCompany(123, [
+$response = $connector->customers(companyId: 0)->updateCompany(customerId: 123, data: [
     'CompanyName' => 'Acme Corporation Pty Ltd',
     'Website' => 'https://www.acme-corp.com.au',
     'Address' => [
@@ -211,7 +211,7 @@ $response = $connector->customers(0)->updateCompany(123, [
 ### Archive a Customer
 
 ```php
-$response = $connector->customers(0)->updateCompany(123, [
+$response = $connector->customers(companyId: 0)->updateCompany(customerId: 123, data: [
     'IsArchived' => true,
 ]);
 
@@ -223,7 +223,7 @@ echo "Customer archived\n";
 Delete a company customer:
 
 ```php
-$response = $connector->customers(0)->deleteCompany(123);
+$response = $connector->customers(companyId: 0)->deleteCompany(customerId: 123);
 
 if ($response->successful()) {
     echo "Customer deleted successfully\n";
@@ -283,7 +283,7 @@ Complete customer object returned by `getCompany()`:
 ### List All Active Customers
 
 ```php
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->where('IsArchived', '=', false)
     ->orderBy('CompanyName')
     ->all();
@@ -296,7 +296,7 @@ foreach ($customers as $customer) {
 ### Build Customer Dropdown
 
 ```php
-$customers = $connector->customers(0)->listCompanies()
+$customers = $connector->customers(companyId: 0)->listCompanies()
     ->where('IsArchived', '=', false)
     ->orderBy('CompanyName')
     ->all();
@@ -319,7 +319,7 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $searchTerm = 'Acme';
 
-$customers = $connector->customers(0)->list()
+$customers = $connector->customers(companyId: 0)->list()
     ->search(Search::make()->column('CompanyName')->find($searchTerm))
     ->all();
 
@@ -335,7 +335,7 @@ if (count($customers) === 0) {
 ### Get Customer with Contact Details
 
 ```php
-$customer = $connector->customers(0)->getCompany(123);
+$customer = $connector->customers(companyId: 0)->getCompany(customerId: 123);
 
 $contactInfo = [
     'name' => $customer->companyName,
@@ -376,7 +376,7 @@ function createCustomer(array $data): int
         throw new InvalidArgumentException("Invalid email format");
     }
 
-    return $this->connector->customers(0)->createCompany($data);
+    return $this->connector->customers(companyId: 0)->createCompany($data);
 }
 
 // Usage
@@ -399,14 +399,14 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 
 $city = 'Brisbane';
 
-$customers = $connector->customers(0)->listCompanies()
+$customers = $connector->customers(companyId: 0)->listCompanies()
     ->where('Address.City', 'like', $city)
     ->orderBy('CompanyName')
     ->all();
 
 echo "Customers in {$city}:\n";
 foreach ($customers as $customer) {
-    $full = $connector->customers(0)->getCompany($customer->id);
+    $full = $connector->customers(companyId: 0)->getCompany(customerId: $customer->id);
     $address = $full->address;
 
     echo "  {$full->companyName}\n";
@@ -425,7 +425,7 @@ $customerIds = [101, 102, 103];
 
 foreach ($customerIds as $id) {
     try {
-        $connector->customers(0)->updateCompany($id, [
+        $connector->customers(companyId: 0)->updateCompany(customerId: $id, data: [
             'IsArchived' => true,
         ]);
         echo "Archived customer {$id}\n";
@@ -438,7 +438,7 @@ foreach ($customerIds as $id) {
 ### Export Customers to Array
 
 ```php
-$customers = $connector->customers(0)->listCompanies()
+$customers = $connector->customers(companyId: 0)->listCompanies()
     ->where('IsArchived', '=', false)
     ->orderBy('CompanyName')
     ->all();
@@ -446,7 +446,7 @@ $customers = $connector->customers(0)->listCompanies()
 $export = [];
 foreach ($customers as $customer) {
     // Get full details for each customer
-    $full = $connector->customers(0)->getCompany($customer->id);
+    $full = $connector->customers(companyId: 0)->getCompany(customerId: $customer->id);
 
     $export[] = [
         'ID' => $full->id,
@@ -470,7 +470,7 @@ return $export;
 ```php
 use Simpro\PhpSdk\Simpro\Query\Search;
 
-$customers = $connector->customers(0)->listCompanies()
+$customers = $connector->customers(companyId: 0)->listCompanies()
     ->where('IsArchived', '=', false)
     ->all();
 
@@ -494,7 +494,7 @@ foreach ($missingEmail as $customer) {
 ### Customer Summary Dashboard
 
 ```php
-$allCustomers = $connector->customers(0)->list()->all();
+$allCustomers = $connector->customers(companyId: 0)->list()->all();
 
 $summary = [
     'total' => count($allCustomers),
@@ -535,7 +535,7 @@ Use `listCompanies()` when you specifically need company customers to reduce the
 Customer lists are paginated automatically. The default page size is 30:
 
 ```php
-$builder = $connector->customers(0)->list();
+$builder = $connector->customers(companyId: 0)->list();
 
 // Change page size if needed
 $builder->getPaginator()->setPerPageLimit(100);
@@ -552,13 +552,13 @@ When you need full details for multiple customers, consider the performance trad
 
 ```php
 // Option 1: Multiple detailed requests (more data, more requests)
-$customers = $connector->customers(0)->listCompanies()->all();
+$customers = $connector->customers(companyId: 0)->listCompanies()->all();
 foreach ($customers as $customer) {
-    $full = $connector->customers(0)->getCompany($customer->id); // N+1 requests
+    $full = $connector->customers(companyId: 0)->getCompany(customerId: $customer->id); // N+1 requests
 }
 
 // Option 2: Use list data when sufficient
-$customers = $connector->customers(0)->listCompanies()->all();
+$customers = $connector->customers(companyId: 0)->listCompanies()->all();
 foreach ($customers as $customer) {
     // Use list data directly when you only need basic info
     echo "{$customer->companyName}: {$customer->email}\n";
@@ -574,7 +574,7 @@ use Illuminate\Support\Facades\Cache;
 
 // Cache customer list for 15 minutes
 $customers = Cache::remember('simpro.customers.active', 900, function () use ($connector) {
-    return $connector->customers(0)->listCompanies()
+    return $connector->customers(companyId: 0)->listCompanies()
         ->where('IsArchived', '=', false)
         ->orderBy('CompanyName')
         ->all();
@@ -591,7 +591,7 @@ Handle validation errors when creating or updating customers:
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 
 try {
-    $customerId = $connector->customers(0)->createCompany([
+    $customerId = $connector->customers(companyId: 0)->createCompany(data: [
         'CompanyName' => '', // Empty name
         'Email' => 'invalid-email', // Invalid format
     ]);
@@ -613,7 +613,7 @@ Handle cases where a customer doesn't exist:
 use Saloon\Exceptions\Request\ClientException;
 
 try {
-    $customer = $connector->customers(0)->getCompany(99999);
+    $customer = $connector->customers(companyId: 0)->getCompany(99999);
 } catch (ClientException $e) {
     if ($e->getResponse()->status() === 404) {
         echo "Customer not found\n";
