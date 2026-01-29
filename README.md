@@ -11,6 +11,27 @@ This package is under active development. The API, features, and internal struct
 
 A stable, production-ready release has **not** yet been tagged. Until a `v1.0.0` (or similar) release is published, this SDK should be considered **experimental** and used with caution in production environments.
 
+## Table of Contents
+
+- [About Simpro](#about-simpro)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Authentication Methods](#authentication-methods)
+  - [OAuth (Authorization Code Grant)](#oauth-authorization-code-grant)
+  - [API Key](#api-key)
+- [Usage](#usage)
+  - [Setting a Timeout](#setting-a-timeout)
+  - [Rate Limiting](#rate-limiting)
+  - [Laravel Integration](#laravel-integration)
+  - [Handling Errors](#handling-errors)
+- [Resources](#resources)
+- [Pagination and Querying](#pagination-and-querying)
+  - [Fluent Search API](#fluent-search-api)
+  - [Search Methods](#search-methods)
+  - [Using Laravel Collections](#using-laravel-collections)
+- [Security](#security)
+- [Credits](#credits)
+- [License](#license)
 
 <div align="center">
   <a href="https://www.simprogroup.com">
@@ -268,6 +289,284 @@ $connector = new SimproApiKeyConnector(
 
 $connector->useRateLimitPlugin(false);
 ```
+
+### Laravel Integration
+
+This section provides guidance for integrating the SDK into Laravel applications. The approach differs depending on whether you're building a single-tenant application (API Key) or a multi-tenant application (OAuth).
+
+#### API Key Connector (Single-Tenant Applications)
+
+For applications that connect to a single Simpro instance using an API key.
+
+**Configuration** (`config/services.php`):
+
+```php
+'simpro' => [
+    'base_url' => env('SIMPRO_BASE_URL'),
+    'api_key' => env('SIMPRO_API_KEY'),
+],
+```
+
+**Service Provider Binding** (`app/Providers/AppServiceProvider.php`):
+
+```php
+use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
+
+public function register(): void
+{
+    $this->app->singleton(SimproApiKeyConnector::class, function ($app) {
+        return new SimproApiKeyConnector(
+            baseUrl: config('services.simpro.base_url'),
+            apiKey: config('services.simpro.api_key'),
+            rateLimitConfig: new RateLimitConfig(
+                store: new LaravelCacheStore($app['cache']->store()),
+            ),
+        );
+    });
+}
+```
+
+**Usage via Dependency Injection**:
+
+```php
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
+
+class JobController extends Controller
+{
+    public function __construct(
+        private SimproApiKeyConnector $simpro
+    ) {}
+
+    public function index()
+    {
+        $jobs = $this->simpro->jobs()->list()->all();
+
+        return view('jobs.index', compact('jobs'));
+    }
+}
+```
+
+**Optional Facade**:
+
+Create a facade for convenient static access:
+
+```php
+// app/Facades/Simpro.php
+namespace App\Facades;
+
+use Illuminate\Support\Facades\Facade;
+use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
+
+/**
+ * @method static \Simpro\PhpSdk\Simpro\Resources\InfoResource info()
+ * @method static \Simpro\PhpSdk\Simpro\Resources\CompanyResource companies()
+ * @method static \Simpro\PhpSdk\Simpro\Resources\JobResource jobs()
+ * @method static \Simpro\PhpSdk\Simpro\Resources\CustomerResource customers()
+ *
+ * @see SimproApiKeyConnector
+ */
+class Simpro extends Facade
+{
+    protected static function getFacadeAccessor(): string
+    {
+        return SimproApiKeyConnector::class;
+    }
+}
+```
+
+Usage:
+
+```php
+use App\Facades\Simpro;
+
+$version = Simpro::info()->version();
+$companies = Simpro::companies()->list()->all();
+```
+
+#### OAuth Connector (Multi-Tenant Applications)
+
+For applications where multiple users connect their own Simpro accounts. This approach requires the Saloon Laravel plugin for the Eloquent cast:
+
+```bash
+composer require saloonphp/laravel-plugin "^3.0"
+```
+
+**Configuration** (`config/services.php`):
+
+```php
+'simpro' => [
+    'client_id' => env('SIMPRO_CLIENT_ID'),
+    'client_secret' => env('SIMPRO_CLIENT_SECRET'),
+    'redirect_uri' => env('SIMPRO_REDIRECT_URI'),
+],
+```
+
+**Model** (`app/Models/SimproConnection.php`):
+
+Store the OAuth authenticator and tenant-specific Simpro URL:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Saloon\Laravel\Casts\EncryptedOAuthAuthenticatorCast;
+
+class SimproConnection extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'build_url',
+        'simpro_auth',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'simpro_auth' => EncryptedOAuthAuthenticatorCast::class,
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+```
+
+Migration:
+
+```php
+Schema::create('simpro_connections', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->string('build_url'); // e.g., https://tenant.simprosuite.com
+    $table->text('simpro_auth'); // Encrypted OAuth authenticator
+    $table->timestamps();
+});
+```
+
+**Factory** (`app/Services/SimproConnectorFactory.php`):
+
+```php
+namespace App\Services;
+
+use App\Models\SimproConnection;
+use Simpro\PhpSdk\Simpro\Connectors\SimproOAuthConnector;
+
+class SimproConnectorFactory
+{
+    /**
+     * Create an unauthenticated connector for the OAuth flow.
+     */
+    public function make(string $buildUrl): SimproOAuthConnector
+    {
+        return new SimproOAuthConnector(
+            baseUrl: $buildUrl,
+            clientId: config('services.simpro.client_id'),
+            clientSecret: config('services.simpro.client_secret'),
+            redirectUri: config('services.simpro.redirect_uri'),
+        );
+    }
+
+    /**
+     * Create an authenticated connector from a stored connection.
+     */
+    public function authenticated(SimproConnection $connection): SimproOAuthConnector
+    {
+        $connector = $this->make($connection->build_url);
+        $authenticator = $connection->simpro_auth;
+
+        // Refresh the token if expired
+        if ($authenticator->hasExpired()) {
+            $authenticator = $connector->refreshAccessToken($authenticator);
+            $connection->update(['simpro_auth' => $authenticator]);
+        }
+
+        $connector->authenticate($authenticator);
+
+        return $connector;
+    }
+}
+```
+
+**Controller** (`app/Http/Controllers/SimproOAuthController.php`):
+
+```php
+namespace App\Http\Controllers;
+
+use App\Models\SimproConnection;
+use App\Services\SimproConnectorFactory;
+use Illuminate\Http\Request;
+
+class SimproOAuthController extends Controller
+{
+    public function __construct(
+        private SimproConnectorFactory $factory
+    ) {}
+
+    public function redirect(Request $request)
+    {
+        $request->validate(['build_url' => 'required|url']);
+
+        // Store the build URL in session for the callback
+        session(['simpro_build_url' => $request->build_url]);
+
+        $connector = $this->factory->make($request->build_url);
+
+        return redirect($connector->getAuthorizationUrl());
+    }
+
+    public function callback(Request $request)
+    {
+        $buildUrl = session('simpro_build_url');
+        $connector = $this->factory->make($buildUrl);
+
+        $authenticator = $connector->getAccessToken($request->code);
+
+        SimproConnection::updateOrCreate(
+            ['user_id' => $request->user()->id],
+            [
+                'build_url' => $buildUrl,
+                'simpro_auth' => $authenticator,
+            ]
+        );
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Simpro account connected successfully.');
+    }
+}
+```
+
+**Usage Example**:
+
+```php
+use App\Models\SimproConnection;
+use App\Services\SimproConnectorFactory;
+
+class SyncJobsCommand extends Command
+{
+    public function handle(SimproConnectorFactory $factory): void
+    {
+        $connections = SimproConnection::all();
+
+        foreach ($connections as $connection) {
+            $simpro = $factory->authenticated($connection);
+
+            foreach ($simpro->jobs()->list()->items() as $job) {
+                // Process each job...
+            }
+        }
+    }
+}
+```
+
+#### Further Reading
+
+- [Saloon Laravel Integration](https://docs.saloon.dev/installable-plugins/laravel-integration)
+- [Saloon OAuth2 Authentication](https://docs.saloon.dev/digging-deeper/oauth2-authentication/oauth2-authentication)
 
 ### Handling Errors
 
