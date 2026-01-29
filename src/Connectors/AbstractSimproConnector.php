@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Connectors;
 
+use Saloon\CachePlugin\Contracts\Cacheable;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
+use Simpro\PhpSdk\Simpro\Concerns\HasSimproCaching;
 use Simpro\PhpSdk\Simpro\Concerns\HasSimproRateLimits;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCurrentUserEndpoints;
@@ -30,10 +33,11 @@ use Throwable;
  *
  * Provides shared functionality for both OAuth and API Key authentication methods.
  */
-abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements HasPagination
+abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements Cacheable, HasPagination
 {
     use AcceptsJson;
     use AlwaysThrowOnErrors;
+    use HasSimproCaching;
     use HasSimproRateLimits;
     use HasTimeout;
     use SupportsCompaniesEndpoints;
@@ -58,9 +62,11 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
         private string $baseUrl,
         int $requestTimeout = 10,
         ?RateLimitConfig $rateLimitConfig = null,
+        ?CacheConfig $cacheConfig = null,
     ) {
         $this->requestTimeout = $requestTimeout;
         $this->setRateLimitConfig($rateLimitConfig);
+        $this->setCacheConfig($cacheConfig);
     }
 
     /**

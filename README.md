@@ -34,6 +34,7 @@ A stable, production-ready release has **not** yet been tagged. Until a `v1.0.0`
 - [Usage](#usage)
   - [Setting a Timeout](#setting-a-timeout)
   - [Rate Limiting](#rate-limiting)
+  - [Caching](#caching)
   - [Laravel Integration](#laravel-integration)
   - [Handling Errors](#handling-errors)
 - [Resources](#resources)
@@ -289,6 +290,125 @@ $connector = new SimproApiKeyConnector(
 $connector->useRateLimitPlugin(false);
 ```
 
+### Caching
+
+The SDK supports response caching using Saloon's cache plugin. Caching is **opt-in** and disabled by default - you must provide a `CacheConfig` to enable it.
+
+#### Enabling Caching
+
+You can enable caching using any PSR-16 compatible cache, Laravel's cache system, or Flysystem:
+
+```php
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
+
+// Using PSR-16 cache (e.g., Symfony Cache)
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    cacheConfig: CacheConfig::psr16($symfonyCache),
+);
+
+// Using Laravel cache
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    cacheConfig: CacheConfig::laravel(Cache::store('redis')),
+);
+
+// Using Flysystem
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    cacheConfig: CacheConfig::flysystem($filesystem),
+);
+```
+
+#### Cache Options
+
+Configure cache expiry and key prefix:
+
+```php
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
+
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    cacheConfig: CacheConfig::laravel(
+        cache: Cache::store('redis'),
+        expiryInSeconds: 600,  // 10 minutes (default: 300)
+        keyPrefix: 'my-app',   // Optional additional prefix
+    ),
+);
+```
+
+#### Cache Behavior
+
+| Aspect | Behavior |
+|--------|----------|
+| Default state | Disabled (opt-in) |
+| Cached methods | GET and OPTIONS only |
+| Cached responses | Successful responses only |
+| Cache key prefix | `simpro:{hostname}[:userPrefix]:{hash}` |
+| Default expiry | 300 seconds (5 minutes) |
+
+Cache keys are automatically prefixed with the Simpro instance hostname to ensure multi-tenant isolation.
+
+#### Enabling Caching After Construction
+
+You can also enable or disable caching after creating the connector:
+
+```php
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
+
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+);
+
+// Enable caching later
+$connector->setCacheConfig(CacheConfig::laravel(Cache::store('redis')));
+
+// Check if caching is enabled
+if ($connector->hasCaching()) {
+    // ...
+}
+
+// Disable caching
+$connector->setCacheConfig(null);
+```
+
+#### Checking Cache Status
+
+After sending a request, you can check if the response came from cache:
+
+```php
+$response = $connector->send($request);
+
+if ($response->isCached()) {
+    // Response was served from cache
+}
+```
+
+#### Disabling Cache for Specific Requests
+
+You can disable caching for individual requests:
+
+```php
+$request->disableCaching();
+$response = $connector->send($request);
+```
+
+#### Invalidating Cache
+
+To invalidate the cache for a specific request:
+
+```php
+$request->invalidateCache();
+$response = $connector->send($request); // Fresh response, also updates cache
+```
+
+See [Saloon's Cache Plugin documentation](https://docs.saloon.dev/installable-plugins/caching-responses) for more details.
+
 ### Laravel Integration
 
 This section provides guidance for integrating the SDK into Laravel applications. The approach differs depending on whether you're building a single-tenant application (API Key) or a multi-tenant application (OAuth).
@@ -309,7 +429,9 @@ For applications that connect to a single Simpro instance using an API key.
 **Service Provider Binding** (`app/Providers/AppServiceProvider.php`):
 
 ```php
+use Illuminate\Support\Facades\Cache;
 use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
 use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
 use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
 
@@ -319,8 +441,13 @@ public function register(): void
         return new SimproApiKeyConnector(
             baseUrl: config('services.simpro.base_url'),
             apiKey: config('services.simpro.api_key'),
+            requestTimeout: 30,
             rateLimitConfig: new RateLimitConfig(
                 store: new LaravelCacheStore($app['cache']->store()),
+            ),
+            cacheConfig: CacheConfig::laravel(
+                cache: Cache::store('redis'),
+                expiryInSeconds: 300,
             ),
         );
     });
@@ -453,7 +580,11 @@ Schema::create('simpro_connections', function (Blueprint $table) {
 namespace App\Services;
 
 use App\Models\SimproConnection;
+use Illuminate\Support\Facades\Cache;
+use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
 use Simpro\PhpSdk\Simpro\Connectors\SimproOAuthConnector;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
 
 class SimproConnectorFactory
 {
@@ -467,6 +598,15 @@ class SimproConnectorFactory
             clientId: config('services.simpro.client_id'),
             clientSecret: config('services.simpro.client_secret'),
             redirectUri: config('services.simpro.redirect_uri'),
+            scopes: [],
+            requestTimeout: 30,
+            rateLimitConfig: new RateLimitConfig(
+                store: new LaravelCacheStore(Cache::store()),
+            ),
+            cacheConfig: CacheConfig::laravel(
+                cache: Cache::store('redis'),
+                expiryInSeconds: 300,
+            ),
         );
     }
 

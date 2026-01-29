@@ -6,6 +6,7 @@ namespace Simpro\PhpSdk\Simpro\Connectors;
 
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\TokenAuthenticator;
+use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
 use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
 
 /**
@@ -34,14 +35,16 @@ final class SimproApiKeyConnector extends AbstractSimproConnector
      * @param  string  $apiKey  Your API key for authentication
      * @param  int  $requestTimeout  Request timeout in seconds (default: 10)
      * @param  RateLimitConfig|null  $rateLimitConfig  Rate limit configuration (default: 10 req/sec with sleep)
+     * @param  CacheConfig|null  $cacheConfig  Cache configuration (default: disabled)
      */
     public function __construct(
         string $baseUrl,
         private readonly string $apiKey,
         int $requestTimeout = 10,
         ?RateLimitConfig $rateLimitConfig = null,
+        ?CacheConfig $cacheConfig = null,
     ) {
-        parent::__construct($baseUrl, $requestTimeout, $rateLimitConfig);
+        parent::__construct($baseUrl, $requestTimeout, $rateLimitConfig, $cacheConfig);
     }
 
     /**
