@@ -11,9 +11,21 @@ This package is under active development. The API, features, and internal struct
 
 A stable, production-ready release has **not** yet been tagged. Until a `v1.0.0` (or similar) release is published, this SDK should be considered **experimental** and used with caution in production environments.
 
+<div align="center">
+  <a href="https://www.simprogroup.com">
+    <img src="simpro-logo.jpg" alt="Simpro Logo">
+  </a>
+</div>
+
+## About Simpro
+
+[Simpro](https://www.simprogroup.com/) is a cloud-based field service management platform designed for trade and service contractors, supporting industries such as fire protection, electrical, plumbing, HVAC, and security. It helps businesses manage jobs, quoting, scheduling, asset registers, compliance, and invoicing in one central system, replacing spreadsheets and disconnected tools with a mobile-friendly platform where technicians can capture job data, photos, and service results on site while office teams manage workflows, customer communication, and reporting, with integrations into accounting and other business software.
+
+- **Website:** [https://www.simprogroup.com/](https://www.simprogroup.com/)
+- **GitHub:** [https://github.com/simPRO-Software](https://github.com/simPRO-Software)
+
 ## Table of Contents
 
-- [About Simpro](#about-simpro)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Authentication Methods](#authentication-methods)
@@ -32,19 +44,6 @@ A stable, production-ready release has **not** yet been tagged. Until a `v1.0.0`
 - [Security](#security)
 - [Credits](#credits)
 - [License](#license)
-
-<div align="center">
-  <a href="https://www.simprogroup.com">
-    <img src="simpro-logo.jpg" alt="Simpro Logo">
-  </a>
-</div>
-
-## About Simpro
-
-[Simpro](https://www.simprogroup.com/) is a cloud-based field service management platform designed for trade and service contractors, supporting industries such as fire protection, electrical, plumbing, HVAC, and security. It helps businesses manage jobs, quoting, scheduling, asset registers, compliance, and invoicing in one central system, replacing spreadsheets and disconnected tools with a mobile-friendly platform where technicians can capture job data, photos, and service results on site while office teams manage workflows, customer communication, and reporting, with integrations into accounting and other business software.
-
-- **Website:** [https://www.simprogroup.com/](https://www.simprogroup.com/)
-- **GitHub:** [https://github.com/simPRO-Software](https://github.com/simPRO-Software)
 
 ## Installation
 
