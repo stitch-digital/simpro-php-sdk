@@ -6,15 +6,19 @@ The Invoices resource provides full CRUD operations for managing customer invoic
 
 ### Basic List
 
-Returns all invoices with pagination support:
+Returns all invoices with pagination support. The list returns `InvoiceListItem` objects with limited fields:
 
 ```php
 $invoices = $connector->invoices(companyId: 0)->list();
 
 foreach ($invoices->items() as $invoice) {
-    echo "{$invoice->invoiceNo}: {$invoice->customer} - \${$invoice->total}\n";
+    $customerName = $invoice->customer?->companyName ?? 'Unknown';
+    $total = $invoice->total?->incTax ?? 0;
+    echo "{$invoice->id}: {$customerName} - \${$total}\n";
 }
 ```
+
+**Note:** For full invoice details (invoice number, dates, status, etc.), use `get()` to retrieve individual invoices by ID.
 
 ### Filtering Invoices
 
@@ -25,19 +29,14 @@ Use the fluent search API or array-based filters:
 ```php
 use Simpro\PhpSdk\Simpro\Query\Search;
 
-// Search by invoice number
-$invoices = $connector->invoices(companyId: 0)->list()
-    ->search(Search::make()->column('InvoiceNo')->equals('INV-001234'))
-    ->first();
-
 // Search by customer
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->where('CustomerID', '=', 456)
+    ->where('Customer.ID', '=', 456)
     ->items();
 
-// Search by status
+// Filter by paid status
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->where('Status', '=', 'Pending')
+    ->where('IsPaid', '=', false)
     ->items();
 
 // Find invoices within a date range
@@ -46,25 +45,22 @@ $invoices = $connector->invoices(companyId: 0)->list()
     ->orderByDesc('DateIssued')
     ->items();
 
-// Find overdue invoices
-$today = date('Y-m-d');
+// Filter by type
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->search([
-        Search::make()->column('DateDue')->lessThan($today),
-        Search::make()->column('AmountDue')->greaterThan(0),
-    ])
-    ->matchAll()
+    ->where('Type', '=', 'TaxInvoice')
     ->items();
 ```
+
+**Note:** Advanced filtering by invoice number, status, or date comparisons may require fetching individual invoices with `get()` and filtering client-side.
 
 #### Array-Based Syntax
 
 ```php
-// Search by invoice number
-$invoices = $connector->invoices(companyId: 0)->list(['InvoiceNo' => 'INV-001234']);
+// Filter by customer ID
+$invoices = $connector->invoices(companyId: 0)->list(['Customer.ID' => 456]);
 
-// Filter by status
-$invoices = $connector->invoices(companyId: 0)->list(['Status' => 'Pending']);
+// Filter by type
+$invoices = $connector->invoices(companyId: 0)->list(['Type' => 'TaxInvoice']);
 
 // Order by date issued descending
 $invoices = $connector->invoices(companyId: 0)->list(['orderby' => '-DateIssued']);
@@ -195,14 +191,13 @@ Lightweight object returned by `list()`:
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Invoice ID |
-| `invoiceNo` | `?string` | Invoice number |
-| `status` | `?string` | Invoice status |
-| `customer` | `?string` | Customer name |
-| `customerId` | `?string` | Customer ID |
-| `dateIssued` | `?string` | Date issued (YYYY-MM-DD) |
-| `dateDue` | `?string` | Due date (YYYY-MM-DD) |
-| `total` | `?float` | Invoice total amount |
-| `amountDue` | `?float` | Remaining amount due |
+| `type` | `string` | Invoice type (e.g., "TaxInvoice") |
+| `customer` | `?InvoiceListCustomer` | Customer object with id, companyName |
+| `jobs` | `array<InvoiceListJob>` | Associated jobs |
+| `total` | `?InvoiceTotal` | Total object with exTax, tax, incTax |
+| `isPaid` | `bool` | Whether invoice is fully paid |
+
+**Note:** For full invoice details (invoice number, dates, status, amount due), use `get()` to retrieve the complete invoice.
 
 ### Invoice (Detailed Response)
 
@@ -245,40 +240,43 @@ Complete invoice object returned by `get()`:
 
 ## Examples
 
-### List Pending Invoices
+### List Unpaid Invoices
 
 ```php
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->where('Status', '=', 'Pending')
+    ->where('IsPaid', '=', false)
     ->orderByDesc('DateIssued')
     ->all();
 
 foreach ($invoices as $invoice) {
-    echo "{$invoice->invoiceNo}: {$invoice->customer} - \${$invoice->total}\n";
+    $customerName = $invoice->customer?->companyName ?? 'Unknown';
+    $total = $invoice->total?->incTax ?? 0;
+    echo "{$invoice->id}: {$customerName} - \${$total}\n";
 }
 ```
 
 ### Find Overdue Invoices
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
+// Note: Date comparison operators may not be supported, so we filter client-side
+// Get unpaid invoices and check due dates individually
+$today = new DateTimeImmutable();
 
-$today = date('Y-m-d');
-
-$overdueInvoices = $connector->invoices(companyId: 0)->list()
-    ->search([
-        Search::make()->column('DateDue')->lessThan($today),
-        Search::make()->column('AmountDue')->greaterThan(0),
-    ])
-    ->matchAll()
-    ->orderBy('DateDue')
+$unpaidInvoices = $connector->invoices(companyId: 0)->list()
+    ->where('IsPaid', '=', false)
     ->all();
 
 $totalOverdue = 0;
-foreach ($overdueInvoices as $invoice) {
-    $daysOverdue = (strtotime($today) - strtotime($invoice->dateDue)) / 86400;
-    echo "{$invoice->invoiceNo}: \${$invoice->amountDue} - {$daysOverdue} days overdue\n";
-    $totalOverdue += $invoice->amountDue;
+foreach ($unpaidInvoices as $invoice) {
+    // Get full invoice details to access dateDue and amountDue
+    $full = $connector->invoices(companyId: 0)->get(invoiceId: $invoice->id);
+
+    if ($full->dateDue !== null && $full->dateDue < $today) {
+        $daysOverdue = $today->diff($full->dateDue)->days;
+        $amountDue = $full->totals?->total ?? 0;
+        echo "{$full->invoiceNo}: \${$amountDue} - {$daysOverdue} days overdue\n";
+        $totalOverdue += $amountDue;
+    }
 }
 
 echo "Total overdue: \${$totalOverdue}\n";
@@ -290,27 +288,29 @@ echo "Total overdue: \${$totalOverdue}\n";
 $customerId = 456;
 
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->where('CustomerID', '=', $customerId)
+    ->where('Customer.ID', '=', $customerId)
     ->orderByDesc('DateIssued')
     ->all();
 
 $summary = [
     'totalInvoices' => count($invoices),
     'totalBilled' => 0,
-    'totalOutstanding' => 0,
+    'totalPaid' => 0,
     'invoices' => [],
 ];
 
 foreach ($invoices as $invoice) {
-    $summary['totalBilled'] += $invoice->total ?? 0;
-    $summary['totalOutstanding'] += $invoice->amountDue ?? 0;
+    $total = $invoice->total?->incTax ?? 0;
+    $summary['totalBilled'] += $total;
+    if ($invoice->isPaid) {
+        $summary['totalPaid'] += $total;
+    }
 
     $summary['invoices'][] = [
-        'invoiceNo' => $invoice->invoiceNo,
-        'dateIssued' => $invoice->dateIssued,
-        'total' => $invoice->total,
-        'amountDue' => $invoice->amountDue,
-        'status' => $invoice->status,
+        'id' => $invoice->id,
+        'type' => $invoice->type,
+        'total' => $total,
+        'isPaid' => $invoice->isPaid,
     ];
 }
 
@@ -382,23 +382,27 @@ $revenue = [
 ];
 
 foreach ($invoices as $invoice) {
-    $revenue['total'] += $invoice->total ?? 0;
+    // Total is an InvoiceTotal object with exTax, tax, incTax properties
+    $revenue['subtotal'] += $invoice->total?->exTax ?? 0;
+    $revenue['tax'] += $invoice->total?->tax ?? 0;
+    $revenue['total'] += $invoice->total?->incTax ?? 0;
 }
 
 echo "Revenue for {$startDate} to {$endDate}:\n";
 echo "  Invoices: {$revenue['count']}\n";
+echo "  Subtotal: \$" . number_format($revenue['subtotal'], 2) . "\n";
+echo "  Tax: \$" . number_format($revenue['tax'], 2) . "\n";
 echo "  Total: \$" . number_format($revenue['total'], 2) . "\n";
 ```
 
 ### Aging Report
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
+$today = new DateTimeImmutable();
 
-$today = date('Y-m-d');
-
+// Get unpaid invoices
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->search(Search::make()->column('AmountDue')->greaterThan(0))
+    ->where('IsPaid', '=', false)
     ->all();
 
 $aging = [
@@ -410,22 +414,27 @@ $aging = [
 ];
 
 foreach ($invoices as $invoice) {
-    if ($invoice->dateDue === null || $invoice->amountDue === null) {
+    // Get full invoice to access dateDue
+    $full = $connector->invoices(companyId: 0)->get(invoiceId: $invoice->id);
+
+    if ($full->dateDue === null) {
         continue;
     }
 
-    $daysOverdue = (strtotime($today) - strtotime($invoice->dateDue)) / 86400;
+    $amountDue = $full->totals?->total ?? 0;
+    $daysOverdue = $today->diff($full->dateDue)->days;
+    $isOverdue = $full->dateDue < $today;
 
-    if ($daysOverdue <= 0) {
-        $aging['current'] += $invoice->amountDue;
+    if (!$isOverdue) {
+        $aging['current'] += $amountDue;
     } elseif ($daysOverdue <= 30) {
-        $aging['1-30'] += $invoice->amountDue;
+        $aging['1-30'] += $amountDue;
     } elseif ($daysOverdue <= 60) {
-        $aging['31-60'] += $invoice->amountDue;
+        $aging['31-60'] += $amountDue;
     } elseif ($daysOverdue <= 90) {
-        $aging['61-90'] += $invoice->amountDue;
+        $aging['61-90'] += $amountDue;
     } else {
-        $aging['90+'] += $invoice->amountDue;
+        $aging['90+'] += $amountDue;
     }
 }
 
@@ -448,43 +457,42 @@ $invoices = $connector->invoices(companyId: 0)->list()
     ->orderBy('DateIssued')
     ->all();
 
-$csv = "Invoice No,Customer,Date Issued,Due Date,Total,Amount Due,Status\n";
+$csv = "ID,Customer,Type,Total,Is Paid\n";
 foreach ($invoices as $invoice) {
     $csv .= implode(',', [
-        '"' . ($invoice->invoiceNo ?? '') . '"',
-        '"' . str_replace('"', '""', $invoice->customer ?? '') . '"',
-        $invoice->dateIssued ?? '',
-        $invoice->dateDue ?? '',
-        $invoice->total ?? 0,
-        $invoice->amountDue ?? 0,
-        '"' . ($invoice->status ?? '') . '"',
+        $invoice->id,
+        '"' . str_replace('"', '""', $invoice->customer?->companyName ?? '') . '"',
+        '"' . ($invoice->type ?? '') . '"',
+        $invoice->total?->incTax ?? 0,
+        $invoice->isPaid ? 'Yes' : 'No',
     ]) . "\n";
 }
 
 file_put_contents('invoices_export.csv', $csv);
 echo "Exported " . count($invoices) . " invoices\n";
+
+// For detailed export with invoice numbers and dates, use get() for each invoice
 ```
 
 ### Send Payment Reminder Logic
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
-
 $reminderDays = 7; // Days before due to send reminder
-$reminderDate = date('Y-m-d', strtotime("+{$reminderDays} days"));
+$reminderDate = new DateTimeImmutable("+{$reminderDays} days");
 
+// Get unpaid invoices and filter by due date client-side
 $invoices = $connector->invoices(companyId: 0)->list()
-    ->search([
-        Search::make()->column('DateDue')->equals($reminderDate),
-        Search::make()->column('AmountDue')->greaterThan(0),
-        Search::make()->column('Status')->equals('Sent'),
-    ])
-    ->matchAll()
+    ->where('IsPaid', '=', false)
     ->all();
 
 foreach ($invoices as $invoice) {
-    // Get full invoice details
+    // Get full invoice details to check due date
     $full = $connector->invoices(companyId: 0)->get(invoiceId: $invoice->id);
+
+    // Check if due date matches our reminder date
+    if ($full->dateDue?->format('Y-m-d') !== $reminderDate->format('Y-m-d')) {
+        continue;
+    }
 
     // Prepare reminder data
     $reminderData = [
@@ -540,15 +548,10 @@ Consider caching invoice summaries:
 ```php
 use Illuminate\Support\Facades\Cache;
 
-// Cache overdue invoice count for 15 minutes
-$overdueCount = Cache::remember('simpro.invoices.overdue_count', 900, function () use ($connector) {
-    $today = date('Y-m-d');
+// Cache unpaid invoice count for 15 minutes
+$unpaidCount = Cache::remember('simpro.invoices.unpaid_count', 900, function () use ($connector) {
     return $connector->invoices(companyId: 0)->list()
-        ->search([
-            Search::make()->column('DateDue')->lessThan($today),
-            Search::make()->column('AmountDue')->greaterThan(0),
-        ])
-        ->matchAll()
+        ->where('IsPaid', '=', false)
         ->getTotalResults();
 });
 ```

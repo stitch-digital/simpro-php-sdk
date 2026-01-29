@@ -6,15 +6,18 @@ The Quotes resource provides full CRUD operations for managing quotes in your Si
 
 ### Basic List
 
-Returns all quotes with pagination support:
+Returns all quotes with pagination support. The list returns `QuoteListItem` objects with minimal fields:
 
 ```php
 $quotes = $connector->quotes(companyId: 0)->list();
 
 foreach ($quotes->items() as $quote) {
-    echo "{$quote->id}: {$quote->name} - {$quote->customer} (\${$quote->total})\n";
+    $total = $quote->total?->incTax ?? 0;
+    echo "{$quote->id}: {$quote->description} (\${$total})\n";
 }
 ```
+
+**Note:** For full quote details (name, customer, dates, status, etc.), use `get()` to retrieve individual quotes by ID.
 
 ### Filtering Quotes
 
@@ -25,24 +28,14 @@ Use the fluent search API or array-based filters:
 ```php
 use Simpro\PhpSdk\Simpro\Query\Search;
 
-// Search by name
+// Search by description
 $quotes = $connector->quotes(companyId: 0)->list()
-    ->search(Search::make()->column('Name')->find('Kitchen Renovation'))
+    ->search(Search::make()->column('Description')->find('Kitchen Renovation'))
     ->items();
 
 // Search by customer
 $quotes = $connector->quotes(companyId: 0)->list()
-    ->where('CustomerID', '=', 456)
-    ->items();
-
-// Search by status
-$quotes = $connector->quotes(companyId: 0)->list()
-    ->where('Status', '=', 'Approved')
-    ->items();
-
-// Search by stage
-$quotes = $connector->quotes(companyId: 0)->list()
-    ->where('Stage', '=', 'Draft')
+    ->where('Customer.ID', '=', 456)
     ->items();
 
 // Find quotes within a date range
@@ -50,25 +43,18 @@ $quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-01-31'))
     ->orderByDesc('DateIssued')
     ->items();
-
-// Multiple criteria with OR logic
-$quotes = $connector->quotes(companyId: 0)->list()
-    ->search([
-        Search::make()->column('Status')->equals('Pending'),
-        Search::make()->column('Status')->equals('Draft'),
-    ])
-    ->matchAny()
-    ->items();
 ```
+
+**Note:** For filtering by status or stage, you may need to retrieve full quote details using `get()` and filter client-side.
 
 #### Array-Based Syntax
 
 ```php
-// Search by name
-$quotes = $connector->quotes(companyId: 0)->list(['Name' => '%25Kitchen%25']);
+// Search by description
+$quotes = $connector->quotes(companyId: 0)->list(['Description' => '%25Kitchen%25']);
 
-// Filter by status
-$quotes = $connector->quotes(companyId: 0)->list(['Status' => 'Approved']);
+// Filter by customer
+$quotes = $connector->quotes(companyId: 0)->list(['Customer.ID' => 456]);
 
 // Order by date issued descending
 $quotes = $connector->quotes(companyId: 0)->list(['orderby' => '-DateIssued']);
@@ -217,20 +203,15 @@ if ($response->successful()) {
 
 ### QuoteListItem (List Response)
 
-Lightweight object returned by `list()`:
+Lightweight object returned by `list()`. Contains only minimal fields:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Quote ID |
-| `name` | `?string` | Quote name |
-| `site` | `?string` | Site name |
-| `siteId` | `?string` | Site ID |
-| `status` | `?string` | Quote status |
-| `stage` | `?string` | Quote stage |
-| `customer` | `?string` | Customer name |
-| `customerId` | `?string` | Customer ID |
-| `dateIssued` | `?string` | Date issued (YYYY-MM-DD) |
-| `total` | `?float` | Quote total |
+| `description` | `?string` | Quote description |
+| `total` | `?QuoteTotal` | Total object with exTax, tax, incTax |
+
+**Note:** For full quote details (name, customer, site, dates, status, stage), use `get()` to retrieve the complete quote.
 
 ### Quote (Detailed Response)
 
@@ -276,44 +257,50 @@ Complete quote object returned by `get()`:
 
 ## Examples
 
-### List Pending Quotes
+### List All Quotes
 
 ```php
 $quotes = $connector->quotes(companyId: 0)->list()
-    ->where('Status', '=', 'Pending')
     ->orderByDesc('DateIssued')
     ->all();
 
 foreach ($quotes as $quote) {
-    echo "{$quote->name}: {$quote->customer} - \${$quote->total}\n";
+    $total = $quote->total?->incTax ?? 0;
+    echo "{$quote->id}: {$quote->description} - \${$total}\n";
 }
 ```
 
 ### Find Expiring Quotes
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
+// Get all quotes and filter by expiry date client-side
+$today = new DateTimeImmutable();
+$nextWeek = $today->modify('+7 days');
 
-$today = date('Y-m-d');
-$nextWeek = date('Y-m-d', strtotime('+7 days'));
+$quotes = $connector->quotes(companyId: 0)->list()->all();
+$expiringQuotes = [];
 
-$expiringQuotes = $connector->quotes(companyId: 0)->list()
-    ->search([
-        Search::make()->column('ExpiryDate')->between($today, $nextWeek),
-        Search::make()->column('Status')->notEqual('Approved'),
-    ])
-    ->matchAll()
-    ->orderBy('ExpiryDate')
-    ->all();
+foreach ($quotes as $quote) {
+    // Get full quote to access expiryDate and status
+    $full = $connector->quotes(companyId: 0)->get(quoteId: $quote->id);
+
+    if ($full->expiryDate !== null &&
+        $full->expiryDate >= $today &&
+        $full->expiryDate <= $nextWeek &&
+        $full->status !== 'Approved') {
+        $expiringQuotes[] = $full;
+    }
+}
 
 foreach ($expiringQuotes as $quote) {
-    echo "Expiring soon: {$quote->name} (expires: {$quote->expiryDate})\n";
+    echo "Expiring soon: {$quote->name} (expires: {$quote->expiryDate?->format('Y-m-d')})\n";
 }
 ```
 
 ### Get Quote Pipeline Summary
 
 ```php
+// Fetch all quotes with full details for stage information
 $quotes = $connector->quotes(companyId: 0)->list()->all();
 
 $pipeline = [
@@ -325,10 +312,14 @@ $pipeline = [
 ];
 
 foreach ($quotes as $quote) {
-    $stage = $quote->stage ?? 'Unknown';
+    // Get full quote to access stage
+    $full = $connector->quotes(companyId: 0)->get(quoteId: $quote->id);
+    $stage = $full->stage ?? 'Unknown';
+    $total = $quote->total?->incTax ?? 0;
+
     if (isset($pipeline[$stage])) {
         $pipeline[$stage]['count']++;
-        $pipeline[$stage]['value'] += $quote->total ?? 0;
+        $pipeline[$stage]['value'] += $total;
     }
 }
 
@@ -387,6 +378,8 @@ return $details;
 ### Calculate Conversion Rate
 
 ```php
+use Simpro\PhpSdk\Simpro\Query\Search;
+
 $quotes = $connector->quotes(companyId: 0)->list()
     ->search(Search::make()->column('DateIssued')->between('2024-01-01', '2024-12-31'))
     ->all();
@@ -397,10 +390,14 @@ $declined = 0;
 $approvedValue = 0;
 
 foreach ($quotes as $quote) {
-    if ($quote->status === 'Approved') {
+    // Get full quote to access status
+    $full = $connector->quotes(companyId: 0)->get(quoteId: $quote->id);
+    $quoteTotal = $quote->total?->incTax ?? 0;
+
+    if ($full->status === 'Approved') {
         $approved++;
-        $approvedValue += $quote->total ?? 0;
-    } elseif ($quote->status === 'Declined') {
+        $approvedValue += $quoteTotal;
+    } elseif ($full->status === 'Declined') {
         $declined++;
     }
 }
@@ -421,7 +418,7 @@ echo "  Total Value Won: \$" . number_format($approvedValue, 2) . "\n";
 $customerId = 456;
 
 $quotes = $connector->quotes(companyId: 0)->list()
-    ->where('CustomerID', '=', $customerId)
+    ->where('Customer.ID', '=', $customerId)
     ->orderByDesc('DateIssued')
     ->all();
 
@@ -433,17 +430,21 @@ $summary = [
 ];
 
 foreach ($quotes as $quote) {
-    $summary['totalValue'] += $quote->total ?? 0;
-    if ($quote->status === 'Approved') {
-        $summary['approvedValue'] += $quote->total ?? 0;
+    // Get full quote for status and name
+    $full = $connector->quotes(companyId: 0)->get(quoteId: $quote->id);
+    $quoteTotal = $quote->total?->incTax ?? 0;
+
+    $summary['totalValue'] += $quoteTotal;
+    if ($full->status === 'Approved') {
+        $summary['approvedValue'] += $quoteTotal;
     }
 
     $summary['quotes'][] = [
         'id' => $quote->id,
-        'name' => $quote->name,
-        'dateIssued' => $quote->dateIssued,
-        'total' => $quote->total,
-        'status' => $quote->status,
+        'name' => $full->name,
+        'dateIssued' => $full->dateIssued?->format('Y-m-d'),
+        'total' => $quoteTotal,
+        'status' => $full->status,
     ];
 }
 
@@ -463,53 +464,51 @@ $quotes = $connector->quotes(companyId: 0)->list()
     ->orderBy('DateIssued')
     ->all();
 
-$csv = "ID,Name,Customer,Site,Date Issued,Due Date,Expiry Date,Total,Status,Stage\n";
+$csv = "ID,Description,Total\n";
 foreach ($quotes as $quote) {
     $csv .= implode(',', [
         $quote->id,
-        '"' . str_replace('"', '""', $quote->name ?? '') . '"',
-        '"' . str_replace('"', '""', $quote->customer ?? '') . '"',
-        '"' . str_replace('"', '""', $quote->site ?? '') . '"',
-        $quote->dateIssued ?? '',
-        '', // Due date not in list response
-        '', // Expiry date not in list response
-        $quote->total ?? 0,
-        '"' . ($quote->status ?? '') . '"',
-        '"' . ($quote->stage ?? '') . '"',
+        '"' . str_replace('"', '""', $quote->description ?? '') . '"',
+        $quote->total?->incTax ?? 0,
     ]) . "\n";
 }
 
 file_put_contents('quotes_export.csv', $csv);
 echo "Exported " . count($quotes) . " quotes\n";
+
+// For detailed export with name, customer, dates, use get() for each quote
 ```
 
 ### Follow-up on Pending Quotes
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
-
 $followUpDays = 7;
-$followUpDate = date('Y-m-d', strtotime("-{$followUpDays} days"));
+$followUpDate = new DateTimeImmutable("-{$followUpDays} days");
 
-$quotes = $connector->quotes(companyId: 0)->list()
-    ->search([
-        Search::make()->column('Status')->equals('Pending'),
-        Search::make()->column('Stage')->equals('Sent'),
-        Search::make()->column('DateIssued')->lessThanOrEqual($followUpDate),
-    ])
-    ->matchAll()
-    ->all();
+// Get all quotes and filter client-side for status and date
+$quotes = $connector->quotes(companyId: 0)->list()->all();
 
 foreach ($quotes as $quote) {
     $full = $connector->quotes(companyId: 0)->get(quoteId: $quote->id);
+
+    // Check if quote needs follow-up
+    if ($full->status !== 'Pending' || $full->stage !== 'Sent') {
+        continue;
+    }
+
+    if ($full->dateIssued === null || $full->dateIssued > $followUpDate) {
+        continue;
+    }
+
+    $daysSinceIssued = (new DateTimeImmutable())->diff($full->dateIssued)->days;
 
     $followUpData = [
         'quoteId' => $full->id,
         'quoteName' => $full->name,
         'customerName' => $full->customer?->name,
         'total' => $full->totals?->total,
-        'dateIssued' => $full->dateIssued?->format('Y-m-d'),
-        'daysSinceIssued' => (time() - $full->dateIssued?->getTimestamp()) / 86400,
+        'dateIssued' => $full->dateIssued->format('Y-m-d'),
+        'daysSinceIssued' => $daysSinceIssued,
     ];
 
     // Queue follow-up (implement your notification logic)
@@ -553,24 +552,22 @@ $quotes = $connector->quotes(companyId: 0)->list()->items();
 
 ### Caching Strategy
 
-Consider caching quote pipeline data:
+Consider caching quote summary data:
 
 ```php
 use Illuminate\Support\Facades\Cache;
 
-// Cache quote pipeline summary for 15 minutes
-$pipeline = Cache::remember('simpro.quotes.pipeline', 900, function () use ($connector) {
-    $quotes = $connector->quotes(companyId: 0)->list()
-        ->where('Status', 'in', ['Draft', 'Sent', 'Pending'])
-        ->all();
+// Cache quote summary for 15 minutes
+$summary = Cache::remember('simpro.quotes.summary', 900, function () use ($connector) {
+    $quotes = $connector->quotes(companyId: 0)->list()->all();
 
-    $summary = ['count' => 0, 'value' => 0];
+    $result = ['count' => 0, 'value' => 0];
     foreach ($quotes as $quote) {
-        $summary['count']++;
-        $summary['value'] += $quote->total ?? 0;
+        $result['count']++;
+        $result['value'] += $quote->total?->incTax ?? 0;
     }
 
-    return $summary;
+    return $result;
 });
 ```
 

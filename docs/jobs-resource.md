@@ -450,8 +450,8 @@ foreach ($overdueJobs as $job) {
 ```php
 $customerId = 456;
 
-$jobs = $connector->jobs(companyId: 0)->list()
-    ->where('CustomerID', '=', $customerId)
+$jobs = $connector->jobs(companyId: 0)->listDetailed()
+    ->where('Customer.ID', '=', $customerId)
     ->orderByDesc('DateIssued')
     ->all();
 
@@ -462,12 +462,13 @@ $summary = [
 ];
 
 foreach ($jobs as $job) {
-    $summary['totalValue'] += $job->total ?? 0;
+    // Note: total is a JobTotal object with exTax, tax, incTax properties
+    $summary['totalValue'] += $job->total?->incTax ?? 0;
     $summary['jobs'][] = [
         'id' => $job->id,
         'name' => $job->name,
-        'status' => $job->status,
-        'total' => $job->total,
+        'stage' => $job->stage,
+        'total' => $job->total?->incTax,
     ];
 }
 
@@ -541,7 +542,7 @@ return $details;
 ### Job Pipeline Summary
 
 ```php
-$jobs = $connector->jobs(companyId: 0)->list()->all();
+$jobs = $connector->jobs(companyId: 0)->listDetailed()->all();
 
 $pipeline = [
     'pending' => ['count' => 0, 'value' => 0],
@@ -550,17 +551,19 @@ $pipeline = [
 ];
 
 foreach ($jobs as $job) {
-    $status = strtolower($job->status ?? 'unknown');
+    $stage = strtolower($job->stage ?? 'unknown');
+    // Note: total is a JobTotal object, use incTax property for the total amount
+    $totalValue = $job->total?->incTax ?? 0;
 
-    if (str_contains($status, 'pending')) {
+    if (str_contains($stage, 'pending')) {
         $pipeline['pending']['count']++;
-        $pipeline['pending']['value'] += $job->total ?? 0;
-    } elseif (str_contains($status, 'progress')) {
+        $pipeline['pending']['value'] += $totalValue;
+    } elseif (str_contains($stage, 'progress')) {
         $pipeline['in_progress']['count']++;
-        $pipeline['in_progress']['value'] += $job->total ?? 0;
-    } elseif (str_contains($status, 'complete')) {
+        $pipeline['in_progress']['value'] += $totalValue;
+    } elseif (str_contains($stage, 'complete')) {
         $pipeline['complete']['count']++;
-        $pipeline['complete']['value'] += $job->total ?? 0;
+        $pipeline['complete']['value'] += $totalValue;
     }
 }
 
@@ -575,22 +578,22 @@ foreach ($pipeline as $stage => $data) {
 ```php
 use Simpro\PhpSdk\Simpro\Query\Search;
 
-$today = date('Y-m-d');
+$today = new DateTimeImmutable();
 
-$serviceJobs = $connector->jobs(companyId: 0)->list()
+// Filter by Type and Stage in the API, then filter by DueDate client-side
+$serviceJobs = $connector->jobs(companyId: 0)->listDetailed()
     ->search([
         Search::make()->column('Type')->equals('Service'),
-        Search::make()->column('DueDate')->equals($today),
-        Search::make()->column('Status')->notEqual('Complete'),
+        Search::make()->column('Stage')->notEqual('Complete'),
     ])
     ->matchAll()
-    ->orderBy('DueTime')
-    ->all();
+    ->collect()
+    ->filter(fn($job) => $job->dueDate?->format('Y-m-d') === $today->format('Y-m-d'));
 
 foreach ($serviceJobs as $job) {
-    echo "{$job->name} - Due: {$job->dueDate}\n";
-    echo "  Customer: {$job->customer}\n";
-    echo "  Site: {$job->site}\n";
+    echo "{$job->name} - Due: {$job->dueDate?->format('Y-m-d')}\n";
+    echo "  Customer: {$job->customer?->companyName}\n";
+    echo "  Site: {$job->site?->name}\n";
 }
 ```
 
@@ -641,23 +644,23 @@ use Simpro\PhpSdk\Simpro\Query\Search;
 $startDate = '2024-01-01';
 $endDate = '2024-12-31';
 
-$jobs = $connector->jobs(companyId: 0)->list()
+// Use listDetailed() to get all job fields for export
+$jobs = $connector->jobs(companyId: 0)->listDetailed()
     ->search(Search::make()->column('DateIssued')->between($startDate, $endDate))
     ->orderBy('DateIssued')
     ->all();
 
-$csv = "ID,Name,Type,Customer,Site,Date Issued,Due Date,Total,Status,Stage\n";
+$csv = "ID,Name,Type,Customer,Site,Date Issued,Due Date,Total,Stage\n";
 foreach ($jobs as $job) {
     $csv .= implode(',', [
         $job->id,
         '"' . str_replace('"', '""', $job->name ?? '') . '"',
         '"' . ($job->type ?? '') . '"',
-        '"' . str_replace('"', '""', $job->customer ?? '') . '"',
-        '"' . str_replace('"', '""', $job->site ?? '') . '"',
-        $job->dateIssued ?? '',
-        '', // Due date not in list response
-        $job->total ?? 0,
-        '"' . ($job->status ?? '') . '"',
+        '"' . str_replace('"', '""', $job->customer?->companyName ?? '') . '"',
+        '"' . str_replace('"', '""', $job->site?->name ?? '') . '"',
+        $job->dateIssued?->format('Y-m-d') ?? '',
+        $job->dueDate?->format('Y-m-d') ?? '',
+        $job->total?->incTax ?? 0,
         '"' . ($job->stage ?? '') . '"',
     ]) . "\n";
 }
@@ -669,22 +672,20 @@ echo "Exported " . count($jobs) . " jobs\n";
 ### Find Jobs by Tag
 
 ```php
-// Note: Tag filtering may need to be done client-side
-// as tag search varies by Simpro configuration
+// Note: Tag filtering is done client-side as tag search varies by Simpro configuration
 
-$jobs = $connector->jobs(companyId: 0)->list()
-    ->where('Status', '!=', 'Complete')
+$jobs = $connector->jobs(companyId: 0)->listDetailed()
+    ->where('Stage', '!=', 'Complete')
     ->all();
 
 $targetTag = 'Urgent';
 $taggedJobs = [];
 
 foreach ($jobs as $job) {
-    $full = $connector->jobs(companyId: 0)->get(jobId: $job->id);
-    if ($full->tags !== null) {
-        foreach ($full->tags as $tag) {
+    if ($job->tags !== null) {
+        foreach ($job->tags as $tag) {
             if ($tag->name === $targetTag) {
-                $taggedJobs[] = $full;
+                $taggedJobs[] = $job;
                 break;
             }
         }
@@ -739,7 +740,7 @@ use Illuminate\Support\Facades\Cache;
 // Cache active job count for 5 minutes
 $activeJobCount = Cache::remember('simpro.jobs.active_count', 300, function () use ($connector) {
     return $connector->jobs(companyId: 0)->list()
-        ->where('Status', '=', 'In Progress')
+        ->where('Stage', '=', 'Progress')
         ->getTotalResults();
 });
 ```

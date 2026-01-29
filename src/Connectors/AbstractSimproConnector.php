@@ -10,6 +10,7 @@ use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
+use Simpro\PhpSdk\Simpro\Concerns\HasSimproRateLimits;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCurrentUserEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCustomersEndpoints;
@@ -21,6 +22,7 @@ use Simpro\PhpSdk\Simpro\Concerns\SupportsQuotesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsSchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 use Simpro\PhpSdk\Simpro\Paginators\SimproPaginator;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
 use Throwable;
 
 /**
@@ -32,6 +34,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
 {
     use AcceptsJson;
     use AlwaysThrowOnErrors;
+    use HasSimproRateLimits;
     use HasTimeout;
     use SupportsCompaniesEndpoints;
     use SupportsCurrentUserEndpoints;
@@ -53,9 +56,11 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
      */
     public function __construct(
         private string $baseUrl,
-        int $requestTimeout = 10
+        int $requestTimeout = 10,
+        ?RateLimitConfig $rateLimitConfig = null,
     ) {
         $this->requestTimeout = $requestTimeout;
+        $this->setRateLimitConfig($rateLimitConfig);
     }
 
     /**

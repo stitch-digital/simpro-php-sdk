@@ -6,6 +6,7 @@ namespace Simpro\PhpSdk\Simpro\Connectors;
 
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\TokenAuthenticator;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
 
 /**
  * Simpro API Key connector using token-based authentication.
@@ -32,13 +33,15 @@ final class SimproApiKeyConnector extends AbstractSimproConnector
      * @param  string  $baseUrl  The base URL of your Simpro API (e.g., 'https://example.simprosuite.com/api/v1.0')
      * @param  string  $apiKey  Your API key for authentication
      * @param  int  $requestTimeout  Request timeout in seconds (default: 10)
+     * @param  RateLimitConfig|null  $rateLimitConfig  Rate limit configuration (default: 10 req/sec with sleep)
      */
     public function __construct(
         string $baseUrl,
         private readonly string $apiKey,
-        int $requestTimeout = 10
+        int $requestTimeout = 10,
+        ?RateLimitConfig $rateLimitConfig = null,
     ) {
-        parent::__construct($baseUrl, $requestTimeout);
+        parent::__construct($baseUrl, $requestTimeout, $rateLimitConfig);
     }
 
     /**

@@ -6,15 +6,18 @@ The Schedules resource provides read-only access to job and activity schedules i
 
 ### Basic List
 
-Returns all schedules with pagination support:
+Returns all schedules with pagination support. The list returns `ScheduleListItem` objects:
 
 ```php
 $schedules = $connector->schedules(companyId: 0)->list();
 
 foreach ($schedules->items() as $schedule) {
-    echo "{$schedule->id}: {$schedule->subject} ({$schedule->date})\n";
+    $staffName = $schedule->staff?->name ?? 'Unassigned';
+    echo "{$schedule->id}: {$schedule->reference} ({$schedule->date}) - {$staffName}\n";
 }
 ```
+
+**Note:** For full schedule details including notes and job information, use `get()` to retrieve individual schedules by ID.
 
 ### Filtering Schedules
 
@@ -32,7 +35,7 @@ $schedules = $connector->schedules(companyId: 0)->list()
 
 // Find schedules for a specific staff member
 $schedules = $connector->schedules(companyId: 0)->list()
-    ->where('StaffID', '=', 123)
+    ->where('Staff.ID', '=', 123)
     ->items();
 
 // Find schedules within a date range
@@ -41,7 +44,7 @@ $schedules = $connector->schedules(companyId: 0)->list()
     ->orderBy('Date')
     ->items();
 
-// Find job schedules only (exclude activities)
+// Find schedules by type
 $schedules = $connector->schedules(companyId: 0)->list()
     ->where('Type', '=', 'Job')
     ->items();
@@ -54,7 +57,7 @@ $schedules = $connector->schedules(companyId: 0)->list()
 $schedules = $connector->schedules(companyId: 0)->list(['Date' => '2024-01-15']);
 
 // Filter by staff
-$schedules = $connector->schedules(companyId: 0)->list(['StaffID' => 123]);
+$schedules = $connector->schedules(companyId: 0)->list(['Staff.ID' => 123]);
 
 // Multiple filters
 $schedules = $connector->schedules(companyId: 0)->list([
@@ -116,18 +119,19 @@ $schedule = $connector->schedules(companyId: 0)->get(scheduleId: 123, columns: [
 
 ### ScheduleListItem (List Response)
 
-Lightweight object returned by `list()`:
+Object returned by `list()`:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Schedule ID |
-| `type` | `?string` | Schedule type (Job, Activity, etc.) |
-| `subject` | `?string` | Schedule subject/title |
+| `type` | `string` | Schedule type (Job, Activity, etc.) |
+| `reference` | `?string` | Reference/title |
+| `totalHours` | `float` | Total scheduled hours |
+| `staff` | `?ScheduleListStaff` | Staff object with id and name |
 | `date` | `?string` | Date string (YYYY-MM-DD format) |
-| `startTime` | `?string` | Start time (HH:MM format) |
-| `endTime` | `?string` | End time (HH:MM format) |
-| `staff` | `?string` | Staff member name |
-| `staffId` | `?string` | Staff member ID |
+| `blocks` | `array<ScheduleBlock>` | Time blocks for this schedule |
+
+**Note:** For full schedule details (notes, job information), use `get()` to retrieve the complete schedule.
 
 ### Schedule (Detailed Response)
 
@@ -165,17 +169,23 @@ Complete schedule object returned by `get()`:
 ### Get Today's Schedules
 
 ```php
+use Simpro\PhpSdk\Simpro\Query\Search;
+
 $today = date('Y-m-d');
 
 $schedules = $connector->schedules(companyId: 0)->list()
     ->search(Search::make()->column('Date')->equals($today))
-    ->orderBy('StartTime')
+    ->orderBy('Date')
     ->all();
 
 foreach ($schedules as $schedule) {
-    echo "{$schedule->startTime} - {$schedule->endTime}: {$schedule->subject}\n";
-    if ($schedule->staff) {
-        echo "  Assigned to: {$schedule->staff}\n";
+    echo "{$schedule->reference} - {$schedule->totalHours} hours\n";
+    if ($schedule->staff !== null) {
+        echo "  Assigned to: {$schedule->staff->name}\n";
+    }
+    // Show time blocks
+    foreach ($schedule->blocks as $block) {
+        echo "  Block: {$block->startTime} - {$block->endTime}\n";
     }
 }
 ```
@@ -183,6 +193,8 @@ foreach ($schedules as $schedule) {
 ### Get This Week's Schedules
 
 ```php
+use Simpro\PhpSdk\Simpro\Query\Search;
+
 $startOfWeek = date('Y-m-d', strtotime('monday this week'));
 $endOfWeek = date('Y-m-d', strtotime('sunday this week'));
 
@@ -195,7 +207,8 @@ $schedules = $connector->schedules(companyId: 0)->list()
 foreach ($schedules as $date => $daySchedules) {
     echo "\n{$date}:\n";
     foreach ($daySchedules as $schedule) {
-        echo "  {$schedule->startTime}-{$schedule->endTime}: {$schedule->subject}\n";
+        $staffName = $schedule->staff?->name ?? 'Unassigned';
+        echo "  {$schedule->reference} ({$schedule->totalHours}h) - {$staffName}\n";
     }
 }
 ```
@@ -206,14 +219,14 @@ foreach ($schedules as $date => $daySchedules) {
 $staffId = 456;
 
 $schedules = $connector->schedules(companyId: 0)->list()
-    ->where('StaffID', '=', $staffId)
+    ->where('Staff.ID', '=', $staffId)
     ->orderByDesc('Date')
     ->collect()
     ->take(10)
     ->all();
 
 foreach ($schedules as $schedule) {
-    echo "{$schedule->date}: {$schedule->subject}\n";
+    echo "{$schedule->date}: {$schedule->reference} ({$schedule->totalHours}h)\n";
 }
 ```
 
@@ -227,9 +240,9 @@ $schedules = $connector->schedules(companyId: 0)->list()
     ->items();
 
 foreach ($schedules as $schedule) {
-    echo "Job Schedule: {$schedule->subject}\n";
-    if ($schedule->staffId) {
-        echo "  Staff ID: {$schedule->staffId}\n";
+    echo "Job Schedule: {$schedule->reference}\n";
+    if ($schedule->staff !== null) {
+        echo "  Staff: {$schedule->staff->name} (ID: {$schedule->staff->id})\n";
     }
 }
 ```
@@ -253,13 +266,16 @@ $schedules = $connector->schedules(companyId: 0)->list()
 // Transform for calendar display
 $calendarEvents = [];
 foreach ($schedules as $schedule) {
-    $calendarEvents[] = [
-        'id' => $schedule->id,
-        'title' => $schedule->subject,
-        'start' => $schedule->date . 'T' . ($schedule->startTime ?? '00:00'),
-        'end' => $schedule->date . 'T' . ($schedule->endTime ?? '23:59'),
-        'resourceId' => $schedule->staffId, // For resource-based calendar views
-    ];
+    // Each schedule may have multiple time blocks
+    foreach ($schedule->blocks as $block) {
+        $calendarEvents[] = [
+            'id' => $schedule->id,
+            'title' => $schedule->reference,
+            'start' => $schedule->date . 'T' . ($block->startTime ?? '00:00'),
+            'end' => $schedule->date . 'T' . ($block->endTime ?? '23:59'),
+            'resourceId' => $schedule->staff?->id, // For resource-based calendar views
+        ];
+    }
 }
 
 return $calendarEvents;
@@ -274,16 +290,18 @@ $checkStart = '09:00';
 $checkEnd = '12:00';
 
 $schedules = $connector->schedules(companyId: 0)->list()
-    ->where('StaffID', '=', $staffId)
+    ->where('Staff.ID', '=', $staffId)
     ->where('Date', '=', $checkDate)
     ->all();
 
 $isAvailable = true;
 foreach ($schedules as $schedule) {
-    // Simple overlap check
-    if ($schedule->startTime < $checkEnd && $schedule->endTime > $checkStart) {
-        $isAvailable = false;
-        echo "Conflict: {$schedule->subject} ({$schedule->startTime}-{$schedule->endTime})\n";
+    // Check each time block for overlap
+    foreach ($schedule->blocks as $block) {
+        if ($block->startTime < $checkEnd && $block->endTime > $checkStart) {
+            $isAvailable = false;
+            echo "Conflict: {$schedule->reference} ({$block->startTime}-{$block->endTime})\n";
+        }
     }
 }
 
@@ -338,16 +356,15 @@ $schedules = $connector->schedules(companyId: 0)->list()
     ->orderBy('Date')
     ->all();
 
-$csv = "ID,Date,Start,End,Subject,Staff,Type\n";
+$csv = "ID,Date,Reference,Staff,Type,Total Hours\n";
 foreach ($schedules as $schedule) {
     $csv .= implode(',', [
         $schedule->id,
         $schedule->date,
-        $schedule->startTime,
-        $schedule->endTime,
-        '"' . str_replace('"', '""', $schedule->subject ?? '') . '"',
-        '"' . str_replace('"', '""', $schedule->staff ?? '') . '"',
+        '"' . str_replace('"', '""', $schedule->reference ?? '') . '"',
+        '"' . str_replace('"', '""', $schedule->staff?->name ?? '') . '"',
         $schedule->type,
+        $schedule->totalHours,
     ]) . "\n";
 }
 

@@ -174,6 +174,101 @@ $connector = new SimproApiKeyConnector(
 );
 ```
 
+### Rate Limiting
+
+The SDK automatically handles Simpro's API rate limit of **10 requests per second** per base URL. By default, when the limit is reached, the SDK waits and retries automatically.
+
+See [Simpro's API documentation](https://developer.simprogroup.com/apidoc/#tag/Rate-Limiting) for more details on rate limits.
+
+#### Default Behavior
+
+Rate limiting is enabled by default with sensible settings:
+
+```php
+// No configuration needed - rate limiting works out of the box
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key'
+);
+```
+
+With default settings:
+- **10 requests per second** limit
+- **Sleep and retry** when limit is reached (no exceptions)
+- **Memory store** for tracking request counts (per-process)
+
+#### Custom Store
+
+For applications running multiple processes or workers, use a persistent store to share rate limit state:
+
+```php
+use Saloon\RateLimitPlugin\Stores\FileStore;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
+
+// File-based store for persistence across processes
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    rateLimitConfig: new RateLimitConfig(
+        store: new FileStore('/var/cache/simpro'),
+    ),
+);
+```
+
+For Laravel applications, you can use a cache-based store:
+
+```php
+use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
+
+// Use Laravel's Redis cache for distributed rate limiting
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    rateLimitConfig: new RateLimitConfig(
+        store: new LaravelCacheStore(Cache::store('redis')),
+    ),
+);
+```
+
+See [Saloon's Rate Limit Plugin documentation](https://docs.saloon.dev/installable-plugins/handling-rate-limits) for all available stores.
+
+#### Throwing Exceptions
+
+For queue jobs or situations where you want to handle rate limits yourself, configure the SDK to throw exceptions instead of sleeping:
+
+```php
+use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
+
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key',
+    rateLimitConfig: RateLimitConfig::throwing(),
+);
+
+try {
+    $response = $connector->send($request);
+} catch (RateLimitReachedException $e) {
+    // Release job back to queue with delay
+    $secondsToWait = $e->getLimit()->getRemainingSeconds();
+    // ... release job with $secondsToWait delay
+}
+```
+
+#### Disabling Rate Limiting
+
+If you need to disable rate limiting entirely:
+
+```php
+$connector = new SimproApiKeyConnector(
+    baseUrl: 'https://example.simprosuite.com/api/v1.0',
+    apiKey: 'your-api-key'
+);
+
+$connector->useRateLimitPlugin(false);
+```
+
 ### Handling Errors
 
 The SDK uses Saloon's `AlwaysThrowOnErrors` trait on the connector, which means exceptions will automatically be thrown whenever a request fails (4xx or 5xx response status codes). You don't need to manually check if a request failed or call `throw()` on responses - exceptions are thrown automatically.

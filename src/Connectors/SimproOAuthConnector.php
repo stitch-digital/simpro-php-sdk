@@ -6,6 +6,7 @@ namespace Simpro\PhpSdk\Simpro\Connectors;
 
 use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Traits\OAuth2\AuthorizationCodeGrant;
+use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
 
 /**
  * Simpro OAuth connector using Authorization Code Grant flow.
@@ -46,6 +47,7 @@ final class SimproOAuthConnector extends AbstractSimproConnector
      * @param  string  $redirectUri  The callback URL for OAuth (must match your registered OAuth app)
      * @param  array<string>  $scopes  Optional OAuth scopes (default: empty array)
      * @param  int  $requestTimeout  Request timeout in seconds (default: 10)
+     * @param  RateLimitConfig|null  $rateLimitConfig  Rate limit configuration (default: 10 req/sec with sleep)
      */
     public function __construct(
         string $baseUrl,
@@ -53,9 +55,10 @@ final class SimproOAuthConnector extends AbstractSimproConnector
         private readonly string $clientSecret,
         private readonly string $redirectUri,
         private readonly array $scopes = [],
-        int $requestTimeout = 10
+        int $requestTimeout = 10,
+        ?RateLimitConfig $rateLimitConfig = null,
     ) {
-        parent::__construct($baseUrl, $requestTimeout);
+        parent::__construct($baseUrl, $requestTimeout, $rateLimitConfig);
     }
 
     /**

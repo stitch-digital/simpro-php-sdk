@@ -6,15 +6,17 @@ The Employees resource provides full CRUD operations for managing employees (sta
 
 ### Basic List
 
-Returns all employees with pagination support:
+Returns all employees with pagination support. The list returns `EmployeeListItem` objects with minimal fields:
 
 ```php
 $employees = $connector->employees(companyId: 0)->list();
 
 foreach ($employees->items() as $employee) {
-    echo "{$employee->id}: {$employee->name} ({$employee->email})\n";
+    echo "{$employee->id}: {$employee->name}\n";
 }
 ```
+
+**Note:** For full employee details (email, phone, address, etc.), use `get()` to retrieve individual employees by ID.
 
 ### Filtering Employees
 
@@ -210,15 +212,14 @@ if ($response->successful()) {
 
 ### EmployeeListItem (List Response)
 
-Lightweight object returned by `list()`:
+Lightweight object returned by `list()`. Contains only minimal fields:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Employee ID |
 | `name` | `string` | Full name |
-| `email` | `?string` | Email address |
-| `phone` | `?string` | Phone number |
-| `isArchived` | `?bool` | Whether employee is archived |
+
+**Note:** For full employee details (email, phone, address, isArchived, etc.), use `get()` to retrieve the complete employee.
 
 ### Employee (Detailed Response)
 
@@ -262,7 +263,7 @@ $employees = $connector->employees(companyId: 0)->list()
     ->all();
 
 foreach ($employees as $employee) {
-    echo "{$employee->name} - {$employee->email}\n";
+    echo "{$employee->id}: {$employee->name}\n";
 }
 ```
 
@@ -417,18 +418,24 @@ return $export;
 ### Find Recently Modified Employees
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
-
-$cutoffDate = date('Y-m-d', strtotime('-7 days'));
+// Get all employees and filter by modification date client-side
+$cutoffDate = new DateTimeImmutable('-7 days');
 
 $employees = $connector->employees(companyId: 0)->list()
-    ->search(Search::make()->column('DateModified')->greaterThanOrEqual($cutoffDate))
-    ->orderByDesc('DateModified')
+    ->orderBy('Name')
     ->all();
 
+$recentlyModified = [];
 foreach ($employees as $employee) {
     $full = $connector->employees(companyId: 0)->get(employeeId: $employee->id);
-    echo "{$full->name} - Modified: {$full->dateModified?->format('Y-m-d H:i')}\n";
+
+    if ($full->dateModified !== null && $full->dateModified >= $cutoffDate) {
+        $recentlyModified[] = $full;
+    }
+}
+
+foreach ($recentlyModified as $employee) {
+    echo "{$employee->name} - Modified: {$employee->dateModified->format('Y-m-d H:i')}\n";
 }
 ```
 

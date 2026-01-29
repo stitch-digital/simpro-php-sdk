@@ -21,6 +21,7 @@
         "php": "^8.2",
         "illuminate/collections": "^11.0 || ^12.0",
         "saloonphp/pagination-plugin": "^2.2",
+        "saloonphp/rate-limit-plugin": "^2.0",
         "saloonphp/saloon": "^3.14"
     },
     "require-dev": {

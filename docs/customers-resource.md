@@ -6,15 +6,18 @@ The Customers resource provides operations for managing customers in your Simpro
 
 ### List All Customers
 
-Returns all customers (both companies and individuals) with pagination support:
+Returns all customers (both companies and individuals) with pagination support. The list returns `CustomerListItem` objects with minimal fields:
 
 ```php
 $customers = $connector->customers(companyId: 0)->list();
 
 foreach ($customers->items() as $customer) {
-    echo "{$customer->id}: {$customer->companyName} ({$customer->type})\n";
+    $name = $customer->companyName ?: "{$customer->givenName} {$customer->familyName}";
+    echo "{$customer->id}: {$name}\n";
 }
 ```
+
+**Note:** For full customer details (email, phone, address, etc.), use `getCompany()` to retrieve individual customers by ID.
 
 ### List Company Customers Only
 
@@ -236,15 +239,16 @@ if ($response->successful()) {
 
 ### CustomerListItem (List Response)
 
-Lightweight object returned by `list()` and `listCompanies()`:
+Lightweight object returned by `list()` and `listCompanies()`. Contains only minimal fields:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Customer ID |
 | `companyName` | `string` | Company name |
-| `type` | `string` | Customer type (Company or Individual) |
-| `email` | `?string` | Email address |
-| `phone` | `?string` | Phone number |
+| `givenName` | `string` | Given name (for individuals) |
+| `familyName` | `string` | Family name (for individuals) |
+
+**Note:** For full customer details (type, email, phone, address, etc.), use `getCompany()` to retrieve the complete customer.
 
 ### Customer (Detailed Response)
 
@@ -289,7 +293,8 @@ $customers = $connector->customers(companyId: 0)->list()
     ->all();
 
 foreach ($customers as $customer) {
-    echo "{$customer->companyName} - {$customer->email}\n";
+    $name = $customer->companyName ?: "{$customer->givenName} {$customer->familyName}";
+    echo "{$customer->id}: {$name}\n";
 }
 ```
 
@@ -468,19 +473,20 @@ return $export;
 ### Find Customers Without Email
 
 ```php
-use Simpro\PhpSdk\Simpro\Query\Search;
-
 $customers = $connector->customers(companyId: 0)->listCompanies()
     ->where('IsArchived', '=', false)
     ->all();
 
 $missingEmail = [];
 foreach ($customers as $customer) {
-    if (empty($customer->email)) {
+    // Get full customer details to check email
+    $full = $connector->customers(companyId: 0)->getCompany(customerId: $customer->id);
+
+    if (empty($full->email)) {
         $missingEmail[] = [
-            'id' => $customer->id,
-            'name' => $customer->companyName,
-            'phone' => $customer->phone,
+            'id' => $full->id,
+            'name' => $full->companyName,
+            'phone' => $full->phone,
         ];
     }
 }
@@ -500,19 +506,15 @@ $summary = [
     'total' => count($allCustomers),
     'companies' => 0,
     'individuals' => 0,
-    'active' => 0,
-    'archived' => 0,
 ];
 
 foreach ($allCustomers as $customer) {
-    if ($customer->type === 'Company') {
+    // Determine type based on whether companyName is set
+    if (!empty($customer->companyName)) {
         $summary['companies']++;
     } else {
         $summary['individuals']++;
     }
-
-    // Note: isArchived not available in list response
-    // Would need to fetch full details to check
 }
 
 echo "Customer Summary:\n";
