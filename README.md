@@ -566,6 +566,7 @@ class SyncJobsCommand extends Command
 
 - [Saloon Laravel Integration](https://docs.saloon.dev/installable-plugins/laravel-integration)
 - [Saloon OAuth2 Authentication](https://docs.saloon.dev/digging-deeper/oauth2-authentication/oauth2-authentication)
+- [Understanding Simpro Grant Types](https://developer.simprogroup.com/apidoc/?page=b0d64c044a432c8e0f9f01e0641d5596)
 
 ### Handling Errors
 
