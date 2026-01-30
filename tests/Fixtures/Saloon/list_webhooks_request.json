@@ -1,0 +1,18 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "Job Update Trigger"
+    },
+    {
+      "ID": 2,
+      "Name": "Invoice Created Trigger"
+    }
+  ]
+}

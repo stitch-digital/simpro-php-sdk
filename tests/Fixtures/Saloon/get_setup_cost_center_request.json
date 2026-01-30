@@ -1,0 +1,28 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": {
+        "ID": 1,
+        "Name": "Service",
+        "IncomeAccountNo": "4000",
+        "ExpenseAccountNo": "5000",
+        "AccrualRevAccountNo": null,
+        "DeferralRevAccountNo": null,
+        "MonthlySalesBudget": 50000.00,
+        "MonthlyExpenditureBudget": 25000.00,
+        "Archived": false,
+        "IsMembershipCostCenter": false,
+        "Rates": {
+            "LaborRate": {
+                "ID": 1,
+                "Name": "Standard Labor Rate"
+            },
+            "ServiceFee": {
+                "ID": 2,
+                "Name": "Standard Service Fee"
+            }
+        }
+    }
+}

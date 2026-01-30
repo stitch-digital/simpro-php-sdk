@@ -1,0 +1,60 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": [
+    {
+      "Job": {
+        "ID": 12345
+      },
+      "Customer": {
+        "ID": 67890
+      },
+      "Site": {
+        "ID": 11111
+      },
+      "RequestNumber": "REQ-001",
+      "OriginalEstimatedBudget": {
+        "Materials": 10000.00,
+        "Resources": 15000.00,
+        "ResourceHours": 100.00
+      },
+      "RevisedEstimatedBudget": {
+        "Materials": 12000.00,
+        "Resources": 18000.00,
+        "ResourceHours": 120.00
+      },
+      "RevizedEstimatedBudget": {
+        "Materials": 12000.00,
+        "Resources": 18000.00,
+        "ResourceHours": 120.00
+      },
+      "CurrentBudget": {
+        "Materials": 12000.00,
+        "Resources": 18000.00,
+        "ResourceHours": 120.00
+      },
+      "ActualToDate": {
+        "Materials": 8000.00,
+        "Resources": 12000.00,
+        "ResourceHours": 80.00
+      },
+      "ForecastRemaining": {
+        "Materials": 4000.00,
+        "Resources": 6000.00,
+        "ResourceHours": 40.00
+      },
+      "Variance": {
+        "Materials": 0.00,
+        "Resources": 0.00,
+        "ResourceHours": 0.00
+      },
+      "Percentage": {
+        "Materials": 66.67,
+        "Resources": 66.67,
+        "ResourceHours": 66.67
+      }
+    }
+  ]
+}

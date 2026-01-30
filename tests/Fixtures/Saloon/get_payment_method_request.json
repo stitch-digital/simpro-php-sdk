@@ -1,0 +1,13 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Name": "Cash",
+    "AccountNo": "1001",
+    "Type": "Bank",
+    "FinanceCharge": 0.0
+  }
+}

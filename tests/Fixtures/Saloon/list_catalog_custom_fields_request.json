@@ -1,0 +1,18 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Name": "Serial Number",
+            "Type": "Text"
+        },
+        {
+            "ID": 2,
+            "Name": "Warranty Period",
+            "Type": "Number"
+        }
+    ]
+}

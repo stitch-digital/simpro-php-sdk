@@ -1,0 +1,17 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Name": "Job Update Trigger",
+    "CallbackURL": "https://example.com/webhook",
+    "Secret": "secret123",
+    "Email": "admin@example.com",
+    "Description": "Triggers when a job is updated",
+    "Events": ["job.created", "job.updated", "job.deleted"],
+    "Status": "Enabled",
+    "DateCreated": "2024-01-15"
+  }
+}

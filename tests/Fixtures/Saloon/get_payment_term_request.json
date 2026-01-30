@@ -1,0 +1,13 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "PaymentTermID": 1,
+    "PaymentTermName": "Net 30",
+    "Days": 30,
+    "Type": "Invoice",
+    "IsDefault": true
+  }
+}

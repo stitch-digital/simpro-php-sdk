@@ -1,0 +1,10 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Name": "North Zone"
+  }
+}

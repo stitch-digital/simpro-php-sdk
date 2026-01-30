@@ -4730,108 +4730,108 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Accounts > accCategories
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/accCategories/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/accCategories/`
   - **Description**: List all accounting categories.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/accounts/accCategories/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/accounts/accCategories/`
   - **Description**: Create a new accounting category.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID}`
   - **Description**: Retrieve details for a specific accounting category.
   - **Parameters**: `companyID`, `accCategoryID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID}`
   - **Description**: Update a accounting category.
   - **Parameters**: `companyID`, `accCategoryID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID}`
   - **Description**: Delete a accounting category.
   - **Parameters**: `companyID`, `accCategoryID`
   - **Response**: No Content
 
 #### Accounts > businessGroups
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/`
   - **Description**: List all business groups.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/`
   - **Description**: Create a new business group.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID}`
   - **Description**: Retrieve details for a specific business group.
   - **Parameters**: `companyID`, `businessGroupID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID}`
   - **Description**: Update a business group.
   - **Parameters**: `companyID`, `businessGroupID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID}`
   - **Description**: Delete a business group.
   - **Parameters**: `companyID`, `businessGroupID`
   - **Response**: No Content
 
 #### Accounts > chartOfAccounts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/`
   - **Description**: List all chart of accounts.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/`
   - **Description**: Create a new chart of account.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID}`
   - **Description**: Retrieve details for a specific chart of account.
   - **Parameters**: `companyID`, `accountID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID}`
   - **Description**: Update a chart of account.
   - **Parameters**: `companyID`, `accountID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID}`
   - **Description**: Delete a chart of account.
   - **Parameters**: `companyID`, `accountID`
   - **Response**: No Content
 
 #### Accounts > costCenters
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/costCenters/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/costCenters/`
   - **Description**: List all cost centers.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/accounts/costCenters/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/accounts/costCenters/`
   - **Description**: Create a new cost center.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID}`
   - **Description**: Retrieve details for a specific cost center.
   - **Parameters**: `companyID`, `costCenterID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID}`
   - **Description**: Update a cost center.
   - **Parameters**: `companyID`, `costCenterID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID}`
   - **Description**: Delete a cost center.
   - **Parameters**: `companyID`, `costCenterID`
   - **Response**: No Content
@@ -4980,888 +4980,888 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Activities
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/activities/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/activities/`
   - **Description**: List all activities.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/activities/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/activities/`
   - **Description**: Create a new activity.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/activities/{activityID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/activities/{activityID}`
   - **Description**: Retrieve details for a specific activity.
   - **Parameters**: `companyID`, `activityID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/activities/{activityID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/activities/{activityID}`
   - **Description**: Update a activity.
   - **Parameters**: `companyID`, `activityID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/activities/{activityID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/activities/{activityID}`
   - **Description**: Delete a activity.
   - **Parameters**: `companyID`, `activityID`
   - **Response**: No Content
 
 #### ArchiveReasons > quotes
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/`
   - **Description**: List all quote archive reasons.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/`
   - **Description**: Create a new quote archive reason.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID}`
   - **Description**: Retrieve details for a specific quote archive reason.
   - **Parameters**: `companyID`, `archiveReasonID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID}`
   - **Description**: Update a quote archive reason.
   - **Parameters**: `companyID`, `archiveReasonID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID}`
   - **Description**: Delete a quote archive reason.
   - **Parameters**: `companyID`, `archiveReasonID`
   - **Response**: No Content
 
 #### AssetTypes
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/`
   - **Description**: List all asset types.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/`
   - **Description**: Create a new asset type.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}`
   - **Description**: Retrieve details for a specific asset type.
   - **Parameters**: `companyID`, `assetTypeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}`
   - **Description**: Update a asset type.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}`
   - **Description**: Delete a asset type.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: No Content
 
 #### AssetTypes > attachments > files
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/`
   - **Description**: List all asset type attachments.
   - **Parameters**: `companyID`, `assetTypeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/`
   - **Description**: Create a new asset type attachment.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/{fileID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/{fileID}`
   - **Description**: Retrieve details for a specific asset type attachment.
   - **Parameters**: `companyID`, `assetTypeID`, `fileID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/{fileID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/{fileID}`
   - **Description**: Update a asset type attachment.
   - **Parameters**: `companyID`, `assetTypeID`, `fileID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/{fileID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/files/{fileID}`
   - **Description**: Delete a asset type attachment.
   - **Parameters**: `companyID`, `assetTypeID`, `fileID`
   - **Response**: No Content
 
 #### AssetTypes > attachments > folders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/`
   - **Description**: List all asset type attachment folders.
   - **Parameters**: `companyID`, `assetTypeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/`
   - **Description**: Create a new asset type attachment folder.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/{folderID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/{folderID}`
   - **Description**: Retrieve details for a specific asset type attachment folder.
   - **Parameters**: `companyID`, `assetTypeID`, `folderID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/{folderID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/{folderID}`
   - **Description**: Update a asset type attachment folder.
   - **Parameters**: `companyID`, `assetTypeID`, `folderID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/{folderID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/attachments/folders/{folderID}`
   - **Description**: Delete a asset type attachment folder.
   - **Parameters**: `companyID`, `assetTypeID`, `folderID`
   - **Response**: No Content
 
 #### AssetTypes > customFields
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/`
   - **Description**: List all asset type custom fields.
   - **Parameters**: `companyID`, `assetTypeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/`
   - **Description**: Create a new asset type custom field.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/{assetTypeCustomFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/{assetTypeCustomFieldID}`
   - **Description**: Retrieve details for a specific asset type custom field.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeCustomFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/{assetTypeCustomFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/{assetTypeCustomFieldID}`
   - **Description**: Update a asset type custom field.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeCustomFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/{assetTypeCustomFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/customFields/{assetTypeCustomFieldID}`
   - **Description**: Delete a asset type custom field.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeCustomFieldID`
   - **Response**: No Content
 
 #### AssetTypes > serviceLevels
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/`
   - **Description**: List all asset type service levels.
   - **Parameters**: `companyID`, `assetTypeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/`
   - **Description**: Create a new asset type service level.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}`
   - **Description**: Retrieve details for a specific asset type service level.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}`
   - **Description**: Update a asset type service level.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}`
   - **Description**: Delete a asset type service level.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`
   - **Response**: No Content
 
 #### AssetTypes > serviceLevels > failurePoints
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/`
   - **Description**: List all failure points.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/`
   - **Description**: Create a new failure point.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}`
   - **Description**: Retrieve details for a specific failure point.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}`
   - **Description**: Update a failure point.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}`
   - **Description**: Delete a failure point.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`
   - **Response**: No Content
 
 #### AssetTypes > serviceLevels > failurePoints > recommendations
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/`
   - **Description**: List all recommendations.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/`
   - **Description**: Create a new recommendation.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/{recommendationID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/{recommendationID}`
   - **Description**: Retrieve details for a specific recommendation.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`, `recommendationID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/{recommendationID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/{recommendationID}`
   - **Description**: Update a recommendation.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`, `recommendationID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/{recommendationID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/serviceLevels/{assetTypeServiceLevelID}/failurePoints/{failurePointID}/recommendations/{recommendationID}`
   - **Description**: Delete a recommendation.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeServiceLevelID`, `failurePointID`, `recommendationID`
   - **Response**: No Content
 
 #### AssetTypes > testReadings
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/`
   - **Description**: List all test readings.
   - **Parameters**: `companyID`, `assetTypeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/`
   - **Description**: Create a new test readings.
   - **Parameters**: `companyID`, `assetTypeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/{assetTypeTestReadingID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/{assetTypeTestReadingID}`
   - **Description**: Retrieve details for a specific test readings.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeTestReadingID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/{assetTypeTestReadingID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/{assetTypeTestReadingID}`
   - **Description**: Update a test readings.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeTestReadingID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/{assetTypeTestReadingID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assetTypes/{assetTypeID}/testReadings/{assetTypeTestReadingID}`
   - **Description**: Delete a test readings.
   - **Parameters**: `companyID`, `assetTypeID`, `assetTypeTestReadingID`
   - **Response**: No Content
 
 #### Assets > serviceLevels
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/`
   - **Description**: List all service levels.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/`
   - **Description**: Create a new service level.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID}`
   - **Description**: Retrieve details for a specific service level.
   - **Parameters**: `companyID`, `serviceLevelID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID}`
   - **Description**: Update a service level.
   - **Parameters**: `companyID`, `serviceLevelID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID}`
   - **Description**: Delete a service level.
   - **Parameters**: `companyID`, `serviceLevelID`
   - **Response**: No Content
 
 #### Commissions
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/commissions/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/commissions/`
   - **Description**: List all commissions.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?
   - **Response**: Array of object
 
 #### Commissions > advanced
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/commissions/advanced/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/commissions/advanced/`
   - **Description**: List all advanced commissions.
   - **Parameters**: `companyID`, `commissionType`, `search`?, `columns`?, `pageSize`?, `page`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/commissions/advanced/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/commissions/advanced/`
   - **Description**: Create a new advanced commission.
   - **Parameters**: `companyID`, `commissionType`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/commissions/advanced/{commissionID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/commissions/advanced/{commissionID}`
   - **Description**: Retrieve details for a specific advanced commission.
   - **Parameters**: `companyID`, `commissionType`, `commissionID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/commissions/advanced/{commissionID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/commissions/advanced/{commissionID}`
   - **Description**: Update a advanced commission.
   - **Parameters**: `companyID`, `commissionType`, `commissionID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/commissions/advanced/{commissionID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/commissions/advanced/{commissionID}`
   - **Description**: Delete a advanced commission.
   - **Parameters**: `companyID`, `commissionType`, `commissionID`
   - **Response**: No Content
 
 #### Commissions > basic
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/commissions/basic/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/commissions/basic/`
   - **Description**: List all basic commissions.
   - **Parameters**: `companyID`, `commissionType`, `search`?, `columns`?, `pageSize`?, `page`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/commissions/basic/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/commissions/basic/`
   - **Description**: Create a new basic commission.
   - **Parameters**: `companyID`, `commissionType`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/commissions/basic/{commissionID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/commissions/basic/{commissionID}`
   - **Description**: Retrieve details for a specific basic commission.
   - **Parameters**: `companyID`, `commissionType`, `commissionID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/commissions/basic/{commissionID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/commissions/basic/{commissionID}`
   - **Description**: Update a basic commission.
   - **Parameters**: `companyID`, `commissionType`, `commissionID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/commissions/basic/{commissionID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/commissions/basic/{commissionID}`
   - **Description**: Delete a basic commission.
   - **Parameters**: `companyID`, `commissionType`, `commissionID`
   - **Response**: No Content
 
 #### Currencies
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/currencies/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/currencies/`
   - **Description**: List all currencies.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/currencies/{currencyID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/currencies/{currencyID}`
   - **Description**: Retrieve details for a specific currency.
   - **Parameters**: `companyID`, `currencyID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/currencies/{currencyID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/currencies/{currencyID}`
   - **Description**: Update a currency.
   - **Parameters**: `companyID`, `currencyID`
   - **Response**: No Content
 
 #### CustomFields > catalogs
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/catalogs/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/catalogs/`
   - **Description**: List all catalog item custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/catalogs/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/catalogs/`
   - **Description**: Create a new catalog item custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/catalogs/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/catalogs/{customFieldID}`
   - **Description**: Retrieve details for a specific catalog item custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/catalogs/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/catalogs/{customFieldID}`
   - **Description**: Update a catalog item custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/catalogs/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/catalogs/{customFieldID}`
   - **Description**: Delete a catalog item custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > contacts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contacts/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contacts/`
   - **Description**: List all contact custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/contacts/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/contacts/`
   - **Description**: Create a new contact custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contacts/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contacts/{customFieldID}`
   - **Description**: Retrieve details for a specific contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contacts/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contacts/{customFieldID}`
   - **Description**: Update a contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contacts/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contacts/{customFieldID}`
   - **Description**: Delete a contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > contractorInvoices
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/`
   - **Description**: List all contractor invoice custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/`
   - **Description**: Create a new contractor invoice custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/{contractorInvoiceID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/{contractorInvoiceID}`
   - **Description**: Retrieve details for a specific contractor invoice custom field (setup).
   - **Parameters**: `companyID`, `contractorInvoiceID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/{contractorInvoiceID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/{contractorInvoiceID}`
   - **Description**: Update a contractor invoice custom field (setup).
   - **Parameters**: `companyID`, `contractorInvoiceID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/{contractorInvoiceID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contractorInvoices/{contractorInvoiceID}`
   - **Description**: Delete a contractor invoice custom field (setup).
   - **Parameters**: `companyID`, `contractorInvoiceID`
   - **Response**: No Content
 
 #### CustomFields > contractorJobs
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/`
   - **Description**: List all contractor job custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/`
   - **Description**: Create a new contractor job custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/{contractorJobID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/{contractorJobID}`
   - **Description**: Retrieve details for a specific contractor job custom field (setup).
   - **Parameters**: `companyID`, `contractorJobID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/{contractorJobID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/{contractorJobID}`
   - **Description**: Update a contractor job custom field (setup).
   - **Parameters**: `companyID`, `contractorJobID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/{contractorJobID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contractorJobs/{contractorJobID}`
   - **Description**: Delete a contractor job custom field (setup).
   - **Parameters**: `companyID`, `contractorJobID`
   - **Response**: No Content
 
 #### CustomFields > contractors
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractors/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractors/`
   - **Description**: List all contractor custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/contractors/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/contractors/`
   - **Description**: Create a new contractor custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractors/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/contractors/{customFieldID}`
   - **Description**: Retrieve details for a specific contractor custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contractors/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/contractors/{customFieldID}`
   - **Description**: Update a contractor custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contractors/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/contractors/{customFieldID}`
   - **Description**: Delete a contractor custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > customerContacts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/`
   - **Description**: List all customer contact custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/`
   - **Description**: Create a new customer contact custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/{customFieldID}`
   - **Description**: Retrieve details for a specific customer contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/{customFieldID}`
   - **Description**: Update a customer contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/customerContacts/{customFieldID}`
   - **Description**: Delete a customer contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > customerContracts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/`
   - **Description**: List all customer contract custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/`
   - **Description**: Create a new customer contract custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/{customFieldID}`
   - **Description**: Retrieve details for a specific customer contract custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/{customFieldID}`
   - **Description**: Update a customer contract custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/customerContracts/{customFieldID}`
   - **Description**: Delete a customer contract custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > customers
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/customers/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/customers/`
   - **Description**: List all customer custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/customers/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/customers/`
   - **Description**: Create a new customer custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/customers/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/customers/{customFieldID}`
   - **Description**: Retrieve details for a specific customer custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/customers/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/customers/{customFieldID}`
   - **Description**: Update a customer custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/customers/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/customers/{customFieldID}`
   - **Description**: Delete a customer custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > employees
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/employees/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/employees/`
   - **Description**: List all employee custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/employees/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/employees/`
   - **Description**: Create a new employee custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/employees/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/employees/{customFieldID}`
   - **Description**: Retrieve details for a specific employee custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/employees/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/employees/{customFieldID}`
   - **Description**: Update a employee custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/employees/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/employees/{customFieldID}`
   - **Description**: Delete a employee custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > invoices
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/invoices/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/invoices/`
   - **Description**: List all invoice custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/invoices/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/invoices/`
   - **Description**: Create a new invoice custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/invoices/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/invoices/{customFieldID}`
   - **Description**: Retrieve details for a specific invoice custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/invoices/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/invoices/{customFieldID}`
   - **Description**: Update a invoice custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/invoices/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/invoices/{customFieldID}`
   - **Description**: Delete a invoice custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > prebuilds
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/`
   - **Description**: List all prebuild item custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/`
   - **Description**: Create a new prebuild item custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/{customFieldID}`
   - **Description**: Retrieve details for a specific prebuild item custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/{customFieldID}`
   - **Description**: Update a prebuild item custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/prebuilds/{customFieldID}`
   - **Description**: Delete a prebuild item custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > projects
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/projects/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/projects/`
   - **Description**: List all project custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/projects/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/projects/`
   - **Description**: Create a new project custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/projects/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/projects/{customFieldID}`
   - **Description**: Retrieve details for a specific project custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/projects/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/projects/{customFieldID}`
   - **Description**: Update a project custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/projects/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/projects/{customFieldID}`
   - **Description**: Delete a project custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > siteContacts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/`
   - **Description**: List all site contact custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/`
   - **Description**: Create a new site contact custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/{customFieldID}`
   - **Description**: Retrieve details for a specific site contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/{customFieldID}`
   - **Description**: Update a site contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/siteContacts/{customFieldID}`
   - **Description**: Delete a site contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > sites
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/sites/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/sites/`
   - **Description**: List all site custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/sites/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/sites/`
   - **Description**: Create a new site custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/sites/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/sites/{customFieldID}`
   - **Description**: Retrieve details for a specific site custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/sites/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/sites/{customFieldID}`
   - **Description**: Update a site custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/sites/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/sites/{customFieldID}`
   - **Description**: Delete a site custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > tasks
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/tasks/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/tasks/`
   - **Description**: List all task custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/tasks/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/tasks/`
   - **Description**: Create a new task custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/tasks/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/tasks/{customFieldID}`
   - **Description**: Retrieve details for a specific task custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/tasks/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/tasks/{customFieldID}`
   - **Description**: Update a task custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/tasks/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/tasks/{customFieldID}`
   - **Description**: Delete a task custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > vendorContacts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/`
   - **Description**: List all vendor contact custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/`
   - **Description**: Create a new vendor contact custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/{customFieldID}`
   - **Description**: Retrieve details for a specific vendor contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/{customFieldID}`
   - **Description**: Update a vendor contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/vendorContacts/{customFieldID}`
   - **Description**: Delete a vendor contact custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > vendorOrders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/`
   - **Description**: List all vendor order custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/`
   - **Description**: Create a new vendor order custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/{customFieldID}`
   - **Description**: Retrieve details for a specific vendor order custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/{customFieldID}`
   - **Description**: Update a vendor order custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/vendorOrders/{customFieldID}`
   - **Description**: Delete a vendor order custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > vendors
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendors/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendors/`
   - **Description**: List all vendor custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/vendors/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/vendors/`
   - **Description**: Create a new vendor custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendors/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/vendors/{customFieldID}`
   - **Description**: Retrieve details for a specific vendor custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/vendors/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/vendors/{customFieldID}`
   - **Description**: Update a vendor custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/vendors/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/vendors/{customFieldID}`
   - **Description**: Delete a vendor custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
 #### CustomFields > workOrders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/workOrders/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/workOrders/`
   - **Description**: List all work order custom fields (setup).
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customFields/workOrders/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customFields/workOrders/`
   - **Description**: Create a new work order custom field (setup).
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customFields/workOrders/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customFields/workOrders/{customFieldID}`
   - **Description**: Retrieve details for a specific work order custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/workOrders/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customFields/workOrders/{customFieldID}`
   - **Description**: Update a work order custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/workOrders/{customFieldID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customFields/workOrders/{customFieldID}`
   - **Description**: Delete a work order custom field (setup).
   - **Parameters**: `companyID`, `customFieldID`
   - **Response**: No Content
@@ -5895,497 +5895,497 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### CustomerProfiles
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customerProfiles/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customerProfiles/`
   - **Description**: List all customer profiles.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/customerProfiles/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/customerProfiles/`
   - **Description**: Create a new customer profile.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID}`
   - **Description**: Retrieve details for a specific customer profile.
   - **Parameters**: `companyID`, `customerProfileID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID}`
   - **Description**: Update a customer profile.
   - **Parameters**: `companyID`, `customerProfileID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID}`
   - **Description**: Delete a customer profile.
   - **Parameters**: `companyID`, `customerProfileID`
   - **Response**: No Content
 
 #### Defaults
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/defaults/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/defaults/`
   - **Description**: Retrieve details for a specific company default settings.
   - **Parameters**: `columns`?
   - **Response**: object
 
 #### Labor > fitTimes
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/fitTimes/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/fitTimes/`
   - **Description**: List all fit times.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/labor/fitTimes/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/labor/fitTimes/`
   - **Description**: Create a new fit time.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/fitTimes/{fitTimeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/fitTimes/{fitTimeID}`
   - **Description**: Retrieve details for a specific fit time.
   - **Parameters**: `companyID`, `fitTimeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/labor/fitTimes/{fitTimeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/labor/fitTimes/{fitTimeID}`
   - **Description**: Update a fit time.
   - **Parameters**: `companyID`, `fitTimeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/labor/fitTimes/{fitTimeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/labor/fitTimes/{fitTimeID}`
   - **Description**: Delete a fit time.
   - **Parameters**: `companyID`, `fitTimeID`
   - **Response**: No Content
 
 #### Labor > laborRates
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/laborRates/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/laborRates/`
   - **Description**: List all labor rates.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/labor/laborRates/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/labor/laborRates/`
   - **Description**: Create a new labor rate.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/laborRates/{laborRateID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/laborRates/{laborRateID}`
   - **Description**: Retrieve details for a specific labor rate.
   - **Parameters**: `companyID`, `laborRateID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/labor/laborRates/{laborRateID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/labor/laborRates/{laborRateID}`
   - **Description**: Update a labor rate.
   - **Parameters**: `companyID`, `laborRateID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/labor/laborRates/{laborRateID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/labor/laborRates/{laborRateID}`
   - **Description**: Delete a labor rate.
   - **Parameters**: `companyID`, `laborRateID`
   - **Response**: No Content
 
 #### Labor > laborRates > overhead
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/laborRates/overhead/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/laborRates/overhead/`
   - **Description**: Retrieve details for a specific labor rate overhead.
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/labor/laborRates/overhead/`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/labor/laborRates/overhead/`
   - **Description**: Update a labor rate overhead.
   - **Response**: No Content
 
 #### Labor > plantRates
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/plantRates/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/plantRates/`
   - **Description**: List all plant rates.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/plantRates/{plantRateID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/plantRates/{plantRateID}`
   - **Description**: Retrieve details for a specific plant rate.
   - **Parameters**: `companyID`, `plantRateID`, `columns`?
   - **Response**: object
 
 #### Labor > scheduleRates
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/`
   - **Description**: List all schedule rates.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/`
   - **Description**: Create a new schedule rate.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/{scheduleRateID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/{scheduleRateID}`
   - **Description**: Retrieve details for a specific schedule rate.
   - **Parameters**: `companyID`, `scheduleRateID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/{scheduleRateID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/{scheduleRateID}`
   - **Description**: Update a schedule rate.
   - **Parameters**: `companyID`, `scheduleRateID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/{scheduleRateID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/labor/scheduleRates/{scheduleRateID}`
   - **Description**: Delete a schedule rate.
   - **Parameters**: `companyID`, `scheduleRateID`
   - **Response**: No Content
 
 #### Labor > serviceFees
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/serviceFees/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/serviceFees/`
   - **Description**: List all service fees.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/labor/serviceFees/{serviceFeeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/labor/serviceFees/{serviceFeeID}`
   - **Description**: Retrieve details for a specific service fee.
   - **Parameters**: `companyID`, `serviceFeeID`, `columns`?
   - **Response**: object
 
 #### Materials > pricingTiers
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/`
   - **Description**: List all pricing tiers.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/`
   - **Description**: Create a new pricing tier.
   - **Parameters**: `companyID`, `makeDefault`?, `updateCustomers`?
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/{pricingTierID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/{pricingTierID}`
   - **Description**: Retrieve details for a specific pricing tier.
   - **Parameters**: `companyID`, `pricingTierID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/{pricingTierID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/{pricingTierID}`
   - **Description**: Update a pricing tier.
   - **Parameters**: `companyID`, `pricingTierID`, `makeDefault`?, `updateCustomers`?
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/{pricingTierID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/materials/pricingTiers/{pricingTierID}`
   - **Description**: Delete a pricing tier.
   - **Parameters**: `companyID`, `pricingTierID`
   - **Response**: No Content
 
 #### Materials > purchasingStages
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/`
   - **Description**: List all purchasing stages.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/`
   - **Description**: Create a new purchasing stage.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/{purchasingStageID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/{purchasingStageID}`
   - **Description**: Retrieve details for a specific purchasing stage.
   - **Parameters**: `companyID`, `purchasingStageID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/{purchasingStageID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/{purchasingStageID}`
   - **Description**: Update a purchasing stage.
   - **Parameters**: `companyID`, `purchasingStageID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/{purchasingStageID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/materials/purchasingStages/{purchasingStageID}`
   - **Description**: Delete a purchasing stage.
   - **Parameters**: `companyID`, `purchasingStageID`
   - **Response**: No Content
 
 #### Materials > stockTakeReasons
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/`
   - **Description**: List all stock take reasons.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/`
   - **Description**: Create a new stock take reason.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/{optionID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/{optionID}`
   - **Description**: Retrieve details for a specific stock take reason.
   - **Parameters**: `companyID`, `optionID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/{optionID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/{optionID}`
   - **Description**: Update a stock take reason.
   - **Parameters**: `companyID`, `optionID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/{optionID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/materials/stockTakeReasons/{optionID}`
   - **Description**: Delete a stock take reason.
   - **Parameters**: `companyID`, `optionID`
   - **Response**: No Content
 
 #### Materials > stockTransferReasons
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/`
   - **Description**: List all stock transfer reasons.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/`
   - **Description**: Create a new stock transfer reason.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/{optionID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/{optionID}`
   - **Description**: Retrieve details for a specific stock transfer reason.
   - **Parameters**: `companyID`, `optionID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/{optionID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/{optionID}`
   - **Description**: Update a stock transfer reason.
   - **Parameters**: `companyID`, `optionID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/{optionID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/materials/stockTransferReasons/{optionID}`
   - **Description**: Delete a stock transfer reason.
   - **Parameters**: `companyID`, `optionID`
   - **Response**: No Content
 
 #### Materials > uoms
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/uoms/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/uoms/`
   - **Description**: List all units of measurement.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/materials/uoms/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/materials/uoms/`
   - **Description**: Create a new unit of measurement.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/materials/uoms/{uomID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/materials/uoms/{uomID}`
   - **Description**: Retrieve details for a specific unit of measurement.
   - **Parameters**: `companyID`, `uomID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/materials/uoms/{uomID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/materials/uoms/{uomID}`
   - **Description**: Update a unit of measurement.
   - **Parameters**: `companyID`, `uomID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/materials/uoms/{uomID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/materials/uoms/{uomID}`
   - **Description**: Delete a unit of measurement.
   - **Parameters**: `companyID`, `uomID`
   - **Response**: No Content
 
 #### ResponseTimes
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/responseTimes/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/responseTimes/`
   - **Description**: List all response times.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/responseTimes/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/responseTimes/`
   - **Description**: Create a new response time.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID}`
   - **Description**: Retrieve details for a specific response time.
   - **Parameters**: `companyID`, `responseTimeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID}`
   - **Description**: Update a response time.
   - **Parameters**: `companyID`, `responseTimeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID}`
   - **Description**: Delete a response time.
   - **Parameters**: `companyID`, `responseTimeID`
   - **Response**: No Content
 
 #### SecurityGroups
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/securityGroups/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/securityGroups/`
   - **Description**: List all security groups.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/securityGroups/{securityGroupID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/securityGroups/{securityGroupID}`
   - **Description**: Retrieve details for a specific security group.
   - **Parameters**: `companyID`, `securityGroupID`, `columns`?
   - **Response**: object
 
 #### StatusCodes > customerInvoices
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/`
   - **Description**: List all customer invoice status codes.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/`
   - **Description**: Create a new customer invoice status code.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/{statusCodeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/{statusCodeID}`
   - **Description**: Retrieve details for a specific customer invoice status code.
   - **Parameters**: `companyID`, `statusCodeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/{statusCodeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/{statusCodeID}`
   - **Description**: Update a customer invoice status code.
   - **Parameters**: `companyID`, `statusCodeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/{statusCodeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/statusCodes/customerInvoices/{statusCodeID}`
   - **Description**: Delete a customer invoice status code.
   - **Parameters**: `companyID`, `statusCodeID`
   - **Response**: No Content
 
 #### StatusCodes > projects
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/projects/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/projects/`
   - **Description**: List all project status codes.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/statusCodes/projects/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/statusCodes/projects/`
   - **Description**: Create a new project status code.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/projects/{statusCodeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/projects/{statusCodeID}`
   - **Description**: Retrieve details for a specific project status code.
   - **Parameters**: `companyID`, `statusCodeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/statusCodes/projects/{statusCodeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/statusCodes/projects/{statusCodeID}`
   - **Description**: Update a project status code.
   - **Parameters**: `companyID`, `statusCodeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/statusCodes/projects/{statusCodeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/statusCodes/projects/{statusCodeID}`
   - **Description**: Delete a project status code.
   - **Parameters**: `companyID`, `statusCodeID`
   - **Response**: No Content
 
 #### StatusCodes > vendorOrders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/`
   - **Description**: List all vendor order status codes.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/`
   - **Description**: Create a new vendor order status code.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/{statusCodeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/{statusCodeID}`
   - **Description**: Retrieve details for a specific vendor order status code.
   - **Parameters**: `companyID`, `statusCodeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/{statusCodeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/{statusCodeID}`
   - **Description**: Update a vendor order status code.
   - **Parameters**: `companyID`, `statusCodeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/{statusCodeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/statusCodes/vendorOrders/{statusCodeID}`
   - **Description**: Delete a vendor order status code.
   - **Parameters**: `companyID`, `statusCodeID`
   - **Response**: No Content
 
 #### Tags > customers
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/tags/customers/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/tags/customers/`
   - **Description**: List all customer tags.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/tags/customers/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/tags/customers/`
   - **Description**: Create a new customer tag.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/tags/customers/{customerTagID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/tags/customers/{customerTagID}`
   - **Description**: Retrieve details for a specific customer tag.
   - **Parameters**: `companyID`, `customerTagID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/tags/customers/{customerTagID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/tags/customers/{customerTagID}`
   - **Description**: Update a customer tag.
   - **Parameters**: `companyID`, `customerTagID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/tags/customers/{customerTagID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/tags/customers/{customerTagID}`
   - **Description**: Delete a customer tag.
   - **Parameters**: `companyID`, `customerTagID`
   - **Response**: No Content
 
 #### Tags > projects
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/tags/projects/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/tags/projects/`
   - **Description**: List all project tags.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/tags/projects/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/tags/projects/`
   - **Description**: Create a new project tag.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/tags/projects/{projectTagID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/tags/projects/{projectTagID}`
   - **Description**: Retrieve details for a specific project tag.
   - **Parameters**: `companyID`, `projectTagID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/tags/projects/{projectTagID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/tags/projects/{projectTagID}`
   - **Description**: Update a project tag.
   - **Parameters**: `companyID`, `projectTagID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/tags/projects/{projectTagID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/tags/projects/{projectTagID}`
   - **Description**: Delete a project tag.
   - **Parameters**: `companyID`, `projectTagID`
   - **Response**: No Content
 
 #### Tasks > categories
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/tasks/categories/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/tasks/categories/`
   - **Description**: List all task categories.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/setup/tasks/categories/`
+- [x] `POST /api/v1.0/companies/{companyID}/setup/tasks/categories/`
   - **Description**: Create a new task category.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID}`
   - **Description**: Retrieve details for a specific task category.
   - **Parameters**: `companyID`, `taskCategoryID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID}`
   - **Description**: Update a task category.
   - **Parameters**: `companyID`, `taskCategoryID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID}`
   - **Description**: Delete a task category.
   - **Parameters**: `companyID`, `taskCategoryID`
   - **Response**: No Content
 
 #### Teams
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/teams/`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/teams/`
   - **Description**: List all teams.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/setup/teams/{teamID}`
+- [x] `GET /api/v1.0/companies/{companyID}/setup/teams/{teamID}`
   - **Description**: Retrieve details for a specific team.
   - **Parameters**: `companyID`, `teamID`, `columns`?
   - **Response**: object

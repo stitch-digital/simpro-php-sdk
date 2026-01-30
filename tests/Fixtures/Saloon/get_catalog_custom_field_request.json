@@ -1,0 +1,15 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": {
+        "ID": 1,
+        "Name": "Serial Number",
+        "Type": "Text",
+        "CustomFieldType": "Catalog",
+        "Required": false,
+        "Archived": false,
+        "Options": []
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Name": "Cash",
+            "AccountNo": "1000"
+        },
+        {
+            "ID": 2,
+            "Name": "Accounts Receivable",
+            "AccountNo": "1100"
+        }
+    ]
+}

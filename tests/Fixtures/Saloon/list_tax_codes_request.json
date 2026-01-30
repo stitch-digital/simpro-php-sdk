@@ -1,0 +1,31 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "3",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "_href": "/api/v1.0/companies/0/setup/accounts/taxCodes/singles/1",
+      "Code": "GST",
+      "Type": "Single",
+      "Rate": 10.0
+    },
+    {
+      "ID": 2,
+      "_href": "/api/v1.0/companies/0/setup/accounts/taxCodes/singles/2",
+      "Code": "EXEMPT",
+      "Type": "Single",
+      "Rate": 0.0
+    },
+    {
+      "ID": 3,
+      "_href": "/api/v1.0/companies/0/setup/accounts/taxCodes/combines/3",
+      "Code": "VAT",
+      "Type": "Combine",
+      "Rate": 20.0
+    }
+  ]
+}

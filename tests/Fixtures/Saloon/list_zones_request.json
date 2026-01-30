@@ -1,0 +1,22 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "3",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "North Zone"
+    },
+    {
+      "ID": 2,
+      "Name": "South Zone"
+    },
+    {
+      "ID": 3,
+      "Name": "Central Zone"
+    }
+  ]
+}

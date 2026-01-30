@@ -1,0 +1,17 @@
+{
+  "statusCode": 201,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 3,
+    "Name": "New Webhook",
+    "CallbackURL": "https://example.com/new-webhook",
+    "Secret": "newsecret",
+    "Email": null,
+    "Description": "New webhook description",
+    "Events": ["job.created"],
+    "Status": "Enabled",
+    "DateCreated": "2024-01-30"
+  }
+}

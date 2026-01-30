@@ -1,0 +1,48 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": [
+    {
+      "Job": {
+        "ID": 12345
+      },
+      "Customer": {
+        "ID": 67890
+      },
+      "Site": {
+        "ID": 11111
+      },
+      "RequestNumber": "REQ-001",
+      "Total": 50000.00,
+      "ClaimedToDate": 25000.00,
+      "BilledPercentage": 50.00,
+      "CostToDate": 20000.00,
+      "CostToComplete": 15000.00,
+      "PercentageComplete": 57.14,
+      "NetMarginToDate": 5000.00,
+      "ProjectedNetMargin": 15000.00
+    },
+    {
+      "Job": {
+        "ID": 12346
+      },
+      "Customer": {
+        "ID": 67891
+      },
+      "Site": {
+        "ID": 11112
+      },
+      "RequestNumber": "REQ-002",
+      "Total": 100000.00,
+      "ClaimedToDate": 75000.00,
+      "BilledPercentage": 75.00,
+      "CostToDate": 60000.00,
+      "CostToComplete": 10000.00,
+      "PercentageComplete": 85.71,
+      "NetMarginToDate": 15000.00,
+      "ProjectedNetMargin": 30000.00
+    }
+  ]
+}

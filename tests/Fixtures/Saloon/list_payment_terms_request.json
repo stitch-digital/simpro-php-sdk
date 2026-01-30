@@ -1,0 +1,31 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "3",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "PaymentTermID": 1,
+      "PaymentTermName": "Net 30",
+      "Days": 30,
+      "Type": "Invoice",
+      "IsDefault": true
+    },
+    {
+      "PaymentTermID": 2,
+      "PaymentTermName": "Net 60",
+      "Days": 60,
+      "Type": "Invoice",
+      "IsDefault": false
+    },
+    {
+      "PaymentTermID": 3,
+      "PaymentTermName": "End of Month",
+      "Days": 0,
+      "Type": "Month",
+      "IsDefault": false
+    }
+  ]
+}
