@@ -31,6 +31,40 @@ foreach ($companies->items() as $customer) {
 }
 ```
 
+### List Company Customers with Full Details
+
+Returns company customers with all available fields in a single request, avoiding N+1 queries:
+
+```php
+$companies = $connector->customers(companyId: 0)->listCompaniesDetailed();
+
+foreach ($companies->items() as $customer) {
+    echo "{$customer->id}: {$customer->companyName}\n";
+    echo "  Email: {$customer->email}\n";
+    echo "  Phone: {$customer->phone}\n";
+    echo "  Amount Owing: {$customer->amountOwing}\n";
+
+    if ($customer->address) {
+        echo "  City: {$customer->address->city}\n";
+    }
+
+    if ($customer->customerType) {
+        echo "  Type: {$customer->customerType->name}\n";
+    }
+
+    // Access nested arrays
+    foreach ($customer->tags ?? [] as $tag) {
+        echo "  Tag: {$tag->name}\n";
+    }
+
+    foreach ($customer->contacts ?? [] as $contact) {
+        echo "  Contact: {$contact->fullName()}\n";
+    }
+}
+```
+
+**Note:** This method requests all available columns from the API, returning `CustomerCompanyListDetailedItem` objects with complete nested data. Use this when you need full customer details for multiple customers to avoid making individual `getCompany()` calls.
+
 ### Filtering Customers
 
 Use the fluent search API or array-based filters:
@@ -248,7 +282,39 @@ Lightweight object returned by `list()` and `listCompanies()`. Contains only min
 | `givenName` | `string` | Given name (for individuals) |
 | `familyName` | `string` | Family name (for individuals) |
 
-**Note:** For full customer details (type, email, phone, address, etc.), use `getCompany()` to retrieve the complete customer.
+**Note:** For full customer details, use `listCompaniesDetailed()` for bulk retrieval or `getCompany()` for individual customers.
+
+### CustomerCompanyListDetailedItem (Detailed List Response)
+
+Detailed object returned by `listCompaniesDetailed()` with all available columns:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Customer ID |
+| `companyName` | `?string` | Company name |
+| `phone` | `?string` | Phone number |
+| `email` | `?string` | Email address |
+| `href` | `?string` | API resource URL |
+| `address` | `?Address` | Physical address |
+| `billingAddress` | `?Address` | Billing address |
+| `customerType` | `?CustomerType` | Customer type (ID and Name) |
+| `tags` | `?array<CustomerTag>` | Customer tags |
+| `amountOwing` | `?float` | Amount currently owed |
+| `profile` | `?CustomerProfile` | Customer profile (ID and Name) |
+| `banking` | `?CustomerBanking` | Banking details (BSB, Account) |
+| `archived` | `?bool` | Whether customer is archived |
+| `sites` | `?array<CustomerSite>` | Associated sites |
+| `contracts` | `?array<CustomerContract>` | Associated contracts |
+| `contacts` | `?array<CustomerContact>` | Associated contacts |
+| `responseTimes` | `?array<CustomerResponseTime>` | Response time settings |
+| `customFields` | `?array<CustomField>` | Custom field values |
+| `dateModified` | `?DateTimeImmutable` | Last modification date |
+| `dateCreated` | `?DateTimeImmutable` | Creation date |
+
+**Helper Methods:**
+- `displayName(): string` - Returns the company name
+- `isArchived(): bool` - Returns true if customer is archived
+- `hasAmountOwing(): bool` - Returns true if amount owing > 0
 
 ### Customer (Detailed Response)
 
@@ -273,7 +339,7 @@ Complete customer object returned by `getCompany()`:
 
 ### Nested Objects
 
-**CustomerAddress:**
+**Address (used by both Address and BillingAddress):**
 | Property | Type | Description |
 |----------|------|-------------|
 | `address` | `?string` | Street address |
@@ -281,6 +347,61 @@ Complete customer object returned by `getCompany()`:
 | `state` | `?string` | State/province |
 | `postalCode` | `?string` | Postal/ZIP code |
 | `country` | `?string` | Country |
+
+**CustomerType:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Customer type ID |
+| `name` | `?string` | Customer type name |
+
+**CustomerTag:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Tag ID |
+| `name` | `?string` | Tag name |
+
+**CustomerProfile:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Profile ID |
+| `name` | `?string` | Profile name |
+
+**CustomerBanking:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `bsb` | `?string` | BSB code |
+| `accountNumber` | `?string` | Account number |
+| `accountName` | `?string` | Account name |
+
+**CustomerSite:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Site ID |
+| `name` | `?string` | Site name |
+
+**CustomerContract:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Contract ID |
+| `name` | `?string` | Contract name |
+
+**CustomerContact:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Contact ID |
+| `givenName` | `?string` | Given name |
+| `familyName` | `?string` | Family name |
+| `email` | `?string` | Email address |
+| `phone` | `?string` | Phone number |
+
+Helper method: `fullName(): string` - Returns "GivenName FamilyName"
+
+**CustomerResponseTime:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Response time ID |
+| `name` | `?string` | Response time name |
+| `description` | `?string` | Response time description |
 
 ## Examples
 
@@ -550,20 +671,34 @@ foreach ($builder->items() as $customer) {
 
 ### Avoiding N+1 Queries
 
-When you need full details for multiple customers, consider the performance trade-off:
+When you need full details for multiple customers, use `listCompaniesDetailed()`:
 
 ```php
-// Option 1: Multiple detailed requests (more data, more requests)
-$customers = $connector->customers(companyId: 0)->listCompanies()->all();
+// Recommended: Use listCompaniesDetailed() for full data in a single request
+$customers = $connector->customers(companyId: 0)->listCompaniesDetailed()->all();
 foreach ($customers as $customer) {
-    $full = $connector->customers(companyId: 0)->getCompany(customerId: $customer->id); // N+1 requests
+    // All fields available without additional API calls
+    echo "{$customer->companyName}: {$customer->email}\n";
+    echo "  Phone: {$customer->phone}\n";
+    echo "  Amount Owing: {$customer->amountOwing}\n";
+    echo "  Type: {$customer->customerType?->name}\n";
+
+    foreach ($customer->sites ?? [] as $site) {
+        echo "  Site: {$site->name}\n";
+    }
 }
 
-// Option 2: Use list data when sufficient
+// Alternative: listCompanies() for basic info only
 $customers = $connector->customers(companyId: 0)->listCompanies()->all();
 foreach ($customers as $customer) {
     // Use list data directly when you only need basic info
-    echo "{$customer->companyName}: {$customer->email}\n";
+    echo "{$customer->id}: {$customer->companyName}\n";
+}
+
+// Avoid: Individual getCompany() calls create N+1 queries
+$customers = $connector->customers(companyId: 0)->listCompanies()->all();
+foreach ($customers as $customer) {
+    $full = $connector->customers(companyId: 0)->getCompany(customerId: $customer->id); // N+1 requests - avoid this
 }
 ```
 
@@ -625,11 +760,354 @@ try {
 }
 ```
 
+## Individual Customers
+
+Individual customers are people (not companies) in your Simpro system.
+
+### Accessing Individual Customers
+
+```php
+$individuals = $connector->customers(companyId: 0)->individuals();
+```
+
+### List Individual Customers
+
+```php
+// Basic list with minimal fields
+$individuals = $connector->customers(companyId: 0)->individuals()->list();
+
+foreach ($individuals->items() as $customer) {
+    echo "{$customer->id}: {$customer->givenName} {$customer->familyName}\n";
+}
+```
+
+### List Individual Customers with Full Details
+
+Returns all available fields in a single request:
+
+```php
+$individuals = $connector->customers(companyId: 0)->individuals()->listDetailed();
+
+foreach ($individuals->items() as $customer) {
+    echo "{$customer->id}: {$customer->givenName} {$customer->familyName}\n";
+    echo "  Email: {$customer->email}\n";
+    echo "  Phone: {$customer->phone}\n";
+    echo "  Cell: {$customer->cellPhone}\n";
+    echo "  Amount Owing: {$customer->amountOwing}\n";
+
+    if ($customer->address) {
+        echo "  City: {$customer->address->city}\n";
+    }
+
+    foreach ($customer->tags ?? [] as $tag) {
+        echo "  Tag: {$tag->name}\n";
+    }
+}
+```
+
+### Get Individual Customer
+
+```php
+$customer = $connector->customers(companyId: 0)->individuals()->get(customerId: 456);
+
+echo "{$customer->title} {$customer->givenName} {$customer->familyName}\n";
+echo "  Phone: {$customer->phone}\n";
+echo "  Email: {$customer->email}\n";
+```
+
+### Create Individual Customer
+
+```php
+$customerId = $connector->customers(companyId: 0)->individuals()->create([
+    'Title' => 'Mr',
+    'GivenName' => 'John',
+    'FamilyName' => 'Smith',
+    'Email' => 'john.smith@email.com',
+    'Phone' => '555-1234',
+]);
+
+echo "Created individual customer: {$customerId}\n";
+```
+
+### Update Individual Customer
+
+```php
+$response = $connector->customers(companyId: 0)->individuals()->update(customerId: 456, data: [
+    'Phone' => '555-9999',
+    'Email' => 'new.email@email.com',
+]);
+```
+
+### Delete Individual Customer
+
+```php
+$response = $connector->customers(companyId: 0)->individuals()->delete(customerId: 456);
+```
+
+---
+
+## Customer Contacts
+
+Manage contacts for a specific customer.
+
+### Accessing Contacts
+
+```php
+$contacts = $connector->customers(companyId: 0)->customer(customerId: 123)->contacts();
+```
+
+### List Contacts
+
+```php
+// Basic list
+$contacts = $connector->customers(companyId: 0)->customer(123)->contacts()->list();
+
+foreach ($contacts->items() as $contact) {
+    echo "{$contact->id}: {$contact->givenName} {$contact->familyName}\n";
+}
+```
+
+### List Contacts with Full Details
+
+Returns all available fields including contact role flags:
+
+```php
+$contacts = $connector->customers(companyId: 0)->customer(123)->contacts()->listDetailed();
+
+foreach ($contacts->items() as $contact) {
+    echo "{$contact->title} {$contact->givenName} {$contact->familyName}\n";
+    echo "  Email: {$contact->email}\n";
+    echo "  Work Phone: {$contact->workPhone}\n";
+    echo "  Cell Phone: {$contact->cellPhone}\n";
+    echo "  Department: {$contact->department}\n";
+    echo "  Position: {$contact->position}\n";
+
+    // Contact role flags
+    if ($contact->primaryJobContact) {
+        echo "  ✓ Primary Job Contact\n";
+    }
+    if ($contact->primaryQuoteContact) {
+        echo "  ✓ Primary Quote Contact\n";
+    }
+    if ($contact->primaryInvoiceContact) {
+        echo "  ✓ Primary Invoice Contact\n";
+    }
+}
+```
+
+### Get Contact
+
+```php
+$contact = $connector->customers(companyId: 0)->customer(123)->contacts()->get(contactId: 1);
+
+echo "{$contact->givenName} {$contact->familyName}\n";
+echo "  Email: {$contact->email}\n";
+echo "  Position: {$contact->position}\n";
+```
+
+### Create Contact
+
+```php
+$contactId = $connector->customers(companyId: 0)->customer(123)->contacts()->create([
+    'Title' => 'Ms',
+    'GivenName' => 'Jane',
+    'FamilyName' => 'Doe',
+    'Email' => 'jane.doe@company.com',
+    'WorkPhone' => '555-0100',
+    'Position' => 'Manager',
+    'PrimaryJobContact' => true,
+]);
+
+echo "Created contact: {$contactId}\n";
+```
+
+### Update Contact
+
+```php
+$response = $connector->customers(companyId: 0)->customer(123)->contacts()->update(contactId: 1, data: [
+    'Position' => 'Senior Manager',
+    'WorkPhone' => '555-0199',
+]);
+```
+
+### Delete Contact
+
+```php
+$response = $connector->customers(companyId: 0)->customer(123)->contacts()->delete(contactId: 1);
+```
+
+### Contact Response Structure
+
+The `Contact` DTO includes the following fields:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `int` | Contact ID |
+| `title` | `?string` | Title (Mr, Ms, etc.) |
+| `givenName` | `?string` | First name |
+| `familyName` | `?string` | Last name |
+| `email` | `?string` | Email address |
+| `workPhone` | `?string` | Work phone |
+| `fax` | `?string` | Fax number |
+| `cellPhone` | `?string` | Mobile phone |
+| `altPhone` | `?string` | Alternative phone |
+| `department` | `?string` | Department |
+| `position` | `?string` | Job position |
+| `notes` | `?string` | Notes |
+| `customFields` | `?array<CustomField>` | Custom field values |
+| `dateModified` | `?DateTimeImmutable` | Last modification date |
+| `quoteContact` | `?bool` | Receives quotes |
+| `jobContact` | `?bool` | Receives job notifications |
+| `invoiceContact` | `?bool` | Receives invoices |
+| `statementContact` | `?bool` | Receives statements |
+| `primaryQuoteContact` | `?bool` | Primary contact for quotes |
+| `primaryJobContact` | `?bool` | Primary contact for jobs |
+| `primaryInvoiceContact` | `?bool` | Primary contact for invoices |
+| `primaryStatementContact` | `?bool` | Primary contact for statements |
+
+---
+
+## Customer Contracts
+
+Manage service contracts for a specific customer.
+
+### Accessing Contracts
+
+```php
+$contracts = $connector->customers(companyId: 0)->customer(customerId: 123)->contracts();
+```
+
+### List Contracts
+
+```php
+// Basic list
+$contracts = $connector->customers(companyId: 0)->customer(123)->contracts()->list();
+
+foreach ($contracts->items() as $contract) {
+    echo "{$contract->id}: {$contract->name} ({$contract->contractNo})\n";
+    echo "  {$contract->startDate} - {$contract->endDate}\n";
+}
+```
+
+### List Contracts with Full Details
+
+Returns all available fields including rates and service levels:
+
+```php
+$contracts = $connector->customers(companyId: 0)->customer(123)->contracts()->listDetailed();
+
+foreach ($contracts->items() as $contract) {
+    echo "{$contract->name} ({$contract->contractNo})\n";
+    echo "  Value: \${$contract->value}\n";
+    echo "  Markup: {$contract->markup}%\n";
+    echo "  Pricing Tier: {$contract->pricingTier->name}\n";
+
+    if ($contract->expired) {
+        echo "  ⚠️ EXPIRED\n";
+    }
+
+    foreach ($contract->serviceLevels ?? [] as $level) {
+        echo "  Service Level: {$level->serviceLevel->name}\n";
+    }
+}
+```
+
+### Get Contract
+
+```php
+$contract = $connector->customers(companyId: 0)->customer(123)->contracts()->get(contractId: 1);
+
+echo "{$contract->name}\n";
+echo "  Contract No: {$contract->contractNo}\n";
+echo "  Value: \${$contract->value}\n";
+echo "  Start: {$contract->startDate}\n";
+echo "  End: {$contract->endDate}\n";
+```
+
+### Create Contract
+
+```php
+$contractId = $connector->customers(companyId: 0)->customer(123)->contracts()->create([
+    'Name' => 'Annual Maintenance',
+    'ContractNo' => 'CON-2024-001',
+    'StartDate' => '2024-01-01',
+    'EndDate' => '2024-12-31',
+    'Value' => 12000.00,
+]);
+
+echo "Created contract: {$contractId}\n";
+```
+
+### Update Contract
+
+```php
+$response = $connector->customers(companyId: 0)->customer(123)->contracts()->update(contractId: 1, data: [
+    'Value' => 15000.00,
+    'Notes' => 'Updated contract value for 2024',
+]);
+```
+
+### Delete Contract
+
+```php
+$response = $connector->customers(companyId: 0)->customer(123)->contracts()->delete(contractId: 1);
+```
+
+### Contract Nested Resources
+
+Contracts have several nested resources for detailed configuration:
+
+#### Contract Inflation
+
+```php
+$inflation = $connector->customers(companyId: 0)->customer(123)->contracts()->contract(1)->inflation();
+
+// List inflation records
+foreach ($inflation->list()->items() as $record) {
+    echo "{$record->date}: {$record->percentage}%\n";
+}
+```
+
+#### Contract Labor Rates
+
+```php
+$laborRates = $connector->customers(companyId: 0)->customer(123)->contracts()->contract(1)->laborRates();
+
+foreach ($laborRates->list()->items() as $rate) {
+    echo "{$rate->name}: \${$rate->rate}/hr\n";
+}
+```
+
+#### Contract Service Levels
+
+```php
+$serviceLevels = $connector->customers(companyId: 0)->customer(123)->contracts()->contract(1)->serviceLevels();
+
+foreach ($serviceLevels->list()->items() as $level) {
+    echo "{$level->name}\n";
+}
+
+// Get asset types for a service level
+$assetTypes = $serviceLevels->serviceLevel(1)->assetTypes();
+foreach ($assetTypes->list()->items() as $type) {
+    echo "  Asset Type: {$type->name}\n";
+}
+```
+
+#### Contract Custom Fields
+
+```php
+$customFields = $connector->customers(companyId: 0)->customer(123)->contracts()->contract(1)->customFields();
+
+foreach ($customFields->list()->items() as $field) {
+    echo "{$field->name}: {$field->value}\n";
+}
+```
+
+---
+
 ## Future Enhancements
 
 The following features are planned for future SDK releases:
 
-- **Individual Customers**: `createIndividual()`, `getIndividual()`, `updateIndividual()`, `deleteIndividual()`
-- **Customer Contacts**: Managing contacts associated with company customers
-- **Customer Contracts**: Service contracts, SLAs, and recurring billing
-- **Customer Sites**: Sites/locations associated with customers
+- **Customer Sites**: Full CRUD operations for sites/locations (basic info available via `listCompaniesDetailed()`)

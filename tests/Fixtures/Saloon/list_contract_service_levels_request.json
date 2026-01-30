@@ -1,0 +1,30 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ServiceLevel": {
+        "ID": 1,
+        "Name": "Priority Support"
+      },
+      "AssetType": {
+        "ID": 1,
+        "Name": "HVAC Unit"
+      }
+    },
+    {
+      "ServiceLevel": {
+        "ID": 2,
+        "Name": "Standard Support"
+      },
+      "AssetType": {
+        "ID": 2,
+        "Name": "Fire Extinguisher"
+      }
+    }
+  ]
+}

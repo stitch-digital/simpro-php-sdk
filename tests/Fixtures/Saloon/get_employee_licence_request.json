@@ -1,0 +1,23 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Type": {
+      "ID": 10,
+      "Name": "Electrician Licence"
+    },
+    "LicenceNo": "EL-12345",
+    "IssueDate": "2020-01-15",
+    "ExpiryDate": "2025-06-30",
+    "Notes": "Class A electrical work",
+    "IsVerified": true,
+    "VerifiedDate": "2024-01-10",
+    "VerifiedBy": {
+      "ID": 5,
+      "Name": "Admin User"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "GivenName": "Alice",
+      "FamilyName": "Johnson",
+      "Email": "alice.johnson@example.com",
+      "Phone": "555-0200",
+      "Position": "Manager"
+    },
+    {
+      "ID": 2,
+      "GivenName": "Bob",
+      "FamilyName": "Williams",
+      "Email": "bob.williams@example.com",
+      "Phone": "555-0201",
+      "Position": "Technician"
+    }
+  ]
+}

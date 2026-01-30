@@ -1,0 +1,133 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "CompanyName": "Acme Corporation",
+      "Phone": "555-0100",
+      "Address": {
+        "Address": "123 Main Street",
+        "City": "Sydney",
+        "State": "NSW",
+        "PostalCode": "2000",
+        "Country": "Australia"
+      },
+      "BillingAddress": {
+        "Address": "PO Box 100",
+        "City": "Sydney",
+        "State": "NSW",
+        "PostalCode": "2001",
+        "Country": "Australia"
+      },
+      "CustomerType": {
+        "ID": 10,
+        "Name": "Commercial"
+      },
+      "Tags": [
+        {
+          "ID": 1,
+          "Name": "VIP"
+        },
+        {
+          "ID": 2,
+          "Name": "High Value"
+        }
+      ],
+      "AmountOwing": 1500.00,
+      "Profile": {
+        "ID": 5,
+        "Name": "Gold Customer"
+      },
+      "Banking": {
+        "BSB": "012-345",
+        "AccountNumber": "123456789",
+        "AccountName": "Acme Corporation"
+      },
+      "Archived": false,
+      "Sites": [
+        {
+          "ID": 100,
+          "Name": "Head Office"
+        },
+        {
+          "ID": 101,
+          "Name": "Warehouse"
+        }
+      ],
+      "Contracts": [
+        {
+          "ID": 200,
+          "Name": "Annual Maintenance"
+        }
+      ],
+      "Contacts": [
+        {
+          "ID": 300,
+          "GivenName": "John",
+          "FamilyName": "Smith",
+          "Email": "john.smith@acme.com",
+          "Phone": "555-0101"
+        }
+      ],
+      "ResponseTimes": [
+        {
+          "ID": 1,
+          "Name": "4 Hour",
+          "Description": "4 hour response time"
+        }
+      ],
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 1,
+            "Name": "Account Manager",
+            "Type": "Text",
+            "IsMandatory": false,
+            "ListItems": []
+          },
+          "Value": "Sarah Jones"
+        }
+      ],
+      "Email": "contact@acme.com",
+      "DateModified": "2024-03-15T10:30:00Z",
+      "DateCreated": "2020-01-15T09:00:00Z",
+      "_href": "/api/v1.0/companies/0/customers/companies/1"
+    },
+    {
+      "ID": 2,
+      "CompanyName": "Beta Industries",
+      "Phone": "555-0200",
+      "Address": {
+        "Address": "456 Industrial Ave",
+        "City": "Melbourne",
+        "State": "VIC",
+        "PostalCode": "3000",
+        "Country": "Australia"
+      },
+      "BillingAddress": null,
+      "CustomerType": {
+        "ID": 11,
+        "Name": "Industrial"
+      },
+      "Tags": [],
+      "AmountOwing": 0,
+      "Profile": null,
+      "Banking": null,
+      "Archived": false,
+      "Sites": [],
+      "Contracts": [],
+      "Contacts": [],
+      "ResponseTimes": [],
+      "CustomFields": [],
+      "Email": "info@beta.com",
+      "DateModified": "2024-02-20T14:00:00Z",
+      "DateCreated": "2022-06-01T10:00:00Z",
+      "_href": "/api/v1.0/companies/0/customers/companies/2"
+    }
+  ]
+}

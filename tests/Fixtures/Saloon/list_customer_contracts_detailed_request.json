@@ -1,0 +1,82 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "Annual Maintenance",
+      "StartDate": "2024-01-01",
+      "EndDate": "2024-12-31",
+      "ContractNo": "CON-001",
+      "Value": 12000.00,
+      "Notes": "Annual service contract",
+      "Email": "service@example.com",
+      "Archived": false,
+      "Expired": false,
+      "PricingTier": {
+        "ID": 1,
+        "Name": "Standard",
+        "DefaultMarkup": 20.0
+      },
+      "Markup": 15.0,
+      "Rates": {
+        "ServiceFee": {
+          "ID": 1,
+          "Name": "Standard Call-out Fee"
+        }
+      },
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 1,
+            "Name": "Contract Type"
+          },
+          "Value": "Full Service"
+        }
+      ],
+      "ServiceLevels": [
+        {
+          "ServiceLevel": {
+            "ID": 1,
+            "Name": "Gold Support",
+            "Prebuild": {
+              "ID": 1,
+              "Name": "Standard Service"
+            },
+            "Time": 4.0,
+            "ChargeRate": 150.00
+          },
+          "AssetType": {
+            "ID": 1,
+            "Name": "HVAC Unit"
+          }
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "Name": "Quarterly Inspection",
+      "StartDate": "2024-03-01",
+      "EndDate": "2025-02-28",
+      "ContractNo": "CON-002",
+      "Value": 3000.00,
+      "Notes": "",
+      "Email": "",
+      "Archived": false,
+      "Expired": false,
+      "PricingTier": {
+        "ID": 2,
+        "Name": "Premium",
+        "DefaultMarkup": 25.0
+      },
+      "Markup": 10.0,
+      "Rates": {},
+      "CustomFields": [],
+      "ServiceLevels": []
+    }
+  ]
+}

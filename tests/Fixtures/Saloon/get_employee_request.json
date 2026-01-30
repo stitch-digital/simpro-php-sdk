@@ -6,11 +6,8 @@
   "data": {
     "ID": 1,
     "Name": "John Smith",
-    "GivenName": "John",
-    "FamilyName": "Smith",
-    "Email": "john.smith@company.com",
-    "Phone": "555-1001",
-    "Mobile": "555-1011",
+    "Position": "Technician",
+    "Availability": ["Mon-Fri 9am-5pm", "Weekends on-call"],
     "Address": {
       "Address": "456 Worker Lane",
       "City": "Melbourne",
@@ -18,10 +15,81 @@
       "PostalCode": "3000",
       "Country": "Australia"
     },
-    "EmployeeNo": "EMP-001",
+    "DateOfHire": "2020-01-10",
     "DateOfBirth": "1985-06-15",
-    "StartDate": "2020-01-10",
-    "IsArchived": false,
-    "DateModified": "2024-01-10T08:00:00Z"
+    "PrimaryContact": {
+      "Email": "john.smith@company.com",
+      "SecondaryEmail": "john.personal@email.com",
+      "WorkPhone": "555-1001",
+      "Extension": "101",
+      "CellPhone": "555-1011",
+      "Fax": "555-1002",
+      "PreferredNotificationMethod": "Email"
+    },
+    "EmergencyContact": {
+      "Name": "Jane Smith",
+      "Relationship": "Spouse",
+      "WorkPhone": "555-2001",
+      "CellPhone": "555-2011",
+      "AltPhone": "555-2021",
+      "Address": "456 Worker Lane, Melbourne VIC 3000"
+    },
+    "AccountSetup": {
+      "Username": "john.smith",
+      "IsMobility": true,
+      "SecurityGroup": {
+        "ID": 1,
+        "Name": "Technicians"
+      },
+      "MobileSecurityGroup": {
+        "ID": 2,
+        "Name": "Field Techs"
+      }
+    },
+    "UserProfile": {
+      "IsSalesperson": false,
+      "IsProjectManager": false,
+      "StorageDevice": {
+        "ID": 1,
+        "Name": "Main Storage"
+      },
+      "PreferredLanguage": "en_AU"
+    },
+    "DateCreated": "2020-01-10T08:00:00+10:00",
+    "DateModified": "2024-01-10T08:00:00+10:00",
+    "Archived": false,
+    "AssignedCostCenters": [
+      {"ID": 1, "Name": "Service"},
+      {"ID": 2, "Name": "Installation"}
+    ],
+    "Zones": [
+      {"ID": 1, "Name": "North"},
+      {"ID": 2, "Name": "South"}
+    ],
+    "DefaultZone": {"ID": 1, "Name": "North"},
+    "DefaultCompany": {"ID": 0, "Name": "Main Company"},
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 1,
+          "Name": "Certification Level",
+          "Type": "List",
+          "ListItems": ["Junior", "Senior", "Expert"],
+          "IsMandatory": false
+        },
+        "Value": "Senior"
+      }
+    ],
+    "MaskedSSN": "XXX-XX-1234",
+    "Banking": {
+      "AccountName": "John Smith",
+      "RoutingNo": "123456",
+      "AccountNo": "789012345"
+    },
+    "PayRates": {
+      "PayRate": 45.00,
+      "EmploymentCost": 55.00,
+      "Overhead": 15.00
+    }
   }
 }

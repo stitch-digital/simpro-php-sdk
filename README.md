@@ -199,7 +199,7 @@ $connector = new SimproApiKeyConnector(
 
 The SDK automatically handles Simpro's API rate limit of **10 requests per second** per base URL. By default, when the limit is reached, the SDK waits and retries automatically.
 
-See [Simpro's API documentation](https://developer.simprogroup.com/apidoc/#tag/Rate-Limiting) for more details on rate limits.
+See [Simpro's API documentation](https://developer.simprogroup.com/apidoc/?page=ed8457e003ba0f6197756eca5a61fde9) for more details on rate limits.
 
 #### Default Behavior
 

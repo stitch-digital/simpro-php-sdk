@@ -1,0 +1,144 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Title": "Mr",
+      "GivenName": "John",
+      "FamilyName": "Doe",
+      "PreferredTechs": [
+        {
+          "ID": 10,
+          "Name": "Mike Technician",
+          "Type": "employee",
+          "TypeId": 10
+        }
+      ],
+      "Phone": "555-1000",
+      "DoNotCall": false,
+      "AltPhone": "555-1001",
+      "Address": {
+        "Address": "123 Residential St",
+        "City": "Sydney",
+        "State": "NSW",
+        "PostalCode": "2000",
+        "Country": "Australia"
+      },
+      "BillingAddress": {
+        "Address": "PO Box 50",
+        "City": "Sydney",
+        "State": "NSW",
+        "PostalCode": "2001",
+        "Country": "Australia"
+      },
+      "CustomerType": "Individual",
+      "Tags": [
+        {
+          "ID": 1,
+          "Name": "Residential"
+        }
+      ],
+      "AmountOwing": 250.00,
+      "Rates": {
+        "PartTaxCode": null,
+        "LabourTaxCode": null,
+        "DiscountFee": 5.0,
+        "AlwaysDeductCIS": false,
+        "ServiceFee": null,
+        "Material": {
+          "PricingTier": {
+            "ID": 1,
+            "Name": "Standard",
+            "DefaultMarkup": 20.0
+          },
+          "Markup": 15.0
+        }
+      },
+      "Profile": {
+        "Notes": "Standard customer profile",
+        "CustomerProfile": {
+          "ID": 1,
+          "Name": "Standard Customer"
+        },
+        "CustomerGroup": null,
+        "AccountManager": null,
+        "Currency": null,
+        "ServiceJobCostCenter": null
+      },
+      "Banking": {
+        "AccountName": "John Doe",
+        "RoutingNo": "111-222",
+        "AccountNo": "12345678",
+        "PaymentMethod": {
+          "ID": 1,
+          "Name": "Bank Transfer"
+        },
+        "PaymentTermID": 1,
+        "PaymentTerms": {
+          "Days": 30,
+          "Type": "Invoice"
+        },
+        "CreditLimit": 5000.00,
+        "OnStop": false,
+        "Retention": "incGST",
+        "VendorOrderNoRequired": false
+      },
+      "Archived": false,
+      "Sites": [
+        {
+          "ID": 50,
+          "Name": "Home"
+        }
+      ],
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 1,
+            "Name": "Membership ID"
+          },
+          "Value": "MEM-12345"
+        }
+      ],
+      "Email": "john.doe@email.com",
+      "DateModified": "2024-03-20T10:00:00Z",
+      "DateCreated": "2023-01-15T09:00:00Z",
+      "CellPhone": "555-1002"
+    },
+    {
+      "ID": 2,
+      "Title": "Ms",
+      "GivenName": "Jane",
+      "FamilyName": "Smith",
+      "PreferredTechs": [],
+      "Phone": "555-2000",
+      "DoNotCall": true,
+      "AltPhone": "",
+      "Address": {
+        "Address": "456 Avenue Rd",
+        "City": "Melbourne",
+        "State": "VIC",
+        "PostalCode": "3000",
+        "Country": "Australia"
+      },
+      "BillingAddress": null,
+      "CustomerType": "Individual",
+      "Tags": [],
+      "AmountOwing": 0,
+      "Rates": null,
+      "Profile": null,
+      "Banking": null,
+      "Archived": false,
+      "Sites": [],
+      "CustomFields": [],
+      "Email": "jane.smith@email.com",
+      "DateModified": "2024-02-10T14:30:00Z",
+      "DateCreated": "2023-06-01T11:00:00Z",
+      "CellPhone": "555-2002"
+    }
+  ]
+}

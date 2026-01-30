@@ -1,0 +1,54 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Date": "2024-03-15",
+      "StartTime": "08:00",
+      "FinishTime": "16:00",
+      "TotalHours": 8.0,
+      "Job": {
+        "ID": 100,
+        "Name": "Office Renovation"
+      },
+      "CostCenter": {
+        "ID": 10,
+        "Name": "Labor"
+      },
+      "Activity": {
+        "ID": 5,
+        "Name": "Installation"
+      },
+      "Notes": "Completed wiring installation",
+      "Billable": true,
+      "Approved": true
+    },
+    {
+      "ID": 2,
+      "Date": "2024-03-16",
+      "StartTime": "09:00",
+      "FinishTime": "17:00",
+      "TotalHours": 8.0,
+      "Job": {
+        "ID": 101,
+        "Name": "Kitchen Remodel"
+      },
+      "CostCenter": {
+        "ID": 10,
+        "Name": "Labor"
+      },
+      "Activity": {
+        "ID": 6,
+        "Name": "Plumbing"
+      },
+      "Notes": null,
+      "Billable": true,
+      "Approved": false
+    }
+  ]
+}

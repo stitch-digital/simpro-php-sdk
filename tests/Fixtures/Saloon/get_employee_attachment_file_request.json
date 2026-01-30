@@ -1,0 +1,22 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Filename": "resume.pdf",
+    "MimeType": "application/pdf",
+    "FileSizeBytes": 102400,
+    "Folder": {
+      "ID": 10,
+      "Name": "Documents"
+    },
+    "DateAdded": "2024-01-15T10:30:00Z",
+    "AddedBy": {
+      "ID": 5,
+      "Name": "Admin User"
+    },
+    "Default": false
+  }
+}

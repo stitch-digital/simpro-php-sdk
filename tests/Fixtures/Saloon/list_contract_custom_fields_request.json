@@ -1,0 +1,29 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "CustomField": {
+        "ID": 1,
+        "Name": "Contract Type",
+        "Type": "List",
+        "IsMandatory": true,
+        "ListItems": ["Maintenance", "Service", "Support"]
+      },
+      "Value": "Maintenance"
+    },
+    {
+      "CustomField": {
+        "ID": 2,
+        "Name": "SLA Reference",
+        "Type": "Text",
+        "IsMandatory": false
+      },
+      "Value": "SLA-2024-001"
+    }
+  ]
+}

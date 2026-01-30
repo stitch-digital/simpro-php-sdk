@@ -1,0 +1,29 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "CustomField": {
+        "ID": 1,
+        "Name": "Department",
+        "Type": "Text",
+        "IsMandatory": false
+      },
+      "Value": "Engineering"
+    },
+    {
+      "CustomField": {
+        "ID": 2,
+        "Name": "Priority",
+        "Type": "List",
+        "IsMandatory": true,
+        "ListItems": ["High", "Medium", "Low"]
+      },
+      "Value": "High"
+    }
+  ]
+}

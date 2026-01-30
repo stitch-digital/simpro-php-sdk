@@ -1,0 +1,26 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "Annual Maintenance Contract",
+      "StartDate": "2024-01-01",
+      "EndDate": "2024-12-31",
+      "ContractNo": "CON-001",
+      "Expired": false
+    },
+    {
+      "ID": 2,
+      "Name": "Service Level Agreement",
+      "StartDate": "2024-06-01",
+      "EndDate": "2025-05-31",
+      "ContractNo": "CON-002",
+      "Expired": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 10,
+      "Name": "Documents",
+      "Parent": null,
+      "DateCreated": "2024-01-01T00:00:00Z",
+      "DateModified": "2024-01-15T10:30:00Z"
+    },
+    {
+      "ID": 11,
+      "Name": "Images",
+      "Parent": {
+        "ID": 10,
+        "Name": "Documents"
+      },
+      "DateCreated": "2024-01-10T00:00:00Z",
+      "DateModified": "2024-02-01T14:00:00Z"
+    }
+  ]
+}

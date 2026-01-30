@@ -1,0 +1,36 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Filename": "licence-scan.pdf",
+      "MimeType": "application/pdf",
+      "FileSizeBytes": 204800,
+      "Folder": null,
+      "DateAdded": "2024-01-10T09:00:00Z",
+      "AddedBy": {
+        "ID": 5,
+        "Name": "Admin User"
+      },
+      "Default": false
+    },
+    {
+      "ID": 2,
+      "Filename": "certificate.jpg",
+      "MimeType": "image/jpeg",
+      "FileSizeBytes": 51200,
+      "Folder": null,
+      "DateAdded": "2024-01-12T11:30:00Z",
+      "AddedBy": {
+        "ID": 5,
+        "Name": "Admin User"
+      },
+      "Default": true
+    }
+  ]
+}

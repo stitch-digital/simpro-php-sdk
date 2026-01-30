@@ -1,0 +1,30 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Type": {
+        "ID": 10,
+        "Name": "Electrician Licence"
+      },
+      "LicenceNo": "EL-12345",
+      "ExpiryDate": "2025-06-30",
+      "IsVerified": true
+    },
+    {
+      "ID": 2,
+      "Type": {
+        "ID": 11,
+        "Name": "First Aid Certificate"
+      },
+      "LicenceNo": "FA-67890",
+      "ExpiryDate": "2024-12-31",
+      "IsVerified": false
+    }
+  ]
+}

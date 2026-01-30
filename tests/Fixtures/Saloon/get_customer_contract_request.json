@@ -1,0 +1,60 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Name": "Annual Maintenance Contract",
+    "StartDate": "2024-01-01",
+    "EndDate": "2024-12-31",
+    "ContractNo": "CON-001",
+    "Value": 12000.00,
+    "Notes": "Covers all HVAC equipment on-site",
+    "Email": "contracts@company.com",
+    "Archived": false,
+    "Expired": false,
+    "PricingTier": {
+      "ID": 1,
+      "Name": "Standard Tier",
+      "DefaultMarkup": 20.0
+    },
+    "Markup": 15.0,
+    "Rates": {
+      "ServiceFee": {
+        "ID": 1,
+        "Name": "Standard Call-out Fee"
+      }
+    },
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 1,
+          "Name": "Contract Manager",
+          "Type": "Text",
+          "ListItems": null,
+          "IsMandatory": false
+        },
+        "Value": "John Smith"
+      }
+    ],
+    "ServiceLevels": [
+      {
+        "ServiceLevel": {
+          "ID": 1,
+          "Name": "Premium Support",
+          "Prebuild": {
+            "ID": 1,
+            "Name": "Standard Service"
+          },
+          "Time": 4.0,
+          "ChargeRate": 150.00
+        },
+        "AssetType": {
+          "ID": 1,
+          "Name": "HVAC Unit"
+        }
+      }
+    ]
+  }
+}

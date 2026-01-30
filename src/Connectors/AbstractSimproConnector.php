@@ -14,6 +14,7 @@ use Saloon\Traits\Plugins\HasTimeout;
 use Simpro\PhpSdk\Simpro\Cache\CacheConfig;
 use Simpro\PhpSdk\Simpro\Concerns\HasSimproCaching;
 use Simpro\PhpSdk\Simpro\Concerns\HasSimproRateLimits;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsActivitySchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCurrentUserEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCustomersEndpoints;
@@ -40,6 +41,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use HasSimproCaching;
     use HasSimproRateLimits;
     use HasTimeout;
+    use SupportsActivitySchedulesEndpoints;
     use SupportsCompaniesEndpoints;
     use SupportsCurrentUserEndpoints;
     use SupportsCustomersEndpoints;

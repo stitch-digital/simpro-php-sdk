@@ -1,0 +1,20 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "GivenName": "John",
+      "FamilyName": "Smith"
+    },
+    {
+      "ID": 2,
+      "GivenName": "Jane",
+      "FamilyName": "Doe"
+    }
+  ]
+}

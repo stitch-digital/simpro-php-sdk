@@ -1,0 +1,24 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "LaborRate": {
+        "ID": 1,
+        "Name": "Standard Labor"
+      },
+      "IsDefault": true
+    },
+    {
+      "LaborRate": {
+        "ID": 2,
+        "Name": "Overtime Labor"
+      },
+      "IsDefault": false
+    }
+  ]
+}

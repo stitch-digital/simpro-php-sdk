@@ -1,0 +1,99 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Title": "Mr",
+    "GivenName": "John",
+    "FamilyName": "Smith",
+    "PreferredTechs": [
+      {
+        "ID": 10,
+        "Name": "Mike Technician",
+        "Type": "employee",
+        "TypeId": 10
+      }
+    ],
+    "Phone": "555-0100",
+    "DoNotCall": false,
+    "AltPhone": "555-0199",
+    "Address": {
+      "Address": "123 Main St",
+      "City": "Sydney",
+      "State": "NSW",
+      "PostalCode": "2000",
+      "Country": "Australia"
+    },
+    "BillingAddress": {
+      "Address": "456 Billing Ave",
+      "City": "Melbourne",
+      "State": "VIC",
+      "PostalCode": "3000",
+      "Country": "Australia"
+    },
+    "CustomerType": "Customer",
+    "Tags": [
+      {"ID": 1, "Name": "VIP"},
+      {"ID": 2, "Name": "Residential"}
+    ],
+    "AmountOwing": 1500.00,
+    "Rates": {
+      "PartTaxCode": null,
+      "LabourTaxCode": null,
+      "DiscountFee": 5.0,
+      "AlwaysDeductCIS": false,
+      "ServiceFee": null,
+      "Material": {
+        "PricingTier": {
+          "ID": 1,
+          "Name": "Standard Tier",
+          "DefaultMarkup": 20.0
+        },
+        "Markup": 15.0
+      }
+    },
+    "Profile": {
+      "Notes": "Important customer notes",
+      "CustomerProfile": {"ID": 1, "Name": "Premium"},
+      "CustomerGroup": {"ID": 1, "Name": "Residential"},
+      "AccountManager": {"ID": 5, "Name": "Sarah Manager"},
+      "Currency": {"ID": "AUD", "Name": "Australian Dollar", "Visible": true},
+      "ServiceJobCostCenter": {"ID": 1, "Name": "Service"}
+    },
+    "Banking": {
+      "AccountName": "John Smith",
+      "RoutingNo": "123456",
+      "AccountNo": "789012345",
+      "PaymentMethod": {"ID": 1, "Name": "Bank Transfer"},
+      "PaymentTermID": 1,
+      "PaymentTerms": {"Days": 30, "Type": "Invoice"},
+      "CreditLimit": 10000.00,
+      "OnStop": false,
+      "Retention": "incGST",
+      "VendorOrderNoRequired": false
+    },
+    "Archived": false,
+    "Sites": [
+      {"ID": 1, "Name": "Main Office"},
+      {"ID": 2, "Name": "Warehouse"}
+    ],
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 1,
+          "Name": "Referred By",
+          "Type": "Text",
+          "ListItems": null,
+          "IsMandatory": false
+        },
+        "Value": "Friend"
+      }
+    ],
+    "Email": "john.smith@example.com",
+    "DateModified": "2024-06-20T14:45:00+10:00",
+    "DateCreated": "2024-01-15T10:30:00+10:00",
+    "CellPhone": "555-0150"
+  }
+}

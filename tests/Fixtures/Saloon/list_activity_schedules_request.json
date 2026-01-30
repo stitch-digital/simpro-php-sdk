@@ -1,0 +1,40 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "TotalHours": 8.0,
+      "Staff": {
+        "ID": 5,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 5
+      },
+      "Date": "2024-03-15",
+      "Activity": {
+        "ID": 10,
+        "Name": "Team meeting"
+      }
+    },
+    {
+      "ID": 2,
+      "TotalHours": 4.5,
+      "Staff": {
+        "ID": 6,
+        "Name": "Jane Doe",
+        "Type": "employee",
+        "TypeId": 6
+      },
+      "Date": "2024-03-16",
+      "Activity": {
+        "ID": 11,
+        "Name": "Site inspection"
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1,
+    "Title": "Mr",
+    "GivenName": "Alice",
+    "FamilyName": "Johnson",
+    "Email": "alice.johnson@example.com",
+    "WorkPhone": "555-0200",
+    "Fax": "555-0298",
+    "CellPhone": "555-0201",
+    "AltPhone": "555-0299",
+    "Department": "Operations",
+    "Position": "Manager",
+    "Notes": "Primary contact for all service requests",
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 1,
+          "Name": "Preferred Contact Method"
+        },
+        "Value": "Email"
+      }
+    ],
+    "DateModified": "2024-05-15T11:30:00Z",
+    "QuoteContact": true,
+    "JobContact": true,
+    "InvoiceContact": false,
+    "StatementContact": false,
+    "PrimaryStatementContact": false,
+    "PrimaryInvoiceContact": false,
+    "PrimaryJobContact": true,
+    "PrimaryQuoteContact": true
+  }
+}

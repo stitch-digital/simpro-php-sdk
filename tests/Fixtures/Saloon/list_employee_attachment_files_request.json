@@ -1,0 +1,42 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Filename": "resume.pdf",
+      "MimeType": "application/pdf",
+      "FileSizeBytes": 102400,
+      "Folder": {
+        "ID": 10,
+        "Name": "Documents"
+      },
+      "DateAdded": "2024-01-15T10:30:00Z",
+      "AddedBy": {
+        "ID": 5,
+        "Name": "Admin User"
+      },
+      "Default": false
+    },
+    {
+      "ID": 2,
+      "Filename": "signature.png",
+      "MimeType": "image/png",
+      "FileSizeBytes": 5120,
+      "Folder": {
+        "ID": 11,
+        "Name": "Images"
+      },
+      "DateAdded": "2024-02-01T14:00:00Z",
+      "AddedBy": {
+        "ID": 5,
+        "Name": "Admin User"
+      },
+      "Default": true
+    }
+  ]
+}

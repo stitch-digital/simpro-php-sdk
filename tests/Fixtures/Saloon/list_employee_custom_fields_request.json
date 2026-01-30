@@ -1,0 +1,30 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "CustomField": {
+        "ID": 1,
+        "Name": "Emergency Contact",
+        "Type": "Text",
+        "IsMandatory": true,
+        "ListItems": []
+      },
+      "Value": "Jane Doe - 555-0199"
+    },
+    {
+      "CustomField": {
+        "ID": 2,
+        "Name": "Shirt Size",
+        "Type": "List",
+        "IsMandatory": false,
+        "ListItems": ["S", "M", "L", "XL"]
+      },
+      "Value": "L"
+    }
+  ]
+}

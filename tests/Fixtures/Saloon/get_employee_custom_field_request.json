@@ -1,0 +1,16 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "CustomField": {
+      "ID": 1,
+      "Name": "Emergency Contact",
+      "Type": "Text",
+      "IsMandatory": true,
+      "ListItems": []
+    },
+    "Value": "Jane Doe - 555-0199"
+  }
+}

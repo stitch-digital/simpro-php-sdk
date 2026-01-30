@@ -14,6 +14,7 @@ use Simpro\PhpSdk\Simpro\Requests\Employees\DeleteEmployeeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\GetEmployeeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\ListEmployeesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\UpdateEmployeeRequest;
+use Simpro\PhpSdk\Simpro\Scopes\Employees\EmployeeScope;
 
 /**
  * @property AbstractSimproConnector $connector
@@ -98,5 +99,20 @@ final class EmployeeResource extends BaseResource
         $request = new DeleteEmployeeRequest($this->companyId, $employeeId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Navigate to a specific employee scope for nested resources.
+     *
+     * @example
+     * // Access employee timesheets
+     * $connector->employees(companyId: 0)->employee(employeeId: 123)->timesheets()->list();
+     *
+     * // Access employee custom fields
+     * $connector->employees(companyId: 0)->employee(employeeId: 123)->customFields()->list();
+     */
+    public function employee(int|string $employeeId): EmployeeScope
+    {
+        return new EmployeeScope($this->connector, $this->companyId, $employeeId);
     }
 }

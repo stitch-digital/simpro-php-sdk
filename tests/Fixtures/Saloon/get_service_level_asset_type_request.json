@@ -1,0 +1,19 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "AssetType": {
+      "ID": 5,
+      "Name": "HVAC Equipment"
+    },
+    "Prebuild": {
+      "ID": 1,
+      "PartNo": "PRE-001",
+      "Name": "Standard HVAC Service"
+    },
+    "ChargeRate": 150.00,
+    "EstimatedTime": 2.5
+  }
+}

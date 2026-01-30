@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2026-01-28 | **Progress:** 148/1325 endpoints (11.2%)
+> **Last Updated:** 2026-01-30 | **Progress:** 211/1325 endpoints (15.9%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -23,17 +23,17 @@ This file serves as the single source of truth for SDK development progress, arc
 
 | Category | Implemented | Remaining | Total |
 |----------|-------------|-----------|-------|
-| Companies | 2 | ~200 | ~202 |
+| Companies | 7 | ~195 | ~202 |
 | Jobs | 121 | ~0 | ~121 |
-| Customers | 6 | ~44 | ~50 |
+| Customers | 41 | ~9 | ~50 |
 | Quotes | 5 | ~35 | ~40 |
 | Invoices | 5 | ~20 | ~25 |
 | Schedules | 2 | ~28 | ~30 |
-| Employees | 5 | ~20 | ~25 |
+| Employees | 29 | ~0 | ~29 |
 | CurrentUser | 1 | 0 | 1 |
 | Info | 1 | 0 | 1 |
 | **Other** | 0 | ~891 | ~891 |
-| **Total** | **148** | **1177** | **1325** |
+| **Total** | **211** | **1114** | **1325** |
 
 ### Implemented Resources Summary
 
@@ -41,12 +41,16 @@ This file serves as the single source of truth for SDK development progress, arc
 |----------|---------|-----------------|------|
 | Info | `get()` + 9 convenience methods | 1 | 1 |
 | Companies | `list()`, `listDetailed()`, `get()`, `getDefault()`, `findByName()` | 3 | 6 |
+| ActivitySchedules | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 2 |
 | Jobs | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 126 | 47+ |
-| Customers | `list()`, `listCompanies()`, `getCompany()`, `createCompany()`, `updateCompany()`, `deleteCompany()` | 6 | 3 |
+| Customers | `list()`, `listCompanies()`, `listCompaniesDetailed()`, `getCompany()`, `createCompany()`, `updateCompany()`, `deleteCompany()` | 41 | 30+ |
+| ↳ Individuals | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` | (included above) | |
+| ↳ Contacts | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + customFields | (included above) | |
+| ↳ Contracts | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + inflation, laborRates, serviceLevels, customFields | (included above) | |
 | Quotes | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 5 |
 | Invoices | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 5 |
 | Schedules | `list()`, `get()` | 2 | 4 |
-| Employees | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 3 |
+| Employees | `list()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 29 | 8 |
 | CurrentUser | `get()` | 1 | 1 |
 
 ---
@@ -59,12 +63,13 @@ Track documentation for each implemented resource:
 |----------|-------------------|---------------|--------|
 | Info | [x] `docs/info-resource.md` | [x] | COMPLETE |
 | Companies | [x] `docs/companies-resource.md` | [x] | COMPLETE |
+| ActivitySchedules | [ ] `docs/activity-schedules-resource.md` | [ ] | PENDING |
 | Jobs | [x] `docs/jobs-resource.md` | [x] | COMPLETE |
 | Customers | [x] `docs/customers-resource.md` | [x] | COMPLETE |
 | Quotes | [x] `docs/quotes-resource.md` | [x] | COMPLETE |
 | Invoices | [x] `docs/invoices-resource.md` | [x] | COMPLETE |
 | Schedules | [x] `docs/schedules-resource.md` | [x] | COMPLETE |
-| Employees | [x] `docs/employees-resource.md` | [x] | COMPLETE |
+| Employees | [x] `docs/employees-resource.md` | [x] | NEEDS UPDATE (nested resources) |
 | CurrentUser | [x] `docs/current-user-resource.md` | [x] | COMPLETE |
 
 ### Documentation Workflow
@@ -158,6 +163,40 @@ $connector->jobs(0)->list()
     ->orderByDesc('DateIssued')
     ->first();
 ```
+
+---
+
+## CRITICAL: DTO Field Specification
+
+> **WARNING: NEVER GUESS DTO FIELDS**
+>
+> All DTO (Data Transfer Object) fields **MUST** come from one of these sources:
+>
+> 1. **Primary Source:** The `swagger 2.json` file in the repository root
+> 2. **Secondary Source:** Explicit user instructions
+>
+> **DO NOT** make educated guesses about field names, types, or structures based on:
+> - Similar endpoints in other APIs
+> - Common naming conventions
+> - Fields that "should" exist based on context
+>
+> **When implementing a new DTO:**
+> 1. Find the exact endpoint in `swagger 2.json`
+> 2. Read the `responses.200.schema.properties` section
+> 3. Map each swagger field to the DTO property exactly
+> 4. If unsure about any field, **ASK** rather than guess
+>
+> **Example: Finding swagger schema for employees**
+> ```bash
+> # Search for the endpoint
+> grep -n "/api/v1.0/companies/{companyID}/employees/" "swagger 2.json"
+> # Read the schema from the returned line number
+> ```
+>
+> This rule exists because guessed fields will:
+> - Cause runtime errors when the API returns unexpected data
+> - Create maintenance burden when fixing incorrect mappings
+> - Break type safety that DTOs are designed to provide
 
 ---
 
@@ -281,11 +320,16 @@ This section outlines the phased approach for implementing the remaining endpoin
 
 **Note:** Job Invoices (5 endpoints) and Customer Invoices (2 endpoints) are DEPRECATED and intentionally NOT implemented. Use `/accounts/receivable/invoices/` instead.
 
-#### Phase 3: Schedules & Employees (~55 endpoints)
-- [ ] ActivitySchedules
+#### Phase 3: Schedules & Employees (~55 endpoints) ✅ COMPLETE
+- [x] ActivitySchedules (5 endpoints)
 - [x] Employees CRUD (List, Get, Create, Update, Delete)
 - [x] Schedules (List, Get)
-- [ ] Employee timesheets
+- [x] Employee Timesheets (1 endpoint)
+- [x] Employee Attachments Files (5 endpoints)
+- [x] Employee Attachments Folders (5 endpoints)
+- [x] Employee CustomFields (3 endpoints)
+- [x] Employee Licences (5 endpoints)
+- [x] Employee Licence Attachments (5 endpoints)
 
 #### Phase 4: Customers (~50 endpoints)
 - [x] Customer companies (List, Get, Create, Update, Delete)
@@ -480,27 +524,27 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: ActivitySchedules
 
-- [ ] `GET /api/v1.0/companies/{companyID}/activitySchedules/`
+- [x] `GET /api/v1.0/companies/{companyID}/activitySchedules/`
   - **Description**: List all activity schedules.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/activitySchedules/`
+- [x] `POST /api/v1.0/companies/{companyID}/activitySchedules/`
   - **Description**: Create a new activity schedule.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/activitySchedules/{scheduleID}`
+- [x] `GET /api/v1.0/companies/{companyID}/activitySchedules/{scheduleID}`
   - **Description**: Retrieve details for a specific activity schedule.
   - **Parameters**: `companyID`, `scheduleID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/activitySchedules/{scheduleID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/activitySchedules/{scheduleID}`
   - **Description**: Update a activity schedule.
   - **Parameters**: `companyID`, `scheduleID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/activitySchedules/{scheduleID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/activitySchedules/{scheduleID}`
   - **Description**: Delete a activity schedule.
   - **Parameters**: `companyID`, `scheduleID`
   - **Response**: No Content
@@ -1332,161 +1376,161 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Contacts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/`
   - **Description**: List all customer contacts.
   - **Parameters**: `companyID`, `customerID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/`
+- [x] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/`
   - **Description**: Create a new customer contact.
   - **Parameters**: `companyID`, `customerID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}`
   - **Description**: Retrieve details for a specific customer contact.
   - **Parameters**: `companyID`, `customerID`, `contactID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}`
   - **Description**: Update a customer contact.
   - **Parameters**: `companyID`, `customerID`, `contactID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}`
   - **Description**: Delete a customer contact.
   - **Parameters**: `companyID`, `customerID`, `contactID`
   - **Response**: No Content
 
 #### Contacts > customFields
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}/customFields/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}/customFields/`
   - **Description**: List all customer contact custom fields.
   - **Parameters**: `companyID`, `customerID`, `contactID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}/customFields/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}/customFields/{customFieldID}`
   - **Description**: Retrieve details for a specific customer contact custom field.
   - **Parameters**: `companyID`, `customerID`, `contactID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}/customFields/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contacts/{contactID}/customFields/{customFieldID}`
   - **Description**: Update a customer contact custom field.
   - **Parameters**: `companyID`, `customerID`, `contactID`, `customFieldID`
   - **Response**: No Content
 
 #### Contracts
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/`
   - **Description**: List all customer contracts.
   - **Parameters**: `companyID`, `customerID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/`
+- [x] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/`
   - **Description**: Create a new customer contract.
   - **Parameters**: `companyID`, `customerID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}`
   - **Description**: Retrieve details for a specific customer contract.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}`
   - **Description**: Update a customer contract.
   - **Parameters**: `companyID`, `customerID`, `contractID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}`
   - **Description**: Delete a customer contract.
   - **Parameters**: `companyID`, `customerID`, `contractID`
   - **Response**: No Content
 
 #### Contracts > customFields
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/customFields/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/customFields/`
   - **Description**: List all customer contract custom fields.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/customFields/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/customFields/{customFieldID}`
   - **Description**: Retrieve details for a specific customer contract custom field.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/customFields/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/customFields/{customFieldID}`
   - **Description**: Update a customer contract custom field.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `customFieldID`
   - **Response**: No Content
 
 #### Contracts > inflation
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/`
   - **Description**: List all customer contract inflation.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/`
+- [x] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/`
   - **Description**: Create a new customer contract inflation.
   - **Parameters**: `companyID`, `customerID`, `contractID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/{inflationID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/{inflationID}`
   - **Description**: Retrieve details for a specific customer contract inflation.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `inflationID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/{inflationID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/{inflationID}`
   - **Description**: Update a customer contract inflation.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `inflationID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/{inflationID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/inflation/{inflationID}`
   - **Description**: Delete a customer contract inflation.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `inflationID`
   - **Response**: No Content
 
 #### Contracts > laborRates
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/`
   - **Description**: List all customer contract labor rates.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/`
+- [x] `POST /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/`
   - **Description**: Create a new customer contract labor rate.
   - **Parameters**: `companyID`, `customerID`, `contractID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/{laborRateID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/{laborRateID}`
   - **Description**: Retrieve details for a specific customer contract labor rate.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `laborRateID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/{laborRateID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/{laborRateID}`
   - **Description**: Update a customer contract labor rate.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `laborRateID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/{laborRateID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/laborRates/{laborRateID}`
   - **Description**: Delete a customer contract labor rate.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `laborRateID`
   - **Response**: No Content
 
 #### Contracts > serviceLevels
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/serviceLevels/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/serviceLevels/`
   - **Description**: List all customer contract service levels.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
 #### Contracts > serviceLevels > assetTypes
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/serviceLevels/{serviceLevelID}/assetTypes/{assetTypeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/serviceLevels/{serviceLevelID}/assetTypes/{assetTypeID}`
   - **Description**: Retrieve details for a specific customer contract service level asset type.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `serviceLevelID`, `assetTypeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/serviceLevels/{serviceLevelID}/assetTypes/{assetTypeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/{customerID}/contracts/{contractID}/serviceLevels/{serviceLevelID}/assetTypes/{assetTypeID}`
   - **Description**: Update a customer contract service level asset type.
   - **Parameters**: `companyID`, `customerID`, `contractID`, `serviceLevelID`, `assetTypeID`
   - **Response**: No Content
@@ -1510,27 +1554,27 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Individuals
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/individuals/`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/individuals/`
   - **Description**: List all individual customers.
   - **Parameters**: `companyID`, `customerType`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/customers/individuals/`
+- [x] `POST /api/v1.0/companies/{companyID}/customers/individuals/`
   - **Description**: Create a new individual customer.
   - **Parameters**: `companyID`, `customerType`, `createSite`?
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customers/individuals/{customerID}`
+- [x] `GET /api/v1.0/companies/{companyID}/customers/individuals/{customerID}`
   - **Description**: Retrieve details for a specific individual customer.
   - **Parameters**: `companyID`, `customerType`, `customerID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/customers/individuals/{customerID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/customers/individuals/{customerID}`
   - **Description**: Update a individual customer.
   - **Parameters**: `companyID`, `customerType`, `customerID`, `createSite`?
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/customers/individuals/{customerID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/customers/individuals/{customerID}`
   - **Description**: Delete a individual customer.
   - **Parameters**: `companyID`, `customerType`, `customerID`
   - **Response**: No Content
@@ -1679,132 +1723,132 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Attachments > files
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/`
   - **Description**: List all employee attachments.
   - **Parameters**: `companyID`, `employeeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/`
+- [x] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/`
   - **Description**: Create a new employee attachment.
   - **Parameters**: `companyID`, `employeeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/{fileID}`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/{fileID}`
   - **Description**: Retrieve details for a specific employee attachment.
   - **Parameters**: `companyID`, `employeeID`, `fileID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/{fileID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/{fileID}`
   - **Description**: Update a employee attachment.
   - **Parameters**: `companyID`, `employeeID`, `fileID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/{fileID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/files/{fileID}`
   - **Description**: Delete a employee attachment.
   - **Parameters**: `companyID`, `employeeID`, `fileID`
   - **Response**: No Content
 
 #### Attachments > folders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/`
   - **Description**: List all employee attachment folders.
   - **Parameters**: `companyID`, `employeeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/`
+- [x] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/`
   - **Description**: Create a new employee attachment folder.
   - **Parameters**: `companyID`, `employeeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/{folderID}`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/{folderID}`
   - **Description**: Retrieve details for a specific employee attachment folder.
   - **Parameters**: `companyID`, `employeeID`, `folderID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/{folderID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/{folderID}`
   - **Description**: Update a employee attachment folder.
   - **Parameters**: `companyID`, `employeeID`, `folderID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/{folderID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/attachments/folders/{folderID}`
   - **Description**: Delete a employee attachment folder.
   - **Parameters**: `companyID`, `employeeID`, `folderID`
   - **Response**: No Content
 
 #### CustomFields
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/customFields/`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/customFields/`
   - **Description**: List all employee custom fields.
   - **Parameters**: `companyID`, `employeeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/customFields/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/customFields/{customFieldID}`
   - **Description**: Retrieve details for a specific employee custom field.
   - **Parameters**: `companyID`, `employeeID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/customFields/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/customFields/{customFieldID}`
   - **Description**: Update a employee custom field.
   - **Parameters**: `companyID`, `employeeID`, `customFieldID`
   - **Response**: No Content
 
 #### Licences
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/`
   - **Description**: List all employee licences.
   - **Parameters**: `companyID`, `employeeID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/`
+- [x] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/`
   - **Description**: Create a new employee licence.
   - **Parameters**: `companyID`, `employeeID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}`
   - **Description**: Retrieve details for a specific employee licence.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}`
   - **Description**: Update a employee licence.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}`
   - **Description**: Delete a employee licence.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`
   - **Response**: No Content
 
 #### Licences > attachments > files
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/`
   - **Description**: List all employee licence attachments.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/`
+- [x] `POST /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/`
   - **Description**: Create a new employee licence attachment.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/{fileID}`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/{fileID}`
   - **Description**: Retrieve details for a specific employee licence attachment.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`, `fileID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/{fileID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/{fileID}`
   - **Description**: Update a employee licence attachment.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`, `fileID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/{fileID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/employees/{employeeID}/licences/{licenceID}/attachments/files/{fileID}`
   - **Description**: Delete a employee licence attachment.
   - **Parameters**: `companyID`, `employeeID`, `licenceID`, `fileID`
   - **Response**: No Content
 
 #### Timesheets
 
-- [ ] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/timesheets/`
+- [x] `GET /api/v1.0/companies/{companyID}/employees/{employeeID}/timesheets/`
   - **Description**: List all employee timesheets.
   - **Parameters**: `companyID`, `employeeID`, `search`?, `columns`?, `UID`?, `StartDate`?, `EndDate`?, `Includes`?, `ScheduleType`?
   - **Response**: Array of object

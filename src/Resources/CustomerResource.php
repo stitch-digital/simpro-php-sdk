@@ -12,9 +12,12 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Customers\CreateCompanyCustomerRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\DeleteCompanyCustomerRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\GetCompanyCustomerRequest;
+use Simpro\PhpSdk\Simpro\Requests\Customers\ListCompanyCustomersDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\ListCompanyCustomersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\ListCustomersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\UpdateCompanyCustomerRequest;
+use Simpro\PhpSdk\Simpro\Resources\Customers\CustomerIndividualResource;
+use Simpro\PhpSdk\Simpro\Scopes\Customers\CustomerScope;
 
 /**
  * @property AbstractSimproConnector $connector
@@ -60,6 +63,40 @@ final class CustomerResource extends BaseResource
     public function listCompanies(array $filters = []): QueryBuilder
     {
         $request = new ListCompanyCustomersRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all company customers with detailed information.
+     *
+     * Returns CustomerCompanyListDetailedItem DTOs with all available columns including:
+     * Address, BillingAddress, CustomerType, Tags, AmountOwing, Profile, Banking,
+     * Sites, Contracts, Contacts, ResponseTimes, CustomFields, and timestamps.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     *
+     * @example
+     * // Get all company customers with full details
+     * $customers = $connector->customers(companyId: 0)->listCompaniesDetailed()->all();
+     *
+     * // With fluent search
+     * $result = $connector->customers(companyId: 0)->listCompaniesDetailed()
+     *     ->search(Search::make()->column('CompanyName')->find('Acme'))
+     *     ->orderByDesc('DateModified')
+     *     ->collect();
+     */
+    public function listCompaniesDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListCompanyCustomersDetailedRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
@@ -121,5 +158,35 @@ final class CustomerResource extends BaseResource
         $request = new DeleteCompanyCustomerRequest($this->companyId, $customerId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Access individual customer operations.
+     *
+     * @example
+     * // List all individual customers
+     * $connector->customers(companyId: 0)->individuals()->list()->all();
+     *
+     * // Get a specific individual
+     * $connector->customers(companyId: 0)->individuals()->get(customerId: 123);
+     */
+    public function individuals(): CustomerIndividualResource
+    {
+        return new CustomerIndividualResource($this->connector, $this->companyId);
+    }
+
+    /**
+     * Navigate to a specific customer scope for accessing nested resources.
+     *
+     * @example
+     * // Access customer contacts
+     * $connector->customers(companyId: 0)->customer(customerId: 456)->contacts()->list();
+     *
+     * // Access customer contracts
+     * $connector->customers(companyId: 0)->customer(customerId: 456)->contracts()->list();
+     */
+    public function customer(int|string $customerId): CustomerScope
+    {
+        return new CustomerScope($this->connector, $this->companyId, $customerId);
     }
 }
