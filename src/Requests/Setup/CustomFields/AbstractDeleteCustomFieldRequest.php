@@ -15,7 +15,7 @@ abstract class AbstractDeleteCustomFieldRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
         protected readonly int|string $customFieldId,
     ) {}
 

@@ -17,6 +17,6 @@ abstract class AbstractScope
 {
     public function __construct(
         protected readonly AbstractSimproConnector $connector,
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
     ) {}
 }

@@ -21,27 +21,27 @@ use Simpro\PhpSdk\Simpro\Resources\Setup\AbstractCustomFieldResource;
  */
 final class VendorContactCustomFieldResource extends AbstractCustomFieldResource
 {
-    protected function createListRequest(int|string $companyId): AbstractListCustomFieldsRequest
+    protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest
     {
         return new ListVendorContactCustomFieldsRequest($companyId);
     }
 
-    protected function createGetRequest(int|string $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest
+    protected function createGetRequest(int $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest
     {
         return new GetVendorContactCustomFieldRequest($companyId, $customFieldId);
     }
 
-    protected function createCreateRequest(int|string $companyId, array $data): AbstractCreateCustomFieldRequest
+    protected function createCreateRequest(int $companyId, array $data): AbstractCreateCustomFieldRequest
     {
         return new CreateVendorContactCustomFieldRequest($companyId, $data);
     }
 
-    protected function createUpdateRequest(int|string $companyId, int|string $customFieldId, array $data): AbstractUpdateCustomFieldRequest
+    protected function createUpdateRequest(int $companyId, int|string $customFieldId, array $data): AbstractUpdateCustomFieldRequest
     {
         return new UpdateVendorContactCustomFieldRequest($companyId, $customFieldId, $data);
     }
 
-    protected function createDeleteRequest(int|string $companyId, int|string $customFieldId): AbstractDeleteCustomFieldRequest
+    protected function createDeleteRequest(int $companyId, int|string $customFieldId): AbstractDeleteCustomFieldRequest
     {
         return new DeleteVendorContactCustomFieldRequest($companyId, $customFieldId);
     }

@@ -15,7 +15,7 @@ final class ListCostCenterSchedulesRequest extends Request implements Paginatabl
     protected Method $method = Method::GET;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $jobId,
         private readonly int|string $sectionId,
         private readonly int|string $costCenterId,

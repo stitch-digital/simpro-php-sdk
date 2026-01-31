@@ -29,7 +29,7 @@ final class JobScope extends AbstractScope
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        int|string $companyId,
+        int $companyId,
         private readonly int|string $jobId,
     ) {
         parent::__construct($connector, $companyId);

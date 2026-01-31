@@ -36,7 +36,7 @@ final class PathBuilder
     /**
      * Add a companies segment.
      */
-    public function companies(int|string $companyId): self
+    public function companies(int $companyId): self
     {
         $this->segments[] = "companies/{$companyId}";
 

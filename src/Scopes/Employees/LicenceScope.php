@@ -19,7 +19,7 @@ final class LicenceScope extends AbstractScope
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        int|string $companyId,
+        int $companyId,
         private readonly int|string $employeeId,
         private readonly int|string $licenceId,
     ) {

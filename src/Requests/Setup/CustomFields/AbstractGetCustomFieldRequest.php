@@ -17,7 +17,7 @@ abstract class AbstractGetCustomFieldRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
         protected readonly int|string $customFieldId,
     ) {}
 

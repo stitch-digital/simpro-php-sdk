@@ -18,7 +18,7 @@ final class MaterialsScope
 {
     public function __construct(
         private readonly AbstractSimproConnector $connector,
-        private readonly int|string $companyId,
+        private readonly int $companyId,
     ) {}
 
     /**

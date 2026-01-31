@@ -22,7 +22,7 @@ abstract class AbstractUpdateCustomFieldRequest extends Request implements HasBo
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
         protected readonly int|string $customFieldId,
         protected readonly array $data,
     ) {}

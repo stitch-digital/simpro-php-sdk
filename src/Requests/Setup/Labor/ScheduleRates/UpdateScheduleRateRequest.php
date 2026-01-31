@@ -22,7 +22,7 @@ final class UpdateScheduleRateRequest extends Request implements HasBody
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $scheduleRateId,
         private readonly array $data,
     ) {}

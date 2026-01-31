@@ -15,7 +15,7 @@ final class DeletePricingTierRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $pricingTierId,
     ) {}
 

@@ -20,7 +20,7 @@ final class TeamResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        private readonly int|string $companyId,
+        private readonly int $companyId,
     ) {
         parent::__construct($connector);
     }

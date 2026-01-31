@@ -19,7 +19,7 @@ final class UpdateEmployeeAttachmentFileRequest extends Request implements HasBo
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
         private readonly int|string $fileId,
         private readonly array $data,

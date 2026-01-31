@@ -22,7 +22,7 @@ final class UpdateAssetTypeServiceLevelRequest extends Request implements HasBod
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $assetTypeId,
         private readonly int|string $serviceLevelId,
         private readonly array $data,

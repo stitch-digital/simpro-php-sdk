@@ -15,7 +15,7 @@ final class ListEmployeeAttachmentFoldersRequest extends Request implements Pagi
     protected Method $method = Method::GET;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
     ) {}
 

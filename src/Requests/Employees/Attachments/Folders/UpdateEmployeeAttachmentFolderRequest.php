@@ -19,7 +19,7 @@ final class UpdateEmployeeAttachmentFolderRequest extends Request implements Has
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
         private readonly int|string $folderId,
         private readonly array $data,

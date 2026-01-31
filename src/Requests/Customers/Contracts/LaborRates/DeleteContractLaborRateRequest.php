@@ -12,7 +12,7 @@ final class DeleteContractLaborRateRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $customerId,
         private readonly int|string $contractId,
         private readonly int|string $laborRateId,

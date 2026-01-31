@@ -8,7 +8,7 @@ use Simpro\PhpSdk\Simpro\Resources\ScheduleResource;
 
 trait SupportsSchedulesEndpoints
 {
-    public function schedules(int|string $companyId = 0): ScheduleResource
+    public function schedules(int $companyId = 0): ScheduleResource
     {
         return new ScheduleResource($this, $companyId);
     }

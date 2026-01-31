@@ -8,7 +8,7 @@ use Simpro\PhpSdk\Simpro\Resources\InvoiceResource;
 
 trait SupportsInvoicesEndpoints
 {
-    public function invoices(int|string $companyId = 0): InvoiceResource
+    public function invoices(int $companyId = 0): InvoiceResource
     {
         return new InvoiceResource($this, $companyId);
     }

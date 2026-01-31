@@ -23,7 +23,7 @@ abstract class AbstractCreateCustomFieldRequest extends Request implements HasBo
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
         protected readonly array $data,
     ) {}
 

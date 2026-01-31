@@ -47,16 +47,6 @@ final class CurrencyResource extends BaseResource
     }
 
     /**
-     * Get visible currencies.
-     *
-     * @param  array<string, mixed>  $filters
-     */
-    public function getVisible(array $filters = []): QueryBuilder
-    {
-        return $this->list(array_merge(['Visible' => true], $filters));
-    }
-
-    /**
      * Get a specific currency.
      *
      * @param  array<string>|null  $columns

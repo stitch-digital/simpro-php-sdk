@@ -12,7 +12,7 @@ final class DeleteLicenceAttachmentFileRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
         private readonly int|string $licenceId,
         private readonly int|string $fileId,

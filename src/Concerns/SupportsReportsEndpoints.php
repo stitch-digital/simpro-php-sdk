@@ -8,7 +8,7 @@ use Simpro\PhpSdk\Simpro\Resources\ReportResource;
 
 trait SupportsReportsEndpoints
 {
-    public function reports(int|string $companyId = 0): ReportResource
+    public function reports(int $companyId = 0): ReportResource
     {
         return new ReportResource($this, $companyId);
     }

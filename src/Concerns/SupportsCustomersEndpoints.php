@@ -8,7 +8,7 @@ use Simpro\PhpSdk\Simpro\Resources\CustomerResource;
 
 trait SupportsCustomersEndpoints
 {
-    public function customers(int|string $companyId = 0): CustomerResource
+    public function customers(int $companyId = 0): CustomerResource
     {
         return new CustomerResource($this, $companyId);
     }

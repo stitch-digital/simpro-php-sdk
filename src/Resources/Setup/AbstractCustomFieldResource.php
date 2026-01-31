@@ -24,20 +24,20 @@ abstract class AbstractCustomFieldResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
     ) {
         parent::__construct($connector);
     }
 
-    abstract protected function createListRequest(int|string $companyId): AbstractListCustomFieldsRequest;
+    abstract protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest;
 
-    abstract protected function createGetRequest(int|string $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest;
+    abstract protected function createGetRequest(int $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest;
 
-    abstract protected function createCreateRequest(int|string $companyId, array $data): AbstractCreateCustomFieldRequest;
+    abstract protected function createCreateRequest(int $companyId, array $data): AbstractCreateCustomFieldRequest;
 
-    abstract protected function createUpdateRequest(int|string $companyId, int|string $customFieldId, array $data): AbstractUpdateCustomFieldRequest;
+    abstract protected function createUpdateRequest(int $companyId, int|string $customFieldId, array $data): AbstractUpdateCustomFieldRequest;
 
-    abstract protected function createDeleteRequest(int|string $companyId, int|string $customFieldId): AbstractDeleteCustomFieldRequest;
+    abstract protected function createDeleteRequest(int $companyId, int|string $customFieldId): AbstractDeleteCustomFieldRequest;
 
     /**
      * List all custom fields.

@@ -20,7 +20,7 @@ final class CreateEmployeeLicenceRequest extends Request implements HasBody
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
         private readonly array $data,
     ) {}

@@ -12,7 +12,7 @@ final class DeleteCustomerProfileRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $customerProfileId,
     ) {}
 

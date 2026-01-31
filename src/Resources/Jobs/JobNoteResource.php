@@ -23,7 +23,7 @@ final class JobNoteResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $jobId,
     ) {
         parent::__construct($connector);

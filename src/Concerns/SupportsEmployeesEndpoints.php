@@ -8,7 +8,7 @@ use Simpro\PhpSdk\Simpro\Resources\EmployeeResource;
 
 trait SupportsEmployeesEndpoints
 {
-    public function employees(int|string $companyId = 0): EmployeeResource
+    public function employees(int $companyId = 0): EmployeeResource
     {
         return new EmployeeResource($this, $companyId);
     }

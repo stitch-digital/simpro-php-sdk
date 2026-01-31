@@ -21,7 +21,7 @@ final class ListContractsDetailedRequest extends Request implements Paginatable
     protected Method $method = Method::GET;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $customerId,
     ) {}
 

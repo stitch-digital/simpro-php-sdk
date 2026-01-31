@@ -19,7 +19,7 @@ final class ContactScope extends AbstractScope
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        int|string $companyId,
+        int $companyId,
         private readonly int|string $customerId,
         private readonly int|string $contactId,
     ) {

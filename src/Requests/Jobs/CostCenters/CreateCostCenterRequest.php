@@ -20,7 +20,7 @@ final class CreateCostCenterRequest extends Request implements HasBody
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $jobId,
         private readonly int|string $sectionId,
         private readonly array $data,

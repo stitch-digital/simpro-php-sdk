@@ -19,7 +19,7 @@ final class UpdateCustomerInvoiceStatusCodeRequest extends Request implements Ha
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $statusCodeId,
         private readonly array $data,
     ) {}

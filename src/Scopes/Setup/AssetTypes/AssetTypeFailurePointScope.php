@@ -14,7 +14,7 @@ final class AssetTypeFailurePointScope extends AbstractScope
 {
     public function __construct(
         \Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector $connector,
-        int|string $companyId,
+        int $companyId,
         private readonly int|string $assetTypeId,
         private readonly int|string $serviceLevelId,
         private readonly int|string $failurePointId,

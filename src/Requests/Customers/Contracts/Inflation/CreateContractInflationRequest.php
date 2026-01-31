@@ -20,7 +20,7 @@ final class CreateContractInflationRequest extends Request implements HasBody
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $customerId,
         private readonly int|string $contractId,
         private readonly array $data,

@@ -23,7 +23,7 @@ final class CreateAssetTypeRecommendationRequest extends Request implements HasB
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $assetTypeId,
         private readonly int|string $serviceLevelId,
         private readonly int|string $failurePointId,

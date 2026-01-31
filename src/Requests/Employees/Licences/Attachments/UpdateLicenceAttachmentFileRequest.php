@@ -19,7 +19,7 @@ final class UpdateLicenceAttachmentFileRequest extends Request implements HasBod
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
         private readonly int|string $licenceId,
         private readonly int|string $fileId,

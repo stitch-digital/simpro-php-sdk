@@ -23,7 +23,7 @@ final class SimproPaginator extends PagedPaginator
 
         $totalPages = $this->getTotalPages($response);
 
-        return $currentPage > $totalPages;
+        return $currentPage >= $totalPages;
     }
 
     protected function getPageItems(Response $response, Request $request): array

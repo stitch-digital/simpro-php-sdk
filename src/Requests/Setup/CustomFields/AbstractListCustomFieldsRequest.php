@@ -18,7 +18,7 @@ abstract class AbstractListCustomFieldsRequest extends Request implements Pagina
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected readonly int|string $companyId,
+        protected readonly int $companyId,
     ) {}
 
     abstract protected function getResourcePath(): string;

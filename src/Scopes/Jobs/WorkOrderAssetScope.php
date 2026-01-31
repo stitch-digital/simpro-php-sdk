@@ -20,7 +20,7 @@ final class WorkOrderAssetScope extends AbstractScope
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        int|string $companyId,
+        int $companyId,
         private readonly int|string $jobId,
         private readonly int|string $sectionId,
         private readonly int|string $costCenterId,

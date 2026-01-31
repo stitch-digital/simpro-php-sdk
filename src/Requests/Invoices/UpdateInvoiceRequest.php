@@ -19,7 +19,7 @@ final class UpdateInvoiceRequest extends Request implements HasBody
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $invoiceId,
         private readonly array $data,
     ) {}

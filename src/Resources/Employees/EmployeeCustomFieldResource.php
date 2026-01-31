@@ -22,7 +22,7 @@ final class EmployeeCustomFieldResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $employeeId,
     ) {
         parent::__construct($connector);

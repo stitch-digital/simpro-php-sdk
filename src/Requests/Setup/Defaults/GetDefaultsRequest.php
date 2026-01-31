@@ -14,7 +14,7 @@ final class GetDefaultsRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
     ) {}
 
     public function resolveEndpoint(): string

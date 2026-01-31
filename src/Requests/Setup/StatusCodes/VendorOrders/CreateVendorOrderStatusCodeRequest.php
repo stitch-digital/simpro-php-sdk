@@ -20,7 +20,7 @@ final class CreateVendorOrderStatusCodeRequest extends Request implements HasBod
      * @param  array<string, mixed>  $data
      */
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly array $data,
     ) {}
 

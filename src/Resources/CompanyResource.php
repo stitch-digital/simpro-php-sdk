@@ -86,7 +86,7 @@ final class CompanyResource extends BaseResource
      *
      * @param  array<string>|null  $columns
      */
-    public function get(int|string $companyId, ?array $columns = null): Company
+    public function get(int $companyId, ?array $columns = null): Company
     {
         $request = new GetCompanyRequest($companyId);
 

@@ -8,7 +8,7 @@ use Simpro\PhpSdk\Simpro\Resources\JobResource;
 
 trait SupportsJobsEndpoints
 {
-    public function jobs(int|string $companyId = 0): JobResource
+    public function jobs(int $companyId = 0): JobResource
     {
         return new JobResource($this, $companyId);
     }

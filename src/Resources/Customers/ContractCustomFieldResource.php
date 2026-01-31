@@ -22,7 +22,7 @@ final class ContractCustomFieldResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        private readonly int|string $companyId,
+        private readonly int $companyId,
         private readonly int|string $customerId,
         private readonly int|string $contractId,
     ) {
