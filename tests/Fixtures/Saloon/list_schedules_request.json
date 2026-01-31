@@ -9,7 +9,7 @@
     {
       "ID": 1,
       "Type": "job",
-      "Reference": "100",
+      "Reference": "100-233",
       "TotalHours": 8.0,
       "Staff": {
         "ID": 3,
@@ -24,14 +24,18 @@
           "StartTime": "08:00",
           "ISO8601StartTime": "2024-01-25T08:00:00+00:00",
           "EndTime": "16:00",
-          "ISO8601EndTime": "2024-01-25T16:00:00+00:00"
+          "ISO8601EndTime": "2024-01-25T16:00:00+00:00",
+          "ScheduleRate": {
+            "ID": 1,
+            "Name": "Normal Time"
+          }
         }
       ]
     },
     {
       "ID": 2,
       "Type": "job",
-      "Reference": "100",
+      "Reference": "100-233",
       "TotalHours": 8.0,
       "Staff": {
         "ID": 3,
@@ -46,7 +50,11 @@
           "StartTime": "08:00",
           "ISO8601StartTime": "2024-01-26T08:00:00+00:00",
           "EndTime": "16:00",
-          "ISO8601EndTime": "2024-01-26T16:00:00+00:00"
+          "ISO8601EndTime": "2024-01-26T16:00:00+00:00",
+          "ScheduleRate": {
+            "ID": 1,
+            "Name": "Normal Time"
+          }
         }
       ]
     }

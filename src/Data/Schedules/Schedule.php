@@ -6,19 +6,28 @@ namespace Simpro\PhpSdk\Simpro\Data\Schedules;
 
 use DateTimeImmutable;
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 
+/**
+ * DTO for schedule details.
+ *
+ * Based on swagger: GET /api/v1.0/companies/{companyID}/schedules/{scheduleID}
+ */
 final readonly class Schedule
 {
+    /**
+     * @param  array<ScheduleBlock>|null  $blocks
+     */
     public function __construct(
         public int $id,
         public ?string $type,
-        public ?string $subject,
-        public ?DateTimeImmutable $date,
-        public ?string $startTime,
-        public ?string $endTime,
-        public ?ScheduleStaff $staff,
-        public ?ScheduleJob $job,
+        public ?string $reference,
+        public ?float $totalHours,
         public ?string $notes,
+        public ?StaffReference $staff,
+        public ?string $date,
+        public ?array $blocks,
+        public ?string $href,
         public ?DateTimeImmutable $dateModified,
     ) {}
 
@@ -29,19 +38,36 @@ final readonly class Schedule
         return self::fromArray($data);
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public static function fromArray(array $data): self
     {
+        $blocks = null;
+        if (isset($data['Blocks']) && is_array($data['Blocks'])) {
+            $blocks = array_map(
+                fn (array $block) => ScheduleBlock::fromArray($block),
+                $data['Blocks']
+            );
+        }
+
+        // Handle empty string for dateModified
+        $dateModified = null;
+        if (isset($data['DateModified']) && $data['DateModified'] !== '') {
+            $dateModified = new DateTimeImmutable($data['DateModified']);
+        }
+
         return new self(
             id: $data['ID'],
             type: $data['Type'] ?? null,
-            subject: $data['Subject'] ?? null,
-            date: isset($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
-            startTime: $data['StartTime'] ?? null,
-            endTime: $data['EndTime'] ?? null,
-            staff: isset($data['Staff']) ? ScheduleStaff::fromArray($data['Staff']) : null,
-            job: isset($data['Job']) ? ScheduleJob::fromArray($data['Job']) : null,
+            reference: $data['Reference'] ?? null,
+            totalHours: isset($data['TotalHours']) ? (float) $data['TotalHours'] : null,
             notes: $data['Notes'] ?? null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
+            date: $data['Date'] ?? null,
+            blocks: $blocks,
+            href: $data['_href'] ?? null,
+            dateModified: $dateModified,
         );
     }
 }

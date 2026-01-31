@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\ActivitySchedules\CreateActivityScheduleReques
 use Simpro\PhpSdk\Simpro\Requests\ActivitySchedules\DeleteActivityScheduleRequest;
 use Simpro\PhpSdk\Simpro\Requests\ActivitySchedules\GetActivityScheduleRequest;
 use Simpro\PhpSdk\Simpro\Requests\ActivitySchedules\ListActivitySchedulesRequest;
+use Simpro\PhpSdk\Simpro\Requests\ActivitySchedules\ListDetailedActivitySchedulesRequest;
 use Simpro\PhpSdk\Simpro\Requests\ActivitySchedules\UpdateActivityScheduleRequest;
 
 /**
@@ -33,12 +34,36 @@ final class ActivityScheduleResource extends BaseResource
      * List all activity schedules.
      *
      * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     * Returns ActivityScheduleListItem DTOs with summary fields.
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListActivitySchedulesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all activity schedules with full details.
+     *
+     * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     * Returns full ActivitySchedule DTOs with all fields including notes, blocks, etc.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedActivitySchedulesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

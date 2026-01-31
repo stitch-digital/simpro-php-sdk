@@ -32,7 +32,7 @@ it('parses get activity schedule response correctly', function () {
         ->and($dto->totalHours)->toBe(8.0)
         ->and($dto->notes)->toBe('Weekly sync meeting')
         ->and($dto->isLocked)->toBeFalse()
-        ->and($dto->recurringScheduleId)->toBe(0)
+        ->and($dto->recurringScheduleId)->toBeNull()
         ->and($dto->date)->toBe('2024-03-15')
         ->and($dto->staff->id)->toBe(5)
         ->and($dto->staff->name)->toBe('John Smith')

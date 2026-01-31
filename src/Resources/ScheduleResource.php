@@ -9,6 +9,7 @@ use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Data\Schedules\Schedule;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Schedules\GetScheduleRequest;
+use Simpro\PhpSdk\Simpro\Requests\Schedules\ListDetailedSchedulesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Schedules\ListSchedulesRequest;
 
 /**
@@ -27,12 +28,36 @@ final class ScheduleResource extends BaseResource
      * List all schedules.
      *
      * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     * Returns ScheduleListItem DTOs with summary fields.
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListSchedulesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all schedules with full details.
+     *
+     * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     * Returns full Schedule DTOs with all fields including notes, href, etc.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedSchedulesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

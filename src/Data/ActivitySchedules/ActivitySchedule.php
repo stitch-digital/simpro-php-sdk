@@ -24,7 +24,7 @@ final readonly class ActivitySchedule
         public ?float $totalHours,
         public ?string $notes,
         public ?bool $isLocked,
-        public ?int $recurringScheduleId,
+        public ?string $recurringScheduleId,
         public ?StaffReference $staff,
         public ?string $date,
         public ?array $blocks,
@@ -50,16 +50,30 @@ final readonly class ActivitySchedule
             );
         }
 
+        // Handle empty string or zero for recurringScheduleId
+        $recurringScheduleId = $data['RecurringScheduleID'] ?? null;
+        if ($recurringScheduleId === '' || $recurringScheduleId === 0 || $recurringScheduleId === '0') {
+            $recurringScheduleId = null;
+        } elseif ($recurringScheduleId !== null) {
+            $recurringScheduleId = (string) $recurringScheduleId;
+        }
+
+        // Handle empty string for dateModified
+        $dateModified = null;
+        if (isset($data['DateModified']) && $data['DateModified'] !== '') {
+            $dateModified = new DateTimeImmutable($data['DateModified']);
+        }
+
         return new self(
             id: $data['ID'],
             totalHours: isset($data['TotalHours']) ? (float) $data['TotalHours'] : null,
             notes: $data['Notes'] ?? null,
             isLocked: $data['IsLocked'] ?? null,
-            recurringScheduleId: $data['RecurringScheduleID'] ?? null,
+            recurringScheduleId: $recurringScheduleId,
             staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
             date: $data['Date'] ?? null,
             blocks: $blocks,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: $dateModified,
             activity: isset($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
         );
     }

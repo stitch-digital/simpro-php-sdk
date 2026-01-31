@@ -8,7 +8,7 @@
     "TotalHours": 8.0,
     "Notes": "Weekly sync meeting",
     "IsLocked": false,
-    "RecurringScheduleID": 0,
+    "RecurringScheduleID": "",
     "Staff": {
       "ID": 5,
       "Name": "John Smith",

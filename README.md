@@ -81,7 +81,7 @@ Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev/) v3 to make HT
 
 ## Authentication Methods
 
-Simpro's API supports two authentication methods. Choose the one that best fits your use case:
+This SDL supports two authentication methods. Choose the one that best fits your use case:
 
 ### OAuth (Authorization Code Grant)
 
