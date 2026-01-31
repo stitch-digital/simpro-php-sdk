@@ -9,11 +9,12 @@ use Saloon\Http\Response;
 final readonly class Currency
 {
     public function __construct(
-        public int $iD,
+        public string $id,
         public string $name,
-        public string $code,
-        public ?string $symbol,
-        public ?float $rate,
+        public string $symbol,
+        public float $exchangeRate,
+        public bool $visible,
+        public string $defaultSymbol,
     ) {}
 
     /**
@@ -22,11 +23,12 @@ final readonly class Currency
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
-            name: $data['Name'] ?? '',
-            code: $data['Code'] ?? '',
-            symbol: $data['Symbol'] ?? null,
-            rate: $data['Rate'] ?? null,
+            id: (string) ($data['ID'] ?? ''),
+            name: (string) ($data['Name'] ?? ''),
+            symbol: (string) ($data['Symbol'] ?? ''),
+            exchangeRate: (float) ($data['ExchangeRate'] ?? 0),
+            visible: (bool) ($data['Visible'] ?? false),
+            defaultSymbol: (string) ($data['DefaultSymbol'] ?? ''),
         );
     }
 

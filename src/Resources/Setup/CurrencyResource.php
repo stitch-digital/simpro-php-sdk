@@ -14,7 +14,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Currencies\ListCurrenciesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Currencies\UpdateCurrencyRequest;
 
 /**
- * Resource for managing Currencys.
+ * Resource for managing Currencies.
  *
  * @property AbstractSimproConnector $connector
  */
@@ -22,13 +22,13 @@ final class CurrencyResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
-        private readonly int|string $companyId,
+        private readonly int $companyId,
     ) {
         parent::__construct($connector);
     }
 
     /**
-     * List all.
+     * List all currencies.
      *
      * @param  array<string, mixed>  $filters
      */
@@ -47,11 +47,21 @@ final class CurrencyResource extends BaseResource
     }
 
     /**
-     * Get a specific item.
+     * Get visible currencies.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function getVisible(array $filters = []): QueryBuilder
+    {
+        return $this->list(array_merge(['Visible' => true], $filters));
+    }
+
+    /**
+     * Get a specific currency.
      *
      * @param  array<string>|null  $columns
      */
-    public function get(int|string $currencyId, ?array $columns = null): Currency
+    public function get(string $currencyId, ?array $columns = null): Currency
     {
         $request = new GetCurrencyRequest($this->companyId, $currencyId);
 
@@ -63,11 +73,11 @@ final class CurrencyResource extends BaseResource
     }
 
     /**
-     * Update an item.
+     * Update a currency.
      *
      * @param  array<string, mixed>  $data
      */
-    public function update(int|string $currencyId, array $data): Response
+    public function update(string $currencyId, array $data): Response
     {
         $request = new UpdateCurrencyRequest($this->companyId, $currencyId, $data);
 

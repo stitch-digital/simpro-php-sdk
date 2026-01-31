@@ -8,14 +8,14 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
-use Simpro\PhpSdk\Simpro\Data\Setup\CurrencyListItem;
+use Simpro\PhpSdk\Simpro\Data\Setup\Currency;
 
 final class ListCurrenciesRequest extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 
     public function __construct(
-        private readonly int|string $companyId,
+        private readonly int $companyId,
     ) {}
 
     public function resolveEndpoint(): string
@@ -24,7 +24,7 @@ final class ListCurrenciesRequest extends Request implements Paginatable
     }
 
     /**
-     * @return array<int, CurrencyListItem>
+     * @return array<int, Currency>
      */
     public function createDtoFromResponse(Response $response): array
     {
@@ -32,7 +32,7 @@ final class ListCurrenciesRequest extends Request implements Paginatable
         $data = $response->json();
 
         return array_map(
-            fn (array $item): CurrencyListItem => CurrencyListItem::fromArray($item),
+            fn (array $item): Currency => Currency::fromArray($item),
             $data
         );
     }
