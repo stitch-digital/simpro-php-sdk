@@ -24,6 +24,16 @@ final class ListCurrenciesRequest extends Request implements Paginatable
     }
 
     /**
+     * @return array<string, string>
+     */
+    protected function defaultQuery(): array
+    {
+        return [
+            'columns' => 'ID,Name,Symbol,ExchangeRate,Visible,DefaultSymbol',
+        ];
+    }
+
+    /**
      * @return array<int, Currency>
      */
     public function createDtoFromResponse(Response $response): array
