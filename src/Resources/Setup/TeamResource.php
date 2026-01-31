@@ -9,6 +9,7 @@ use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Data\Setup\Team;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Teams\GetTeamRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Teams\ListDetailedTeamsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Teams\ListTeamsRequest;
 
 /**
@@ -26,9 +27,12 @@ final class TeamResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all teams with basic information (ID and Name only).
+     * This is a lightweight method for quick lookups and dropdowns.
      *
-     * @param  array<string, mixed>  $filters
+     * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
@@ -45,7 +49,30 @@ final class TeamResource extends BaseResource
     }
 
     /**
-     * Get a specific item.
+     * List all teams with complete information (all fields).
+     * Use this when you need detailed team data including availability,
+     * cost centers, members, and zones without making individual get() calls.
+     *
+     * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedTeamsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * Get detailed information for a specific team.
      *
      * @param  array<string>|null  $columns
      */
