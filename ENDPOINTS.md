@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2026-01-30 | **Progress:** 211/1325 endpoints (15.9%)
+> **Last Updated:** 2026-01-30 | **Progress:** 399/1366 endpoints (29.2%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -32,8 +32,10 @@ This file serves as the single source of truth for SDK development progress, arc
 | Employees | 29 | ~0 | ~29 |
 | CurrentUser | 1 | 0 | 1 |
 | Info | 1 | 0 | 1 |
-| **Other** | 0 | ~891 | ~891 |
-| **Total** | **211** | **1114** | **1325** |
+| Reports | 2 | 0 | 2 |
+| Setup | 186 | ~0 | ~186 |
+| **Other** | 0 | ~679 | ~679 |
+| **Total** | **399** | **967** | **1366** |
 
 ### Implemented Resources Summary
 
@@ -52,6 +54,8 @@ This file serves as the single source of truth for SDK development progress, arc
 | Schedules | `list()`, `get()` | 2 | 4 |
 | Employees | `list()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 29 | 8 |
 | CurrentUser | `get()` | 1 | 1 |
+| Reports | `jobCostToCompleteFinancial()`, `jobCostToCompleteOperations()` | 2 | 2 |
+| Setup | Webhooks, TaxCodes, PaymentMethods, PaymentTerms, CustomerGroups, Zones, AccountingCategories, BusinessGroups, ChartOfAccounts, CostCenters, CustomFields (19 types), AssetTypes (deep nesting), Labor (5 resources), Materials (5 resources), Activities, ArchiveReasons, AssetServiceLevels, Commissions, Currencies, CustomerProfiles, Defaults, ResponseTimes, SecurityGroups, StatusCodes, Tags, TaskCategories, Teams | 186 | 75+ |
 
 ---
 
@@ -71,6 +75,8 @@ Track documentation for each implemented resource:
 | Schedules | [x] `docs/schedules-resource.md` | [x] | COMPLETE |
 | Employees | [x] `docs/employees-resource.md` | [x] | NEEDS UPDATE (nested resources) |
 | CurrentUser | [x] `docs/current-user-resource.md` | [x] | COMPLETE |
+| Reports | [x] `docs/reports-resource.md` | [x] | COMPLETE |
+| Setup | [x] `docs/setup-resource.md` | [x] | COMPLETE |
 
 ### Documentation Workflow
 
