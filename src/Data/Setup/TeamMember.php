@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
-use Saloon\Http\Response;
-
-final readonly class TeamListItem
+final readonly class TeamMember
 {
     public function __construct(
         public int $id,
         public string $name,
+        public string $type,
+        public int $typeId,
     ) {}
 
     /**
@@ -21,14 +21,8 @@ final readonly class TeamListItem
         return new self(
             id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
+            type: $data['Type'] ?? '',
+            typeId: (int) ($data['TypeId'] ?? 0),
         );
-    }
-
-    public static function fromResponse(Response $response): self
-    {
-        /** @var array<string, mixed> $data */
-        $data = $response->json();
-
-        return self::fromArray($data);
     }
 }

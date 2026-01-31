@@ -267,12 +267,12 @@ $advanced = $connector->setup(companyId: 0)->commissions()->advanced()->list();
 // List currencies
 $currencies = $connector->setup(companyId: 0)->currencies()->list();
 
-// Get a currency
-$currency = $connector->setup(companyId: 0)->currencies()->get(currencyId: 1);
+// Get a currency (uses currency code as ID)
+$currency = $connector->setup(companyId: 0)->currencies()->get(currencyId: 'GBP');
 
-// Update currency (no create/delete)
-$connector->setup(companyId: 0)->currencies()->update(currencyId: 1, data: [
-    'Rate' => 1.25,
+// Update currency exchange rate (no create/delete)
+$connector->setup(companyId: 0)->currencies()->update(currencyId: 'USD', data: [
+    'ExchangeRate' => 1.25,
 ]);
 ```
 
@@ -341,11 +341,32 @@ $categories = $connector->setup(companyId: 0)->taskCategories()->list();
 ### Teams
 
 ```php
-// List teams (read-only)
+// List teams (returns ID and Name only)
 $teams = $connector->setup(companyId: 0)->teams()->list();
 
-// Get a team
-$team = $connector->setup(companyId: 0)->teams()->get(teamId: 1);
+// Get a team with specific columns
+$team = $connector->setup(companyId: 0)->teams()->get(
+    teamId: 1,
+    columns: ['ID', 'Name', 'Availability', 'CostCenters', 'Members', 'Zones']
+);
+
+// Access team properties
+echo "Team: {$team->name}\n";
+
+// Team availability (array of time slots)
+foreach ($team->availability ?? [] as $slot) {
+    echo "{$slot->startDay} {$slot->startTime} - {$slot->endDay} {$slot->endTime}\n";
+}
+
+// Team members
+foreach ($team->members ?? [] as $member) {
+    echo "{$member->name} ({$member->type})\n";
+}
+
+// Cost centers and zones are Reference objects (ID and Name)
+foreach ($team->costCenters ?? [] as $costCenter) {
+    echo "Cost Center: {$costCenter->name}\n";
+}
 ```
 
 ## Common Patterns
