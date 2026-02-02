@@ -1,0 +1,63 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "System": {
+      "General": {
+        "DateFormat": "DD/MM/YYYY",
+        "TimeFormat": "12 Hour",
+        "ThousandsSeparator": ",",
+        "NegativeNumberFormat": "-X"
+      },
+      "JobsQuotes": {
+        "DefaultCostCenter": {
+          "ID": 1,
+          "Name": "Labor"
+        },
+        "SingleCostCenter": false
+      },
+      "Jobs": {
+        "WarrantyCostCenter": {
+          "ID": 2,
+          "Name": "Warranty"
+        },
+        "MandatoryDueDateOnCreation": {
+          "ServiceJob": true,
+          "ProjectJob": false
+        }
+      },
+      "Quotes": {
+        "MandatoryDueDateOnCreation": {
+          "ServiceQuote": false,
+          "ProjectQuote": true
+        }
+      }
+    },
+    "Financial": {
+      "Accounts": {
+        "IncomeAccount": "4000",
+        "DepositAccount": "2100",
+        "ExpenseAccount": "5000",
+        "ContractorInvoiceAccount": "5100",
+        "RetainageAssetAccount": "1400",
+        "RetainageLiabilityAccount": "2200",
+        "FinanceChargeAccount": "4100",
+        "FreightAccount": "5200",
+        "RestockingFeeAccount": "4200",
+        "TaxAccount": "2300"
+      },
+      "Invoicing": {
+        "ShowSellCostPrices": "Sell",
+        "FinanceChargeLabel": "Finance Charge",
+        "Tracking": "Invoice",
+        "RetainageHold": "None"
+      }
+    },
+    "Schedule": {
+      "WorkWeekStart": "Monday",
+      "ScheduleFormat": "30"
+    }
+  }
+}

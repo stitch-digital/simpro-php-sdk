@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Simpro\PhpSdk\Simpro\Data\Jobs;
+namespace Simpro\PhpSdk\Simpro\Data\Jobs\Tasks;
 
-final readonly class JobReference
+final readonly class JobTaskStatus
 {
     public function __construct(
         public int $id,
@@ -14,7 +14,7 @@ final readonly class JobReference
     public static function fromArray(array $data): self
     {
         return new self(
-            id: $data['ID'],
+            id: (int) $data['ID'],
             name: $data['Name'] ?? null,
         );
     }

@@ -1,0 +1,20 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Name": "Administrators",
+            "Dashboards": [{"ID": 1, "Name": "Main Dashboard"}],
+            "BusinessGroup": {"ID": 1, "Name": "Default"}
+        },
+        {
+            "ID": 2,
+            "Name": "Field Technicians",
+            "Dashboards": [],
+            "BusinessGroup": null
+        }
+    ]
+}

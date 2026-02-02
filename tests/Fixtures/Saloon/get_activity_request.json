@@ -1,0 +1,16 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": {
+        "ID": 1,
+        "Name": "Service Call",
+        "Billable": true,
+        "Archived": false,
+        "ScheduleRate": {
+            "ID": 5,
+            "Name": "Standard Rate"
+        }
+    }
+}

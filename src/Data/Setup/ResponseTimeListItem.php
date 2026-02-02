@@ -11,6 +11,7 @@ final readonly class ResponseTimeListItem
     public function __construct(
         public int $iD,
         public string $name,
+        public bool $archived,
     ) {}
 
     /**
@@ -21,6 +22,7 @@ final readonly class ResponseTimeListItem
         return new self(
             iD: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
+            archived: (bool) ($data['Archived'] ?? false),
         );
     }
 

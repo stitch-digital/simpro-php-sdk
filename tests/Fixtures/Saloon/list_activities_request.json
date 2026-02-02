@@ -1,0 +1,20 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Name": "Service Call"
+        },
+        {
+            "ID": 2,
+            "Name": "Installation"
+        },
+        {
+            "ID": 3,
+            "Name": "Maintenance"
+        }
+    ]
+}

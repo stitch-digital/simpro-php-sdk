@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\CreateAccountingCat
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\DeleteAccountingCategoryRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\GetAccountingCategoryRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\ListAccountingCategoriesRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\ListDetailedAccountingCategoriesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\UpdateAccountingCategoryRequest;
 
 /**
@@ -43,6 +44,27 @@ final class AccountingCategoryResource extends BaseResource
                 $value = implode(',', $value);
             }
 
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all accounting categories with full details.
+     *
+     * Returns AccountingCategory DTOs with all fields (ID, Name, Ref, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedAccountingCategoriesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
             $request->query()->add($key, (string) $value);
         }
 

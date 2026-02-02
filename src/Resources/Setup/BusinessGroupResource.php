@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\CreateBusinessGroupReques
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\DeleteBusinessGroupRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\GetBusinessGroupRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\ListBusinessGroupsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\ListDetailedBusinessGroupsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\UpdateBusinessGroupRequest;
 
 /**
@@ -43,6 +44,27 @@ final class BusinessGroupResource extends BaseResource
                 $value = implode(',', $value);
             }
 
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all business groups with full details.
+     *
+     * Returns BusinessGroup DTOs with all fields (ID, Name, CostCenters).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedBusinessGroupsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
             $request->query()->add($key, (string) $value);
         }
 

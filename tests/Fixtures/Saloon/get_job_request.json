@@ -62,25 +62,35 @@
     ],
     "Salesperson": {
       "ID": 3,
-      "Name": "Sales Rep"
+      "Name": "Sales Rep",
+      "Type": "employee",
+      "TypeId": 3
     },
     "ProjectManager": {
       "ID": 4,
-      "Name": "Project Lead"
+      "Name": "Project Lead",
+      "Type": "employee",
+      "TypeId": 4
     },
     "Technicians": [
       {
         "ID": 5,
-        "Name": "Tech One"
+        "Name": "Tech One",
+        "Type": "employee",
+        "TypeId": 5
       },
       {
         "ID": 6,
-        "Name": "Tech Two"
+        "Name": "Tech Two",
+        "Type": "contractor",
+        "TypeId": 10
       }
     ],
     "Technician": {
       "ID": 5,
-      "Name": "Tech One"
+      "Name": "Tech One",
+      "Type": "employee",
+      "TypeId": 5
     },
     "Stage": "In Progress",
     "Status": {
@@ -88,12 +98,28 @@
       "Name": "Job : In Progress",
       "Color": "#3564b1"
     },
-    "ResponseTime": "4 Hours",
+    "ResponseTime": {
+      "ID": 1,
+      "Name": "4 Hours",
+      "Days": 0,
+      "Hours": 4,
+      "Minutes": 0
+    },
     "IsVariation": false,
     "LinkedVariations": [],
     "ConvertedFromQuote": {
       "ID": 200,
-      "Name": "Kitchen Quote"
+      "Description": "Kitchen Quote",
+      "Total": {
+        "ExTax": 10000.00,
+        "Tax": 1000.00,
+        "IncTax": 11000.00
+      }
+    },
+    "ConvertedFrom": {
+      "ID": 200,
+      "Type": "Quote",
+      "Date": "2024-01-10T09:00:00+10:00"
     },
     "Sections": [
       {
@@ -138,20 +164,23 @@
         "Actual": 5000,
         "Committed": 0,
         "Estimate": 5000,
-        "Revised": 5000
+        "Revised": 5000,
+        "Revized": 5000
       },
       "ResourcesCost": {
         "Total": {
           "Actual": 5000,
           "Committed": 0,
           "Estimate": 5000,
-          "Revised": 5000
+          "Revised": 5000,
+          "Revized": 5000
         },
         "Labor": {
           "Actual": 5000,
           "Committed": 0,
           "Estimate": 5000,
-          "Revised": 5000
+          "Revised": 5000,
+          "Revized": 5000
         }
       },
       "InvoicedValue": 0,

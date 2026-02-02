@@ -10,6 +10,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\CreateAccountingCat
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\DeleteAccountingCategoryRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\GetAccountingCategoryRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\ListAccountingCategoriesRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\ListDetailedAccountingCategoriesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AccountingCategories\UpdateAccountingCategoryRequest;
 
 it('sends list accounting categories request to correct endpoint', function () {
@@ -105,6 +106,53 @@ it('sends delete accounting category request', function () {
     $response = $this->sdk->send($request);
 
     expect($response->status())->toBe(204);
+});
+
+it('sends list detailed accounting categories request to correct endpoint', function () {
+    MockClient::global([
+        ListDetailedAccountingCategoriesRequest::class => MockResponse::fixture('list_detailed_accounting_categories_request'),
+    ]);
+
+    $request = new ListDetailedAccountingCategoriesRequest(0);
+    $response = $this->sdk->send($request);
+
+    expect($response->status())->toBe(200);
+});
+
+it('parses list detailed accounting categories response correctly', function () {
+    MockClient::global([
+        ListDetailedAccountingCategoriesRequest::class => MockResponse::fixture('list_detailed_accounting_categories_request'),
+    ]);
+
+    $request = new ListDetailedAccountingCategoriesRequest(0);
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto)->toBeArray()
+        ->and($dto)->toHaveCount(3)
+        ->and($dto[0])->toBeInstanceOf(AccountingCategory::class)
+        ->and($dto[0]->id)->toBe(1)
+        ->and($dto[0]->name)->toBe('Materials')
+        ->and($dto[0]->ref)->toBe('ACC-001')
+        ->and($dto[0]->archived)->toBeFalse()
+        ->and($dto[1]->id)->toBe(2)
+        ->and($dto[1]->name)->toBe('Labor')
+        ->and($dto[1]->ref)->toBe('ACC-002')
+        ->and($dto[1]->archived)->toBeFalse()
+        ->and($dto[2]->id)->toBe(3)
+        ->and($dto[2]->name)->toBe('Overhead')
+        ->and($dto[2]->ref)->toBeNull()
+        ->and($dto[2]->archived)->toBeTrue();
+});
+
+it('can list detailed accounting categories via setup resource', function () {
+    MockClient::global([
+        ListDetailedAccountingCategoriesRequest::class => MockResponse::fixture('list_detailed_accounting_categories_request'),
+    ]);
+
+    $queryBuilder = $this->sdk->setup(0)->accountingCategories()->listDetailed();
+
+    expect($queryBuilder)->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Query\QueryBuilder::class);
 });
 
 it('can access accounting categories via setup resource', function () {

@@ -7,6 +7,9 @@ namespace Simpro\PhpSdk\Simpro\Scopes\Customers;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Resources\Customers\ContactResource;
 use Simpro\PhpSdk\Simpro\Resources\Customers\ContractResource;
+use Simpro\PhpSdk\Simpro\Resources\Customers\CustomerCustomFieldResource;
+use Simpro\PhpSdk\Simpro\Resources\Customers\CustomerLaborRateResource;
+use Simpro\PhpSdk\Simpro\Resources\Customers\CustomerNoteResource;
 use Simpro\PhpSdk\Simpro\Scopes\AbstractScope;
 
 /**
@@ -21,6 +24,15 @@ use Simpro\PhpSdk\Simpro\Scopes\AbstractScope;
  *
  * // Access customer contracts
  * $connector->customers(companyId: 0)->customer(customerId: 123)->contracts()->list();
+ *
+ * // Access customer custom fields
+ * $connector->customers(companyId: 0)->customer(customerId: 123)->customFields()->list();
+ *
+ * // Access customer notes
+ * $connector->customers(companyId: 0)->customer(customerId: 123)->notes()->list();
+ *
+ * // Access customer labor rates
+ * $connector->customers(companyId: 0)->customer(customerId: 123)->laborRates()->list();
  */
 final class CustomerScope extends AbstractScope
 {
@@ -62,5 +74,29 @@ final class CustomerScope extends AbstractScope
     public function contract(int|string $contractId): ContractScope
     {
         return new ContractScope($this->connector, $this->companyId, $this->customerId, $contractId);
+    }
+
+    /**
+     * Access custom fields for this customer.
+     */
+    public function customFields(): CustomerCustomFieldResource
+    {
+        return new CustomerCustomFieldResource($this->connector, $this->companyId, $this->customerId);
+    }
+
+    /**
+     * Access notes for this customer.
+     */
+    public function notes(): CustomerNoteResource
+    {
+        return new CustomerNoteResource($this->connector, $this->companyId, $this->customerId);
+    }
+
+    /**
+     * Access labor rates for this customer.
+     */
+    public function laborRates(): CustomerLaborRateResource
+    {
+        return new CustomerLaborRateResource($this->connector, $this->companyId, $this->customerId);
     }
 }

@@ -10,6 +10,8 @@ final readonly class SectionListItem
         public int $id,
         public ?string $name,
         public ?string $description,
+        public ?bool $isVariation,
+        public ?bool $isVariationRetention,
         public ?int $displayOrder,
     ) {}
 
@@ -19,6 +21,8 @@ final readonly class SectionListItem
             id: $data['ID'],
             name: $data['Name'] ?? null,
             description: $data['Description'] ?? null,
+            isVariation: $data['IsVariation'] ?? null,
+            isVariationRetention: $data['IsVariationRetention'] ?? null,
             displayOrder: isset($data['DisplayOrder']) ? (int) $data['DisplayOrder'] : null,
         );
     }

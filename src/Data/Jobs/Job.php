@@ -6,14 +6,15 @@ namespace Simpro\PhpSdk\Simpro\Data\Jobs;
 
 use DateTimeImmutable;
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 
 final readonly class Job
 {
     /**
      * @param  array<JobContact>|null  $additionalContacts
      * @param  array<JobTag>|null  $tags
-     * @param  array<JobStaff>|null  $technicians
-     * @param  array<JobReference>|null  $linkedVariations
+     * @param  array<StaffReference>|null  $technicians
+     * @param  array<JobVariationReference>|null  $linkedVariations
      * @param  array<JobSection>|null  $sections
      * @param  array<JobCustomField>|null  $customFields
      */
@@ -35,17 +36,17 @@ final readonly class Job
         public ?DateTimeImmutable $dueDate,
         public ?string $dueTime,
         public ?array $tags,
-        public ?JobStaff $salesperson,
-        public ?JobStaff $projectManager,
+        public ?StaffReference $salesperson,
+        public ?StaffReference $projectManager,
         public ?array $technicians,
-        public ?JobStaff $technician,
+        public ?StaffReference $technician,
         public ?string $stage,
         public JobStatus|string|null $status,
-        public ?string $responseTime,
+        public ?JobResponseTime $responseTime,
         public ?bool $isVariation,
         public ?array $linkedVariations,
-        public ?JobReference $convertedFromQuote,
-        public ?JobReference $convertedFrom,
+        public ?JobVariationReference $convertedFromQuote,
+        public ?JobConvertedFrom $convertedFrom,
         public ?array $sections,
         public ?DateTimeImmutable $dateModified,
         public ?bool $autoAdjustStatus,
@@ -86,14 +87,10 @@ final readonly class Job
             }
         }
 
-        // Handle ResponseTime which can be string or empty object
+        // Handle ResponseTime which can be object or null
         $responseTime = null;
-        if (isset($data['ResponseTime'])) {
-            if (is_string($data['ResponseTime'])) {
-                $responseTime = $data['ResponseTime'];
-            } elseif (is_array($data['ResponseTime']) && ! empty($data['ResponseTime'])) {
-                $responseTime = json_encode($data['ResponseTime']);
-            }
+        if (isset($data['ResponseTime']) && is_array($data['ResponseTime']) && ! empty($data['ResponseTime'])) {
+            $responseTime = JobResponseTime::fromArray($data['ResponseTime']);
         }
 
         return new self(
@@ -120,23 +117,23 @@ final readonly class Job
                 fn (array $item) => JobTag::fromArray($item),
                 $data['Tags']
             ) : null,
-            salesperson: isset($data['Salesperson']) ? JobStaff::fromArray($data['Salesperson']) : null,
-            projectManager: isset($data['ProjectManager']) ? JobStaff::fromArray($data['ProjectManager']) : null,
+            salesperson: isset($data['Salesperson']) ? StaffReference::fromArray($data['Salesperson']) : null,
+            projectManager: isset($data['ProjectManager']) ? StaffReference::fromArray($data['ProjectManager']) : null,
             technicians: isset($data['Technicians']) ? array_map(
-                fn (array $item) => JobStaff::fromArray($item),
+                fn (array $item) => StaffReference::fromArray($item),
                 $data['Technicians']
             ) : null,
-            technician: isset($data['Technician']) ? JobStaff::fromArray($data['Technician']) : null,
+            technician: isset($data['Technician']) ? StaffReference::fromArray($data['Technician']) : null,
             stage: $data['Stage'] ?? null,
             status: $status,
             responseTime: $responseTime,
             isVariation: $data['IsVariation'] ?? null,
             linkedVariations: isset($data['LinkedVariations']) ? array_map(
-                fn (array $item) => JobReference::fromArray($item),
+                fn (array $item) => JobVariationReference::fromArray($item),
                 $data['LinkedVariations']
             ) : null,
-            convertedFromQuote: isset($data['ConvertedFromQuote']) ? JobReference::fromArray($data['ConvertedFromQuote']) : null,
-            convertedFrom: isset($data['ConvertedFrom']) ? JobReference::fromArray($data['ConvertedFrom']) : null,
+            convertedFromQuote: isset($data['ConvertedFromQuote']) ? JobVariationReference::fromArray($data['ConvertedFromQuote']) : null,
+            convertedFrom: isset($data['ConvertedFrom']) ? JobConvertedFrom::fromArray($data['ConvertedFrom']) : null,
             sections: isset($data['Sections']) ? array_map(
                 fn (array $item) => JobSection::fromArray($item),
                 $data['Sections']

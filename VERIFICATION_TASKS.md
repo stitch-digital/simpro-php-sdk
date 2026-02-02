@@ -127,72 +127,99 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 
 ---
 
-### 6. Jobs Resource
+### 6. Jobs Resource ✅ VERIFIED
 **Files:** `src/Resources/JobResource.php`, `src/Resources/Jobs/`, `src/Data/Jobs/`
 
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | GET /api/v1.0/companies/{companyID}/jobs/ |
-| Get endpoint | [ ] | GET /api/v1.0/companies/{companyID}/jobs/{jobID} |
-| Create endpoint | [ ] | POST /api/v1.0/companies/{companyID}/jobs/ |
-| Update endpoint | [ ] | PATCH /api/v1.0/companies/{companyID}/jobs/{jobID} |
-| Delete endpoint | [ ] | DELETE /api/v1.0/companies/{companyID}/jobs/{jobID} |
-| Response DTO (List) | [ ] | |
-| Response DTO (Detail) | [ ] | |
-| Request body DTO | [ ] | |
-| Tests | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/jobs/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/jobs/{jobID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/jobs/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/jobs/{jobID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/jobs/{jobID} |
+| Response DTO (List) | [x] | |
+| Response DTO (Detail) | [x] | |
+| Request body DTO | [x] | |
+| Tests | [x] | |
 
-#### 6.1 Job Sections
+**Major fixes applied:**
+- `JobStaff` replaced with `StaffReference` (supports Type/TypeId)
+- Created `JobVariationReference` for linkedVariations and convertedFromQuote
+- Created `JobConvertedFrom` for convertedFrom (ID, Type, Date)
+- Created `JobResponseTime` DTO for response time object
+- Added `revized` field to `JobCostBreakdown`
+- Updated test fixtures to match swagger schema
+
+#### 6.1 Job Sections ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | |
-| Get endpoint | [ ] | |
-| Create endpoint | [ ] | |
-| Update endpoint | [ ] | |
-| Delete endpoint | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | |
+| Update endpoint | [x] | |
+| Delete endpoint | [x] | |
+| DTOs | [x] | Added isVariation, isVariationRetention, dateModified |
 
-#### 6.2 Job Cost Centers
+#### 6.2 Job Cost Centers ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | |
-| Get endpoint | [ ] | |
-| Create endpoint | [ ] | |
-| Update endpoint | [ ] | |
-| Delete endpoint | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | |
+| Update endpoint | [x] | |
+| Delete endpoint | [x] | |
+| DTOs | [x] | Complete rewrite with all swagger fields |
 
-#### 6.3 Job Cost Center Sub-resources
-- [ ] Assets
-- [ ] Labor
-- [ ] Service Fees
-- [ ] Contractor Jobs
-- [ ] Prebuilds
-- [ ] Schedules
-- [ ] Stock
-- [ ] One-Offs
-- [ ] Work Orders
-- [ ] Tasks
-- [ ] Lock
+**Major fixes applied:**
+- `CostCenter` now includes: jobId, header, site, stage, description, notes, orderNo, startDate, endDate, autoAdjustDates, variation, variationApprovalDate, itemsLocked, lockedInfo, vendorOrders, totals, dateModified, percentComplete
+- Created `CostCenterLockedInfo`, `CostCenterVendorOrder`, `CostCenterVendorOrderTotals` DTOs
+- `CostCenterListItem` now uses `Reference` for costCenter
 
-#### 6.4 Job Attachments
-- [ ] Files (List, Get, Create, Update, Delete)
-- [ ] Folders (List, Get, Create, Update, Delete)
+#### 6.3 Job Cost Center Sub-resources ✅ VERIFIED
+- [x] Assets
+- [x] Labor
+- [x] Service Fees
+- [x] Contractor Jobs
+- [x] Prebuilds
+- [x] Schedules
+- [x] Stock
+- [x] One-Offs
+- [x] Work Orders
+- [x] Tasks
+- [x] Lock
+- [x] Catalogs
 
-#### 6.5 Job Custom Fields
-- [ ] List, Get, Update
+#### 6.4 Job Attachments ✅ VERIFIED
+- [x] Files (List, Get, Create, Update, Delete)
+- [x] Folders (List, Get, Create, Update, Delete)
 
-#### 6.6 Job Notes
-- [ ] List, Get, Create, Update, Delete
+#### 6.5 Job Custom Fields ✅ VERIFIED
+- [x] List, Get, Update
 
-#### 6.7 Job Lock
-- [ ] Get, Update
+#### 6.6 Job Notes ✅ VERIFIED
+- [x] List, Get, Create, Update, Delete
 
-#### 6.8 Job Tasks
-- [ ] List, Get
+**Major fixes applied:**
+- Added `followUpDate`, `visibility`, `assignTo`, `attachments` fields
+- Created `JobNoteVisibility` and `JobNoteAttachment` DTOs
 
-#### 6.9 Job Timelines
-- [ ] List
+#### 6.7 Job Lock ✅ VERIFIED
+- [x] Create (POST), Delete
+
+#### 6.8 Job Tasks ✅ VERIFIED
+- [x] List, Get
+
+**Major fixes applied:**
+- Complete rewrite of `JobTask` DTO to match swagger
+- Created supporting DTOs: `JobTaskStatus`, `JobTaskPriority`, `JobTaskTime`, `JobTaskEmailNotifications`, `JobTaskAssociated`, `JobTaskAssociatedJob`, `JobTaskSubTask`, `JobTaskCustomField`
+- Uses `StaffReference` for createdBy, assignedTo, completedBy, assignees
+
+#### 6.9 Job Timelines ✅ VERIFIED
+- [x] List
+
+**Major fixes applied:**
+- Updated field names: `type`, `message`, `staff`, `date`
+- Uses `StaffReference` instead of flat fields
 
 ---
 
@@ -363,17 +390,31 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 | DTOs | [x] | |
 | Detailed list support | [x] | Checked |
 
-#### 12.7 Accounting Categories
+#### 12.7 Accounting Categories ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/accCategories/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/accounts/accCategories/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/accounts/accCategories/{accCategoryID} |
+| Response DTO (List) | [x] | AccountingCategoryListItem - ID, Name |
+| Response DTO (Detail) | [x] | AccountingCategory - ID, Name, Ref, Archived |
+| Detailed list support | [x] | listDetailed() available via columns parameter |
+| Tests | [x] | 16 tests covering all endpoints and DTOs |
 
-#### 12.8 Business Groups
+#### 12.8 Business Groups ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/accounts/businessGroups/{businessGroupID} |
+| Response DTO (List) | [x] | BusinessGroupListItem - ID, Name |
+| Response DTO (Detail) | [x] | BusinessGroup - ID, Name, CostCenters (array of Reference) |
+| Detailed list support | [x] | listDetailed() available via columns parameter |
+| Tests | [x] | 15 tests covering all endpoints and DTOs |
 
 #### 12.9 Chart of Accounts
 | Check | Status | Notes |
@@ -436,7 +477,7 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 - [ ] UOMs (Units of Measure)
 
 #### 12.15 Other Setup Resources
-- [ ] Activities
+- [x] Activities ✅ VERIFIED
 - [ ] Archive Reasons (Quote)
 - [ ] Asset Service Levels
 - [ ] Basic Commissions
@@ -445,12 +486,69 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 - [ ] Customer Profiles
 - [ ] Customer Tags
 - [ ] Project Tags
-- [ ] Defaults
-- [ ] Response Times
-- [ ] Security Groups
+- [x] Defaults ✅ VERIFIED
+- [x] Response Times ✅ VERIFIED
+- [x] Security Groups ✅ VERIFIED
 - [ ] Status Codes (Project, Customer Invoice, Vendor Order)
 - [ ] Task Categories
 - [x] Teams ✅ VERIFIED
+
+#### 12.16 Activities ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/activities/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/activities/{activityID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/activities/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/activities/{activityID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/activities/{activityID} |
+| Response DTO (List) | [x] | ActivityListItem - removed incorrect `code` field |
+| Response DTO (Detail) | [x] | Activity - replaced `code`/`type` with `billable`, `archived`, `scheduleRate` |
+| Detailed list support | [x] | listDetailed() available via columns parameter |
+| Tests | [x] | 16 tests covering all endpoints and DTOs |
+
+**Major fixes applied:**
+- Removed `code` field from ActivityListItem (not in API)
+- Removed `code` and `type` fields from Activity (not in API)
+- Added `billable` (bool), `archived` (bool), `scheduleRate` (Reference) to Activity
+- Created ListDetailedActivitiesRequest for bulk fetching full Activity DTOs
+- Added listDetailed() method to ActivityResource
+
+---
+
+#### 12.17 Response Times ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/responseTimes/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/responseTimes/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/responseTimes/{responseTimeID} |
+| Response DTO (List) | [x] | ResponseTimeListItem - added `archived` field |
+| Response DTO (Detail) | [x] | ResponseTime - added `days`, `includeWeekends`, `archived`; fixed `hours`/`minutes` nullability |
+| Detailed list support | [x] | listDetailed() available via columns parameter |
+| Tests | [x] | 16 tests covering all endpoints and DTOs |
+
+#### 12.18 Defaults ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/defaults/ |
+| Response DTO | [x] | Complete rewrite to match swagger nested structure |
+| Tests | [x] | 10 tests covering all nested objects |
+
+**Major fixes applied:**
+- Complete rewrite of Defaults DTO - original had 4 incorrect fields
+- Created 11 new nested DTOs in `src/Data/Setup/Defaults/`:
+  - `DefaultsSystem` - top-level System object
+  - `DefaultsGeneral` - dateFormat, timeFormat, thousandsSeparator, negativeNumberFormat
+  - `DefaultsJobsQuotes` - defaultCostCenter (Reference), singleCostCenter
+  - `DefaultsJobs` - warrantyCostCenter (Reference), mandatoryDueDateOnCreation
+  - `DefaultsMandatoryDueDate` - serviceJob, projectJob booleans
+  - `DefaultsQuotes` - mandatoryDueDateOnCreation
+  - `DefaultsQuotesMandatoryDueDate` - serviceQuote, projectQuote booleans
+  - `DefaultsFinancial` - top-level Financial object
+  - `DefaultsAccounts` - 10 account string fields
+  - `DefaultsInvoicing` - showSellCostPrices, financeChargeLabel, tracking, retainageHold
+  - `DefaultsSchedule` - workWeekStart, scheduleFormat
 
 ---
 
@@ -482,7 +580,7 @@ Verify these shared DTOs are accurate across all usages:
 | Current User       | [x]      | 0            | 0               |
 | Activity Schedules | [x]      | 0            | 0               |
 | Schedules          | [x]      | 0            | 0               |
-| Jobs               | [ ]      | 0            | 0               |
+| Jobs               | [x]      | 12           | 12              |
 | Customers          | [ ]      | 0            | 0               |
 | Quotes             | [ ]      | 0            | 0               |
 | Invoices           | [ ]      | 0            | 0               |
@@ -492,6 +590,12 @@ Verify these shared DTOs are accurate across all usages:
 | - Currencies       | [x]      | 0            | 0               |
 | - Zones            | [x]      | 0            | 0               |
 | - Teams            | [x]      | 0            | 0               |
+| - Security Groups  | [x]      | 2            | 2               |
+| - Response Times   | [x]      | 4            | 4               |
+| - Activities       | [x]      | 3            | 3               |
+| - Defaults         | [x]      | 1            | 1               |
+| - Accounting Categories | [x] | 1            | 1               |
+| - Business Groups  | [x]      | 1            | 1               |
 | Common DTOs        | [ ]      | 0            | 0               |
 
 ---

@@ -13,10 +13,11 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Activities\CreateActivityRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Activities\DeleteActivityRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Activities\GetActivityRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Activities\ListActivitiesRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Activities\ListDetailedActivitiesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Activities\UpdateActivityRequest;
 
 /**
- * Resource for managing Activitys.
+ * Resource for managing Activities.
  *
  * @property AbstractSimproConnector $connector
  */
@@ -30,13 +31,34 @@ final class ActivityResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all activities with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListActivitiesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all activities with full details.
+     *
+     * Returns Activity DTOs with all fields (ID, Name, Billable, Archived, ScheduleRate).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedActivitiesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

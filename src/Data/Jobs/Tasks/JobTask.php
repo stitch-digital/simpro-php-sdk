@@ -6,19 +6,36 @@ namespace Simpro\PhpSdk\Simpro\Data\Jobs\Tasks;
 
 use DateTimeImmutable;
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 
 final readonly class JobTask
 {
+    /**
+     * @param  array<StaffReference>|null  $assignees
+     * @param  array<JobTaskSubTask>|null  $subTasks
+     * @param  array<JobTaskCustomField>|null  $customFields
+     */
     public function __construct(
         public int $id,
-        public ?string $name,
+        public ?string $subject,
+        public ?StaffReference $createdBy,
+        public ?StaffReference $assignedTo,
+        public ?array $assignees,
+        public ?bool $assignedToCustomer,
+        public ?StaffReference $completedBy,
+        public ?JobTaskAssociated $associated,
+        public ?bool $isBillable,
+        public ?bool $showOnWorkOrder,
+        public ?JobTaskEmailNotifications $emailNotifications,
         public ?string $description,
-        public ?string $status,
-        public ?int $assignedToId,
-        public ?string $assignedToName,
-        public ?DateTimeImmutable $dueDate,
-        public ?DateTimeImmutable $completedDate,
-        public ?DateTimeImmutable $dateCreated,
+        public ?string $notes,
+        public ?JobTaskStatus $status,
+        public ?JobTaskPriority $priority,
+        public ?JobTaskTime $estimated,
+        public ?JobTaskTime $actual,
+        public ?array $subTasks,
+        public ?array $customFields,
+        public ?int $percentComplete,
         public ?DateTimeImmutable $dateModified,
     ) {}
 
@@ -31,14 +48,34 @@ final readonly class JobTask
     {
         return new self(
             id: $data['ID'],
-            name: $data['Name'] ?? null,
+            subject: $data['Subject'] ?? null,
+            createdBy: isset($data['CreatedBy']) ? StaffReference::fromArray($data['CreatedBy']) : null,
+            assignedTo: isset($data['AssignedTo']) ? StaffReference::fromArray($data['AssignedTo']) : null,
+            assignees: isset($data['Assignees']) ? array_map(
+                fn (array $item) => StaffReference::fromArray($item),
+                $data['Assignees']
+            ) : null,
+            assignedToCustomer: $data['AssignedToCustomer'] ?? null,
+            completedBy: isset($data['CompletedBy']) ? StaffReference::fromArray($data['CompletedBy']) : null,
+            associated: isset($data['Associated']) ? JobTaskAssociated::fromArray($data['Associated']) : null,
+            isBillable: $data['IsBillable'] ?? null,
+            showOnWorkOrder: $data['ShowOnWorkOrder'] ?? null,
+            emailNotifications: isset($data['EmailNotifications']) ? JobTaskEmailNotifications::fromArray($data['EmailNotifications']) : null,
             description: $data['Description'] ?? null,
-            status: $data['Status'] ?? null,
-            assignedToId: isset($data['AssignedTo']['ID']) ? (int) $data['AssignedTo']['ID'] : null,
-            assignedToName: $data['AssignedTo']['Name'] ?? null,
-            dueDate: isset($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
-            completedDate: isset($data['CompletedDate']) ? new DateTimeImmutable($data['CompletedDate']) : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            notes: $data['Notes'] ?? null,
+            status: isset($data['Status']) ? JobTaskStatus::fromArray($data['Status']) : null,
+            priority: isset($data['Priority']) ? JobTaskPriority::fromArray($data['Priority']) : null,
+            estimated: isset($data['Estimated']) ? JobTaskTime::fromArray($data['Estimated']) : null,
+            actual: isset($data['Actual']) ? JobTaskTime::fromArray($data['Actual']) : null,
+            subTasks: isset($data['SubTasks']) ? array_map(
+                fn (array $item) => JobTaskSubTask::fromArray($item),
+                $data['SubTasks']
+            ) : null,
+            customFields: isset($data['CustomFields']) ? array_map(
+                fn (array $item) => JobTaskCustomField::fromArray($item),
+                $data['CustomFields']
+            ) : null,
+            percentComplete: isset($data['PercentComplete']) ? (int) $data['PercentComplete'] : null,
             dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }

@@ -11,8 +11,11 @@ final readonly class ResponseTime
     public function __construct(
         public int $iD,
         public string $name,
-        public ?int $hours,
-        public ?int $minutes,
+        public int $days,
+        public int $hours,
+        public int $minutes,
+        public bool $includeWeekends,
+        public bool $archived,
     ) {}
 
     /**
@@ -23,8 +26,11 @@ final readonly class ResponseTime
         return new self(
             iD: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            hours: $data['Hours'] ?? null,
-            minutes: $data['Minutes'] ?? null,
+            days: (int) ($data['Days'] ?? 0),
+            hours: (int) ($data['Hours'] ?? 0),
+            minutes: (int) ($data['Minutes'] ?? 0),
+            includeWeekends: (bool) ($data['IncludeWeekends'] ?? false),
+            archived: (bool) ($data['Archived'] ?? false),
         );
     }
 

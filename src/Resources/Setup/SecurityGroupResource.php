@@ -9,6 +9,7 @@ use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Data\Setup\SecurityGroup;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\SecurityGroups\GetSecurityGroupRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\SecurityGroups\ListDetailedSecurityGroupsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\SecurityGroups\ListSecurityGroupsRequest;
 
 /**
@@ -26,13 +27,35 @@ final class SecurityGroupResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all security groups with basic information (ID and Name only).
+     * This is a lightweight method for quick lookups and dropdowns.
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListSecurityGroupsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all security groups with complete information (all fields).
+     * Use this when you need detailed security group data including dashboards
+     * and business groups without making individual get() calls.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedSecurityGroupsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

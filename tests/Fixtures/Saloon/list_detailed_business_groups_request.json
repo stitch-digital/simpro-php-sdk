@@ -1,0 +1,23 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Name": "Plumbing",
+            "CostCenters": [
+                {
+                    "ID": 1,
+                    "Name": "Service"
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Name": "Electrical",
+            "CostCenters": []
+        }
+    ]
+}

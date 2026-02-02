@@ -11,6 +11,7 @@ final readonly class JobCostBreakdown
         public ?float $committed,
         public ?float $estimate,
         public ?float $revised,
+        public ?float $revized,
     ) {}
 
     public static function fromArray(array $data): self
@@ -20,6 +21,7 @@ final readonly class JobCostBreakdown
             committed: isset($data['Committed']) ? (float) $data['Committed'] : null,
             estimate: isset($data['Estimate']) ? (float) $data['Estimate'] : null,
             revised: isset($data['Revised']) ? (float) $data['Revised'] : null,
+            revized: isset($data['Revized']) ? (float) $data['Revized'] : null,
         );
     }
 }

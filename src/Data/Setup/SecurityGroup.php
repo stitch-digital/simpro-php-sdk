@@ -5,13 +5,18 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 
 final readonly class SecurityGroup
 {
+    /**
+     * @param  array<Reference>  $dashboards
+     */
     public function __construct(
         public int $iD,
         public string $name,
-        public ?string $description,
+        public array $dashboards,
+        public ?Reference $businessGroup,
     ) {}
 
     /**
@@ -22,7 +27,13 @@ final readonly class SecurityGroup
         return new self(
             iD: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            description: $data['Description'] ?? null,
+            dashboards: array_map(
+                fn (array $item): Reference => Reference::fromArray($item),
+                $data['Dashboards'] ?? []
+            ),
+            businessGroup: isset($data['BusinessGroup'])
+                ? Reference::fromArray($data['BusinessGroup'])
+                : null,
         );
     }
 

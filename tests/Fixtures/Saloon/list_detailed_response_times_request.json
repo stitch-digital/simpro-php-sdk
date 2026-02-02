@@ -1,0 +1,26 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Name": "24 Hours Emergency Response",
+            "Days": 0,
+            "Hours": 24,
+            "Minutes": 0,
+            "IncludeWeekends": true,
+            "Archived": false
+        },
+        {
+            "ID": 2,
+            "Name": "48 Hours Standard",
+            "Days": 2,
+            "Hours": 0,
+            "Minutes": 0,
+            "IncludeWeekends": false,
+            "Archived": false
+        }
+    ]
+}

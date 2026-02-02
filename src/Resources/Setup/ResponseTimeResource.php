@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ResponseTimes\CreateResponseTimeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ResponseTimes\DeleteResponseTimeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ResponseTimes\GetResponseTimeRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\ResponseTimes\ListDetailedResponseTimesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ResponseTimes\ListResponseTimesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ResponseTimes\UpdateResponseTimeRequest;
 
@@ -30,13 +31,32 @@ final class ResponseTimeResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all response times with basic information (ID, Name, Archived only).
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListResponseTimesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all response times with complete information (all fields).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedResponseTimesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

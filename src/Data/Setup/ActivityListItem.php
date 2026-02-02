@@ -11,7 +11,6 @@ final readonly class ActivityListItem
     public function __construct(
         public int $iD,
         public string $name,
-        public ?string $code,
     ) {}
 
     /**
@@ -22,7 +21,6 @@ final readonly class ActivityListItem
         return new self(
             iD: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            code: $data['Code'] ?? null,
         );
     }
 

@@ -10,6 +10,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\CreateBusinessGroupReques
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\DeleteBusinessGroupRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\GetBusinessGroupRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\ListBusinessGroupsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\ListDetailedBusinessGroupsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\BusinessGroups\UpdateBusinessGroupRequest;
 
 it('sends list business groups request to correct endpoint', function () {
@@ -160,4 +161,47 @@ it('can delete business group via setup resource', function () {
     $response = $this->sdk->setup(0)->businessGroups()->delete(1);
 
     expect($response->status())->toBe(204);
+});
+
+it('sends list detailed business groups request to correct endpoint', function () {
+    MockClient::global([
+        ListDetailedBusinessGroupsRequest::class => MockResponse::fixture('list_detailed_business_groups_request'),
+    ]);
+
+    $request = new ListDetailedBusinessGroupsRequest(0);
+    $response = $this->sdk->send($request);
+
+    expect($response->status())->toBe(200);
+});
+
+it('parses list detailed business groups response correctly', function () {
+    MockClient::global([
+        ListDetailedBusinessGroupsRequest::class => MockResponse::fixture('list_detailed_business_groups_request'),
+    ]);
+
+    $request = new ListDetailedBusinessGroupsRequest(0);
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto)->toBeArray()
+        ->and($dto)->toHaveCount(2)
+        ->and($dto[0])->toBeInstanceOf(BusinessGroup::class)
+        ->and($dto[0]->id)->toBe(1)
+        ->and($dto[0]->name)->toBe('Plumbing')
+        ->and($dto[0]->costCenters)->toBeArray()
+        ->and($dto[0]->costCenters)->toHaveCount(1)
+        ->and($dto[1]->id)->toBe(2)
+        ->and($dto[1]->name)->toBe('Electrical')
+        ->and($dto[1]->costCenters)->toBeArray()
+        ->and($dto[1]->costCenters)->toHaveCount(0);
+});
+
+it('can access listDetailed via setup resource', function () {
+    MockClient::global([
+        ListDetailedBusinessGroupsRequest::class => MockResponse::fixture('list_detailed_business_groups_request'),
+    ]);
+
+    $queryBuilder = $this->sdk->setup(0)->businessGroups()->listDetailed();
+
+    expect($queryBuilder)->toBeInstanceOf(\Simpro\PhpSdk\Simpro\Query\QueryBuilder::class);
 });

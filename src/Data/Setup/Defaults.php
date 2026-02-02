@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Setup\Defaults\DefaultsFinancial;
+use Simpro\PhpSdk\Simpro\Data\Setup\Defaults\DefaultsSchedule;
+use Simpro\PhpSdk\Simpro\Data\Setup\Defaults\DefaultsSystem;
 
 final readonly class Defaults
 {
     public function __construct(
-        public ?int $defaultTaxCodeId = null,
-        public ?int $defaultPaymentTermId = null,
-        public ?int $defaultPaymentMethodId = null,
-        public ?int $defaultCustomerGroupId = null,
+        public DefaultsSystem $system,
+        public DefaultsFinancial $financial,
+        public DefaultsSchedule $schedule,
     ) {}
 
     /**
@@ -21,10 +23,9 @@ final readonly class Defaults
     public static function fromArray(array $data): self
     {
         return new self(
-            defaultTaxCodeId: $data['DefaultTaxCode']['ID'] ?? null,
-            defaultPaymentTermId: $data['DefaultPaymentTerm']['ID'] ?? null,
-            defaultPaymentMethodId: $data['DefaultPaymentMethod']['ID'] ?? null,
-            defaultCustomerGroupId: $data['DefaultCustomerGroup']['ID'] ?? null,
+            system: DefaultsSystem::fromArray($data['System'] ?? []),
+            financial: DefaultsFinancial::fromArray($data['Financial'] ?? []),
+            schedule: DefaultsSchedule::fromArray($data['Schedule'] ?? []),
         );
     }
 

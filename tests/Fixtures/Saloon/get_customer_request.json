@@ -6,13 +6,10 @@
   "data": {
     "ID": 1,
     "CompanyName": "Acme Corp",
-    "Type": "Company",
-    "GivenName": "John",
-    "FamilyName": "Doe",
-    "Email": "contact@acme.com",
+    "PreferredTechs": [],
     "Phone": "555-0100",
+    "DoNotCall": false,
     "AltPhone": "555-0101",
-    "Fax": "555-0102",
     "Address": {
       "Address": "123 Business Park",
       "City": "Sydney",
@@ -20,9 +17,70 @@
       "PostalCode": "2000",
       "Country": "Australia"
     },
-    "ABN": "12345678901",
+    "BillingAddress": {
+      "Address": "123 Business Park",
+      "City": "Sydney",
+      "State": "NSW",
+      "PostalCode": "2000",
+      "Country": "Australia"
+    },
+    "CustomerType": "Customer",
+    "Tags": [],
+    "AmountOwing": 0.00,
+    "Rates": {
+      "PartTaxCode": null,
+      "LabourTaxCode": null,
+      "DiscountFee": 0,
+      "AlwaysDeductCIS": false,
+      "ServiceFee": null,
+      "Material": {
+        "PricingTier": {
+          "ID": 1,
+          "Name": "Standard",
+          "DefaultMarkup": 10
+        },
+        "Markup": 10
+      }
+    },
+    "Profile": {
+      "Notes": "",
+      "CustomerProfile": null,
+      "CustomerGroup": null,
+      "AccountManager": null,
+      "Currency": {
+        "ID": "AUD",
+        "Name": "Australian Dollar",
+        "Visible": true
+      },
+      "ServiceJobCostCenter": null
+    },
+    "Banking": {
+      "AccountName": "",
+      "RoutingNo": "",
+      "AccountNo": "",
+      "PaymentMethod": null,
+      "PaymentTermID": 1,
+      "PaymentTerms": {
+        "Days": 30,
+        "Type": "Invoice"
+      },
+      "CreditLimit": 0,
+      "OnStop": false,
+      "Retention": "exGST",
+      "VendorOrderNoRequired": false
+    },
+    "Archived": false,
+    "Sites": [],
+    "Contracts": [],
+    "Contacts": [],
+    "ResponseTimes": [],
+    "CustomFields": [],
+    "Email": "contact@acme.com",
+    "DateModified": "2024-01-20T10:30:00Z",
+    "DateCreated": "2024-01-01T08:00:00Z",
+    "EIN": "12345678901",
     "Website": "https://acme.com",
-    "IsArchived": false,
-    "DateModified": "2024-01-20T10:30:00Z"
+    "Fax": "555-0102",
+    "CompanyNumber": ""
   }
 }

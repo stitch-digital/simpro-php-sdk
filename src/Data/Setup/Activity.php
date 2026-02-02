@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 
 final readonly class Activity
 {
     public function __construct(
         public int $iD,
         public string $name,
-        public ?string $code,
-        public ?string $type,
+        public bool $billable,
+        public bool $archived,
+        public ?Reference $scheduleRate,
     ) {}
 
     /**
@@ -23,8 +25,9 @@ final readonly class Activity
         return new self(
             iD: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            code: $data['Code'] ?? null,
-            type: $data['Type'] ?? null,
+            billable: (bool) ($data['Billable'] ?? false),
+            archived: (bool) ($data['Archived'] ?? false),
+            scheduleRate: isset($data['ScheduleRate']) ? Reference::fromArray($data['ScheduleRate']) : null,
         );
     }
 
