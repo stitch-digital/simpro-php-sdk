@@ -34,7 +34,7 @@ final readonly class ActivityScheduleBlock
             iso8601StartTime: isset($data['ISO8601StartTime']) ? new DateTimeImmutable($data['ISO8601StartTime']) : null,
             endTime: $data['EndTime'] ?? null,
             iso8601EndTime: isset($data['ISO8601EndTime']) ? new DateTimeImmutable($data['ISO8601EndTime']) : null,
-            scheduleRate: isset($data['ScheduleRate']) ? Reference::fromArray($data['ScheduleRate']) : null,
+            scheduleRate: isset($data['ScheduleRate']['ID']) ? Reference::fromArray($data['ScheduleRate']) : null,
         );
     }
 }

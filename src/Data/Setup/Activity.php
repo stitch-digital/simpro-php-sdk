@@ -27,7 +27,7 @@ final readonly class Activity
             name: $data['Name'] ?? '',
             billable: (bool) ($data['Billable'] ?? false),
             archived: (bool) ($data['Archived'] ?? false),
-            scheduleRate: isset($data['ScheduleRate']) ? Reference::fromArray($data['ScheduleRate']) : null,
+            scheduleRate: isset($data['ScheduleRate']['ID']) ? Reference::fromArray($data['ScheduleRate']) : null,
         );
     }
 
