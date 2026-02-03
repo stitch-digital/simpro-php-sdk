@@ -37,11 +37,11 @@ it('parses list activities response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(3)
         ->and($dto[0])->toBeInstanceOf(ActivityListItem::class)
-        ->and($dto[0]->iD)->toBe(1)
+        ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('Service Call')
-        ->and($dto[1]->iD)->toBe(2)
+        ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->name)->toBe('Installation')
-        ->and($dto[2]->iD)->toBe(3)
+        ->and($dto[2]->id)->toBe(3)
         ->and($dto[2]->name)->toBe('Maintenance');
 });
 
@@ -66,7 +66,7 @@ it('parses get activity response correctly with all fields', function () {
     $dto = $response->dto();
 
     expect($dto)->toBeInstanceOf(Activity::class)
-        ->and($dto->iD)->toBe(1)
+        ->and($dto->id)->toBe(1)
         ->and($dto->name)->toBe('Service Call')
         ->and($dto->billable)->toBe(true)
         ->and($dto->archived)->toBe(false)
@@ -109,17 +109,17 @@ it('parses list detailed activities response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(3)
         ->and($dto[0])->toBeInstanceOf(Activity::class)
-        ->and($dto[0]->iD)->toBe(1)
+        ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('Service Call')
         ->and($dto[0]->billable)->toBe(true)
         ->and($dto[0]->archived)->toBe(false)
         ->and($dto[0]->scheduleRate)->not->toBeNull()
         ->and($dto[0]->scheduleRate->id)->toBe(5)
         ->and($dto[1])->toBeInstanceOf(Activity::class)
-        ->and($dto[1]->iD)->toBe(2)
+        ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->scheduleRate)->toBeNull()
         ->and($dto[2])->toBeInstanceOf(Activity::class)
-        ->and($dto[2]->iD)->toBe(3)
+        ->and($dto[2]->id)->toBe(3)
         ->and($dto[2]->billable)->toBe(false)
         ->and($dto[2]->archived)->toBe(true);
 });
@@ -182,7 +182,7 @@ it('can get activity via setup resource', function () {
     $activity = $this->sdk->setup(0)->activities()->get(1);
 
     expect($activity)->toBeInstanceOf(Activity::class)
-        ->and($activity->iD)->toBe(1);
+        ->and($activity->id)->toBe(1);
 });
 
 it('can list detailed activities via setup resource', function () {

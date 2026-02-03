@@ -34,9 +34,9 @@ it('parses list security groups response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(SecurityGroupListItem::class)
-        ->and($dto[0]->iD)->toBe(1)
+        ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('Administrators')
-        ->and($dto[1]->iD)->toBe(2)
+        ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->name)->toBe('Field Technicians');
 });
 
@@ -61,7 +61,7 @@ it('parses get security group response correctly', function () {
     $dto = $response->dto();
 
     expect($dto)->toBeInstanceOf(SecurityGroup::class)
-        ->and($dto->iD)->toBe(1)
+        ->and($dto->id)->toBe(1)
         ->and($dto->name)->toBe('Administrators')
         ->and($dto->dashboards)->toBeArray()
         ->and($dto->dashboards)->toHaveCount(2)
@@ -96,12 +96,12 @@ it('parses list detailed security groups response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(SecurityGroup::class)
-        ->and($dto[0]->iD)->toBe(1)
+        ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('Administrators')
         ->and($dto[0]->dashboards)->toHaveCount(1)
         ->and($dto[0]->businessGroup)->toBeInstanceOf(Reference::class)
         ->and($dto[1])->toBeInstanceOf(SecurityGroup::class)
-        ->and($dto[1]->iD)->toBe(2)
+        ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->name)->toBe('Field Technicians')
         ->and($dto[1]->dashboards)->toHaveCount(0)
         ->and($dto[1]->businessGroup)->toBeNull();
@@ -136,7 +136,7 @@ it('can get security group via setup resource', function () {
     $group = $this->sdk->setup(0)->securityGroups()->get(1);
 
     expect($group)->toBeInstanceOf(SecurityGroup::class)
-        ->and($group->iD)->toBe(1);
+        ->and($group->id)->toBe(1);
 });
 
 it('can list detailed security groups via setup resource', function () {

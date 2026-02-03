@@ -37,10 +37,10 @@ it('parses list response times response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(3)
         ->and($dto[0])->toBeInstanceOf(ResponseTimeListItem::class)
-        ->and($dto[0]->iD)->toBe(1)
+        ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('24 Hours Emergency Response')
         ->and($dto[0]->archived)->toBe(false)
-        ->and($dto[2]->iD)->toBe(3)
+        ->and($dto[2]->id)->toBe(3)
         ->and($dto[2]->name)->toBe('Legacy Response Time')
         ->and($dto[2]->archived)->toBe(true);
 });
@@ -66,7 +66,7 @@ it('parses get response time response correctly with all fields', function () {
     $dto = $response->dto();
 
     expect($dto)->toBeInstanceOf(ResponseTime::class)
-        ->and($dto->iD)->toBe(1)
+        ->and($dto->id)->toBe(1)
         ->and($dto->name)->toBe('24 Hours Emergency Response')
         ->and($dto->days)->toBe(0)
         ->and($dto->hours)->toBe(24)
@@ -109,7 +109,7 @@ it('parses list detailed response times response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(ResponseTime::class)
-        ->and($dto[0]->iD)->toBe(1)
+        ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->name)->toBe('24 Hours Emergency Response')
         ->and($dto[0]->days)->toBe(0)
         ->and($dto[0]->hours)->toBe(24)
@@ -117,7 +117,7 @@ it('parses list detailed response times response correctly', function () {
         ->and($dto[0]->includeWeekends)->toBe(true)
         ->and($dto[0]->archived)->toBe(false)
         ->and($dto[1])->toBeInstanceOf(ResponseTime::class)
-        ->and($dto[1]->iD)->toBe(2)
+        ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->days)->toBe(2)
         ->and($dto[1]->hours)->toBe(0)
         ->and($dto[1]->includeWeekends)->toBe(false);
@@ -184,7 +184,7 @@ it('can get response time via setup resource', function () {
     $responseTime = $this->sdk->setup(0)->responseTimes()->get(1);
 
     expect($responseTime)->toBeInstanceOf(ResponseTime::class)
-        ->and($responseTime->iD)->toBe(1);
+        ->and($responseTime->id)->toBe(1);
 });
 
 it('can list detailed response times via setup resource', function () {
