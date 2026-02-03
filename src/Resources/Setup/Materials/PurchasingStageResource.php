@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PurchasingStages\CreatePurchasingStageRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PurchasingStages\DeletePurchasingStageRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PurchasingStages\GetPurchasingStageRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PurchasingStages\ListDetailedPurchasingStagesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PurchasingStages\ListPurchasingStagesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PurchasingStages\UpdatePurchasingStageRequest;
 
@@ -37,6 +38,27 @@ final class PurchasingStageResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListPurchasingStagesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all purchasing stages with full details.
+     *
+     * Returns PurchasingStage DTOs with all fields including Archived.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedPurchasingStagesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

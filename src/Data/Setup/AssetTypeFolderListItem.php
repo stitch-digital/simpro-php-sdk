@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 /**
- * AssetTypeFolderListItem DTO.
+ * AssetTypeFolderListItem DTO (list response).
  */
 final readonly class AssetTypeFolderListItem
 {
     public function __construct(
         public int $id,
-        public ?string $name = null,
+        public string $name,
     ) {}
 
     /**
@@ -21,7 +21,7 @@ final readonly class AssetTypeFolderListItem
     {
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            name: $data['Name'],
         );
     }
 }

@@ -9,10 +9,13 @@ use Saloon\Http\Response;
 final readonly class BasicCommission
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
-        public ?string $type,
-        public ?float $rate,
+        public string $type = 'Basic',
+        public int $displayOrder = 0,
+        public string $rule = 'Dollar',
+        public float $rate = 0.0,
+        public ?string $trigger = null,
     ) {}
 
     /**
@@ -21,10 +24,13 @@ final readonly class BasicCommission
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            type: $data['Type'] ?? null,
-            rate: $data['Rate'] ?? null,
+            type: $data['Type'] ?? 'Basic',
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
+            rule: $data['Rule'] ?? 'Dollar',
+            rate: (float) ($data['Rate'] ?? 0.0),
+            trigger: $data['Trigger'] ?? null,
         );
     }
 

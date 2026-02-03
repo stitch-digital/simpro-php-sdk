@@ -6,13 +6,18 @@ namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
 
+/**
+ * Asset service level DTO.
+ */
 final readonly class AssetServiceLevel
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
-        public ?string $description,
-        public ?int $priority,
+        public int $years = 0,
+        public int $months = 0,
+        public int $days = 0,
+        public bool $archived = false,
     ) {}
 
     /**
@@ -21,10 +26,12 @@ final readonly class AssetServiceLevel
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            description: $data['Description'] ?? null,
-            priority: $data['Priority'] ?? null,
+            years: (int) ($data['Years'] ?? 0),
+            months: (int) ($data['Months'] ?? 0),
+            days: (int) ($data['Days'] ?? 0),
+            archived: (bool) ($data['Archived'] ?? false),
         );
     }
 

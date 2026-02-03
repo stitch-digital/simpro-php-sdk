@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tasks\Categories\CreateTaskCategoryRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tasks\Categories\DeleteTaskCategoryRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tasks\Categories\GetTaskCategoryRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Tasks\Categories\ListDetailedTaskCategoriesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tasks\Categories\ListTaskCategoriesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tasks\Categories\UpdateTaskCategoryRequest;
 
@@ -30,13 +31,34 @@ final class TaskCategoryResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all task categories with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListTaskCategoriesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all task categories with full details.
+     *
+     * Returns TaskCategory DTOs with all fields (ID, Name, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedTaskCategoriesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

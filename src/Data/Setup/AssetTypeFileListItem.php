@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 /**
- * AssetTypeFileListItem DTO.
+ * AssetTypeFileListItem DTO (list response).
  */
 final readonly class AssetTypeFileListItem
 {
     public function __construct(
-        public int $id,
-        public ?string $name = null,
+        public string $id,
+        public string $filename,
     ) {}
 
     /**
@@ -20,8 +20,8 @@ final readonly class AssetTypeFileListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            id: (string) $data['ID'],
+            filename: $data['Filename'],
         );
     }
 }

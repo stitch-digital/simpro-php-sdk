@@ -9,6 +9,7 @@ use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Data\Setup\PlantRate;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\PlantRates\GetPlantRateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\PlantRates\ListDetailedPlantRatesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\PlantRates\ListPlantRatesRequest;
 
 /**
@@ -33,6 +34,27 @@ final class PlantRateResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListPlantRatesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all plant rates with full details.
+     *
+     * Returns PlantRate DTOs with all fields including TaxCode and Plant references.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedPlantRatesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

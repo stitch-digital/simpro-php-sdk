@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
-use Saloon\Http\Response;
-
+/**
+ * Customer profile list item DTO.
+ */
 final readonly class CustomerProfileListItem
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
     ) {}
 
@@ -19,16 +20,8 @@ final readonly class CustomerProfileListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
         );
-    }
-
-    public static function fromResponse(Response $response): self
-    {
-        /** @var array<string, mixed> $data */
-        $data = $response->json();
-
-        return self::fromArray($data);
     }
 }

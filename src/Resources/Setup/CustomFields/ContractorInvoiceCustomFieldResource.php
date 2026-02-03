@@ -8,11 +8,13 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractCreateCustomFieldRe
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractDeleteCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractGetCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListCustomFieldsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListDetailedCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractUpdateCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\ContractorInvoices\CreateContractorInvoiceCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\ContractorInvoices\DeleteContractorInvoiceCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\ContractorInvoices\GetContractorInvoiceCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\ContractorInvoices\ListContractorInvoiceCustomFieldsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\ContractorInvoices\ListDetailedContractorInvoiceCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\ContractorInvoices\UpdateContractorInvoiceCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Resources\Setup\AbstractCustomFieldResource;
 
@@ -24,6 +26,11 @@ final class ContractorInvoiceCustomFieldResource extends AbstractCustomFieldReso
     protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest
     {
         return new ListContractorInvoiceCustomFieldsRequest($companyId);
+    }
+
+    protected function createListDetailedRequest(int $companyId): AbstractListDetailedCustomFieldsRequest
+    {
+        return new ListDetailedContractorInvoiceCustomFieldsRequest($companyId);
     }
 
     protected function createGetRequest(int $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest

@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Projects\CreateProjectTagRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Projects\DeleteProjectTagRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Projects\GetProjectTagRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Projects\ListDetailedProjectTagsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Projects\ListProjectTagsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Projects\UpdateProjectTagRequest;
 
@@ -37,6 +38,27 @@ final class ProjectTagResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListProjectTagsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all project tags with full details.
+     *
+     * Returns ProjectTag DTOs with all fields (ID, Name, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedProjectTagsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

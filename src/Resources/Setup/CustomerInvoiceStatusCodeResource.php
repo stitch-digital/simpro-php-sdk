@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\CustomerInvoices\CreateCusto
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\CustomerInvoices\DeleteCustomerInvoiceStatusCodeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\CustomerInvoices\GetCustomerInvoiceStatusCodeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\CustomerInvoices\ListCustomerInvoiceStatusCodesRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\CustomerInvoices\ListDetailedCustomerInvoiceStatusCodesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\CustomerInvoices\UpdateCustomerInvoiceStatusCodeRequest;
 
 /**
@@ -37,6 +38,27 @@ final class CustomerInvoiceStatusCodeResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListCustomerInvoiceStatusCodesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all customer invoice status codes with full details.
+     *
+     * Returns CustomerInvoiceStatusCode DTOs with all fields (ID, Name, Color, Priority).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedCustomerInvoiceStatusCodesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

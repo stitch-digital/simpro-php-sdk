@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Customers\CreateCustomerTagRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Customers\DeleteCustomerTagRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Customers\GetCustomerTagRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Customers\ListCustomerTagsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Customers\ListDetailedCustomerTagsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Tags\Customers\UpdateCustomerTagRequest;
 
 /**
@@ -37,6 +38,27 @@ final class CustomerTagResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListCustomerTagsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all customer tags with full details.
+     *
+     * Returns CustomerTag DTOs with all fields (ID, Name, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedCustomerTagsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

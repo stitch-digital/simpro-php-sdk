@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 /**
- * AssetTypeFailurePointListItem DTO.
+ * AssetTypeFailurePointListItem DTO (list response).
  */
 final readonly class AssetTypeFailurePointListItem
 {
     public function __construct(
         public int $id,
-        public ?string $name = null,
+        public string $name,
+        public int $displayOrder = 0,
     ) {}
 
     /**
@@ -21,7 +22,8 @@ final readonly class AssetTypeFailurePointListItem
     {
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            name: $data['Name'],
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
         );
     }
 }

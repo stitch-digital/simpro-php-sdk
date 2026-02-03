@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Basic\CreateBasicCommissionR
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Basic\DeleteBasicCommissionRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Basic\GetBasicCommissionRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Basic\ListBasicCommissionsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Basic\ListDetailedBasicCommissionsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Basic\UpdateBasicCommissionRequest;
 
 /**
@@ -37,6 +38,27 @@ final class BasicCommissionResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListBasicCommissionsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all basic commissions with full details.
+     *
+     * Returns BasicCommission DTOs with all fields (ID, Name, Type, DisplayOrder, Rule, Rate, Trigger).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedBasicCommissionsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

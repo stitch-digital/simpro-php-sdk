@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Webhooks\CreateWebhookRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Webhooks\DeleteWebhookRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Webhooks\GetWebhookRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Webhooks\ListDetailedWebhooksRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Webhooks\ListWebhooksRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Webhooks\UpdateWebhookRequest;
 
@@ -37,6 +38,28 @@ final class WebhookResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListWebhooksRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all webhook subscriptions with full details.
+     *
+     * Returns Webhook DTOs with all fields (ID, Name, CallbackURL, Secret, Email, Description, Events, Status, DateCreated).
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedWebhooksRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

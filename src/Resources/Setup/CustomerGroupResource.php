@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerGroups\CreateCustomerGroupReques
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerGroups\DeleteCustomerGroupRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerGroups\GetCustomerGroupRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerGroups\ListCustomerGroupsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerGroups\ListDetailedCustomerGroupsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerGroups\UpdateCustomerGroupRequest;
 
 /**
@@ -30,13 +31,35 @@ final class CustomerGroupResource extends BaseResource
     }
 
     /**
-     * List all customer groups.
+     * List all customer groups with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListCustomerGroupsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all customer groups with full details.
+     *
+     * Returns CustomerGroup DTOs with all fields (ID, Name, Archived).
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedCustomerGroupsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

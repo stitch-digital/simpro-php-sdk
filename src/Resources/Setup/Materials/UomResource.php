@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\Uoms\CreateUomRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\Uoms\DeleteUomRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\Uoms\GetUomRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\Uoms\ListDetailedUomsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\Uoms\ListUomsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\Uoms\UpdateUomRequest;
 
@@ -37,6 +38,27 @@ final class UomResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListUomsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all units of measurement with full details.
+     *
+     * Returns Uom DTOs with all fields including WholeNoOnly.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedUomsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CostCenters\CreateSetupCostCenterRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CostCenters\DeleteSetupCostCenterRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CostCenters\GetSetupCostCenterRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CostCenters\ListDetailedSetupCostCentersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CostCenters\ListSetupCostCentersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CostCenters\UpdateSetupCostCenterRequest;
 
@@ -37,6 +38,28 @@ final class CostCenterResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListSetupCostCentersRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all cost centers with full details.
+     *
+     * Returns SetupCostCenter DTOs with all fields including Rates.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedSetupCostCentersRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

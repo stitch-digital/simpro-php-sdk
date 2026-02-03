@@ -7,9 +7,10 @@
         "ID": 1,
         "Name": "Serial Number",
         "Type": "Text",
-        "CustomFieldType": "Catalog",
-        "Required": false,
+        "ListItems": null,
+        "IsMandatory": false,
+        "Order": 0,
         "Archived": false,
-        "Options": []
+        "Locked": false
     }
 }

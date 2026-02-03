@@ -8,10 +8,12 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractCreateCustomFieldRe
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractDeleteCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractGetCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListCustomFieldsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListDetailedCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractUpdateCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\Projects\CreateProjectCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\Projects\DeleteProjectCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\Projects\GetProjectCustomFieldRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\Projects\ListDetailedProjectCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\Projects\ListProjectCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\Projects\UpdateProjectCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Resources\Setup\AbstractCustomFieldResource;
@@ -24,6 +26,11 @@ final class ProjectCustomFieldResource extends AbstractCustomFieldResource
     protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest
     {
         return new ListProjectCustomFieldsRequest($companyId);
+    }
+
+    protected function createListDetailedRequest(int $companyId): AbstractListDetailedCustomFieldsRequest
+    {
+        return new ListDetailedProjectCustomFieldsRequest($companyId);
     }
 
     protected function createGetRequest(int $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest

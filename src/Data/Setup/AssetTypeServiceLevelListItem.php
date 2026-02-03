@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
+use Simpro\PhpSdk\Simpro\Data\Common\Reference;
+
 /**
- * AssetTypeServiceLevelListItem DTO.
+ * AssetTypeServiceLevelListItem DTO (list response).
  */
 final readonly class AssetTypeServiceLevelListItem
 {
     public function __construct(
-        public int $id,
-        public ?string $name = null,
+        public Reference $serviceLevel,
+        public int $displayOrder = 0,
+        public bool $isDefault = true,
     ) {}
 
     /**
@@ -20,8 +23,9 @@ final readonly class AssetTypeServiceLevelListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            serviceLevel: Reference::fromArray($data['ServiceLevel']),
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
+            isDefault: (bool) ($data['IsDefault'] ?? true),
         );
     }
 }

@@ -55,7 +55,6 @@ final class ListCompanyCustomersDetailedRequest extends Request implements Pagin
                 'Email',
                 'DateModified',
                 'DateCreated',
-                '_href',
             ]),
         ];
     }

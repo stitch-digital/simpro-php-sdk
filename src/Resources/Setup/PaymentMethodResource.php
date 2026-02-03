@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\PaymentMethods\CreatePaymentMethodRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\PaymentMethods\DeletePaymentMethodRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\PaymentMethods\GetPaymentMethodRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\PaymentMethods\ListDetailedPaymentMethodsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\PaymentMethods\ListPaymentMethodsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\PaymentMethods\UpdatePaymentMethodRequest;
 
@@ -30,13 +31,35 @@ final class PaymentMethodResource extends BaseResource
     }
 
     /**
-     * List all payment methods.
+     * List all payment methods with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListPaymentMethodsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all payment methods with full details.
+     *
+     * Returns PaymentMethod DTOs with all fields (ID, Name, AccountNo, Type, FinanceCharge).
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedPaymentMethodsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

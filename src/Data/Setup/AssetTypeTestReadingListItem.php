@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 /**
- * AssetTypeTestReadingListItem DTO.
+ * AssetTypeTestReadingListItem DTO (list response).
  */
 final readonly class AssetTypeTestReadingListItem
 {
     public function __construct(
         public int $id,
-        public ?string $name = null,
+        public string $name,
+        public string $type = 'Text',
+        public int $order = 0,
     ) {}
 
     /**
@@ -21,7 +23,9 @@ final readonly class AssetTypeTestReadingListItem
     {
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            name: $data['Name'],
+            type: $data['Type'] ?? 'Text',
+            order: (int) ($data['Order'] ?? 0),
         );
     }
 }

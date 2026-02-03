@@ -9,9 +9,8 @@ use Saloon\Http\Response;
 final readonly class AdvancedCommissionListItem
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
-        public ?string $type,
     ) {}
 
     /**
@@ -20,9 +19,8 @@ final readonly class AdvancedCommissionListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            type: $data['Type'] ?? null,
         );
     }
 

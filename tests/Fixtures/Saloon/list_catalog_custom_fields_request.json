@@ -7,12 +7,16 @@
         {
             "ID": 1,
             "Name": "Serial Number",
-            "Type": "Text"
+            "Type": "Text",
+            "Order": 0,
+            "Locked": false
         },
         {
             "ID": 2,
             "Name": "Warranty Period",
-            "Type": "Number"
+            "Type": "Numeric",
+            "Order": 1,
+            "Locked": false
         }
     ]
 }

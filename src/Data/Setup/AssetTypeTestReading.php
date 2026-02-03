@@ -7,14 +7,22 @@ namespace Simpro\PhpSdk\Simpro\Data\Setup;
 use Saloon\Http\Response;
 
 /**
- * AssetTypeTestReading DTO.
+ * AssetTypeTestReading DTO (detail response).
  */
 final readonly class AssetTypeTestReading
 {
+    /**
+     * @param  array<string>|null  $listItems
+     * @param  array<AssetTypeServiceLevelListItem>  $serviceLevels
+     */
     public function __construct(
         public int $id,
-        public ?string $name = null,
-        public ?string $type = null,
+        public string $name,
+        public string $type = 'Text',
+        public ?array $listItems = null,
+        public bool $isMandatory = false,
+        public array $serviceLevels = [],
+        public int $order = 0,
         public bool $archived = false,
     ) {}
 
@@ -30,10 +38,21 @@ final readonly class AssetTypeTestReading
      */
     public static function fromArray(array $data): self
     {
+        $serviceLevels = [];
+        if (isset($data['ServiceLevels']) && is_array($data['ServiceLevels'])) {
+            foreach ($data['ServiceLevels'] as $serviceLevel) {
+                $serviceLevels[] = AssetTypeServiceLevelListItem::fromArray($serviceLevel);
+            }
+        }
+
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
-            type: $data['Type'] ?? null,
+            name: $data['Name'],
+            type: $data['Type'] ?? 'Text',
+            listItems: $data['ListItems'] ?? null,
+            isMandatory: (bool) ($data['IsMandatory'] ?? false),
+            serviceLevels: $serviceLevels,
+            order: (int) ($data['Order'] ?? 0),
             archived: (bool) ($data['Archived'] ?? false),
         );
     }

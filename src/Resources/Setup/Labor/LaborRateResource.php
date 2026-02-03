@@ -14,6 +14,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\CreateLaborRateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\DeleteLaborRateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\GetLaborRateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\GetOverheadRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\ListDetailedLaborRatesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\ListLaborRatesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\UpdateLaborRateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\LaborRates\UpdateOverheadRequest;
@@ -40,6 +41,27 @@ final class LaborRateResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListLaborRatesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all labor rates with full details.
+     *
+     * Returns LaborRate DTOs with all fields including TaxCode and Plant references.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedLaborRatesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

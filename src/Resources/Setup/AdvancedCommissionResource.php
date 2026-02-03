@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Advanced\CreateAdvancedCommi
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Advanced\DeleteAdvancedCommissionRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Advanced\GetAdvancedCommissionRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Advanced\ListAdvancedCommissionsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Advanced\ListDetailedAdvancedCommissionsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Commissions\Advanced\UpdateAdvancedCommissionRequest;
 
 /**
@@ -37,6 +38,27 @@ final class AdvancedCommissionResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListAdvancedCommissionsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all advanced commissions with full details.
+     *
+     * Returns AdvancedCommission DTOs with all fields (ID, Name, Type, DisplayOrder, Components, Trigger).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedAdvancedCommissionsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

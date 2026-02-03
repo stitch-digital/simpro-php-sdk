@@ -9,11 +9,12 @@ use Saloon\Http\Response;
 final readonly class AdvancedCommission
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
-        public ?string $type,
-        public ?float $rate,
-        public ?string $conditions,
+        public string $type = 'Advanced',
+        public int $displayOrder = 0,
+        public ?AdvancedCommissionComponents $components = null,
+        public string $trigger = 'CostCenterLocked',
     ) {}
 
     /**
@@ -22,11 +23,12 @@ final readonly class AdvancedCommission
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            type: $data['Type'] ?? null,
-            rate: $data['Rate'] ?? null,
-            conditions: $data['Conditions'] ?? null,
+            type: $data['Type'] ?? 'Advanced',
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
+            components: isset($data['Components']) ? AdvancedCommissionComponents::fromArray($data['Components']) : null,
+            trigger: $data['Trigger'] ?? 'CostCenterLocked',
         );
     }
 

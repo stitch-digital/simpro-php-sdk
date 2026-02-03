@@ -6,13 +6,16 @@ namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
 
+/**
+ * Quote archive reason DTO.
+ */
 final readonly class QuoteArchiveReason
 {
     public function __construct(
-        public int $iD,
-        public string $name,
-        public ?string $description,
-        public bool $isActive,
+        public int $id,
+        public string $archiveReason,
+        public int $displayOrder = 0,
+        public bool $archived = false,
     ) {}
 
     /**
@@ -21,10 +24,10 @@ final readonly class QuoteArchiveReason
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
-            name: $data['Name'] ?? '',
-            description: $data['Description'] ?? null,
-            isActive: (bool) ($data['IsActive'] ?? false),
+            id: (int) ($data['ID'] ?? 0),
+            archiveReason: $data['ArchiveReason'] ?? '',
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
+            archived: (bool) ($data['Archived'] ?? false),
         );
     }
 

@@ -9,9 +9,9 @@ use Saloon\Http\Response;
 final readonly class CustomerTag
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
-        public ?string $color,
+        public bool $archived = false,
     ) {}
 
     /**
@@ -20,9 +20,9 @@ final readonly class CustomerTag
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            color: $data['Color'] ?? null,
+            archived: (bool) ($data['Archived'] ?? false),
         );
     }
 

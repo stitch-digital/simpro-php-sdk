@@ -350,38 +350,81 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 
 ---
 
-### 12. Setup Resource
+### 12. Setup Resource ✅ VERIFIED (All Sub-Resources Complete)
 **Files:** `src/Resources/SetupResource.php`, `src/Resources/Setup/`, `src/Data/Setup/`
 
-#### 12.1 Webhooks
-| Check | Status | Notes |
-|-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+**Summary:** All 27 Setup sub-resources have been verified against swagger specification. This includes:
+- 10 Account-related resources (Tax Codes, Payment Methods/Terms, Customer Groups, Zones, Accounting Categories, Business Groups, Chart of Accounts, Cost Centers)
+- 19 Custom Field types (all sharing the same schema)
+- 8 Asset Type resources (with 7 nested sub-resources)
+- 5 Labor resources
+- 5 Materials resources
+- 3 Status Code types
+- 2 Tag types
+- 2 Commission types
+- Plus: Activities, Defaults, Response Times, Security Groups, Teams, Webhooks, Quote Archive Reasons, Asset Service Levels, Customer Profiles, Task Categories
 
-#### 12.2 Tax Codes
+#### 12.1 Webhooks ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/webhooks/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/webhooks/{webhookID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/webhooks/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/webhooks/{webhookID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/webhooks/{webhookID} |
+| Response DTO (List) | [x] | WebhookListItem - ID, Name |
+| Response DTO (Detail) | [x] | Webhook - ID, Name, CallbackURL, Secret, Email, Description, Events, Status, DateCreated |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
 
-#### 12.3 Payment Methods
+#### 12.2 Tax Codes ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/taxCodes/ |
+| Response DTO | [x] | TaxCode - ID, _href, Code, Type, Rate |
+| Detailed list support | [x] | Not needed - list returns all fields |
+| Tests | [x] | Existing tests validated |
 
-#### 12.4 Payment Terms
-| Check | Status | Notes |
-|-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+**Note:** Tax Codes is read-only at the main level. Sub-endpoints for combines, components, and singles have their own CRUD operations.
 
-#### 12.5 Customer Groups
+#### 12.3 Payment Methods ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/paymentMethods/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/paymentMethods/{paymentMethodID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/accounts/paymentMethods/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/accounts/paymentMethods/{paymentMethodID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/accounts/paymentMethods/{paymentMethodID} |
+| Response DTO (List) | [x] | PaymentMethodListItem - ID, Name |
+| Response DTO (Detail) | [x] | PaymentMethod - ID, Name, AccountNo, Type, FinanceCharge |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
+
+#### 12.4 Payment Terms ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/paymentTerms/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/paymentTerms/{paymentTermID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/accounts/paymentTerms/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/accounts/paymentTerms/{paymentTermID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/accounts/paymentTerms/{paymentTermID} |
+| Response DTO (List) | [x] | PaymentTerm - PaymentTermID, PaymentTermName, Days, Type, IsDefault |
+| Response DTO (Detail) | [x] | PaymentTerm (same as list - all fields returned in list) |
+| Detailed list support | [x] | Not needed - list and detail responses have same fields |
+| Tests | [x] | Existing tests validated |
+
+#### 12.5 Customer Groups ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/customerGroups/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/customerGroups/{customerGroupID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/customerGroups/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/customerGroups/{customerGroupID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/customerGroups/{customerGroupID} |
+| Response DTO (List) | [x] | CustomerGroupListItem - ID, Name |
+| Response DTO (Detail) | [x] | CustomerGroup - ID, Name, Archived |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
 
 #### 12.6 Zones ✅ VERIFIED
 | Check | Status | Notes |
@@ -416,82 +459,132 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 | Detailed list support | [x] | listDetailed() available via columns parameter |
 | Tests | [x] | 15 tests covering all endpoints and DTOs |
 
-#### 12.9 Chart of Accounts
+#### 12.9 Chart of Accounts ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/accounts/chartOfAccounts/{accountID} |
+| Response DTO (List) | [x] | ChartOfAccountListItem - ID, Name |
+| Response DTO (Detail) | [x] | ChartOfAccount - ID, Name, Number, Type, Archived |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
 
-#### 12.10 Cost Centers
+#### 12.10 Cost Centers ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/costCenters/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/accounts/costCenters/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/accounts/costCenters/{costCenterID} |
+| Response DTO (List) | [x] | SetupCostCenterListItem - ID, Name |
+| Response DTO (Detail) | [x] | SetupCostCenter - ID, Name, IncomeAccountNo, ExpenseAccountNo, AccrualRevAccountNo, DeferralRevAccountNo, MonthlySalesBudget, MonthlyExpenditureBudget, Archived, IsMembershipCostCenter, Rates |
+| Nested Rates DTO | [x] | CostCenterRates - ServiceFee (Reference), LaborRate (Reference) |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
 
-#### 12.11 Custom Fields (19 types)
-- [ ] Catalog
-- [ ] Contact
-- [ ] Contractor
-- [ ] Contractor Invoice
-- [ ] Contractor Job
-- [ ] Customer
-- [ ] Customer Contact
-- [ ] Customer Contract
-- [ ] Employee
-- [ ] Invoice
-- [ ] Prebuild
-- [ ] Project
-- [ ] Site
-- [ ] Site Contact
-- [ ] Task
-- [ ] Vendor
-- [ ] Vendor Contact
-- [ ] Vendor Order
-- [ ] Work Order
-
-#### 12.12 Asset Types (with deep nesting)
+#### 12.11 Custom Fields (19 types) ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| CRUD endpoints | [ ] | |
-| Folders | [ ] | |
-| Files | [ ] | |
-| Custom Fields | [ ] | |
-| Failure Points | [ ] | |
-| Recommendations | [ ] | |
-| Service Levels | [ ] | |
-| Test Readings | [ ] | |
-| DTOs | [ ] | |
+| Base DTOs | [x] | CustomField (detail), CustomFieldListItem (list) |
+| Abstract classes | [x] | AbstractCustomFieldResource, AbstractListDetailedCustomFieldsRequest |
+| List schema | [x] | ID, Name, Type, Order, Locked |
+| Detail schema | [x] | ID, Name, Type, ListItems, IsMandatory, Order, Archived, Locked |
+| Detailed list support | [x] | listDetailed() added to all 19 resource types |
+| Tests | [x] | Updated test and fixture to match swagger |
 
-#### 12.13 Labor Resources
-- [ ] Labor Rates
-- [ ] Fit Times
-- [ ] Plant Rates
-- [ ] Schedule Rates
-- [ ] Service Fees
+**All 19 Custom Field types share the same schema:**
+- [x] Catalog
+- [x] Contact
+- [x] Contractor
+- [x] Contractor Invoice
+- [x] Contractor Job
+- [x] Customer
+- [x] Customer Contact
+- [x] Customer Contract
+- [x] Employee
+- [x] Invoice
+- [x] Prebuild
+- [x] Project
+- [x] Site
+- [x] Site Contact
+- [x] Task
+- [x] Vendor
+- [x] Vendor Contact
+- [x] Vendor Order
+- [x] Work Order
 
-#### 12.14 Materials Resources
-- [ ] Pricing Tiers
-- [ ] Purchasing Stages
-- [ ] Stock Take Reasons
-- [ ] Stock Transfer Reasons
-- [ ] UOMs (Units of Measure)
+**Major fixes applied:**
+- Updated CustomField DTO: removed `customFieldType`, `required`, `options`
+- Added correct fields: `listItems` (nullable array), `isMandatory` (bool), `order` (int), `locked` (bool)
+- Updated CustomFieldListItem DTO: added `order`, `locked` fields
+- Created AbstractListDetailedCustomFieldsRequest with DETAILED_COLUMNS constant
+- Added listDetailed() method to AbstractCustomFieldResource
+- Created 19 ListDetailed*CustomFieldsRequest classes
+
+#### 12.12 Asset Types (with deep nesting) ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| CRUD endpoints | [x] | GET list/single, POST, PATCH, DELETE |
+| Main DTO | [x] | AssetType with Reference, RegType, JobCostCenter, QuoteCostCenter, DefaultTechnician, Description, Archived |
+| Folders | [x] | AssetTypeFolder with ParentID, Parent (Reference) |
+| Files | [x] | AssetTypeFile with Filename, Folder, MimeType, FileSizeBytes, DateAdded, AddedBy |
+| Custom Fields | [x] | Same schema as setup custom fields (ID, Name, Type, ListItems, IsMandatory, Order, Archived, Locked) |
+| Service Levels | [x] | ServiceLevel (Reference), DisplayOrder, IsDefault, Prebuild (nested) |
+| Failure Points | [x] | DisplayOrder, Standard, Prebuild (nested), IsCritical, Severity |
+| Recommendations | [x] | ChargeRate, Prebuild (nested) |
+| Test Readings | [x] | ListItems, IsMandatory, ServiceLevels (array), Order, Archived |
+| DTOs | [x] | All 14 DTOs updated to match swagger |
+
+**New DTOs created:**
+- `AssetTypeReference` - nested Section/Standard object
+- `AssetTypePrebuild` - nested Prebuild object (ID, PartNo, Name, AddOnPrice, DisplayOrder, Archived)
+
+**Major fixes applied:**
+- AssetType: Added reference, regType, jobCostCenter, quoteCostCenter, defaultTechnician, description
+- AssetTypeCustomField/ListItem: Updated to match custom field schema (isMandatory, order, locked, listItems)
+- AssetTypeServiceLevel: Changed from flat id/name/archived to ServiceLevel (Reference) + DisplayOrder + IsDefault + Prebuild
+- AssetTypeFailurePoint: Added displayOrder, standard, prebuild, isCritical, severity
+- AssetTypeTestReading: Added listItems, isMandatory, serviceLevels (array), order
+- AssetTypeRecommendation: Added chargeRate, prebuild
+- AssetTypeFile: Changed id type to string, added filename, mimeType, fileSizeBytes, dateAdded, addedBy
+- AssetTypeFolder: Added parentId, parent (Reference)
+
+#### 12.13 Labor Resources ✅ VERIFIED
+- [x] Labor Rates - LaborRate with nested TaxCode, Plant references, listDetailed() added
+- [x] Fit Times - FitTime with multiplier, displayOrder, archived, listDetailed() added
+- [x] Plant Rates - PlantRate with nested TaxCode, Plant references, listDetailed() added
+- [x] Schedule Rates - ScheduleRate with 12 fields matching swagger, listDetailed() added
+- [x] Service Fees - ServiceFee with nested SalesTaxCode, listDetailed() added
+
+#### 12.14 Materials Resources ✅ VERIFIED
+- [x] Pricing Tiers - PricingTier with ScaledTierPricing nested array, listDetailed() added
+- [x] Purchasing Stages - ID, Name, Archived, listDetailed() added
+- [x] Stock Take Reasons - List includes Archived, no listDetailed() needed
+- [x] Stock Transfer Reasons - List includes Archived, no listDetailed() needed
+- [x] UOMs (Units of Measure) - Uom with wholeNoOnly, listDetailed() added
 
 #### 12.15 Other Setup Resources
 - [x] Activities ✅ VERIFIED
-- [ ] Archive Reasons (Quote)
-- [ ] Asset Service Levels
-- [ ] Basic Commissions
-- [ ] Advanced Commissions
+- [x] Archive Reasons (Quote) ✅ VERIFIED
+- [x] Asset Service Levels ✅ VERIFIED
+- [x] Basic Commissions ✅ VERIFIED - Fixed fields to match swagger, listDetailed() added
+- [x] Advanced Commissions ✅ VERIFIED - Created AdvancedCommissionComponents DTO, listDetailed() added
 - [x] Currencies ✅ VERIFIED
-- [ ] Customer Profiles
-- [ ] Customer Tags
-- [ ] Project Tags
+- [x] Customer Profiles ✅ VERIFIED
+- [x] Customer Tags ✅ VERIFIED
+- [x] Project Tags ✅ VERIFIED
 - [x] Defaults ✅ VERIFIED
 - [x] Response Times ✅ VERIFIED
 - [x] Security Groups ✅ VERIFIED
-- [ ] Status Codes (Project, Customer Invoice, Vendor Order)
-- [ ] Task Categories
+- [x] Status Codes (Project, Customer Invoice, Vendor Order) ✅ VERIFIED
+- [x] Task Categories ✅ VERIFIED
 - [x] Teams ✅ VERIFIED
+- [x] Payment Terms ✅ VERIFIED
+- [x] Payment Methods ✅ VERIFIED
 
 #### 12.16 Activities ✅ VERIFIED
 | Check | Status | Notes |
@@ -550,6 +643,87 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
   - `DefaultsInvoicing` - showSellCostPrices, financeChargeLabel, tracking, retainageHold
   - `DefaultsSchedule` - workWeekStart, scheduleFormat
 
+#### 12.19 Task Categories ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/tasks/categories/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/tasks/categories/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/tasks/categories/{taskCategoryID} |
+| Response DTO (List) | [x] | TaskCategoryListItem - ID, Name |
+| Response DTO (Detail) | [x] | TaskCategory - ID, Name, Archived |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
+
+**Major fixes applied:**
+- Fixed `$iD` to `$id` property naming convention
+- Removed incorrect `color` field from TaskCategory (not in API)
+- Added `archived` (bool) to TaskCategory
+- Created ListDetailedTaskCategoriesRequest for bulk fetching full TaskCategory DTOs
+- Added listDetailed() method to TaskCategoryResource
+
+#### 12.20 Quote Archive Reasons ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/archiveReasons/quotes/{archiveReasonID} |
+| Response DTO (List) | [x] | QuoteArchiveReasonListItem - ID, ArchiveReason |
+| Response DTO (Detail) | [x] | QuoteArchiveReason - ID, ArchiveReason, DisplayOrder, Archived |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
+
+**Major fixes applied:**
+- Fixed `$iD` to `$id` property naming convention
+- Renamed `name` to `archiveReason` to match API
+- Removed incorrect `description`, `isActive` fields (not in API)
+- Added `displayOrder` (int), `archived` (bool) to QuoteArchiveReason
+- Created ListDetailedQuoteArchiveReasonsRequest for bulk fetching full QuoteArchiveReason DTOs
+- Added listDetailed() method to QuoteArchiveReasonResource
+
+#### 12.21 Asset Service Levels ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/assets/serviceLevels/{serviceLevelID} |
+| Response DTO (List) | [x] | AssetServiceLevelListItem - ID, Name |
+| Response DTO (Detail) | [x] | AssetServiceLevel - ID, Name, Years, Months, Days, Archived |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
+
+**Major fixes applied:**
+- Fixed `$iD` to `$id` property naming convention
+- Removed incorrect `description`, `priority` fields (not in API)
+- Added `years` (int), `months` (int), `days` (int), `archived` (bool) to AssetServiceLevel
+- Created ListDetailedAssetServiceLevelsRequest for bulk fetching full AssetServiceLevel DTOs
+- Added listDetailed() method to AssetServiceLevelResource
+
+#### 12.22 Customer Profiles ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/customerProfiles/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/setup/customerProfiles/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/setup/customerProfiles/{customerProfileID} |
+| Response DTO (List) | [x] | CustomerProfileListItem - ID, Name |
+| Response DTO (Detail) | [x] | CustomerProfile - ID, Name, Archived |
+| Detailed list support | [x] | listDetailed() added |
+| Tests | [x] | Existing tests validated |
+
+**Major fixes applied:**
+- Fixed `$iD` to `$id` property naming convention
+- Removed incorrect `description`, `isDefault` fields (not in API)
+- Added `archived` (bool) to CustomerProfile
+- Created ListDetailedCustomerProfilesRequest for bulk fetching full CustomerProfile DTOs
+- Added listDetailed() method to CustomerProfileResource
+
 ---
 
 ## Common DTOs
@@ -586,7 +760,7 @@ Verify these shared DTOs are accurate across all usages:
 | Invoices           | [ ]      | 0            | 0               |
 | Employees          | [ ]      | 0            | 0               |
 | Reports            | [ ]      | 0            | 0               |
-| Setup (partial)    | [ ]      | 0            | 0               |
+| Setup (all sub-resources) | [x] | 71        | 71              |
 | - Currencies       | [x]      | 0            | 0               |
 | - Zones            | [x]      | 0            | 0               |
 | - Teams            | [x]      | 0            | 0               |
@@ -596,6 +770,24 @@ Verify these shared DTOs are accurate across all usages:
 | - Defaults         | [x]      | 1            | 1               |
 | - Accounting Categories | [x] | 1            | 1               |
 | - Business Groups  | [x]      | 1            | 1               |
+| - Customer Groups  | [x]      | 0            | 0               |
+| - Task Categories  | [x]      | 2            | 2               |
+| - Payment Terms    | [x]      | 0            | 0               |
+| - Payment Methods  | [x]      | 0            | 0               |
+| - Chart of Accounts | [x]     | 0            | 0               |
+| - Quote Archive Reasons | [x] | 4            | 4               |
+| - Asset Service Levels | [x]  | 4            | 4               |
+| - Customer Profiles | [x]     | 3            | 3               |
+| - Webhooks         | [x]      | 0            | 0               |
+| - Tax Codes        | [x]      | 0            | 0               |
+| - Cost Centers     | [x]      | 0            | 0               |
+| - Status Codes (3) | [x]      | 6            | 6               |
+| - Tags (2)         | [x]      | 4            | 4               |
+| - Commissions (2)  | [x]      | 5            | 5               |
+| - Labor (5)        | [x]      | 10           | 10              |
+| - Materials (5)    | [x]      | 4            | 4               |
+| - Custom Fields (19) | [x]    | 3            | 3               |
+| - Asset Types (8)  | [x]      | 14           | 14              |
 | Common DTOs        | [ ]      | 0            | 0               |
 
 ---

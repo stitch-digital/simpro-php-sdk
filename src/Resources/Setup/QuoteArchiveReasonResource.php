@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ArchiveReasons\Quotes\CreateQuoteArchiveReasonRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ArchiveReasons\Quotes\DeleteQuoteArchiveReasonRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ArchiveReasons\Quotes\GetQuoteArchiveReasonRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\ArchiveReasons\Quotes\ListDetailedQuoteArchiveReasonsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ArchiveReasons\Quotes\ListQuoteArchiveReasonsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ArchiveReasons\Quotes\UpdateQuoteArchiveReasonRequest;
 
@@ -30,13 +31,34 @@ final class QuoteArchiveReasonResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all quote archive reasons with minimal fields (ID, ArchiveReason).
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListQuoteArchiveReasonsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all quote archive reasons with full details.
+     *
+     * Returns QuoteArchiveReason DTOs with all fields (ID, ArchiveReason, DisplayOrder, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedQuoteArchiveReasonsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

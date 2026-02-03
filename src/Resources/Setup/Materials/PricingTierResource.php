@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PricingTiers\CreatePricingTierRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PricingTiers\DeletePricingTierRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PricingTiers\GetPricingTierRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PricingTiers\ListDetailedPricingTiersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PricingTiers\ListPricingTiersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\PricingTiers\UpdatePricingTierRequest;
 
@@ -37,6 +38,27 @@ final class PricingTierResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListPricingTiersRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all pricing tiers with full details.
+     *
+     * Returns PricingTier DTOs with all fields including ScaledTierPricing, DateModified, etc.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedPricingTiersRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

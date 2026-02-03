@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\FitTimes\CreateFitTimeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\FitTimes\DeleteFitTimeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\FitTimes\GetFitTimeRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\FitTimes\ListDetailedFitTimesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\FitTimes\ListFitTimesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\FitTimes\UpdateFitTimeRequest;
 
@@ -37,6 +38,27 @@ final class FitTimeResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListFitTimesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all fit times with full details.
+     *
+     * Returns FitTime DTOs with all fields (ID, Name, Multiplier, DisplayOrder, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedFitTimesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractCreateCustomFieldRe
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractDeleteCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractGetCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListCustomFieldsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListDetailedCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractUpdateCustomFieldRequest;
 
 /**
@@ -31,6 +32,8 @@ abstract class AbstractCustomFieldResource extends BaseResource
 
     abstract protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest;
 
+    abstract protected function createListDetailedRequest(int $companyId): AbstractListDetailedCustomFieldsRequest;
+
     abstract protected function createGetRequest(int $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest;
 
     abstract protected function createCreateRequest(int $companyId, array $data): AbstractCreateCustomFieldRequest;
@@ -47,6 +50,28 @@ abstract class AbstractCustomFieldResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = $this->createListRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all custom fields with full details.
+     *
+     * Returns CustomField DTOs with all fields (ID, Name, Type, ListItems, IsMandatory, Order, Archived, Locked).
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = $this->createListDetailedRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

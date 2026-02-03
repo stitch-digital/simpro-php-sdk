@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerProfiles\CreateCustomerProfileRe
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerProfiles\DeleteCustomerProfileRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerProfiles\GetCustomerProfileRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerProfiles\ListCustomerProfilesRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerProfiles\ListDetailedCustomerProfilesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomerProfiles\UpdateCustomerProfileRequest;
 
 /**
@@ -30,13 +31,34 @@ final class CustomerProfileResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all customer profiles with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListCustomerProfilesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all customer profiles with full details.
+     *
+     * Returns CustomerProfile DTOs with all fields (ID, Name, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedCustomerProfilesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

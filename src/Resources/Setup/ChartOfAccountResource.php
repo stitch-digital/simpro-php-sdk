@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\ChartOfAccounts\CreateChartOfAccountRequ
 use Simpro\PhpSdk\Simpro\Requests\Setup\ChartOfAccounts\DeleteChartOfAccountRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ChartOfAccounts\GetChartOfAccountRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ChartOfAccounts\ListChartOfAccountsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\ChartOfAccounts\ListDetailedChartOfAccountsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\ChartOfAccounts\UpdateChartOfAccountRequest;
 
 /**
@@ -30,13 +31,35 @@ final class ChartOfAccountResource extends BaseResource
     }
 
     /**
-     * List all chart of accounts.
+     * List all chart of accounts with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListChartOfAccountsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all chart of accounts with full details.
+     *
+     * Returns ChartOfAccount DTOs with all fields (ID, Name, Number, Type, Archived).
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedChartOfAccountsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

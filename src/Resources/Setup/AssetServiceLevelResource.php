@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\Assets\ServiceLevels\CreateAssetServiceL
 use Simpro\PhpSdk\Simpro\Requests\Setup\Assets\ServiceLevels\DeleteAssetServiceLevelRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Assets\ServiceLevels\GetAssetServiceLevelRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Assets\ServiceLevels\ListAssetServiceLevelsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Assets\ServiceLevels\ListDetailedAssetServiceLevelsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Assets\ServiceLevels\UpdateAssetServiceLevelRequest;
 
 /**
@@ -30,13 +31,34 @@ final class AssetServiceLevelResource extends BaseResource
     }
 
     /**
-     * List all.
+     * List all asset service levels with minimal fields (ID, Name).
      *
      * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListAssetServiceLevelsRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all asset service levels with full details.
+     *
+     * Returns AssetServiceLevel DTOs with all fields (ID, Name, Years, Months, Days, Archived).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedAssetServiceLevelsRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

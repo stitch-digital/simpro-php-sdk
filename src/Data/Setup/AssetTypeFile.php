@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
+use DateTimeImmutable;
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\Reference;
+use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 
 /**
- * AssetTypeFile DTO.
+ * AssetTypeFile DTO (detail response).
  */
 final readonly class AssetTypeFile
 {
     public function __construct(
-        public int $id,
-        public ?string $name = null,
-        public ?string $url = null,
-        public ?int $size = null,
+        public string $id,
+        public string $filename,
+        public ?Reference $folder = null,
+        public ?string $mimeType = null,
+        public ?int $fileSizeBytes = null,
+        public ?DateTimeImmutable $dateAdded = null,
+        public ?StaffReference $addedBy = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -31,10 +37,13 @@ final readonly class AssetTypeFile
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
-            url: $data['Url'] ?? null,
-            size: isset($data['Size']) ? (int) $data['Size'] : null,
+            id: (string) $data['ID'],
+            filename: $data['Filename'],
+            folder: isset($data['Folder']) ? Reference::fromArray($data['Folder']) : null,
+            mimeType: $data['MimeType'] ?? null,
+            fileSizeBytes: isset($data['FileSizeBytes']) ? (int) $data['FileSizeBytes'] : null,
+            dateAdded: isset($data['DateAdded']) ? new DateTimeImmutable($data['DateAdded']) : null,
+            addedBy: isset($data['AddedBy']) ? StaffReference::fromArray($data['AddedBy']) : null,
         );
     }
 }

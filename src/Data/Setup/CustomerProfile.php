@@ -6,13 +6,15 @@ namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
 
+/**
+ * Customer profile DTO.
+ */
 final readonly class CustomerProfile
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
-        public ?string $description,
-        public bool $isDefault,
+        public bool $archived = false,
     ) {}
 
     /**
@@ -21,10 +23,9 @@ final readonly class CustomerProfile
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
-            description: $data['Description'] ?? null,
-            isDefault: (bool) ($data['IsDefault'] ?? false),
+            archived: (bool) ($data['Archived'] ?? false),
         );
     }
 

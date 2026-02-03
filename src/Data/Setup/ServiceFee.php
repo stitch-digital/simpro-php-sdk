@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Data\Setup;
 
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\TaxCode;
 
 /**
  * ServiceFee DTO.
@@ -13,7 +14,11 @@ final readonly class ServiceFee
 {
     public function __construct(
         public int $id,
-        public ?string $name = null,
+        public string $name,
+        public ?TaxCode $salesTaxCode = null,
+        public ?float $laborTime = null,
+        public float $price = 0.0,
+        public int $displayOrder = 0,
         public bool $archived = false,
     ) {}
 
@@ -31,7 +36,11 @@ final readonly class ServiceFee
     {
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            name: $data['Name'] ?? '',
+            salesTaxCode: isset($data['SalesTaxCode']) ? TaxCode::fromArray($data['SalesTaxCode']) : null,
+            laborTime: isset($data['LaborTime']) ? (float) $data['LaborTime'] : null,
+            price: (float) ($data['Price'] ?? 0.0),
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
             archived: (bool) ($data['Archived'] ?? false),
         );
     }

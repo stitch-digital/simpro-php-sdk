@@ -66,10 +66,11 @@ it('parses get catalog custom field response correctly', function () {
         ->and($dto->id)->toBe(1)
         ->and($dto->name)->toBe('Serial Number')
         ->and($dto->type)->toBe('Text')
-        ->and($dto->customFieldType)->toBe('Catalog')
-        ->and($dto->required)->toBeFalse()
+        ->and($dto->listItems)->toBeNull()
+        ->and($dto->isMandatory)->toBeFalse()
+        ->and($dto->order)->toBe(0)
         ->and($dto->archived)->toBeFalse()
-        ->and($dto->options)->toBeArray();
+        ->and($dto->locked)->toBeFalse();
 });
 
 it('sends create catalog custom field request and returns id', function () {

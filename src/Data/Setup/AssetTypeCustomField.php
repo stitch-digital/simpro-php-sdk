@@ -7,15 +7,22 @@ namespace Simpro\PhpSdk\Simpro\Data\Setup;
 use Saloon\Http\Response;
 
 /**
- * AssetTypeCustomField DTO.
+ * AssetTypeCustomField DTO (detail response).
  */
 final readonly class AssetTypeCustomField
 {
+    /**
+     * @param  array<string>|null  $listItems
+     */
     public function __construct(
         public int $id,
-        public ?string $name = null,
-        public ?string $type = null,
-        public bool $required = false,
+        public string $name,
+        public string $type = 'Text',
+        public ?array $listItems = null,
+        public bool $isMandatory = false,
+        public int $order = 0,
+        public bool $archived = false,
+        public bool $locked = false,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -32,9 +39,13 @@ final readonly class AssetTypeCustomField
     {
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
-            type: $data['Type'] ?? null,
-            required: (bool) ($data['Required'] ?? false),
+            name: $data['Name'],
+            type: $data['Type'] ?? 'Text',
+            listItems: $data['ListItems'] ?? null,
+            isMandatory: (bool) ($data['IsMandatory'] ?? false),
+            order: (int) ($data['Order'] ?? 0),
+            archived: (bool) ($data['Archived'] ?? false),
+            locked: (bool) ($data['Locked'] ?? false),
         );
     }
 }

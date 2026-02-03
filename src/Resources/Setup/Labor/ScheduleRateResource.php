@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\ScheduleRates\CreateScheduleRateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\ScheduleRates\DeleteScheduleRateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\ScheduleRates\GetScheduleRateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\ScheduleRates\ListDetailedScheduleRatesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\ScheduleRates\ListScheduleRatesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Labor\ScheduleRates\UpdateScheduleRateRequest;
 
@@ -37,6 +38,27 @@ final class ScheduleRateResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListScheduleRatesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all schedule rates with full details.
+     *
+     * Returns ScheduleRate DTOs with all fields including Multiplier, ShowInMobile, etc.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedScheduleRatesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

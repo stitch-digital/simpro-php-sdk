@@ -8,11 +8,13 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractCreateCustomFieldRe
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractDeleteCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractGetCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListCustomFieldsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractListDetailedCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractUpdateCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\CustomerContacts\CreateCustomerContactCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\CustomerContacts\DeleteCustomerContactCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\CustomerContacts\GetCustomerContactCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\CustomerContacts\ListCustomerContactCustomFieldsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\CustomerContacts\ListDetailedCustomerContactCustomFieldsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\CustomerContacts\UpdateCustomerContactCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Resources\Setup\AbstractCustomFieldResource;
 
@@ -24,6 +26,11 @@ final class CustomerContactCustomFieldResource extends AbstractCustomFieldResour
     protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest
     {
         return new ListCustomerContactCustomFieldsRequest($companyId);
+    }
+
+    protected function createListDetailedRequest(int $companyId): AbstractListDetailedCustomFieldsRequest
+    {
+        return new ListDetailedCustomerContactCustomFieldsRequest($companyId);
     }
 
     protected function createGetRequest(int $companyId, int|string $customFieldId): AbstractGetCustomFieldRequest

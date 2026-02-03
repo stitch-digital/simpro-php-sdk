@@ -13,7 +13,9 @@ final readonly class FitTime
 {
     public function __construct(
         public int $id,
-        public ?string $name = null,
+        public string $name,
+        public float $multiplier = 1.0,
+        public int $displayOrder = 0,
         public bool $archived = false,
     ) {}
 
@@ -31,7 +33,9 @@ final readonly class FitTime
     {
         return new self(
             id: (int) $data['ID'],
-            name: $data['Name'] ?? null,
+            name: $data['Name'] ?? '',
+            multiplier: (float) ($data['Multiplier'] ?? 1.0),
+            displayOrder: (int) ($data['DisplayOrder'] ?? 0),
             archived: (bool) ($data['Archived'] ?? false),
         );
     }

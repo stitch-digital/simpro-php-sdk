@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\Projects\CreateProjectStatusCodeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\Projects\DeleteProjectStatusCodeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\Projects\GetProjectStatusCodeRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\Projects\ListDetailedProjectStatusCodesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\Projects\ListProjectStatusCodesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\StatusCodes\Projects\UpdateProjectStatusCodeRequest;
 
@@ -37,6 +38,27 @@ final class ProjectStatusCodeResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListProjectStatusCodesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all project status codes with full details.
+     *
+     * Returns ProjectStatusCode DTOs with all fields (ID, Name, Color, Priority).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedProjectStatusCodesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
