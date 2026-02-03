@@ -9,7 +9,7 @@ use Saloon\Http\Response;
 final readonly class ResponseTime
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
         public int $days,
         public int $hours,
@@ -24,7 +24,7 @@ final readonly class ResponseTime
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
             days: (int) ($data['Days'] ?? 0),
             hours: (int) ($data['Hours'] ?? 0),

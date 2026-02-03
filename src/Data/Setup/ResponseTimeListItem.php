@@ -9,7 +9,7 @@ use Saloon\Http\Response;
 final readonly class ResponseTimeListItem
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
         public bool $archived,
     ) {}
@@ -20,7 +20,7 @@ final readonly class ResponseTimeListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
             archived: (bool) ($data['Archived'] ?? false),
         );

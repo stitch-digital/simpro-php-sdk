@@ -10,7 +10,7 @@ use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 final readonly class Activity
 {
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
         public bool $billable,
         public bool $archived,
@@ -23,7 +23,7 @@ final readonly class Activity
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
             billable: (bool) ($data['Billable'] ?? false),
             archived: (bool) ($data['Archived'] ?? false),

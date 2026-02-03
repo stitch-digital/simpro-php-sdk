@@ -13,7 +13,7 @@ final readonly class SecurityGroup
      * @param  array<Reference>  $dashboards
      */
     public function __construct(
-        public int $iD,
+        public int $id,
         public string $name,
         public array $dashboards,
         public ?Reference $businessGroup,
@@ -25,7 +25,7 @@ final readonly class SecurityGroup
     public static function fromArray(array $data): self
     {
         return new self(
-            iD: (int) ($data['ID'] ?? 0),
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? '',
             dashboards: array_map(
                 fn (array $item): Reference => Reference::fromArray($item),
