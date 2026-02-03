@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Requests\Setup\AssetTypes\CreateAssetTypeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AssetTypes\DeleteAssetTypeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AssetTypes\GetAssetTypeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AssetTypes\ListAssetTypesRequest;
+use Simpro\PhpSdk\Simpro\Requests\Setup\AssetTypes\ListDetailedAssetTypesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\AssetTypes\UpdateAssetTypeRequest;
 
 /**
@@ -37,6 +38,25 @@ final class AssetTypeResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListAssetTypesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all asset types with full details.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedAssetTypesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

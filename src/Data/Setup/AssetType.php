@@ -23,6 +23,8 @@ final readonly class AssetType
         public ?StaffReference $defaultTechnician = null,
         public ?string $description = null,
         public bool $archived = false,
+        /** @var array<AssetTypeServiceLevel>|null */
+        public ?array $serviceLevels = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -47,6 +49,9 @@ final readonly class AssetType
             defaultTechnician: isset($data['DefaultTechnician']) ? StaffReference::fromArray($data['DefaultTechnician']) : null,
             description: $data['Description'] ?? null,
             archived: (bool) ($data['Archived'] ?? false),
+            serviceLevels: isset($data['ServiceLevels'])
+                ? array_map(fn (array $item): AssetTypeServiceLevel => AssetTypeServiceLevel::fromArray($item), $data['ServiceLevels'])
+                : null,
         );
     }
 }

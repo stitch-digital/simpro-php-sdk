@@ -530,6 +530,7 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 |-------|--------|-------|
 | CRUD endpoints | [x] | GET list/single, POST, PATCH, DELETE |
 | Main DTO | [x] | AssetType with Reference, RegType, JobCostCenter, QuoteCostCenter, DefaultTechnician, Description, Archived |
+| Detailed list support | [x] | listDetailed() added |
 | Folders | [x] | AssetTypeFolder with ParentID, Parent (Reference) |
 | Files | [x] | AssetTypeFile with Filename, Folder, MimeType, FileSizeBytes, DateAdded, AddedBy |
 | Custom Fields | [x] | Same schema as setup custom fields (ID, Name, Type, ListItems, IsMandatory, Order, Archived, Locked) |

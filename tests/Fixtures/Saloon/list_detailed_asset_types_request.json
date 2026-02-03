@@ -1,0 +1,45 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json",
+        "Result-Total": "1",
+        "Result-Pages": "1"
+    },
+    "data": [
+        {
+            "ID": 908,
+            "Name": "Battery - VRLA",
+            "Reference": {
+                "Section": "",
+                "Standard": ""
+            },
+            "RegType": 0,
+            "JobCostCenter": {
+                "ID": 711,
+                "Name": "Service - Agreements"
+            },
+            "QuoteCostCenter": null,
+            "DefaultTechnician": null,
+            "Description": "Battery - VRLA",
+            "Archived": false,
+            "ServiceLevels": [
+                {
+                    "ServiceLevel": {
+                        "ID": 542,
+                        "Name": "PM Annual"
+                    },
+                    "DisplayOrder": 0,
+                    "IsDefault": false
+                },
+                {
+                    "ServiceLevel": {
+                        "ID": 543,
+                        "Name": "PM Semi Annual"
+                    },
+                    "DisplayOrder": 1,
+                    "IsDefault": false
+                }
+            ]
+        }
+    ]
+}
