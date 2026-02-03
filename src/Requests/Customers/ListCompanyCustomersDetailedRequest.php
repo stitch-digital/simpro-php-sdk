@@ -38,6 +38,8 @@ final class ListCompanyCustomersDetailedRequest extends Request implements Pagin
             'columns' => implode(',', [
                 'ID',
                 'CompanyName',
+                'GivenName',
+                'FamilyName',
                 'Phone',
                 'Address',
                 'BillingAddress',

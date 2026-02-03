@@ -9,6 +9,8 @@
     {
       "ID": 1,
       "CompanyName": "Acme Corporation",
+      "GivenName": "John",
+      "FamilyName": "Doe",
       "Phone": "555-0100",
       "Address": {
         "Address": "123 Main Street",
@@ -24,10 +26,7 @@
         "PostalCode": "2001",
         "Country": "Australia"
       },
-      "CustomerType": {
-        "ID": 10,
-        "Name": "Commercial"
-      },
+      "CustomerType": "Commercial",
       "Tags": [
         {
           "ID": 1,
@@ -40,13 +39,40 @@
       ],
       "AmountOwing": 1500.00,
       "Profile": {
-        "ID": 5,
-        "Name": "Gold Customer"
+        "Notes": "Important customer notes",
+        "CustomerProfile": {
+          "ID": 5,
+          "Name": "Gold"
+        },
+        "CustomerGroup": {
+          "ID": 4,
+          "Name": "Commercial"
+        },
+        "AccountManager": null,
+        "Currency": {
+          "ID": "AUD",
+          "Name": "Australian Dollar",
+          "Visible": true
+        },
+        "ServiceJobCostCenter": {
+          "ID": 10,
+          "Name": "Main"
+        }
       },
       "Banking": {
-        "BSB": "012-345",
-        "AccountNumber": "123456789",
-        "AccountName": "Acme Corporation"
+        "AccountName": "Acme Corporation",
+        "RoutingNo": "012-345",
+        "AccountNo": "123456789",
+        "PaymentMethod": null,
+        "PaymentTermID": 27,
+        "PaymentTerms": {
+          "Days": 30,
+          "Type": "Invoice"
+        },
+        "CreditLimit": -1,
+        "OnStop": false,
+        "Retention": "incGST",
+        "VendorOrderNoRequired": true
       },
       "Archived": false,
       "Sites": [
@@ -62,7 +88,11 @@
       "Contracts": [
         {
           "ID": 200,
-          "Name": "Annual Maintenance"
+          "Name": "Annual Maintenance",
+          "StartDate": "2024-01-01",
+          "EndDate": "2024-12-31",
+          "ContractNo": "AM-2024-001",
+          "Expired": false
         }
       ],
       "Contacts": [
@@ -101,6 +131,8 @@
     {
       "ID": 2,
       "CompanyName": "Beta Industries",
+      "GivenName": null,
+      "FamilyName": null,
       "Phone": "555-0200",
       "Address": {
         "Address": "456 Industrial Ave",
@@ -110,10 +142,7 @@
         "Country": "Australia"
       },
       "BillingAddress": null,
-      "CustomerType": {
-        "ID": 11,
-        "Name": "Industrial"
-      },
+      "CustomerType": "Industrial",
       "Tags": [],
       "AmountOwing": 0,
       "Profile": null,

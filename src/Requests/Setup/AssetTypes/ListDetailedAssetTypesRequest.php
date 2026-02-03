@@ -49,7 +49,7 @@ final class ListDetailedAssetTypesRequest extends Request implements Paginatable
     {
         return [
             'columns' => implode(',', self::DETAILED_COLUMNS),
-            'display' => 'all'
+            'display' => 'all',
         ];
     }
 

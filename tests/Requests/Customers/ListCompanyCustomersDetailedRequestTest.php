@@ -30,6 +30,8 @@ it('includes all columns in the request query', function () {
     expect($query)->toHaveKey('columns')
         ->and($query['columns'])->toContain('ID')
         ->and($query['columns'])->toContain('CompanyName')
+        ->and($query['columns'])->toContain('GivenName')
+        ->and($query['columns'])->toContain('FamilyName')
         ->and($query['columns'])->toContain('Address')
         ->and($query['columns'])->toContain('BillingAddress')
         ->and($query['columns'])->toContain('CustomerType')
@@ -60,9 +62,13 @@ it('parses list company customers detailed response correctly', function () {
         ->and($dto[0])->toBeInstanceOf(CustomerCompanyListDetailedItem::class)
         ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->companyName)->toBe('Acme Corporation')
+        ->and($dto[0]->givenName)->toBe('John')
+        ->and($dto[0]->familyName)->toBe('Doe')
         ->and($dto[0]->phone)->toBe('555-0100')
         ->and($dto[0]->email)->toBe('contact@acme.com')
-        ->and($dto[0]->href)->toBe('/api/v1.0/companies/0/customers/companies/1');
+        ->and($dto[0]->href)->toBe('/api/v1.0/companies/0/customers/companies/1')
+        ->and($dto[1]->givenName)->toBeNull()
+        ->and($dto[1]->familyName)->toBeNull();
 });
 
 it('parses address fields correctly', function () {
@@ -91,9 +97,8 @@ it('parses customer type correctly', function () {
     $response = $this->sdk->send($request);
     $dto = $response->dto();
 
-    expect($dto[0]->customerType)->not->toBeNull()
-        ->and($dto[0]->customerType->id)->toBe(10)
-        ->and($dto[0]->customerType->name)->toBe('Commercial');
+    expect($dto[0]->customerType)->toBe('Commercial')
+        ->and($dto[1]->customerType)->toBe('Industrial');
 });
 
 it('parses tags correctly', function () {
@@ -136,8 +141,13 @@ it('parses profile correctly', function () {
     $dto = $response->dto();
 
     expect($dto[0]->profile)->not->toBeNull()
-        ->and($dto[0]->profile->id)->toBe(5)
-        ->and($dto[0]->profile->name)->toBe('Gold Customer')
+        ->and($dto[0]->profile->notes)->toBe('Important customer notes')
+        ->and($dto[0]->profile->customerProfile)->not->toBeNull()
+        ->and($dto[0]->profile->customerProfile->id)->toBe(5)
+        ->and($dto[0]->profile->customerProfile->name)->toBe('Gold')
+        ->and($dto[0]->profile->customerGroup)->not->toBeNull()
+        ->and($dto[0]->profile->customerGroup->id)->toBe(4)
+        ->and($dto[0]->profile->customerGroup->name)->toBe('Commercial')
         ->and($dto[1]->profile)->toBeNull();
 });
 
@@ -151,9 +161,17 @@ it('parses banking correctly', function () {
     $dto = $response->dto();
 
     expect($dto[0]->banking)->not->toBeNull()
-        ->and($dto[0]->banking->bsb)->toBe('012-345')
-        ->and($dto[0]->banking->accountNumber)->toBe('123456789')
         ->and($dto[0]->banking->accountName)->toBe('Acme Corporation')
+        ->and($dto[0]->banking->routingNo)->toBe('012-345')
+        ->and($dto[0]->banking->accountNo)->toBe('123456789')
+        ->and($dto[0]->banking->paymentTermID)->toBe(27)
+        ->and($dto[0]->banking->paymentTerms)->not->toBeNull()
+        ->and($dto[0]->banking->paymentTerms->days)->toBe(30)
+        ->and($dto[0]->banking->paymentTerms->type)->toBe('Invoice')
+        ->and($dto[0]->banking->creditLimit)->toBe(-1.0)
+        ->and($dto[0]->banking->onStop)->toBeFalse()
+        ->and($dto[0]->banking->retention)->toBe('incGST')
+        ->and($dto[0]->banking->vendorOrderNoRequired)->toBeTrue()
         ->and($dto[1]->banking)->toBeNull();
 });
 
@@ -184,7 +202,11 @@ it('parses contracts correctly', function () {
     expect($dto[0]->contracts)->toBeArray()
         ->and($dto[0]->contracts)->toHaveCount(1)
         ->and($dto[0]->contracts[0]->id)->toBe(200)
-        ->and($dto[0]->contracts[0]->name)->toBe('Annual Maintenance');
+        ->and($dto[0]->contracts[0]->name)->toBe('Annual Maintenance')
+        ->and($dto[0]->contracts[0]->startDate)->toBe('2024-01-01')
+        ->and($dto[0]->contracts[0]->endDate)->toBe('2024-12-31')
+        ->and($dto[0]->contracts[0]->contractNo)->toBe('AM-2024-001')
+        ->and($dto[0]->contracts[0]->expired)->toBeFalse();
 });
 
 it('parses contacts correctly', function () {
