@@ -29,16 +29,15 @@ it('parses get current user response correctly', function () {
     $dto = $response->dto();
 
     expect($dto)->toBeInstanceOf(CurrentUser::class)
-        ->and($dto->id)->toBe(42)
-        ->and($dto->username)->toBe('jdoe')
-        ->and($dto->email)->toBe('john.doe@example.com')
-        ->and($dto->givenName)->toBe('John')
-        ->and($dto->familyName)->toBe('Doe')
-        ->and($dto->displayName)->toBe('John Doe')
-        ->and($dto->companies)->toHaveCount(2)
-        ->and($dto->companies[0])->toBeInstanceOf(Reference::class)
-        ->and($dto->companies[0]->id)->toBe(1)
-        ->and($dto->companies[0]->name)->toBe('Main Company');
+        ->and($dto->id)->toBe(705)
+        ->and($dto->name)->toBe('Seen Services - Automation Platform')
+        ->and($dto->type)->toBe('employee')
+        ->and($dto->typeId)->toBe(705)
+        ->and($dto->preferredLanguage)->toBe('en_GB')
+        ->and($dto->accessibleCompanies)->toHaveCount(1)
+        ->and($dto->accessibleCompanies[0])->toBeInstanceOf(Reference::class)
+        ->and($dto->accessibleCompanies[0]->id)->toBe(0)
+        ->and($dto->accessibleCompanies[0]->name)->toBe('Seen Services');
 });
 
 it('can access current user via resource', function () {
@@ -49,5 +48,5 @@ it('can access current user via resource', function () {
     $user = $this->sdk->currentUser()->get();
 
     expect($user)->toBeInstanceOf(CurrentUser::class)
-        ->and($user->fullName())->toBe('John Doe');
+        ->and($user->name)->toBe('Seen Services - Automation Platform');
 });

@@ -13,16 +13,15 @@ use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 final readonly class CurrentUser
 {
     /**
-     * @param  array<Reference>|null  $companies
+     * @param  array<Reference>|null  $accessibleCompanies
      */
     public function __construct(
         public int $id,
-        public ?string $username = null,
-        public ?string $email = null,
-        public ?string $givenName = null,
-        public ?string $familyName = null,
-        public ?string $displayName = null,
-        public ?array $companies = null,
+        public ?string $name = null,
+        public ?string $type = null,
+        public ?int $typeId = null,
+        public ?string $preferredLanguage = null,
+        public ?array $accessibleCompanies = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -36,29 +35,14 @@ final readonly class CurrentUser
     {
         return new self(
             id: (int) $data['ID'],
-            username: $data['Username'] ?? null,
-            email: $data['Email'] ?? null,
-            givenName: $data['GivenName'] ?? null,
-            familyName: $data['FamilyName'] ?? null,
-            displayName: $data['DisplayName'] ?? $data['Name'] ?? null,
-            companies: isset($data['Companies']) ? array_map(
+            name: $data['Name'] ?? null,
+            type: $data['Type'] ?? null,
+            typeId: isset($data['TypeID']) ? (int) $data['TypeID'] : null,
+            preferredLanguage: $data['PreferredLanguage'] ?? null,
+            accessibleCompanies: isset($data['AccessibleCompanies']) ? array_map(
                 fn (array $item) => Reference::fromArray($item),
-                $data['Companies']
+                $data['AccessibleCompanies']
             ) : null,
         );
-    }
-
-    /**
-     * Get the full name of the user.
-     */
-    public function fullName(): string
-    {
-        if ($this->displayName !== null) {
-            return $this->displayName;
-        }
-
-        $parts = array_filter([$this->givenName, $this->familyName]);
-
-        return implode(' ', $parts) ?: $this->username ?? '';
     }
 }

@@ -80,8 +80,16 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 | Check | Status | Notes |
 |-------|--------|-------|
 | Endpoint | [x] | GET /api/v1.0/currentUser/ |
-| Response DTO | [x] | |
-| Tests | [x] | |
+| Response DTO | [x] | Fixed to match actual API response |
+| Tests | [x] | Updated fixture and assertions |
+
+**Major fixes applied:**
+- Removed incorrect fields: `username`, `email`, `givenName`, `familyName`, `displayName`, `companies`
+- Removed `fullName()` helper method
+- Added correct fields: `name` (?string), `type` (?string), `typeId` (?int), `preferredLanguage` (?string)
+- Renamed `companies` to `accessibleCompanies` (from `AccessibleCompanies` API field)
+- Updated test fixture with real API response data
+- Updated documentation to reflect corrected DTO
 
 ---
 
@@ -752,7 +760,7 @@ Verify these shared DTOs are accurate across all usages:
 |--------------------|----------|--------------|-----------------|
 | Info               | [x]      | 0            | 0               |
 | Companies          | [x]      | 0            | 0               |
-| Current User       | [x]      | 0            | 0               |
+| Current User       | [x]      | 7            | 7               |
 | Activity Schedules | [x]      | 0            | 0               |
 | Schedules          | [x]      | 0            | 0               |
 | Jobs               | [x]      | 12           | 12              |

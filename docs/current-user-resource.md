@@ -13,10 +13,11 @@ $user = $connector->currentUser()->get();
 
 return [
     'id' => $user->id,
-    'username' => $user->username,
-    'email' => $user->email,
-    'displayName' => $user->displayName,
-    'companies' => $user->companies,
+    'name' => $user->name,
+    'type' => $user->type,
+    'typeId' => $user->typeId,
+    'preferredLanguage' => $user->preferredLanguage,
+    'accessibleCompanies' => $user->accessibleCompanies,
 ];
 ```
 
@@ -27,18 +28,12 @@ The `CurrentUser` DTO provides all user information:
 ```php
 $user = $connector->currentUser()->get();
 
-// Basic identity
+// Identity
 echo "User ID: {$user->id}\n";
-echo "Username: {$user->username}\n";
-echo "Email: {$user->email}\n";
-
-// Name fields
-echo "Given Name: {$user->givenName}\n";
-echo "Family Name: {$user->familyName}\n";
-echo "Display Name: {$user->displayName}\n";
-
-// Full name helper method
-echo "Full Name: {$user->fullName()}\n";
+echo "Name: {$user->name}\n";
+echo "Type: {$user->type}\n";
+echo "Type ID: {$user->typeId}\n";
+echo "Preferred Language: {$user->preferredLanguage}\n";
 ```
 
 ### Accessing Company Access
@@ -48,8 +43,8 @@ The user's accessible companies are returned as an array of `Reference` objects:
 ```php
 $user = $connector->currentUser()->get();
 
-if ($user->companies !== null) {
-    foreach ($user->companies as $company) {
+if ($user->accessibleCompanies !== null) {
+    foreach ($user->accessibleCompanies as $company) {
         echo "Company ID: {$company->id}, Name: {$company->name}\n";
     }
 }
@@ -64,29 +59,20 @@ The `CurrentUser` DTO contains the following properties:
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | User ID |
-| `username` | `?string` | Login username |
-| `email` | `?string` | Email address |
-| `givenName` | `?string` | First name |
-| `familyName` | `?string` | Last name / surname |
-| `displayName` | `?string` | Display name (may differ from username) |
-| `companies` | `?array<Reference>` | Companies the user has access to |
+| `name` | `?string` | User or integration name |
+| `type` | `?string` | User type (e.g. "employee") |
+| `typeId` | `?int` | ID corresponding to the user type |
+| `preferredLanguage` | `?string` | Preferred language code (e.g. "en_GB") |
+| `accessibleCompanies` | `?array<Reference>` | Companies the user has access to |
 
-### Reference DTO (for Companies)
+### Reference DTO (for AccessibleCompanies)
 
-Each company in the `companies` array is a `Reference` object:
+Each company in the `accessibleCompanies` array is a `Reference` object:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `int` | Company ID |
 | `name` | `string` | Company name |
-
-### Helper Methods
-
-The `CurrentUser` DTO provides a convenience method:
-
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `fullName()` | `string` | Returns display name, or "Given Family" name, or username |
 
 ## Examples
 
@@ -98,15 +84,11 @@ $user = $connector->currentUser()->get();
 return [
     'identity' => [
         'id' => $user->id,
-        'username' => $user->username,
-        'email' => $user->email,
+        'name' => $user->name,
+        'type' => $user->type,
+        'typeId' => $user->typeId,
     ],
-    'name' => [
-        'given' => $user->givenName,
-        'family' => $user->familyName,
-        'display' => $user->displayName,
-        'full' => $user->fullName(),
-    ],
+    'preferredLanguage' => $user->preferredLanguage,
 ];
 ```
 
@@ -120,8 +102,8 @@ $user = $connector->currentUser()->get();
 $targetCompanyId = 5;
 $hasAccess = false;
 
-if ($user->companies !== null) {
-    foreach ($user->companies as $company) {
+if ($user->accessibleCompanies !== null) {
+    foreach ($user->accessibleCompanies as $company) {
         if ($company->id === $targetCompanyId) {
             $hasAccess = true;
             break;
@@ -142,8 +124,8 @@ if ($hasAccess) {
 $user = $connector->currentUser()->get();
 
 $options = [];
-if ($user->companies !== null) {
-    foreach ($user->companies as $company) {
+if ($user->accessibleCompanies !== null) {
+    foreach ($user->accessibleCompanies as $company) {
         $options[] = [
             'value' => $company->id,
             'label' => $company->name,
@@ -159,10 +141,10 @@ return $options;
 ```php
 $user = $connector->currentUser()->get();
 
-$greeting = "Welcome, {$user->fullName()}!";
+$greeting = "Welcome, {$user->name}!";
 
-if ($user->companies !== null && count($user->companies) > 0) {
-    $companyCount = count($user->companies);
+if ($user->accessibleCompanies !== null && count($user->accessibleCompanies) > 0) {
+    $companyCount = count($user->accessibleCompanies);
     $greeting .= " You have access to {$companyCount} " .
                  ($companyCount === 1 ? 'company' : 'companies') . ".";
 }
@@ -183,7 +165,7 @@ $user = Cache::remember('simpro.current_user', 3600, function () use ($connector
 });
 
 // Use cached user info
-echo "Logged in as: {$user->fullName()}\n";
+echo "Logged in as: {$user->name}\n";
 ```
 
 ## Authentication Context
@@ -207,7 +189,7 @@ $connector->authenticate($authenticator);
 
 // Get the user who authorized the app
 $user = $connector->currentUser()->get();
-echo "Authorized by: {$user->fullName()}\n";
+echo "Authorized by: {$user->name}\n";
 ```
 
 ### API Key Authentication
@@ -222,7 +204,7 @@ $connector = new SimproApiKeyConnector(
 
 // Get the user associated with the API key
 $user = $connector->currentUser()->get();
-echo "API Key belongs to: {$user->fullName()}\n";
+echo "API Key belongs to: {$user->name}\n";
 ```
 
 ## Use Cases
@@ -237,7 +219,7 @@ $user = $connector->currentUser()->get();
 $auditEntry = [
     'timestamp' => now(),
     'user_id' => $user->id,
-    'user_name' => $user->fullName(),
+    'user_name' => $user->name,
     'action' => 'created_job',
     'resource_id' => $jobId,
 ];
@@ -254,7 +236,7 @@ While the Simpro API handles permissions internally, you can use user info for U
 $user = $connector->currentUser()->get();
 
 // Example: Check if user can see all companies
-$companyCount = $user->companies !== null ? count($user->companies) : 0;
+$companyCount = $user->accessibleCompanies !== null ? count($user->accessibleCompanies) : 0;
 $showCompanySelector = $companyCount > 1;
 
 return view('dashboard', [
@@ -271,7 +253,7 @@ For applications serving multiple Simpro users:
 $user = $connector->currentUser()->get();
 
 // Store user's default company preference
-$defaultCompanyId = $user->companies[0]->id ?? null;
+$defaultCompanyId = $user->accessibleCompanies[0]->id ?? null;
 
 UserPreferences::updateOrCreate(
     ['simpro_user_id' => $user->id],
