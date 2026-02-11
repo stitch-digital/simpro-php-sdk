@@ -22,11 +22,20 @@ final class CreateCompanyCustomerRequest extends Request implements HasBody
     public function __construct(
         private readonly int $companyId,
         private readonly array $data,
+        private readonly bool $createSite = false,
     ) {}
 
     public function resolveEndpoint(): string
     {
         return "/api/v1.0/companies/{$this->companyId}/customers/companies/";
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultQuery(): array
+    {
+        return $this->createSite ? ['createSite' => 'true'] : [];
     }
 
     /**

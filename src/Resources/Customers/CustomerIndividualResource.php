@@ -94,9 +94,9 @@ final class CustomerIndividualResource extends BaseResource
      * @param  array<string, mixed>  $data
      * @return int The ID of the created customer
      */
-    public function create(array $data): int
+    public function create(array $data, bool $createSite = false): int
     {
-        $request = new CreateIndividualCustomerRequest($this->companyId, $data);
+        $request = new CreateIndividualCustomerRequest($this->companyId, $data, $createSite);
 
         return $this->connector->send($request)->dto();
     }
@@ -106,9 +106,9 @@ final class CustomerIndividualResource extends BaseResource
      *
      * @param  array<string, mixed>  $data
      */
-    public function update(int|string $customerId, array $data): Response
+    public function update(int|string $customerId, array $data, bool $createSite = false): Response
     {
-        $request = new UpdateIndividualCustomerRequest($this->companyId, $customerId, $data);
+        $request = new UpdateIndividualCustomerRequest($this->companyId, $customerId, $data, $createSite);
 
         return $this->connector->send($request);
     }

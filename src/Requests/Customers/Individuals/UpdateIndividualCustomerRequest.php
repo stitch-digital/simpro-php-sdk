@@ -22,11 +22,20 @@ final class UpdateIndividualCustomerRequest extends Request implements HasBody
         private readonly int $companyId,
         private readonly int|string $customerId,
         private readonly array $data,
+        private readonly bool $createSite = false,
     ) {}
 
     public function resolveEndpoint(): string
     {
         return "/api/v1.0/companies/{$this->companyId}/customers/individuals/{$this->customerId}";
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultQuery(): array
+    {
+        return $this->createSite ? ['createSite' => 'true'] : [];
     }
 
     /**

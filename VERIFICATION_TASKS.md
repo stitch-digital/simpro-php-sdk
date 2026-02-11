@@ -231,60 +231,75 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 
 ---
 
-### 7. Customers Resource
+### 7. Customers Resource ✅ VERIFIED
 **Files:** `src/Resources/CustomerResource.php`, `src/Resources/Customers/`, `src/Data/Customers/`
 
 | Check | Status | Notes |
 |-------|--------|-------|
-| General List | [ ] | GET /api/v1.0/companies/{companyID}/customers/ |
-| Tests | [ ] | |
+| General List | [x] | GET /api/v1.0/companies/{companyID}/customers/ |
+| Tests | [x] | Updated fixtures and assertions |
 
-#### 7.1 Customer Companies
+#### 7.1 Customer Companies ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | GET /api/v1.0/companies/{companyID}/customers/companies/ |
-| Get endpoint | [ ] | GET /api/v1.0/companies/{companyID}/customers/companies/{customerID} |
-| Create endpoint | [ ] | POST /api/v1.0/companies/{companyID}/customers/companies/ |
-| Update endpoint | [ ] | PATCH /api/v1.0/companies/{companyID}/customers/companies/{customerID} |
-| Delete endpoint | [ ] | DELETE /api/v1.0/companies/{companyID}/customers/companies/{customerID} |
-| Response DTO (List) | [ ] | |
-| Response DTO (Detail) | [ ] | |
-| Request body DTO | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/customers/companies/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/customers/companies/{customerID} |
+| Create endpoint | [x] | POST - added createSite query parameter |
+| Update endpoint | [x] | PATCH - added createSite query parameter |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/customers/companies/{customerID} |
+| Response DTO (List) | [x] | Created CustomerCompanyListItem with {id, companyName} |
+| Response DTO (Detail) | [x] | Customer - all 26 fields match swagger |
+| Detailed list support | [x] | Added 8 missing columns: Rates, PreferredTechs, DoNotCall, AltPhone, EIN, Website, Fax, CompanyNumber |
+| Request body DTO | [x] | Uses array |
 
-#### 7.2 Customer Individuals
+**Major fixes applied:**
+- Added `_href` field to `CustomerListItem`
+- Created dedicated `CustomerCompanyListItem` for company list (was reusing `CustomerListItem`)
+- Added `createSite` boolean query parameter to Create/Update requests
+- Added 8 missing columns to `ListCompanyCustomersDetailedRequest`
+- Added 8 missing fields to `CustomerCompanyListDetailedItem` (rates, preferredTechs, doNotCall, altPhone, ein, website, fax, companyNumber)
+- Deleted orphaned DTOs: `CustomerType`, `CustomerProfile`, `CustomerBanking`
+
+#### 7.2 Customer Individuals ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | |
-| Get endpoint | [ ] | |
-| Create endpoint | [ ] | |
-| Update endpoint | [ ] | |
-| Delete endpoint | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | Added createSite query parameter |
+| Update endpoint | [x] | Added createSite query parameter |
+| Delete endpoint | [x] | |
+| DTOs | [x] | CustomerIndividual, CustomerIndividualListItem match swagger |
 
-#### 7.3 Customer Contacts
+#### 7.3 Customer Contacts ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | |
-| Get endpoint | [ ] | |
-| Create endpoint | [ ] | |
-| Update endpoint | [ ] | |
-| Delete endpoint | [ ] | |
-| Custom Fields | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | |
+| Update endpoint | [x] | |
+| Delete endpoint | [x] | |
+| Custom Fields | [x] | |
+| DTOs | [x] | |
 
-#### 7.4 Customer Contracts
+**Major fixes applied:**
+- Removed extra fields from `ContactListItem` (email, phone, position not in swagger list response)
+- Added `Contact` (nullable ContactReference object) to `Contact` DTO
+- Created `ContactReference` DTO with {id, givenName, familyName, email}
+- Added `Contact` column to `ListContactsDetailedRequest`
+
+#### 7.4 Customer Contracts ✅ VERIFIED
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | |
-| Get endpoint | [ ] | |
-| Create endpoint | [ ] | |
-| Update endpoint | [ ] | |
-| Delete endpoint | [ ] | |
-| Inflation | [ ] | |
-| Labor Rates | [ ] | |
-| Service Levels | [ ] | |
-| Custom Fields | [ ] | |
-| DTOs | [ ] | |
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | |
+| Update endpoint | [x] | |
+| Delete endpoint | [x] | |
+| Inflation | [x] | ContractInflationListItem matches swagger |
+| Labor Rates | [x] | ContractLaborRateListItem matches swagger |
+| Service Levels | [x] | Contract service level list matches swagger |
+| Custom Fields | [x] | |
+| DTOs | [x] | Contract, ContractListItem match swagger |
 
 ---
 
@@ -764,7 +779,7 @@ Verify these shared DTOs are accurate across all usages:
 | Activity Schedules | [x]      | 0            | 0               |
 | Schedules          | [x]      | 0            | 0               |
 | Jobs               | [x]      | 12           | 12              |
-| Customers          | [ ]      | 0            | 0               |
+| Customers          | [x]      | 8            | 8               |
 | Quotes             | [ ]      | 0            | 0               |
 | Invoices           | [ ]      | 0            | 0               |
 | Employees          | [ ]      | 0            | 0               |

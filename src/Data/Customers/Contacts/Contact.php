@@ -20,6 +20,7 @@ final readonly class Contact
      */
     public function __construct(
         public int $id,
+        public ?ContactReference $contact,
         public ?string $title,
         public ?string $givenName,
         public ?string $familyName,
@@ -57,6 +58,7 @@ final readonly class Contact
     {
         return new self(
             id: $data['ID'],
+            contact: isset($data['Contact']) && is_array($data['Contact']) ? ContactReference::fromArray($data['Contact']) : null,
             title: $data['Title'] ?? null,
             givenName: $data['GivenName'] ?? null,
             familyName: $data['FamilyName'] ?? null,

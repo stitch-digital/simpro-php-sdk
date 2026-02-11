@@ -38,6 +38,7 @@ final class ListContactsDetailedRequest extends Request implements Paginatable
         return [
             'columns' => implode(',', [
                 'ID',
+                'Contact',
                 'Title',
                 'GivenName',
                 'FamilyName',

@@ -8,6 +8,7 @@ final readonly class CustomerListItem
 {
     public function __construct(
         public int $id,
+        public string $href,
         public string $companyName,
         public string $givenName,
         public string $familyName,
@@ -20,6 +21,7 @@ final readonly class CustomerListItem
     {
         return new self(
             id: $data['ID'],
+            href: $data['_href'] ?? '',
             companyName: $data['CompanyName'] ?? '',
             givenName: $data['GivenName'] ?? '',
             familyName: $data['FamilyName'] ?? '',

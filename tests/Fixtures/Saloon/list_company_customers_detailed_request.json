@@ -12,6 +12,8 @@
       "GivenName": "John",
       "FamilyName": "Doe",
       "Phone": "555-0100",
+      "AltPhone": "555-0199",
+      "Fax": "555-0198",
       "Address": {
         "Address": "123 Main Street",
         "City": "Sydney",
@@ -38,6 +40,23 @@
         }
       ],
       "AmountOwing": 1500.00,
+      "Rates": {
+        "PartTaxCode": {
+          "ID": 1,
+          "Code": "GST",
+          "Type": "Combined",
+          "Rate": 10.0,
+          "ReverseTaxEnabled": false
+        },
+        "LabourTaxCode": null,
+        "DiscountFee": 5.0,
+        "AlwaysDeductCIS": false,
+        "ServiceFee": {
+          "ID": 1,
+          "Name": "Standard"
+        },
+        "Material": null
+      },
       "Profile": {
         "Notes": "Important customer notes",
         "CustomerProfile": {
@@ -75,6 +94,7 @@
         "VendorOrderNoRequired": true
       },
       "Archived": false,
+      "DoNotCall": false,
       "Sites": [
         {
           "ID": 100,
@@ -111,6 +131,13 @@
           "Description": "4 hour response time"
         }
       ],
+      "PreferredTechs": [
+        {
+          "ID": 10,
+          "Name": "Mike Technician",
+          "Type": "employee"
+        }
+      ],
       "CustomFields": [
         {
           "CustomField": {
@@ -124,6 +151,9 @@
         }
       ],
       "Email": "contact@acme.com",
+      "Website": "https://acme.com",
+      "EIN": "12-3456789",
+      "CompanyNumber": "ACN-001",
       "DateModified": "2024-03-15T10:30:00Z",
       "DateCreated": "2020-01-15T09:00:00Z",
       "_href": "/api/v1.0/companies/0/customers/companies/1"
@@ -134,6 +164,8 @@
       "GivenName": null,
       "FamilyName": null,
       "Phone": "555-0200",
+      "AltPhone": null,
+      "Fax": null,
       "Address": {
         "Address": "456 Industrial Ave",
         "City": "Melbourne",
@@ -145,15 +177,21 @@
       "CustomerType": "Industrial",
       "Tags": [],
       "AmountOwing": 0,
+      "Rates": null,
       "Profile": null,
       "Banking": null,
       "Archived": false,
+      "DoNotCall": null,
       "Sites": [],
       "Contracts": [],
       "Contacts": [],
       "ResponseTimes": [],
+      "PreferredTechs": [],
       "CustomFields": [],
       "Email": "info@beta.com",
+      "Website": null,
+      "EIN": null,
+      "CompanyNumber": null,
       "DateModified": "2024-02-20T14:00:00Z",
       "DateCreated": "2022-06-01T10:00:00Z",
       "_href": "/api/v1.0/companies/0/customers/companies/2"

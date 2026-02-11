@@ -19,7 +19,7 @@ final readonly class Reference
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['ID'],
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? null,
         );
     }

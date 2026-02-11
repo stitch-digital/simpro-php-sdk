@@ -8,12 +8,14 @@
   "data": [
     {
       "ID": 1,
+      "_href": "/api/v1.0/companies/0/customers/1",
       "CompanyName": "Acme Corp",
       "GivenName": "",
       "FamilyName": ""
     },
     {
       "ID": 2,
+      "_href": "/api/v1.0/companies/0/customers/2",
       "CompanyName": "",
       "GivenName": "John",
       "FamilyName": "Smith"

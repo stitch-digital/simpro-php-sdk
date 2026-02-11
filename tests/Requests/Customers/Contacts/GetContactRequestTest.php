@@ -29,6 +29,11 @@ it('parses get contact response correctly', function () {
 
     expect($dto)->toBeInstanceOf(Contact::class)
         ->and($dto->id)->toBe(1)
+        ->and($dto->contact)->not->toBeNull()
+        ->and($dto->contact->id)->toBe(50)
+        ->and($dto->contact->givenName)->toBe('Alice')
+        ->and($dto->contact->familyName)->toBe('Johnson')
+        ->and($dto->contact->email)->toBe('alice.johnson@example.com')
         ->and($dto->title)->toBe('Mr')
         ->and($dto->givenName)->toBe('Alice')
         ->and($dto->familyName)->toBe('Johnson')

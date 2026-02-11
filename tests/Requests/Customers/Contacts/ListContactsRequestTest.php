@@ -33,11 +33,8 @@ it('parses list contacts response correctly', function () {
         ->and($dto[0]->id)->toBe(1)
         ->and($dto[0]->givenName)->toBe('Alice')
         ->and($dto[0]->familyName)->toBe('Johnson')
-        ->and($dto[0]->email)->toBe('alice.johnson@example.com')
-        ->and($dto[0]->phone)->toBe('555-0200')
-        ->and($dto[0]->position)->toBe('Manager')
         ->and($dto[1])->toBeInstanceOf(ContactListItem::class)
         ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->givenName)->toBe('Bob')
-        ->and($dto[1]->position)->toBe('Technician');
+        ->and($dto[1]->familyName)->toBe('Williams');
 });

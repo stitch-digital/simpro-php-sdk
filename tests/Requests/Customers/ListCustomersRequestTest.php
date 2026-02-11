@@ -31,11 +31,13 @@ it('parses list customers response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(CustomerListItem::class)
         ->and($dto[0]->id)->toBe(1)
+        ->and($dto[0]->href)->toBe('/api/v1.0/companies/0/customers/1')
         ->and($dto[0]->companyName)->toBe('Acme Corp')
         ->and($dto[0]->givenName)->toBe('')
         ->and($dto[0]->familyName)->toBe('')
         ->and($dto[1])->toBeInstanceOf(CustomerListItem::class)
         ->and($dto[1]->id)->toBe(2)
+        ->and($dto[1]->href)->toBe('/api/v1.0/companies/0/customers/2')
         ->and($dto[1]->companyName)->toBe('')
         ->and($dto[1]->givenName)->toBe('John')
         ->and($dto[1]->familyName)->toBe('Smith');

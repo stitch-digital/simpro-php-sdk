@@ -32,18 +32,28 @@ it('includes all columns in the request query', function () {
         ->and($query['columns'])->toContain('CompanyName')
         ->and($query['columns'])->toContain('GivenName')
         ->and($query['columns'])->toContain('FamilyName')
+        ->and($query['columns'])->toContain('Phone')
+        ->and($query['columns'])->toContain('AltPhone')
+        ->and($query['columns'])->toContain('Fax')
         ->and($query['columns'])->toContain('Address')
         ->and($query['columns'])->toContain('BillingAddress')
         ->and($query['columns'])->toContain('CustomerType')
         ->and($query['columns'])->toContain('Tags')
         ->and($query['columns'])->toContain('AmountOwing')
+        ->and($query['columns'])->toContain('Rates')
         ->and($query['columns'])->toContain('Profile')
         ->and($query['columns'])->toContain('Banking')
         ->and($query['columns'])->toContain('Sites')
         ->and($query['columns'])->toContain('Contracts')
         ->and($query['columns'])->toContain('Contacts')
         ->and($query['columns'])->toContain('ResponseTimes')
+        ->and($query['columns'])->toContain('PreferredTechs')
         ->and($query['columns'])->toContain('CustomFields')
+        ->and($query['columns'])->toContain('Email')
+        ->and($query['columns'])->toContain('Website')
+        ->and($query['columns'])->toContain('EIN')
+        ->and($query['columns'])->toContain('CompanyNumber')
+        ->and($query['columns'])->toContain('DoNotCall')
         ->and($query['columns'])->toContain('DateModified')
         ->and($query['columns'])->toContain('DateCreated');
 });
@@ -65,10 +75,18 @@ it('parses list company customers detailed response correctly', function () {
         ->and($dto[0]->givenName)->toBe('John')
         ->and($dto[0]->familyName)->toBe('Doe')
         ->and($dto[0]->phone)->toBe('555-0100')
+        ->and($dto[0]->altPhone)->toBe('555-0199')
+        ->and($dto[0]->fax)->toBe('555-0198')
         ->and($dto[0]->email)->toBe('contact@acme.com')
+        ->and($dto[0]->website)->toBe('https://acme.com')
+        ->and($dto[0]->ein)->toBe('12-3456789')
+        ->and($dto[0]->companyNumber)->toBe('ACN-001')
+        ->and($dto[0]->doNotCall)->toBeFalse()
         ->and($dto[0]->href)->toBe('/api/v1.0/companies/0/customers/companies/1')
         ->and($dto[1]->givenName)->toBeNull()
-        ->and($dto[1]->familyName)->toBeNull();
+        ->and($dto[1]->familyName)->toBeNull()
+        ->and($dto[1]->altPhone)->toBeNull()
+        ->and($dto[1]->website)->toBeNull();
 });
 
 it('parses address fields correctly', function () {
@@ -294,4 +312,36 @@ it('provides archived status helper method', function () {
     $dto = $response->dto();
 
     expect($dto[0]->isArchived())->toBeFalse();
+});
+
+it('parses rates correctly', function () {
+    MockClient::global([
+        ListCompanyCustomersDetailedRequest::class => MockResponse::fixture('list_company_customers_detailed_request'),
+    ]);
+
+    $request = new ListCompanyCustomersDetailedRequest(0);
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto[0]->rates)->not->toBeNull()
+        ->and($dto[0]->rates->partTaxCode)->not->toBeNull()
+        ->and($dto[0]->rates->partTaxCode->code)->toBe('GST')
+        ->and($dto[0]->rates->discountFee)->toBe(5.0)
+        ->and($dto[1]->rates)->toBeNull();
+});
+
+it('parses preferred techs correctly', function () {
+    MockClient::global([
+        ListCompanyCustomersDetailedRequest::class => MockResponse::fixture('list_company_customers_detailed_request'),
+    ]);
+
+    $request = new ListCompanyCustomersDetailedRequest(0);
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto[0]->preferredTechs)->toBeArray()
+        ->and($dto[0]->preferredTechs)->toHaveCount(1)
+        ->and($dto[0]->preferredTechs[0]->id)->toBe(10)
+        ->and($dto[0]->preferredTechs[0]->name)->toBe('Mike Technician')
+        ->and($dto[0]->preferredTechs[0]->isEmployee())->toBeTrue();
 });

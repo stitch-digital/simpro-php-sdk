@@ -9,18 +9,12 @@
     {
       "ID": 1,
       "GivenName": "Alice",
-      "FamilyName": "Johnson",
-      "Email": "alice.johnson@example.com",
-      "Phone": "555-0200",
-      "Position": "Manager"
+      "FamilyName": "Johnson"
     },
     {
       "ID": 2,
       "GivenName": "Bob",
-      "FamilyName": "Williams",
-      "Email": "bob.williams@example.com",
-      "Phone": "555-0201",
-      "Position": "Technician"
+      "FamilyName": "Williams"
     }
   ]
 }

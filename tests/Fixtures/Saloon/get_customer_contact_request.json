@@ -5,6 +5,12 @@
   },
   "data": {
     "ID": 1,
+    "Contact": {
+      "ID": 50,
+      "GivenName": "Alice",
+      "FamilyName": "Johnson",
+      "Email": "alice.johnson@example.com"
+    },
     "Title": "Mr",
     "GivenName": "Alice",
     "FamilyName": "Johnson",

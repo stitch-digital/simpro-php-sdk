@@ -22,7 +22,7 @@ final readonly class StaffReference
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['ID'],
+            id: (int) ($data['ID'] ?? 0),
             name: $data['Name'] ?? null,
             type: $data['Type'] ?? null,
             typeId: isset($data['TypeId']) ? (int) $data['TypeId'] : null,

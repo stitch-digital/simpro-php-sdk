@@ -7,6 +7,7 @@ namespace Simpro\PhpSdk\Simpro\Data\Customers;
 use DateTimeImmutable;
 use Simpro\PhpSdk\Simpro\Data\Common\Address;
 use Simpro\PhpSdk\Simpro\Data\Common\CustomField;
+use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 
 /**
  * Detailed customer company list item with all available columns.
@@ -22,6 +23,7 @@ final readonly class CustomerCompanyListDetailedItem
      * @param  array<CustomerContract>|null  $contracts
      * @param  array<CustomerContact>|null  $contacts
      * @param  array<CustomerResponseTime>|null  $responseTimes
+     * @param  array<StaffReference>|null  $preferredTechs
      * @param  array<CustomField>|null  $customFields
      */
     public function __construct(
@@ -30,20 +32,28 @@ final readonly class CustomerCompanyListDetailedItem
         public ?string $givenName,
         public ?string $familyName,
         public ?string $phone,
+        public ?string $altPhone,
+        public ?string $fax,
         public ?string $email,
+        public ?string $website,
+        public ?string $ein,
+        public ?string $companyNumber,
         public ?string $href,
         public ?Address $address,
         public ?Address $billingAddress,
         public ?string $customerType,
         public ?array $tags,
         public ?float $amountOwing,
+        public ?CustomerRates $rates,
         public ?CustomerProfileDetails $profile,
         public ?CustomerBankingDetails $banking,
         public ?bool $archived,
+        public ?bool $doNotCall,
         public ?array $sites,
         public ?array $contracts,
         public ?array $contacts,
         public ?array $responseTimes,
+        public ?array $preferredTechs,
         public ?array $customFields,
         public ?DateTimeImmutable $dateModified,
         public ?DateTimeImmutable $dateCreated,
@@ -60,7 +70,12 @@ final readonly class CustomerCompanyListDetailedItem
             givenName: $data['GivenName'] ?? null,
             familyName: $data['FamilyName'] ?? null,
             phone: $data['Phone'] ?? null,
+            altPhone: $data['AltPhone'] ?? null,
+            fax: $data['Fax'] ?? null,
             email: $data['Email'] ?? null,
+            website: $data['Website'] ?? null,
+            ein: $data['EIN'] ?? null,
+            companyNumber: $data['CompanyNumber'] ?? null,
             href: $data['_href'] ?? null,
             address: isset($data['Address']) && is_array($data['Address']) ? Address::fromArray($data['Address']) : null,
             billingAddress: isset($data['BillingAddress']) && is_array($data['BillingAddress']) ? Address::fromArray($data['BillingAddress']) : null,
@@ -70,9 +85,11 @@ final readonly class CustomerCompanyListDetailedItem
                 $data['Tags']
             ) : null,
             amountOwing: isset($data['AmountOwing']) ? (float) $data['AmountOwing'] : null,
+            rates: isset($data['Rates']) && is_array($data['Rates']) ? CustomerRates::fromArray($data['Rates']) : null,
             profile: isset($data['Profile']) && is_array($data['Profile']) ? CustomerProfileDetails::fromArray($data['Profile']) : null,
             banking: isset($data['Banking']) && is_array($data['Banking']) ? CustomerBankingDetails::fromArray($data['Banking']) : null,
             archived: $data['Archived'] ?? null,
+            doNotCall: $data['DoNotCall'] ?? null,
             sites: isset($data['Sites']) && is_array($data['Sites']) ? array_map(
                 fn (array $item) => CustomerSite::fromArray($item),
                 $data['Sites']
@@ -88,6 +105,10 @@ final readonly class CustomerCompanyListDetailedItem
             responseTimes: isset($data['ResponseTimes']) && is_array($data['ResponseTimes']) ? array_map(
                 fn (array $item) => CustomerResponseTime::fromArray($item),
                 $data['ResponseTimes']
+            ) : null,
+            preferredTechs: isset($data['PreferredTechs']) && is_array($data['PreferredTechs']) ? array_map(
+                fn (array $item) => StaffReference::fromArray($item),
+                $data['PreferredTechs']
             ) : null,
             customFields: isset($data['CustomFields']) && is_array($data['CustomFields']) ? array_map(
                 fn (array $item) => CustomField::fromArray($item),
