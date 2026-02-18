@@ -13,7 +13,7 @@ final readonly class JobTaskAssociated
     public static function fromArray(array $data): self
     {
         return new self(
-            job: isset($data['Job']) ? JobTaskAssociatedJob::fromArray($data['Job']) : null,
+            job: ! empty($data['Job']) ? JobTaskAssociatedJob::fromArray($data['Job']) : null,
         );
     }
 }

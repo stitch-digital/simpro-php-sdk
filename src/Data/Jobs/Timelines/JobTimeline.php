@@ -21,8 +21,8 @@ final readonly class JobTimeline
         return new self(
             type: $data['Type'] ?? null,
             message: $data['Message'] ?? null,
-            staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
-            date: isset($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
+            staff: ! empty($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
+            date: ! empty($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
         );
     }
 }

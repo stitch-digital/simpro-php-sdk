@@ -22,7 +22,7 @@ final readonly class JobConvertedFrom
         return new self(
             id: (int) $data['ID'],
             type: $data['Type'] ?? null,
-            date: isset($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
+            date: ! empty($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
         );
     }
 }

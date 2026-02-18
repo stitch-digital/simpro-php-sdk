@@ -29,7 +29,7 @@ final readonly class AssetTypePrebuild
             id: isset($data['ID']) ? (int) $data['ID'] : null,
             partNo: $data['PartNo'] ?? null,
             name: $data['Name'] ?? null,
-            addOnPrice: isset($data['AddOnPrice']) ? Money::fromArray($data['AddOnPrice']) : null,
+            addOnPrice: ! empty($data['AddOnPrice']) ? Money::fromArray($data['AddOnPrice']) : null,
             displayOrder: (int) ($data['DisplayOrder'] ?? 0),
             archived: (bool) ($data['Archived'] ?? false),
         );

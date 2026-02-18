@@ -14,8 +14,8 @@ use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 final readonly class ServiceLevel
 {
     public function __construct(
-        public Reference $serviceLevel,
-        public Reference $assetType,
+        public ?Reference $serviceLevel,
+        public ?Reference $assetType,
     ) {}
 
     /**
@@ -24,8 +24,8 @@ final readonly class ServiceLevel
     public static function fromArray(array $data): self
     {
         return new self(
-            serviceLevel: Reference::fromArray($data['ServiceLevel']),
-            assetType: Reference::fromArray($data['AssetType']),
+            serviceLevel: ! empty($data['ServiceLevel']) ? Reference::fromArray($data['ServiceLevel']) : null,
+            assetType: ! empty($data['AssetType']) ? Reference::fromArray($data['AssetType']) : null,
         );
     }
 }

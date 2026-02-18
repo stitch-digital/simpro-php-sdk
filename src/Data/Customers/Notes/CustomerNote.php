@@ -27,7 +27,7 @@ final readonly class CustomerNote
         public array $attachments,
         public ?StaffReference $assignTo,
         public ?StaffReference $submittedBy,
-        public CustomerNoteReference $reference,
+        public ?CustomerNoteReference $reference,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -45,14 +45,14 @@ final readonly class CustomerNote
             subject: $data['Subject'] ?? null,
             note: $data['Note'] ?? null,
             dateCreated: new DateTimeImmutable($data['DateCreated']),
-            followUpDate: isset($data['FollowUpDate']) ? new DateTimeImmutable($data['FollowUpDate']) : null,
+            followUpDate: ! empty($data['FollowUpDate']) ? new DateTimeImmutable($data['FollowUpDate']) : null,
             attachments: isset($data['Attachments']) ? array_map(
                 fn (array $item) => CustomerNoteAttachment::fromArray($item),
                 $data['Attachments']
             ) : [],
-            assignTo: isset($data['AssignTo']) ? StaffReference::fromArray($data['AssignTo']) : null,
-            submittedBy: isset($data['SubmittedBy']) ? StaffReference::fromArray($data['SubmittedBy']) : null,
-            reference: CustomerNoteReference::fromArray($data['Reference'] ?? []),
+            assignTo: ! empty($data['AssignTo']) ? StaffReference::fromArray($data['AssignTo']) : null,
+            submittedBy: ! empty($data['SubmittedBy']) ? StaffReference::fromArray($data['SubmittedBy']) : null,
+            reference: ! empty($data['Reference']) ? CustomerNoteReference::fromArray($data['Reference']) : null,
         );
     }
 }

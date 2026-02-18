@@ -30,8 +30,8 @@ final readonly class CustomerContractSummary
         return new self(
             id: (int) $data['ID'],
             name: $data['Name'] ?? '',
-            startDate: isset($data['StartDate']) ? new DateTimeImmutable($data['StartDate']) : null,
-            endDate: isset($data['EndDate']) ? new DateTimeImmutable($data['EndDate']) : null,
+            startDate: ! empty($data['StartDate']) ? new DateTimeImmutable($data['StartDate']) : null,
+            endDate: ! empty($data['EndDate']) ? new DateTimeImmutable($data['EndDate']) : null,
             contractNo: $data['ContractNo'] ?? '',
             expired: $data['Expired'] ?? false,
         );

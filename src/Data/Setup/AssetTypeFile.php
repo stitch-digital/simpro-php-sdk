@@ -39,11 +39,11 @@ final readonly class AssetTypeFile
         return new self(
             id: (string) $data['ID'],
             filename: $data['Filename'],
-            folder: isset($data['Folder']) ? Reference::fromArray($data['Folder']) : null,
+            folder: ! empty($data['Folder']) ? Reference::fromArray($data['Folder']) : null,
             mimeType: $data['MimeType'] ?? null,
             fileSizeBytes: isset($data['FileSizeBytes']) ? (int) $data['FileSizeBytes'] : null,
-            dateAdded: isset($data['DateAdded']) ? new DateTimeImmutable($data['DateAdded']) : null,
-            addedBy: isset($data['AddedBy']) ? StaffReference::fromArray($data['AddedBy']) : null,
+            dateAdded: ! empty($data['DateAdded']) ? new DateTimeImmutable($data['DateAdded']) : null,
+            addedBy: ! empty($data['AddedBy']) ? StaffReference::fromArray($data['AddedBy']) : null,
         );
     }
 }

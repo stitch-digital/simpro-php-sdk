@@ -40,9 +40,9 @@ final readonly class JobCostToCompleteFinancial
     public static function fromArray(array $data): self
     {
         return new self(
-            job: isset($data['Job']['ID']) ? Reference::fromId((int) $data['Job']['ID']) : null,
-            customer: isset($data['Customer']['ID']) ? Reference::fromId((int) $data['Customer']['ID']) : null,
-            site: isset($data['Site']['ID']) ? Reference::fromId((int) $data['Site']['ID']) : null,
+            job: ! empty($data['Job']['ID']) ? Reference::fromId((int) $data['Job']['ID']) : null,
+            customer: ! empty($data['Customer']['ID']) ? Reference::fromId((int) $data['Customer']['ID']) : null,
+            site: ! empty($data['Site']['ID']) ? Reference::fromId((int) $data['Site']['ID']) : null,
             requestNumber: $data['RequestNumber'] ?? '',
             total: (float) ($data['Total'] ?? 0),
             claimedToDate: (float) ($data['ClaimedToDate'] ?? 0),

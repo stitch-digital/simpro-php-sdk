@@ -18,9 +18,9 @@ final readonly class JobTaskTime
     public static function fromArray(array $data): self
     {
         return new self(
-            startDate: isset($data['StartDate']) ? new DateTimeImmutable($data['StartDate']) : null,
+            startDate: ! empty($data['StartDate']) ? new DateTimeImmutable($data['StartDate']) : null,
             startTime: $data['StartTime'] ?? null,
-            endDate: isset($data['EndDate']) ? new DateTimeImmutable($data['EndDate']) : null,
+            endDate: ! empty($data['EndDate']) ? new DateTimeImmutable($data['EndDate']) : null,
             endTime: $data['EndTime'] ?? null,
         );
     }

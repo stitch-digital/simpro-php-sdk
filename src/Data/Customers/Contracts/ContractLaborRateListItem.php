@@ -14,7 +14,7 @@ use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 final readonly class ContractLaborRateListItem
 {
     public function __construct(
-        public Reference $laborRate,
+        public ?Reference $laborRate,
         public bool $isDefault,
     ) {}
 
@@ -24,7 +24,7 @@ final readonly class ContractLaborRateListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            laborRate: Reference::fromArray($data['LaborRate']),
+            laborRate: ! empty($data['LaborRate']) ? Reference::fromArray($data['LaborRate']) : null,
             isDefault: $data['IsDefault'] ?? false,
         );
     }

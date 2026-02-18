@@ -69,7 +69,7 @@ final readonly class Job
     {
         // Handle Status which can be string or object
         $status = null;
-        if (isset($data['Status'])) {
+        if (! empty($data['Status'])) {
             if (is_array($data['Status'])) {
                 $status = JobStatus::fromArray($data['Status']);
             } else {
@@ -79,7 +79,7 @@ final readonly class Job
 
         // Handle Total which can be float or object
         $total = null;
-        if (isset($data['Total'])) {
+        if (! empty($data['Total'])) {
             if (is_array($data['Total'])) {
                 $total = JobTotal::fromArray($data['Total']);
             } else {
@@ -89,7 +89,7 @@ final readonly class Job
 
         // Handle ResponseTime which can be object or null
         $responseTime = null;
-        if (isset($data['ResponseTime']) && is_array($data['ResponseTime']) && ! empty($data['ResponseTime'])) {
+        if (! empty($data['ResponseTime']) && is_array($data['ResponseTime'])) {
             $responseTime = JobResponseTime::fromArray($data['ResponseTime']);
         }
 
@@ -97,33 +97,33 @@ final readonly class Job
             id: $data['ID'],
             type: $data['Type'] ?? '',
             name: $data['Name'] ?? null,
-            customer: isset($data['Customer']) ? JobCustomer::fromArray($data['Customer']) : null,
-            customerContract: isset($data['CustomerContract']) ? JobContract::fromArray($data['CustomerContract']) : null,
-            customerContact: isset($data['CustomerContact']) ? JobContact::fromArray($data['CustomerContact']) : null,
+            customer: ! empty($data['Customer']) ? JobCustomer::fromArray($data['Customer']) : null,
+            customerContract: ! empty($data['CustomerContract']) ? JobContract::fromArray($data['CustomerContract']) : null,
+            customerContact: ! empty($data['CustomerContact']) ? JobContact::fromArray($data['CustomerContact']) : null,
             additionalContacts: isset($data['AdditionalContacts']) ? array_map(
                 fn (array $item) => JobContact::fromArray($item),
                 $data['AdditionalContacts']
             ) : null,
-            site: isset($data['Site']) ? JobSite::fromArray($data['Site']) : null,
-            siteContact: isset($data['SiteContact']) ? JobContact::fromArray($data['SiteContact']) : null,
+            site: ! empty($data['Site']) ? JobSite::fromArray($data['Site']) : null,
+            siteContact: ! empty($data['SiteContact']) ? JobContact::fromArray($data['SiteContact']) : null,
             orderNo: $data['OrderNo'] ?? null,
             requestNo: $data['RequestNo'] ?? null,
             description: $data['Description'] ?? null,
             notes: $data['Notes'] ?? null,
-            dateIssued: isset($data['DateIssued']) ? new DateTimeImmutable($data['DateIssued']) : null,
-            dueDate: isset($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
+            dateIssued: ! empty($data['DateIssued']) ? new DateTimeImmutable($data['DateIssued']) : null,
+            dueDate: ! empty($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
             dueTime: $data['DueTime'] ?? null,
             tags: isset($data['Tags']) ? array_map(
                 fn (array $item) => JobTag::fromArray($item),
                 $data['Tags']
             ) : null,
-            salesperson: isset($data['Salesperson']) ? StaffReference::fromArray($data['Salesperson']) : null,
-            projectManager: isset($data['ProjectManager']) ? StaffReference::fromArray($data['ProjectManager']) : null,
+            salesperson: ! empty($data['Salesperson']) ? StaffReference::fromArray($data['Salesperson']) : null,
+            projectManager: ! empty($data['ProjectManager']) ? StaffReference::fromArray($data['ProjectManager']) : null,
             technicians: isset($data['Technicians']) ? array_map(
                 fn (array $item) => StaffReference::fromArray($item),
                 $data['Technicians']
             ) : null,
-            technician: isset($data['Technician']) ? StaffReference::fromArray($data['Technician']) : null,
+            technician: ! empty($data['Technician']) ? StaffReference::fromArray($data['Technician']) : null,
             stage: $data['Stage'] ?? null,
             status: $status,
             responseTime: $responseTime,
@@ -132,23 +132,23 @@ final readonly class Job
                 fn (array $item) => JobVariationReference::fromArray($item),
                 $data['LinkedVariations']
             ) : null,
-            convertedFromQuote: isset($data['ConvertedFromQuote']) ? JobVariationReference::fromArray($data['ConvertedFromQuote']) : null,
-            convertedFrom: isset($data['ConvertedFrom']) ? JobConvertedFrom::fromArray($data['ConvertedFrom']) : null,
+            convertedFromQuote: ! empty($data['ConvertedFromQuote']) ? JobVariationReference::fromArray($data['ConvertedFromQuote']) : null,
+            convertedFrom: ! empty($data['ConvertedFrom']) ? JobConvertedFrom::fromArray($data['ConvertedFrom']) : null,
             sections: isset($data['Sections']) ? array_map(
                 fn (array $item) => JobSection::fromArray($item),
                 $data['Sections']
             ) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
             autoAdjustStatus: $data['AutoAdjustStatus'] ?? null,
             isRetentionEnabled: $data['IsRetentionEnabled'] ?? null,
             total: $total,
-            totals: isset($data['Totals']) ? JobTotals::fromArray($data['Totals']) : null,
+            totals: ! empty($data['Totals']) ? JobTotals::fromArray($data['Totals']) : null,
             customFields: isset($data['CustomFields']) ? array_map(
                 fn (array $item) => JobCustomField::fromArray($item),
                 $data['CustomFields']
             ) : null,
-            stc: isset($data['STC']) ? JobStc::fromArray($data['STC']) : null,
-            completedDate: isset($data['CompletedDate']) ? new DateTimeImmutable($data['CompletedDate']) : null,
+            stc: ! empty($data['STC']) ? JobStc::fromArray($data['STC']) : null,
+            completedDate: ! empty($data['CompletedDate']) ? new DateTimeImmutable($data['CompletedDate']) : null,
         );
     }
 }

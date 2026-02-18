@@ -16,7 +16,7 @@ final readonly class JobTaskCustomField
     public static function fromArray(array $data): self
     {
         return new self(
-            customField: isset($data['CustomField']) ? Reference::fromArray($data['CustomField']) : null,
+            customField: ! empty($data['CustomField']) ? Reference::fromArray($data['CustomField']) : null,
             value: $data['Value'] ?? null,
         );
     }

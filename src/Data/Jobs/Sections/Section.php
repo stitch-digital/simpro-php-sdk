@@ -37,7 +37,7 @@ final readonly class Section
             isVariation: $data['IsVariation'] ?? null,
             isVariationRetention: $data['IsVariationRetention'] ?? null,
             displayOrder: isset($data['DisplayOrder']) ? (int) $data['DisplayOrder'] : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
             costCenters: isset($data['CostCenters']) ? array_map(
                 fn (array $item) => SectionCostCenter::fromArray($item),
                 $data['CostCenters']

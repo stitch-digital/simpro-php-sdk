@@ -17,7 +17,7 @@ final readonly class ServiceLevelDetail
     public function __construct(
         public int $id,
         public string $name,
-        public Reference $prebuild,
+        public ?Reference $prebuild,
         public float $time,
         public float $chargeRate,
     ) {}
@@ -30,7 +30,7 @@ final readonly class ServiceLevelDetail
         return new self(
             id: (int) $data['ID'],
             name: $data['Name'] ?? '',
-            prebuild: Reference::fromArray($data['Prebuild']),
+            prebuild: ! empty($data['Prebuild']) ? Reference::fromArray($data['Prebuild']) : null,
             time: isset($data['Time']) ? (float) $data['Time'] : 0.0,
             chargeRate: isset($data['ChargeRate']) ? (float) $data['ChargeRate'] : 0.0,
         );

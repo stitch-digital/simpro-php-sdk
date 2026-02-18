@@ -30,9 +30,9 @@ final readonly class ActivityScheduleListItem
         return new self(
             id: $data['ID'],
             totalHours: isset($data['TotalHours']) ? (float) $data['TotalHours'] : null,
-            staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
+            staff: ! empty($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
             date: $data['Date'] ?? null,
-            activity: isset($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
+            activity: ! empty($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
         );
     }
 }

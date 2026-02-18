@@ -32,12 +32,12 @@ final readonly class CostCenterSchedule
             id: $data['ID'],
             staffId: isset($data['Staff']['ID']) ? (int) $data['Staff']['ID'] : null,
             staffName: $data['Staff']['Name'] ?? null,
-            startDate: isset($data['StartDate']) ? new DateTimeImmutable($data['StartDate']) : null,
-            endDate: isset($data['EndDate']) ? new DateTimeImmutable($data['EndDate']) : null,
+            startDate: ! empty($data['StartDate']) ? new DateTimeImmutable($data['StartDate']) : null,
+            endDate: ! empty($data['EndDate']) ? new DateTimeImmutable($data['EndDate']) : null,
             startTime: $data['StartTime'] ?? null,
             endTime: $data['EndTime'] ?? null,
             notes: $data['Notes'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

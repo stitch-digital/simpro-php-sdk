@@ -27,13 +27,13 @@ final readonly class Timesheet
     {
         return new self(
             id: $data['ID'],
-            date: isset($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
+            date: ! empty($data['Date']) ? new DateTimeImmutable($data['Date']) : null,
             startTime: $data['StartTime'] ?? null,
             finishTime: $data['FinishTime'] ?? null,
             totalHours: isset($data['TotalHours']) ? (float) $data['TotalHours'] : null,
-            job: isset($data['Job']) ? Reference::fromArray($data['Job']) : null,
-            costCenter: isset($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
-            activity: isset($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
+            job: ! empty($data['Job']) ? Reference::fromArray($data['Job']) : null,
+            costCenter: ! empty($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
+            activity: ! empty($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
             notes: $data['Notes'] ?? null,
             billable: $data['Billable'] ?? null,
             approved: $data['Approved'] ?? null,

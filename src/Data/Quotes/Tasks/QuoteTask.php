@@ -38,15 +38,15 @@ final readonly class QuoteTask
             subject: $data['Subject'] ?? null,
             description: $data['Description'] ?? null,
             notes: $data['Notes'] ?? null,
-            createdBy: isset($data['CreatedBy']) ? StaffReference::fromArray($data['CreatedBy']) : null,
-            assignedTo: isset($data['AssignedTo']) ? StaffReference::fromArray($data['AssignedTo']) : null,
+            createdBy: ! empty($data['CreatedBy']) ? StaffReference::fromArray($data['CreatedBy']) : null,
+            assignedTo: ! empty($data['AssignedTo']) ? StaffReference::fromArray($data['AssignedTo']) : null,
             assignees: isset($data['Assignees']) ? array_map(
                 fn (array $item) => StaffReference::fromArray($item),
                 $data['Assignees']
             ) : null,
             isBillable: $data['IsBillable'] ?? null,
             percentComplete: isset($data['PercentComplete']) ? (int) $data['PercentComplete'] : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

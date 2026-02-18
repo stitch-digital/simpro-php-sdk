@@ -15,9 +15,9 @@ final readonly class JobResourcesMarkup
     public static function fromArray(array $data): self
     {
         return new self(
-            total: isset($data['Total']) ? JobCostBreakdown::fromArray($data['Total']) : null,
-            labor: isset($data['Labor']) ? JobCostBreakdown::fromArray($data['Labor']) : null,
-            plantAndEquipment: isset($data['PlantAndEquipment']) ? JobCostBreakdown::fromArray($data['PlantAndEquipment']) : null,
+            total: ! empty($data['Total']) ? JobCostBreakdown::fromArray($data['Total']) : null,
+            labor: ! empty($data['Labor']) ? JobCostBreakdown::fromArray($data['Labor']) : null,
+            plantAndEquipment: ! empty($data['PlantAndEquipment']) ? JobCostBreakdown::fromArray($data['PlantAndEquipment']) : null,
         );
     }
 }

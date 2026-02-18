@@ -77,17 +77,17 @@ final readonly class CustomerCompanyListDetailedItem
             ein: $data['EIN'] ?? null,
             companyNumber: $data['CompanyNumber'] ?? null,
             href: $data['_href'] ?? null,
-            address: isset($data['Address']) && is_array($data['Address']) ? Address::fromArray($data['Address']) : null,
-            billingAddress: isset($data['BillingAddress']) && is_array($data['BillingAddress']) ? Address::fromArray($data['BillingAddress']) : null,
+            address: ! empty($data['Address']) && is_array($data['Address']) ? Address::fromArray($data['Address']) : null,
+            billingAddress: ! empty($data['BillingAddress']) && is_array($data['BillingAddress']) ? Address::fromArray($data['BillingAddress']) : null,
             customerType: $data['CustomerType'] ?? null,
             tags: isset($data['Tags']) && is_array($data['Tags']) ? array_map(
                 fn (array $item) => CustomerTag::fromArray($item),
                 $data['Tags']
             ) : null,
             amountOwing: isset($data['AmountOwing']) ? (float) $data['AmountOwing'] : null,
-            rates: isset($data['Rates']) && is_array($data['Rates']) ? CustomerRates::fromArray($data['Rates']) : null,
-            profile: isset($data['Profile']) && is_array($data['Profile']) ? CustomerProfileDetails::fromArray($data['Profile']) : null,
-            banking: isset($data['Banking']) && is_array($data['Banking']) ? CustomerBankingDetails::fromArray($data['Banking']) : null,
+            rates: ! empty($data['Rates']) && is_array($data['Rates']) ? CustomerRates::fromArray($data['Rates']) : null,
+            profile: ! empty($data['Profile']) && is_array($data['Profile']) ? CustomerProfileDetails::fromArray($data['Profile']) : null,
+            banking: ! empty($data['Banking']) && is_array($data['Banking']) ? CustomerBankingDetails::fromArray($data['Banking']) : null,
             archived: $data['Archived'] ?? null,
             doNotCall: $data['DoNotCall'] ?? null,
             sites: isset($data['Sites']) && is_array($data['Sites']) ? array_map(
@@ -114,8 +114,8 @@ final readonly class CustomerCompanyListDetailedItem
                 fn (array $item) => CustomField::fromArray($item),
                 $data['CustomFields']
             ) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 

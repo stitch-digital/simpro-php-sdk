@@ -20,7 +20,7 @@ final readonly class InvoiceListJob
         return new self(
             id: $data['ID'],
             description: $data['Description'] ?? null,
-            total: isset($data['Total']) ? InvoiceTotal::fromArray($data['Total']) : null,
+            total: ! empty($data['Total']) ? InvoiceTotal::fromArray($data['Total']) : null,
         );
     }
 }

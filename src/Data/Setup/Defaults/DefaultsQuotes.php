@@ -7,7 +7,7 @@ namespace Simpro\PhpSdk\Simpro\Data\Setup\Defaults;
 final readonly class DefaultsQuotes
 {
     public function __construct(
-        public DefaultsQuotesMandatoryDueDate $mandatoryDueDateOnCreation,
+        public ?DefaultsQuotesMandatoryDueDate $mandatoryDueDateOnCreation,
     ) {}
 
     /**
@@ -16,9 +16,9 @@ final readonly class DefaultsQuotes
     public static function fromArray(array $data): self
     {
         return new self(
-            mandatoryDueDateOnCreation: DefaultsQuotesMandatoryDueDate::fromArray(
-                $data['MandatoryDueDateOnCreation'] ?? []
-            ),
+            mandatoryDueDateOnCreation: ! empty($data['MandatoryDueDateOnCreation'])
+                ? DefaultsQuotesMandatoryDueDate::fromArray($data['MandatoryDueDateOnCreation'])
+                : null,
         );
     }
 }

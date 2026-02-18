@@ -12,7 +12,7 @@ use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 final readonly class AssetTypeServiceLevelListItem
 {
     public function __construct(
-        public Reference $serviceLevel,
+        public ?Reference $serviceLevel,
         public int $displayOrder = 0,
         public bool $isDefault = true,
     ) {}
@@ -23,7 +23,7 @@ final readonly class AssetTypeServiceLevelListItem
     public static function fromArray(array $data): self
     {
         return new self(
-            serviceLevel: Reference::fromArray($data['ServiceLevel']),
+            serviceLevel: ! empty($data['ServiceLevel']) ? Reference::fromArray($data['ServiceLevel']) : null,
             displayOrder: (int) ($data['DisplayOrder'] ?? 0),
             isDefault: (bool) ($data['IsDefault'] ?? true),
         );

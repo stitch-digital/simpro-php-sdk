@@ -36,8 +36,8 @@ final readonly class ContractorJob
             status: $data['Status'] ?? null,
             description: $data['Description'] ?? null,
             totalCost: isset($data['TotalCost']) ? (float) $data['TotalCost'] : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

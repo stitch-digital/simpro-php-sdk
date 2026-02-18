@@ -20,7 +20,7 @@ final readonly class CostCenterListItem
         return new self(
             id: $data['ID'],
             name: $data['Name'] ?? null,
-            costCenter: isset($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
+            costCenter: ! empty($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
             displayOrder: isset($data['DisplayOrder']) ? (int) $data['DisplayOrder'] : null,
         );
     }

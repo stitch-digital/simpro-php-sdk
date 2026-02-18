@@ -19,9 +19,9 @@ final readonly class JobCostCenter
         return new self(
             id: $data['ID'],
             name: $data['Name'] ?? null,
-            costCenter: isset($data['CostCenter']) ? JobCostCenterReference::fromArray($data['CostCenter']) : null,
+            costCenter: ! empty($data['CostCenter']) ? JobCostCenterReference::fromArray($data['CostCenter']) : null,
             displayOrder: $data['DisplayOrder'] ?? null,
-            total: isset($data['Total']) ? JobCostCenterTotal::fromArray($data['Total']) : null,
+            total: ! empty($data['Total']) ? JobCostCenterTotal::fromArray($data['Total']) : null,
         );
     }
 }

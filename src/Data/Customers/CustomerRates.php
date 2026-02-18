@@ -28,12 +28,12 @@ final readonly class CustomerRates
     public static function fromArray(array $data): self
     {
         return new self(
-            partTaxCode: isset($data['PartTaxCode']) ? TaxCode::fromArray($data['PartTaxCode']) : null,
-            labourTaxCode: isset($data['LabourTaxCode']) ? TaxCode::fromArray($data['LabourTaxCode']) : null,
+            partTaxCode: ! empty($data['PartTaxCode']) ? TaxCode::fromArray($data['PartTaxCode']) : null,
+            labourTaxCode: ! empty($data['LabourTaxCode']) ? TaxCode::fromArray($data['LabourTaxCode']) : null,
             discountFee: isset($data['DiscountFee']) ? (float) $data['DiscountFee'] : 0.0,
             alwaysDeductCIS: $data['AlwaysDeductCIS'] ?? false,
-            serviceFee: isset($data['ServiceFee']) ? Reference::fromArray($data['ServiceFee']) : null,
-            material: isset($data['Material']) ? CustomerMaterial::fromArray($data['Material']) : null,
+            serviceFee: ! empty($data['ServiceFee']) ? Reference::fromArray($data['ServiceFee']) : null,
+            material: ! empty($data['Material']) ? CustomerMaterial::fromArray($data['Material']) : null,
         );
     }
 }

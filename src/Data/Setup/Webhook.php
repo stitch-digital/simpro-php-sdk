@@ -48,7 +48,7 @@ final readonly class Webhook
             description: $data['Description'] ?? '',
             events: $data['Events'] ?? [],
             status: $data['Status'] ?? '',
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

@@ -38,17 +38,17 @@ final readonly class JobNote
             id: $data['ID'],
             subject: $data['Subject'] ?? null,
             note: $data['Note'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            followUpDate: isset($data['FollowUpDate']) ? new DateTimeImmutable($data['FollowUpDate']) : null,
-            visibility: isset($data['Visibility']) ? JobNoteVisibility::fromArray($data['Visibility']) : null,
-            assignTo: isset($data['AssignTo']) ? StaffReference::fromArray($data['AssignTo']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            followUpDate: ! empty($data['FollowUpDate']) ? new DateTimeImmutable($data['FollowUpDate']) : null,
+            visibility: ! empty($data['Visibility']) ? JobNoteVisibility::fromArray($data['Visibility']) : null,
+            assignTo: ! empty($data['AssignTo']) ? StaffReference::fromArray($data['AssignTo']) : null,
             attachments: isset($data['Attachments']) ? array_map(
                 fn (array $item) => JobNoteAttachment::fromArray($item),
                 $data['Attachments']
             ) : null,
             createdById: isset($data['CreatedBy']['ID']) ? (int) $data['CreatedBy']['ID'] : null,
             createdByName: $data['CreatedBy']['Name'] ?? null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

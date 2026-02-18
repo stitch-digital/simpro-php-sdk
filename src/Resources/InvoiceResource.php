@@ -12,8 +12,10 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\CreateInvoiceRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\DeleteInvoiceRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\GetInvoiceRequest;
+use Simpro\PhpSdk\Simpro\Requests\Invoices\ListDetailedInvoicesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\ListInvoicesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\UpdateInvoiceRequest;
+use Simpro\PhpSdk\Simpro\Scopes\Invoices\InvoiceScope;
 
 /**
  * @property AbstractSimproConnector $connector
@@ -37,6 +39,28 @@ final class InvoiceResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListInvoicesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all invoices with full details.
+     *
+     * Uses the columns parameter to return full Invoice DTOs.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedInvoicesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
@@ -98,5 +122,13 @@ final class InvoiceResource extends BaseResource
         $request = new DeleteInvoiceRequest($this->companyId, $invoiceId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Navigate to a specific invoice scope for accessing sub-resources.
+     */
+    public function invoice(int|string $invoiceId): InvoiceScope
+    {
+        return new InvoiceScope($this->connector, $this->companyId, $invoiceId);
     }
 }

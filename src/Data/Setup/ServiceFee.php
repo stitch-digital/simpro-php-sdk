@@ -37,7 +37,7 @@ final readonly class ServiceFee
         return new self(
             id: (int) $data['ID'],
             name: $data['Name'] ?? '',
-            salesTaxCode: isset($data['SalesTaxCode']) ? TaxCode::fromArray($data['SalesTaxCode']) : null,
+            salesTaxCode: ! empty($data['SalesTaxCode']) ? TaxCode::fromArray($data['SalesTaxCode']) : null,
             laborTime: isset($data['LaborTime']) ? (float) $data['LaborTime'] : null,
             price: (float) ($data['Price'] ?? 0.0),
             displayOrder: (int) ($data['DisplayOrder'] ?? 0),

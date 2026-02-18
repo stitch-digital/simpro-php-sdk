@@ -38,7 +38,7 @@ final readonly class AssetTypeFailurePoint
             name: $data['Name'],
             displayOrder: (int) ($data['DisplayOrder'] ?? 0),
             standard: $data['Standard'] ?? null,
-            prebuild: isset($data['Prebuild']) ? AssetTypePrebuild::fromArray($data['Prebuild']) : null,
+            prebuild: ! empty($data['Prebuild']) ? AssetTypePrebuild::fromArray($data['Prebuild']) : null,
             isCritical: (bool) ($data['IsCritical'] ?? false),
             severity: $data['Severity'] ?? null,
         );

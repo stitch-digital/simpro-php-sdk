@@ -14,7 +14,7 @@ use Simpro\PhpSdk\Simpro\Data\Customers\Contracts\PricingTier;
 final readonly class CustomerMaterial
 {
     public function __construct(
-        public PricingTier $pricingTier,
+        public ?PricingTier $pricingTier,
         public float $markup,
     ) {}
 
@@ -24,7 +24,7 @@ final readonly class CustomerMaterial
     public static function fromArray(array $data): self
     {
         return new self(
-            pricingTier: PricingTier::fromArray($data['PricingTier']),
+            pricingTier: ! empty($data['PricingTier']) ? PricingTier::fromArray($data['PricingTier']) : null,
             markup: isset($data['Markup']) ? (float) $data['Markup'] : 0.0,
         );
     }

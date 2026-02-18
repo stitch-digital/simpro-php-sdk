@@ -69,7 +69,7 @@ final readonly class Quote
     public static function fromArray(array $data): self
     {
         $status = null;
-        if (isset($data['Status'])) {
+        if (! empty($data['Status'])) {
             if (is_array($data['Status'])) {
                 $status = QuoteStatus::fromArray($data['Status']);
             } else {
@@ -78,7 +78,7 @@ final readonly class Quote
         }
 
         $total = null;
-        if (isset($data['Total'])) {
+        if (! empty($data['Total'])) {
             if (is_array($data['Total'])) {
                 $total = QuoteTotal::fromArray($data['Total']);
             } else {
@@ -90,53 +90,53 @@ final readonly class Quote
             id: $data['ID'],
             type: $data['Type'] ?? null,
             name: $data['Name'] ?? null,
-            site: isset($data['Site']) ? QuoteSite::fromArray($data['Site']) : null,
-            customer: isset($data['Customer']) ? QuoteCustomer::fromArray($data['Customer']) : null,
+            site: ! empty($data['Site']) ? QuoteSite::fromArray($data['Site']) : null,
+            customer: ! empty($data['Customer']) ? QuoteCustomer::fromArray($data['Customer']) : null,
             additionalCustomers: isset($data['AdditionalCustomers']) ? array_map(
                 fn (array $item) => QuoteCustomer::fromArray($item),
                 $data['AdditionalCustomers']
             ) : null,
-            customerContact: isset($data['CustomerContact']) ? QuoteContact::fromArray($data['CustomerContact']) : null,
+            customerContact: ! empty($data['CustomerContact']) ? QuoteContact::fromArray($data['CustomerContact']) : null,
             additionalContacts: isset($data['AdditionalContacts']) ? array_map(
                 fn (array $item) => QuoteContact::fromArray($item),
                 $data['AdditionalContacts']
             ) : null,
-            siteContact: isset($data['SiteContact']) ? QuoteContact::fromArray($data['SiteContact']) : null,
-            convertedFromLead: isset($data['ConvertedFromLead']) ? QuoteConvertedFromLead::fromArray($data['ConvertedFromLead']) : null,
-            salesperson: isset($data['Salesperson']) ? StaffReference::fromArray($data['Salesperson']) : null,
-            projectManager: isset($data['ProjectManager']) ? StaffReference::fromArray($data['ProjectManager']) : null,
+            siteContact: ! empty($data['SiteContact']) ? QuoteContact::fromArray($data['SiteContact']) : null,
+            convertedFromLead: ! empty($data['ConvertedFromLead']) ? QuoteConvertedFromLead::fromArray($data['ConvertedFromLead']) : null,
+            salesperson: ! empty($data['Salesperson']) ? StaffReference::fromArray($data['Salesperson']) : null,
+            projectManager: ! empty($data['ProjectManager']) ? StaffReference::fromArray($data['ProjectManager']) : null,
             technicians: isset($data['Technicians']) ? array_map(
                 fn (array $item) => StaffReference::fromArray($item),
                 $data['Technicians']
             ) : null,
-            technician: isset($data['Technician']) ? StaffReference::fromArray($data['Technician']) : null,
+            technician: ! empty($data['Technician']) ? StaffReference::fromArray($data['Technician']) : null,
             status: $status,
             stage: $data['Stage'] ?? null,
             orderNo: $data['OrderNo'] ?? null,
             requestNo: $data['RequestNo'] ?? null,
             description: $data['Description'] ?? null,
             notes: $data['Notes'] ?? null,
-            dateIssued: isset($data['DateIssued']) ? new DateTimeImmutable($data['DateIssued']) : null,
-            dueDate: isset($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
-            dateApproved: isset($data['DateApproved']) ? new DateTimeImmutable($data['DateApproved']) : null,
+            dateIssued: ! empty($data['DateIssued']) ? new DateTimeImmutable($data['DateIssued']) : null,
+            dueDate: ! empty($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
+            dateApproved: ! empty($data['DateApproved']) ? new DateTimeImmutable($data['DateApproved']) : null,
             validityDays: isset($data['ValidityDays']) ? (int) $data['ValidityDays'] : null,
             isClosed: $data['IsClosed'] ?? null,
-            archiveReason: isset($data['ArchiveReason']) ? QuoteArchiveReasonRef::fromArray($data['ArchiveReason']) : null,
+            archiveReason: ! empty($data['ArchiveReason']) ? QuoteArchiveReasonRef::fromArray($data['ArchiveReason']) : null,
             customerStage: $data['CustomerStage'] ?? null,
             jobNo: $data['JobNo'] ?? null,
             isVariation: $data['IsVariation'] ?? null,
             linkedJobId: isset($data['LinkedJobId']) ? (int) $data['LinkedJobId'] : null,
-            forecast: isset($data['Forecast']) ? QuoteForecast::fromArray($data['Forecast']) : null,
+            forecast: ! empty($data['Forecast']) ? QuoteForecast::fromArray($data['Forecast']) : null,
             total: $total,
-            totals: isset($data['Totals']) ? QuoteTotals::fromArray($data['Totals']) : null,
+            totals: ! empty($data['Totals']) ? QuoteTotals::fromArray($data['Totals']) : null,
             tags: isset($data['Tags']) ? array_map(
                 fn (array $item) => Reference::fromArray($item),
                 $data['Tags']
             ) : null,
             autoAdjustStatus: $data['AutoAdjustStatus'] ?? null,
             customFields: $data['CustomFields'] ?? null,
-            stc: isset($data['STC']) ? QuoteStc::fromArray($data['STC']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            stc: ! empty($data['STC']) ? QuoteStc::fromArray($data['STC']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

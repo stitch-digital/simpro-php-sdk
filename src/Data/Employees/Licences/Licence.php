@@ -31,14 +31,14 @@ final readonly class Licence
     {
         return new self(
             id: $data['ID'],
-            type: isset($data['Type']) ? Reference::fromArray($data['Type']) : null,
+            type: ! empty($data['Type']) ? Reference::fromArray($data['Type']) : null,
             licenceNo: $data['LicenceNo'] ?? null,
-            issueDate: isset($data['IssueDate']) ? new DateTimeImmutable($data['IssueDate']) : null,
-            expiryDate: isset($data['ExpiryDate']) ? new DateTimeImmutable($data['ExpiryDate']) : null,
+            issueDate: ! empty($data['IssueDate']) ? new DateTimeImmutable($data['IssueDate']) : null,
+            expiryDate: ! empty($data['ExpiryDate']) ? new DateTimeImmutable($data['ExpiryDate']) : null,
             notes: $data['Notes'] ?? null,
             isVerified: $data['IsVerified'] ?? null,
-            verifiedDate: isset($data['VerifiedDate']) ? new DateTimeImmutable($data['VerifiedDate']) : null,
-            verifiedBy: isset($data['VerifiedBy']) ? Reference::fromArray($data['VerifiedBy']) : null,
+            verifiedDate: ! empty($data['VerifiedDate']) ? new DateTimeImmutable($data['VerifiedDate']) : null,
+            verifiedBy: ! empty($data['VerifiedBy']) ? Reference::fromArray($data['VerifiedBy']) : null,
         );
     }
 }

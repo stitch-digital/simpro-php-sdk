@@ -10,6 +10,9 @@ final readonly class InvoiceTotal
         public float $exTax,
         public float $tax,
         public float $incTax,
+        public ?float $reverseChargeTax = null,
+        public ?float $amountApplied = null,
+        public ?float $balanceDue = null,
     ) {}
 
     /**
@@ -21,6 +24,9 @@ final readonly class InvoiceTotal
             exTax: (float) ($data['ExTax'] ?? 0),
             tax: (float) ($data['Tax'] ?? 0),
             incTax: (float) ($data['IncTax'] ?? 0),
+            reverseChargeTax: isset($data['ReverseChargeTax']) ? (float) $data['ReverseChargeTax'] : null,
+            amountApplied: isset($data['AmountApplied']) ? (float) $data['AmountApplied'] : null,
+            balanceDue: isset($data['BalanceDue']) ? (float) $data['BalanceDue'] : null,
         );
     }
 }

@@ -12,9 +12,9 @@ use Simpro\PhpSdk\Simpro\Data\Setup\Defaults\DefaultsSystem;
 final readonly class Defaults
 {
     public function __construct(
-        public DefaultsSystem $system,
-        public DefaultsFinancial $financial,
-        public DefaultsSchedule $schedule,
+        public ?DefaultsSystem $system,
+        public ?DefaultsFinancial $financial,
+        public ?DefaultsSchedule $schedule,
     ) {}
 
     /**
@@ -23,9 +23,9 @@ final readonly class Defaults
     public static function fromArray(array $data): self
     {
         return new self(
-            system: DefaultsSystem::fromArray($data['System'] ?? []),
-            financial: DefaultsFinancial::fromArray($data['Financial'] ?? []),
-            schedule: DefaultsSchedule::fromArray($data['Schedule'] ?? []),
+            system: ! empty($data['System']) ? DefaultsSystem::fromArray($data['System']) : null,
+            financial: ! empty($data['Financial']) ? DefaultsFinancial::fromArray($data['Financial']) : null,
+            schedule: ! empty($data['Schedule']) ? DefaultsSchedule::fromArray($data['Schedule']) : null,
         );
     }
 

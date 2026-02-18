@@ -34,7 +34,7 @@ final readonly class BusinessGroup
     public static function fromArray(array $data): self
     {
         $costCenters = [];
-        if (isset($data['CostCenters']) && is_array($data['CostCenters'])) {
+        if (! empty($data['CostCenters']) && is_array($data['CostCenters'])) {
             $costCenters = array_map(
                 fn (array $item) => Reference::fromArray($item),
                 $data['CostCenters']

@@ -34,8 +34,8 @@ final readonly class WorkOrder
             status: $data['Status'] ?? null,
             assignedToId: isset($data['AssignedTo']['ID']) ? (int) $data['AssignedTo']['ID'] : null,
             assignedToName: $data['AssignedTo']['Name'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

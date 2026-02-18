@@ -36,8 +36,8 @@ final readonly class AttachmentFile
             size: isset($data['Size']) ? (int) $data['Size'] : null,
             url: $data['URL'] ?? null,
             folderId: isset($data['Folder']['ID']) ? (int) $data['Folder']['ID'] : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

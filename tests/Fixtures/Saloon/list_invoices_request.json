@@ -26,10 +26,14 @@
           }
         }
       ],
+      "RecurringInvoice": null,
       "Total": {
         "ExTax": 5000.00,
         "Tax": 500.00,
-        "IncTax": 5500.00
+        "IncTax": 5500.00,
+        "ReverseChargeTax": 0.00,
+        "AmountApplied": 5000.00,
+        "BalanceDue": 500.00
       },
       "IsPaid": false
     },
@@ -53,10 +57,14 @@
           }
         }
       ],
+      "RecurringInvoice": null,
       "Total": {
         "ExTax": 2500.00,
         "Tax": 250.00,
-        "IncTax": 2750.00
+        "IncTax": 2750.00,
+        "ReverseChargeTax": 0.00,
+        "AmountApplied": 2500.00,
+        "BalanceDue": 250.00
       },
       "IsPaid": true
     }

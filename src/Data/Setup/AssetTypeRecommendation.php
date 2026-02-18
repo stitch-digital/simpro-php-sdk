@@ -34,7 +34,7 @@ final readonly class AssetTypeRecommendation
             id: (int) $data['ID'],
             name: $data['Name'],
             chargeRate: (float) ($data['ChargeRate'] ?? 0.0),
-            prebuild: isset($data['Prebuild']) ? AssetTypePrebuild::fromArray($data['Prebuild']) : null,
+            prebuild: ! empty($data['Prebuild']) ? AssetTypePrebuild::fromArray($data['Prebuild']) : null,
         );
     }
 }

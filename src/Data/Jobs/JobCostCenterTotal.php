@@ -19,7 +19,7 @@ final readonly class JobCostCenterTotal
             exTax: (float) ($data['ExTax'] ?? 0),
             tax: (float) ($data['Tax'] ?? 0),
             incTax: (float) ($data['IncTax'] ?? 0),
-            taxCode: isset($data['TaxCode']) ? JobTaxCode::fromArray($data['TaxCode']) : null,
+            taxCode: ! empty($data['TaxCode']) ? JobTaxCode::fromArray($data['TaxCode']) : null,
         );
     }
 }

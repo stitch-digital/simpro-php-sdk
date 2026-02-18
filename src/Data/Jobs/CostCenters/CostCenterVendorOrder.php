@@ -21,7 +21,7 @@ final readonly class CostCenterVendorOrder
             stage: $data['Stage'] ?? null,
             reference: $data['Reference'] ?? null,
             showItemDueDate: $data['ShowItemDueDate'] ?? null,
-            totals: isset($data['Totals']) ? CostCenterVendorOrderTotals::fromArray($data['Totals']) : null,
+            totals: ! empty($data['Totals']) ? CostCenterVendorOrderTotals::fromArray($data['Totals']) : null,
         );
     }
 }

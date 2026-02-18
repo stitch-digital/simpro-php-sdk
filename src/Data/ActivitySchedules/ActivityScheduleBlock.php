@@ -31,10 +31,10 @@ final readonly class ActivityScheduleBlock
         return new self(
             hrs: isset($data['Hrs']) ? (float) $data['Hrs'] : null,
             startTime: $data['StartTime'] ?? null,
-            iso8601StartTime: isset($data['ISO8601StartTime']) ? new DateTimeImmutable($data['ISO8601StartTime']) : null,
+            iso8601StartTime: ! empty($data['ISO8601StartTime']) ? new DateTimeImmutable($data['ISO8601StartTime']) : null,
             endTime: $data['EndTime'] ?? null,
-            iso8601EndTime: isset($data['ISO8601EndTime']) ? new DateTimeImmutable($data['ISO8601EndTime']) : null,
-            scheduleRate: isset($data['ScheduleRate']['ID']) ? Reference::fromArray($data['ScheduleRate']) : null,
+            iso8601EndTime: ! empty($data['ISO8601EndTime']) ? new DateTimeImmutable($data['ISO8601EndTime']) : null,
+            scheduleRate: ! empty($data['ScheduleRate']['ID']) ? Reference::fromArray($data['ScheduleRate']) : null,
         );
     }
 }

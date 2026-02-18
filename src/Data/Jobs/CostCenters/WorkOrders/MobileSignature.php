@@ -31,7 +31,7 @@ final readonly class MobileSignature
             signedByName: $data['SignedBy']['Name'] ?? null,
             signedByEmail: $data['SignedBy']['Email'] ?? null,
             signatureUrl: $data['SignatureUrl'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

@@ -12,8 +12,9 @@ final readonly class InvoiceListItem
     public function __construct(
         public int $id,
         public string $type,
-        public ?InvoiceListCustomer $customer,
+        public ?InvoiceCustomer $customer,
         public array $jobs,
+        public ?InvoiceRecurringInvoice $recurringInvoice,
         public ?InvoiceTotal $total,
         public bool $isPaid,
     ) {}
@@ -26,12 +27,13 @@ final readonly class InvoiceListItem
         return new self(
             id: $data['ID'],
             type: $data['Type'] ?? '',
-            customer: isset($data['Customer']) ? InvoiceListCustomer::fromArray($data['Customer']) : null,
+            customer: ! empty($data['Customer']) ? InvoiceCustomer::fromArray($data['Customer']) : null,
             jobs: isset($data['Jobs']) ? array_map(
                 fn (array $job) => InvoiceListJob::fromArray($job),
                 $data['Jobs']
             ) : [],
-            total: isset($data['Total']) ? InvoiceTotal::fromArray($data['Total']) : null,
+            recurringInvoice: ! empty($data['RecurringInvoice']) ? InvoiceRecurringInvoice::fromArray($data['RecurringInvoice']) : null,
+            total: ! empty($data['Total']) ? InvoiceTotal::fromArray($data['Total']) : null,
             isPaid: $data['IsPaid'] ?? false,
         );
     }

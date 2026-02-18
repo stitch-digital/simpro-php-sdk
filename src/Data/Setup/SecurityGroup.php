@@ -31,7 +31,7 @@ final readonly class SecurityGroup
                 fn (array $item): Reference => Reference::fromArray($item),
                 $data['Dashboards'] ?? []
             ),
-            businessGroup: isset($data['BusinessGroup'])
+            businessGroup: ! empty($data['BusinessGroup'])
                 ? Reference::fromArray($data['BusinessGroup'])
                 : null,
         );

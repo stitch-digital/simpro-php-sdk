@@ -45,11 +45,11 @@ final readonly class LaborRate
             costRate: (float) ($data['CostRate'] ?? 0.0),
             markup: (float) ($data['Markup'] ?? 0.0),
             multiplier: (float) ($data['Multiplier'] ?? 1.0),
-            taxCode: isset($data['TaxCode']) ? TaxCode::fromArray($data['TaxCode']) : null,
+            taxCode: ! empty($data['TaxCode']) ? TaxCode::fromArray($data['TaxCode']) : null,
             isDefault: (bool) ($data['IsDefault'] ?? false),
             addToAllCustomers: (bool) ($data['AddToAllCustomers'] ?? false),
             incOverhead: (bool) ($data['IncOverhead'] ?? false),
-            plant: isset($data['Plant']) ? Reference::fromArray($data['Plant']) : null,
+            plant: ! empty($data['Plant']) ? Reference::fromArray($data['Plant']) : null,
             archived: (bool) ($data['Archived'] ?? false),
         );
     }

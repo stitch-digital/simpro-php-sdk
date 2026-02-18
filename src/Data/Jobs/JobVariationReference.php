@@ -22,7 +22,7 @@ final readonly class JobVariationReference
         return new self(
             id: (int) $data['ID'],
             description: $data['Description'] ?? null,
-            total: isset($data['Total']) && is_array($data['Total'])
+            total: ! empty($data['Total']) && is_array($data['Total'])
                 ? JobTotal::fromArray($data['Total'])
                 : null,
         );

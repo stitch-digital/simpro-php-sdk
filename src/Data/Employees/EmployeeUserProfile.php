@@ -28,7 +28,7 @@ final readonly class EmployeeUserProfile
         return new self(
             isSalesperson: $data['IsSalesperson'] ?? null,
             isProjectManager: $data['IsProjectManager'] ?? null,
-            storageDevice: isset($data['StorageDevice']) ? Reference::fromArray($data['StorageDevice']) : null,
+            storageDevice: ! empty($data['StorageDevice']) ? Reference::fromArray($data['StorageDevice']) : null,
             preferredLanguage: $data['PreferredLanguage'] ?? null,
         );
     }

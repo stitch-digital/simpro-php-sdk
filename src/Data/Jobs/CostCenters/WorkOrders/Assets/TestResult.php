@@ -32,12 +32,12 @@ final readonly class TestResult
             id: $data['ID'],
             name: $data['Name'] ?? null,
             status: $data['Status'] ?? null,
-            passedDate: isset($data['PassedDate']) ? new DateTimeImmutable($data['PassedDate']) : null,
-            failedDate: isset($data['FailedDate']) ? new DateTimeImmutable($data['FailedDate']) : null,
+            passedDate: ! empty($data['PassedDate']) ? new DateTimeImmutable($data['PassedDate']) : null,
+            failedDate: ! empty($data['FailedDate']) ? new DateTimeImmutable($data['FailedDate']) : null,
             testTypeId: isset($data['TestType']['ID']) ? (int) $data['TestType']['ID'] : null,
             testTypeName: $data['TestType']['Name'] ?? null,
             notes: $data['Notes'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

@@ -44,7 +44,7 @@ final readonly class Schedule
     public static function fromArray(array $data): self
     {
         $blocks = null;
-        if (isset($data['Blocks']) && is_array($data['Blocks'])) {
+        if (! empty($data['Blocks']) && is_array($data['Blocks'])) {
             $blocks = array_map(
                 fn (array $block) => ScheduleBlock::fromArray($block),
                 $data['Blocks']
@@ -53,7 +53,7 @@ final readonly class Schedule
 
         // Handle empty string for dateModified
         $dateModified = null;
-        if (isset($data['DateModified']) && $data['DateModified'] !== '') {
+        if (! empty($data['DateModified'])) {
             $dateModified = new DateTimeImmutable($data['DateModified']);
         }
 
@@ -63,7 +63,7 @@ final readonly class Schedule
             reference: $data['Reference'] ?? null,
             totalHours: isset($data['TotalHours']) ? (float) $data['TotalHours'] : null,
             notes: $data['Notes'] ?? null,
-            staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
+            staff: ! empty($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
             date: $data['Date'] ?? null,
             blocks: $blocks,
             href: $data['_href'] ?? null,

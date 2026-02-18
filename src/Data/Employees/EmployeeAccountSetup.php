@@ -28,8 +28,8 @@ final readonly class EmployeeAccountSetup
         return new self(
             username: $data['Username'] ?? null,
             isMobility: $data['IsMobility'] ?? null,
-            securityGroup: isset($data['SecurityGroup']) ? Reference::fromArray($data['SecurityGroup']) : null,
-            mobileSecurityGroup: isset($data['MobileSecurityGroup']) ? Reference::fromArray($data['MobileSecurityGroup']) : null,
+            securityGroup: ! empty($data['SecurityGroup']) ? Reference::fromArray($data['SecurityGroup']) : null,
+            mobileSecurityGroup: ! empty($data['MobileSecurityGroup']) ? Reference::fromArray($data['MobileSecurityGroup']) : null,
         );
     }
 }

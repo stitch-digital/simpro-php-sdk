@@ -31,7 +31,7 @@ final readonly class QuoteSection
             description: $data['Description'] ?? null,
             isVariation: $data['IsVariation'] ?? null,
             displayOrder: isset($data['DisplayOrder']) ? (int) $data['DisplayOrder'] : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

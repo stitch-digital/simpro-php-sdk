@@ -49,24 +49,24 @@ final readonly class JobTask
         return new self(
             id: $data['ID'],
             subject: $data['Subject'] ?? null,
-            createdBy: isset($data['CreatedBy']) ? StaffReference::fromArray($data['CreatedBy']) : null,
-            assignedTo: isset($data['AssignedTo']) ? StaffReference::fromArray($data['AssignedTo']) : null,
+            createdBy: ! empty($data['CreatedBy']) ? StaffReference::fromArray($data['CreatedBy']) : null,
+            assignedTo: ! empty($data['AssignedTo']) ? StaffReference::fromArray($data['AssignedTo']) : null,
             assignees: isset($data['Assignees']) ? array_map(
                 fn (array $item) => StaffReference::fromArray($item),
                 $data['Assignees']
             ) : null,
             assignedToCustomer: $data['AssignedToCustomer'] ?? null,
-            completedBy: isset($data['CompletedBy']) ? StaffReference::fromArray($data['CompletedBy']) : null,
-            associated: isset($data['Associated']) ? JobTaskAssociated::fromArray($data['Associated']) : null,
+            completedBy: ! empty($data['CompletedBy']) ? StaffReference::fromArray($data['CompletedBy']) : null,
+            associated: ! empty($data['Associated']) ? JobTaskAssociated::fromArray($data['Associated']) : null,
             isBillable: $data['IsBillable'] ?? null,
             showOnWorkOrder: $data['ShowOnWorkOrder'] ?? null,
-            emailNotifications: isset($data['EmailNotifications']) ? JobTaskEmailNotifications::fromArray($data['EmailNotifications']) : null,
+            emailNotifications: ! empty($data['EmailNotifications']) ? JobTaskEmailNotifications::fromArray($data['EmailNotifications']) : null,
             description: $data['Description'] ?? null,
             notes: $data['Notes'] ?? null,
-            status: isset($data['Status']) ? JobTaskStatus::fromArray($data['Status']) : null,
-            priority: isset($data['Priority']) ? JobTaskPriority::fromArray($data['Priority']) : null,
-            estimated: isset($data['Estimated']) ? JobTaskTime::fromArray($data['Estimated']) : null,
-            actual: isset($data['Actual']) ? JobTaskTime::fromArray($data['Actual']) : null,
+            status: ! empty($data['Status']) ? JobTaskStatus::fromArray($data['Status']) : null,
+            priority: ! empty($data['Priority']) ? JobTaskPriority::fromArray($data['Priority']) : null,
+            estimated: ! empty($data['Estimated']) ? JobTaskTime::fromArray($data['Estimated']) : null,
+            actual: ! empty($data['Actual']) ? JobTaskTime::fromArray($data['Actual']) : null,
             subTasks: isset($data['SubTasks']) ? array_map(
                 fn (array $item) => JobTaskSubTask::fromArray($item),
                 $data['SubTasks']
@@ -76,7 +76,7 @@ final readonly class JobTask
                 $data['CustomFields']
             ) : null,
             percentComplete: isset($data['PercentComplete']) ? (int) $data['PercentComplete'] : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

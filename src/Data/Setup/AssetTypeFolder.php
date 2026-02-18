@@ -35,7 +35,7 @@ final readonly class AssetTypeFolder
             id: (int) $data['ID'],
             name: $data['Name'],
             parentId: isset($data['ParentID']) ? (int) $data['ParentID'] : null,
-            parent: isset($data['Parent']) ? Reference::fromArray($data['Parent']) : null,
+            parent: ! empty($data['Parent']) ? Reference::fromArray($data['Parent']) : null,
         );
     }
 }

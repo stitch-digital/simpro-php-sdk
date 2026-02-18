@@ -15,8 +15,8 @@ use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 final readonly class ServiceLevelAssetType
 {
     public function __construct(
-        public Reference $assetType,
-        public Prebuild $prebuild,
+        public ?Reference $assetType,
+        public ?Prebuild $prebuild,
         public float $chargeRate,
         public float $estimatedTime,
     ) {}
@@ -34,8 +34,8 @@ final readonly class ServiceLevelAssetType
     public static function fromArray(array $data): self
     {
         return new self(
-            assetType: Reference::fromArray($data['AssetType']),
-            prebuild: Prebuild::fromArray($data['Prebuild']),
+            assetType: ! empty($data['AssetType']) ? Reference::fromArray($data['AssetType']) : null,
+            prebuild: ! empty($data['Prebuild']) ? Prebuild::fromArray($data['Prebuild']) : null,
             chargeRate: isset($data['ChargeRate']) ? (float) $data['ChargeRate'] : 0.0,
             estimatedTime: isset($data['EstimatedTime']) ? (float) $data['EstimatedTime'] : 0.0,
         );

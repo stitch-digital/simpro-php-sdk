@@ -39,7 +39,7 @@ final readonly class AssetTypeTestReading
     public static function fromArray(array $data): self
     {
         $serviceLevels = [];
-        if (isset($data['ServiceLevels']) && is_array($data['ServiceLevels'])) {
+        if (! empty($data['ServiceLevels']) && is_array($data['ServiceLevels'])) {
             foreach ($data['ServiceLevels'] as $serviceLevel) {
                 $serviceLevels[] = AssetTypeServiceLevelListItem::fromArray($serviceLevel);
             }

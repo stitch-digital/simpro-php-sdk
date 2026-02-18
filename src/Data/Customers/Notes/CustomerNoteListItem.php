@@ -14,7 +14,7 @@ final readonly class CustomerNoteListItem
     public function __construct(
         public int $id,
         public ?string $subject,
-        public CustomerNoteReference $reference,
+        public ?CustomerNoteReference $reference,
     ) {}
 
     /**
@@ -25,7 +25,7 @@ final readonly class CustomerNoteListItem
         return new self(
             id: (int) $data['ID'],
             subject: $data['Subject'] ?? null,
-            reference: CustomerNoteReference::fromArray($data['Reference'] ?? []),
+            reference: ! empty($data['Reference']) ? CustomerNoteReference::fromArray($data['Reference']) : null,
         );
     }
 }

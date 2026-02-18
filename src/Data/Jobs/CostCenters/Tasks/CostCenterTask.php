@@ -35,9 +35,9 @@ final readonly class CostCenterTask
             status: $data['Status'] ?? null,
             assignedToId: isset($data['AssignedTo']['ID']) ? (int) $data['AssignedTo']['ID'] : null,
             assignedToName: $data['AssignedTo']['Name'] ?? null,
-            dueDate: isset($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
-            completedDate: isset($data['CompletedDate']) ? new DateTimeImmutable($data['CompletedDate']) : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dueDate: ! empty($data['DueDate']) ? new DateTimeImmutable($data['DueDate']) : null,
+            completedDate: ! empty($data['CompletedDate']) ? new DateTimeImmutable($data['CompletedDate']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

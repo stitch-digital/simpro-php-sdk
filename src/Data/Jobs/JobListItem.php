@@ -20,7 +20,7 @@ final readonly class JobListItem
         return new self(
             id: $data['ID'],
             description: $data['Description'] ?? null,
-            total: isset($data['Total']) ? JobTotal::fromArray($data['Total']) : null,
+            total: ! empty($data['Total']) ? JobTotal::fromArray($data['Total']) : null,
         );
     }
 }

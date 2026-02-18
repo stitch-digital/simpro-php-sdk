@@ -32,8 +32,8 @@ final readonly class Asset
             assetTypeId: isset($data['AssetType']['ID']) ? (int) $data['AssetType']['ID'] : null,
             assetTypeName: $data['AssetType']['Name'] ?? null,
             serialNumber: $data['SerialNumber'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

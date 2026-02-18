@@ -19,7 +19,7 @@ final readonly class DefaultsJobsQuotes
     public static function fromArray(array $data): self
     {
         return new self(
-            defaultCostCenter: isset($data['DefaultCostCenter']['ID'])
+            defaultCostCenter: ! empty($data['DefaultCostCenter']['ID'])
                 ? Reference::fromArray($data['DefaultCostCenter'])
                 : null,
             singleCostCenter: (bool) ($data['SingleCostCenter'] ?? false),

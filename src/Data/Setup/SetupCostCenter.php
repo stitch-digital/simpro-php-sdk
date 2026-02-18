@@ -48,7 +48,7 @@ final readonly class SetupCostCenter
             monthlyExpenditureBudget: isset($data['MonthlyExpenditureBudget']) ? (float) $data['MonthlyExpenditureBudget'] : null,
             archived: (bool) ($data['Archived'] ?? false),
             isMembershipCostCenter: (bool) ($data['IsMembershipCostCenter'] ?? false),
-            rates: isset($data['Rates']) ? CostCenterRates::fromArray($data['Rates']) : null,
+            rates: ! empty($data['Rates']) ? CostCenterRates::fromArray($data['Rates']) : null,
         );
     }
 }

@@ -29,11 +29,11 @@ final readonly class CustomerProfileDetails
     {
         return new self(
             notes: $data['Notes'] ?? '',
-            customerProfile: isset($data['CustomerProfile']) ? Reference::fromArray($data['CustomerProfile']) : null,
-            customerGroup: isset($data['CustomerGroup']) ? Reference::fromArray($data['CustomerGroup']) : null,
-            accountManager: isset($data['AccountManager']) ? Reference::fromArray($data['AccountManager']) : null,
-            currency: isset($data['Currency']) ? CustomerCurrency::fromArray($data['Currency']) : null,
-            serviceJobCostCenter: isset($data['ServiceJobCostCenter']) ? Reference::fromArray($data['ServiceJobCostCenter']) : null,
+            customerProfile: ! empty($data['CustomerProfile']) ? Reference::fromArray($data['CustomerProfile']) : null,
+            customerGroup: ! empty($data['CustomerGroup']) ? Reference::fromArray($data['CustomerGroup']) : null,
+            accountManager: ! empty($data['AccountManager']) ? Reference::fromArray($data['AccountManager']) : null,
+            currency: ! empty($data['Currency']) ? CustomerCurrency::fromArray($data['Currency']) : null,
+            serviceJobCostCenter: ! empty($data['ServiceJobCostCenter']) ? Reference::fromArray($data['ServiceJobCostCenter']) : null,
         );
     }
 }

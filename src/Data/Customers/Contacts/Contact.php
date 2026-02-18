@@ -58,7 +58,7 @@ final readonly class Contact
     {
         return new self(
             id: $data['ID'],
-            contact: isset($data['Contact']) && is_array($data['Contact']) ? ContactReference::fromArray($data['Contact']) : null,
+            contact: ! empty($data['Contact']) && is_array($data['Contact']) ? ContactReference::fromArray($data['Contact']) : null,
             title: $data['Title'] ?? null,
             givenName: $data['GivenName'] ?? null,
             familyName: $data['FamilyName'] ?? null,
@@ -71,7 +71,7 @@ final readonly class Contact
             position: $data['Position'] ?? null,
             notes: $data['Notes'] ?? null,
             customFields: isset($data['CustomFields']) ? array_map(fn (array $item) => CustomField::fromArray($item), $data['CustomFields']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
             quoteContact: $data['QuoteContact'] ?? null,
             jobContact: $data['JobContact'] ?? null,
             invoiceContact: $data['InvoiceContact'] ?? null,

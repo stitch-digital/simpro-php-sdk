@@ -10,7 +10,7 @@ final readonly class DefaultsJobs
 {
     public function __construct(
         public ?Reference $warrantyCostCenter,
-        public DefaultsMandatoryDueDate $mandatoryDueDateOnCreation,
+        public ?DefaultsMandatoryDueDate $mandatoryDueDateOnCreation,
     ) {}
 
     /**
@@ -19,12 +19,12 @@ final readonly class DefaultsJobs
     public static function fromArray(array $data): self
     {
         return new self(
-            warrantyCostCenter: isset($data['WarrantyCostCenter']['ID'])
+            warrantyCostCenter: ! empty($data['WarrantyCostCenter']['ID'])
                 ? Reference::fromArray($data['WarrantyCostCenter'])
                 : null,
-            mandatoryDueDateOnCreation: DefaultsMandatoryDueDate::fromArray(
-                $data['MandatoryDueDateOnCreation'] ?? []
-            ),
+            mandatoryDueDateOnCreation: ! empty($data['MandatoryDueDateOnCreation'])
+                ? DefaultsMandatoryDueDate::fromArray($data['MandatoryDueDateOnCreation'])
+                : null,
         );
     }
 }

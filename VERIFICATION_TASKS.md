@@ -383,20 +383,43 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 
 ---
 
-### 9. Invoices Resource
+### 9. Invoices Resource ✅ VERIFIED
 **Files:** `src/Resources/InvoiceResource.php`, `src/Data/Invoices/`
 
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | GET /api/v1.0/companies/{companyID}/accounts/receivable/invoices/ |
-| Get endpoint | [ ] | GET /api/v1.0/companies/{companyID}/accounts/receivable/invoices/{invoiceID} |
-| Create endpoint | [ ] | POST |
-| Update endpoint | [ ] | PATCH |
-| Delete endpoint | [ ] | DELETE |
-| Response DTO (List) | [ ] | |
-| Response DTO (Detail) | [ ] | |
-| Request body DTO | [ ] | |
-| Tests | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/invoices/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/invoices/{invoiceID} |
+| Create endpoint | [x] | POST |
+| Update endpoint | [x] | PATCH |
+| Delete endpoint | [x] | DELETE |
+| Detailed list support | [x] | listDetailed() available |
+| Response DTO (List) | [x] | Added RecurringInvoice, updated Total with full fields |
+| Response DTO (Detail) | [x] | Fully rewritten to match modern /invoices/ endpoint schema |
+| Request body DTO | [x] | |
+| Tests | [x] | |
+
+**Major fixes applied:**
+- Rewrote `Invoice` DTO — removed legacy fields (InvoiceNo, Site, Totals with TotalExTax/AmountDue/AmountPaid), replaced with swagger-accurate fields (InternalID, Stage, Status as {ID,Name}, PaymentTerms, CostCenters, etc.)
+- Deleted `InvoiceTotals` (legacy endpoint), `InvoiceSite` (not in modern endpoint), `InvoiceListCustomer` (merged into `InvoiceCustomer`)
+- Updated `InvoiceCustomer` — removed `type`, added `givenName`/`familyName` to unify list and detail
+- Updated `InvoiceTotal` — added `reverseChargeTax`, `amountApplied`, `balanceDue`
+- Updated `InvoiceListItem` — added `recurringInvoice`, changed customer type
+- Created 11 new supporting DTOs: InvoiceRecurringInvoice, InvoicePeriod, InvoicePaymentTerms, InvoiceStatus, InvoiceRetainage, InvoiceCostCenter, InvoiceCostCenterTotal, InvoiceCostCenterClaim, InvoiceCostCenterItem, InvoiceCostCenterItemDetail, InvoiceCostCenterItemQuantity
+- Added `ListDetailedInvoicesRequest` with columns parameter
+
+#### 9.1 Invoice Sub-resources ✅ VERIFIED
+
+| Sub-resource | Status | Operations |
+|-------------|--------|------------|
+| Notes | [x] | List, Get, Create, Update, Delete |
+| Custom Fields | [x] | List, Get, Update (reuses JobCustomFieldValue DTO) |
+| Credit Notes | [x] | List, Get, Create, Update |
+| Credit Note Notes | [x] | List, Get, Create, Update, Delete |
+| Credit Note Custom Fields | [x] | List, Get, Update |
+| Cost Centers | [x] | Skipped (private/internal) — data included in detail response |
+
+**Scopes added:** `InvoiceScope`, `InvoiceCreditNoteScope`
 
 ---
 
@@ -844,7 +867,7 @@ Verify these shared DTOs are accurate across all usages:
 | Jobs               | [x]      | 12           | 12              |
 | Customers          | [x]      | 8            | 8               |
 | Quotes             | [x]      | 25+          | 25+             |
-| Invoices           | [ ]      | 0            | 0               |
+| Invoices           | [x]      | 15+          | 15+             |
 | Employees          | [ ]      | 0            | 0               |
 | Reports            | [ ]      | 0            | 0               |
 | Setup (all sub-resources) | [x] | 71        | 71              |

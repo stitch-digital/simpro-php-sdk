@@ -43,7 +43,7 @@ final readonly class ActivitySchedule
     public static function fromArray(array $data): self
     {
         $blocks = null;
-        if (isset($data['Blocks']) && is_array($data['Blocks'])) {
+        if (! empty($data['Blocks']) && is_array($data['Blocks'])) {
             $blocks = array_map(
                 fn (array $block) => ActivityScheduleBlock::fromArray($block),
                 $data['Blocks']
@@ -60,7 +60,7 @@ final readonly class ActivitySchedule
 
         // Handle empty string for dateModified
         $dateModified = null;
-        if (isset($data['DateModified']) && $data['DateModified'] !== '') {
+        if (! empty($data['DateModified'])) {
             $dateModified = new DateTimeImmutable($data['DateModified']);
         }
 
@@ -70,11 +70,11 @@ final readonly class ActivitySchedule
             notes: $data['Notes'] ?? null,
             isLocked: $data['IsLocked'] ?? null,
             recurringScheduleId: $recurringScheduleId,
-            staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
+            staff: ! empty($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
             date: $data['Date'] ?? null,
             blocks: $blocks,
             dateModified: $dateModified,
-            activity: isset($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
+            activity: ! empty($data['Activity']) ? Reference::fromArray($data['Activity']) : null,
         );
     }
 }

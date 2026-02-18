@@ -21,7 +21,7 @@ final readonly class JobCustomField
     public static function fromArray(array $data): self
     {
         // Handle both flat format and nested CustomField format
-        if (isset($data['CustomField'])) {
+        if (! empty($data['CustomField'])) {
             $customField = $data['CustomField'];
 
             return new self(

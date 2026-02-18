@@ -23,7 +23,7 @@ final readonly class ContractRates
     public static function fromArray(array $data): self
     {
         return new self(
-            serviceFee: isset($data['ServiceFee']) ? Reference::fromArray($data['ServiceFee']) : null,
+            serviceFee: ! empty($data['ServiceFee']) ? Reference::fromArray($data['ServiceFee']) : null,
         );
     }
 }

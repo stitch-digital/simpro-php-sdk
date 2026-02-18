@@ -29,9 +29,9 @@ final readonly class Contract
         public string $email,
         public bool $archived,
         public bool $expired,
-        public PricingTier $pricingTier,
+        public ?PricingTier $pricingTier,
         public float $markup,
-        public ContractRates $rates,
+        public ?ContractRates $rates,
         public ?array $customFields,
         public ?array $serviceLevels,
     ) {}
@@ -59,9 +59,9 @@ final readonly class Contract
             email: $data['Email'] ?? '',
             archived: $data['Archived'] ?? false,
             expired: $data['Expired'] ?? false,
-            pricingTier: PricingTier::fromArray($data['PricingTier']),
+            pricingTier: ! empty($data['PricingTier']) ? PricingTier::fromArray($data['PricingTier']) : null,
             markup: isset($data['Markup']) ? (float) $data['Markup'] : 0.0,
-            rates: ContractRates::fromArray($data['Rates'] ?? []),
+            rates: ! empty($data['Rates']) ? ContractRates::fromArray($data['Rates']) : null,
             customFields: isset($data['CustomFields']) ? array_map(fn (array $item) => CustomField::fromArray($item), $data['CustomFields']) : null,
             serviceLevels: isset($data['ServiceLevels']) ? array_map(fn (array $item) => ContractServiceLevel::fromArray($item), $data['ServiceLevels']) : null,
         );

@@ -32,8 +32,8 @@ final readonly class OneOffItem
             quantity: isset($data['Quantity']) ? (float) $data['Quantity'] : null,
             unitCost: isset($data['UnitCost']) ? (float) $data['UnitCost'] : null,
             totalCost: isset($data['TotalCost']) ? (float) $data['TotalCost'] : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            dateModified: isset($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }
 }

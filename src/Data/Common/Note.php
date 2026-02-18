@@ -34,11 +34,11 @@ final readonly class Note
             id: (int) $data['ID'],
             subject: $data['Subject'] ?? null,
             note: $data['Note'] ?? $data['Text'] ?? $data['Content'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
-            followUpDate: isset($data['FollowUpDate']) ? new DateTimeImmutable($data['FollowUpDate']) : null,
-            assignTo: isset($data['AssignTo']) && is_array($data['AssignTo']) ? StaffReference::fromArray($data['AssignTo']) : null,
-            submittedBy: isset($data['SubmittedBy']) && is_array($data['SubmittedBy']) ? StaffReference::fromArray($data['SubmittedBy']) : null,
-            reference: isset($data['Reference']) && is_array($data['Reference']) ? NoteReference::fromArray($data['Reference']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            followUpDate: ! empty($data['FollowUpDate']) ? new DateTimeImmutable($data['FollowUpDate']) : null,
+            assignTo: ! empty($data['AssignTo']) && is_array($data['AssignTo']) ? StaffReference::fromArray($data['AssignTo']) : null,
+            submittedBy: ! empty($data['SubmittedBy']) && is_array($data['SubmittedBy']) ? StaffReference::fromArray($data['SubmittedBy']) : null,
+            reference: ! empty($data['Reference']) && is_array($data['Reference']) ? NoteReference::fromArray($data['Reference']) : null,
             attachments: isset($data['Attachments']) ? array_map(
                 fn (array $item) => NoteAttachment::fromArray($item),
                 $data['Attachments']

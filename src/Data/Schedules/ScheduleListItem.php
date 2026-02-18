@@ -32,7 +32,7 @@ final readonly class ScheduleListItem
     public static function fromArray(array $data): self
     {
         $blocks = null;
-        if (isset($data['Blocks']) && is_array($data['Blocks'])) {
+        if (! empty($data['Blocks']) && is_array($data['Blocks'])) {
             $blocks = array_map(
                 fn (array $block) => ScheduleBlock::fromArray($block),
                 $data['Blocks']
@@ -44,7 +44,7 @@ final readonly class ScheduleListItem
             type: $data['Type'] ?? null,
             reference: $data['Reference'] ?? null,
             totalHours: isset($data['TotalHours']) ? (float) $data['TotalHours'] : null,
-            staff: isset($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
+            staff: ! empty($data['Staff']) ? StaffReference::fromArray($data['Staff']) : null,
             date: $data['Date'] ?? null,
             blocks: $blocks,
         );

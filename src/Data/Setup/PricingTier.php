@@ -40,7 +40,7 @@ final readonly class PricingTier
     public static function fromArray(array $data): self
     {
         $scaledTierPricing = [];
-        if (isset($data['ScaledTierPricing']) && is_array($data['ScaledTierPricing'])) {
+        if (! empty($data['ScaledTierPricing']) && is_array($data['ScaledTierPricing'])) {
             $scaledTierPricing = array_map(
                 fn (array $item): ScaledTierPricing => ScaledTierPricing::fromArray($item),
                 $data['ScaledTierPricing']

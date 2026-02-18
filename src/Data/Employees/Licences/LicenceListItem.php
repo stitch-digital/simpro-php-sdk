@@ -21,9 +21,9 @@ final readonly class LicenceListItem
     {
         return new self(
             id: $data['ID'],
-            type: isset($data['Type']) ? Reference::fromArray($data['Type']) : null,
+            type: ! empty($data['Type']) ? Reference::fromArray($data['Type']) : null,
             licenceNo: $data['LicenceNo'] ?? null,
-            expiryDate: isset($data['ExpiryDate']) ? new DateTimeImmutable($data['ExpiryDate']) : null,
+            expiryDate: ! empty($data['ExpiryDate']) ? new DateTimeImmutable($data['ExpiryDate']) : null,
             isVerified: $data['IsVerified'] ?? null,
         );
     }

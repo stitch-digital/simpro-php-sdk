@@ -29,19 +29,19 @@ final readonly class QuoteTotals
     public static function fromArray(array $data): self
     {
         return new self(
-            materialsCost: isset($data['MaterialsCost']) ? JobCostBreakdown::fromArray($data['MaterialsCost']) : null,
-            resourcesCost: isset($data['ResourcesCost']) ? JobResourcesCost::fromArray($data['ResourcesCost']) : null,
-            materialsMarkup: isset($data['MaterialsMarkup']) ? JobCostBreakdown::fromArray($data['MaterialsMarkup']) : null,
-            resourcesMarkup: isset($data['ResourcesMarkup']) ? JobResourcesMarkup::fromArray($data['ResourcesMarkup']) : null,
-            adjusted: isset($data['Adjusted']) ? JobCostBreakdown::fromArray($data['Adjusted']) : null,
+            materialsCost: ! empty($data['MaterialsCost']) ? JobCostBreakdown::fromArray($data['MaterialsCost']) : null,
+            resourcesCost: ! empty($data['ResourcesCost']) ? JobResourcesCost::fromArray($data['ResourcesCost']) : null,
+            materialsMarkup: ! empty($data['MaterialsMarkup']) ? JobCostBreakdown::fromArray($data['MaterialsMarkup']) : null,
+            resourcesMarkup: ! empty($data['ResourcesMarkup']) ? JobResourcesMarkup::fromArray($data['ResourcesMarkup']) : null,
+            adjusted: ! empty($data['Adjusted']) ? JobCostBreakdown::fromArray($data['Adjusted']) : null,
             membershipDiscount: isset($data['MembershipDiscount']) ? (float) $data['MembershipDiscount'] : null,
             discount: isset($data['Discount']) ? (float) $data['Discount'] : null,
             stcs: isset($data['STCs']) ? (float) $data['STCs'] : null,
             veecs: isset($data['VEECs']) ? (float) $data['VEECs'] : null,
-            grossProfitLoss: isset($data['GrossProfitLoss']) ? JobCostBreakdown::fromArray($data['GrossProfitLoss']) : null,
-            grossMargin: isset($data['GrossMargin']) ? JobCostBreakdown::fromArray($data['GrossMargin']) : null,
-            nettProfitLoss: isset($data['NettProfitLoss']) ? JobCostBreakdown::fromArray($data['NettProfitLoss']) : null,
-            nettMargin: isset($data['NettMargin']) ? JobCostBreakdown::fromArray($data['NettMargin']) : null,
+            grossProfitLoss: ! empty($data['GrossProfitLoss']) ? JobCostBreakdown::fromArray($data['GrossProfitLoss']) : null,
+            grossMargin: ! empty($data['GrossMargin']) ? JobCostBreakdown::fromArray($data['GrossMargin']) : null,
+            nettProfitLoss: ! empty($data['NettProfitLoss']) ? JobCostBreakdown::fromArray($data['NettProfitLoss']) : null,
+            nettMargin: ! empty($data['NettMargin']) ? JobCostBreakdown::fromArray($data['NettMargin']) : null,
         );
     }
 }

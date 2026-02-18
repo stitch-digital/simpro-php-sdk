@@ -40,9 +40,9 @@ final readonly class PlantRate
             name: $data['Name'] ?? '',
             costRate: (float) ($data['CostRate'] ?? 0.0),
             markup: (float) ($data['Markup'] ?? 0.0),
-            taxCode: isset($data['TaxCode']) ? TaxCode::fromArray($data['TaxCode']) : null,
+            taxCode: ! empty($data['TaxCode']) ? TaxCode::fromArray($data['TaxCode']) : null,
             addToAllCustomers: (bool) ($data['AddToAllCustomers'] ?? false),
-            plant: isset($data['Plant']) ? Reference::fromArray($data['Plant']) : null,
+            plant: ! empty($data['Plant']) ? Reference::fromArray($data['Plant']) : null,
         );
     }
 }

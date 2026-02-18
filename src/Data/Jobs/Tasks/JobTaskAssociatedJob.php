@@ -17,7 +17,7 @@ final readonly class JobTaskAssociatedJob
     {
         return new self(
             id: (int) $data['ID'],
-            costCenter: isset($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
+            costCenter: ! empty($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
         );
     }
 }

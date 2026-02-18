@@ -27,7 +27,7 @@ final readonly class AdvancedCommission
             name: $data['Name'] ?? '',
             type: $data['Type'] ?? 'Advanced',
             displayOrder: (int) ($data['DisplayOrder'] ?? 0),
-            components: isset($data['Components']) ? AdvancedCommissionComponents::fromArray($data['Components']) : null,
+            components: ! empty($data['Components']) ? AdvancedCommissionComponents::fromArray($data['Components']) : null,
             trigger: $data['Trigger'] ?? 'CostCenterLocked',
         );
     }

@@ -19,7 +19,7 @@ final readonly class QuoteConvertedFromLead
         return new self(
             id: (int) ($data['ID'] ?? 0),
             leadName: $data['LeadName'] ?? null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

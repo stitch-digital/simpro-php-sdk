@@ -5,28 +5,118 @@
   },
   "data": {
     "ID": 1,
-    "InvoiceNo": "INV-001",
-    "Status": "Unpaid",
+    "InternalID": "INV-001",
+    "Type": "TaxInvoice",
     "Customer": {
       "ID": 5,
       "CompanyName": "Acme Corp",
-      "Type": "Company"
+      "GivenName": "John",
+      "FamilyName": "Smith"
     },
-    "Site": {
-      "ID": 10,
-      "Name": "123 Main St"
-    },
-    "OrderNo": "ORD-001",
-    "Description": "Kitchen Renovation - Progress Claim 1",
+    "Jobs": [
+      {
+        "ID": 100,
+        "Description": "Kitchen renovation",
+        "Total": {
+          "ExTax": 4545.45,
+          "Tax": 454.55,
+          "IncTax": 5000.00
+        }
+      }
+    ],
+    "RecurringInvoice": null,
     "DateIssued": "2024-01-20",
-    "DateDue": "2024-02-19",
-    "Totals": {
-      "TotalExTax": 4545.45,
-      "TotalIncTax": 5000.00,
-      "TotalTax": 454.55,
-      "AmountDue": 5000.00,
-      "AmountPaid": 0.00
+    "Period": {
+      "StartDate": "2024-01-01",
+      "EndDate": "2024-01-31"
     },
-    "DateModified": "2024-01-20T16:00:00Z"
+    "PaymentTermID": 1,
+    "PaymentTerms": {
+      "Days": 30,
+      "Type": "Invoice",
+      "DueDate": "2024-02-19"
+    },
+    "ProgressClaimNumber": 1,
+    "IsFinalClaim": false,
+    "Stage": "Approved",
+    "PerItem": false,
+    "OrderNo": "ORD-001",
+    "LatePaymentFee": false,
+    "CISDeductionRate": null,
+    "ExchangeRate": 1.0,
+    "AccountingCategory": {
+      "ID": 10,
+      "Name": "General"
+    },
+    "Status": {
+      "ID": 1,
+      "Name": "Unpaid"
+    },
+    "AutoAdjustStatus": true,
+    "Description": "Kitchen Renovation - Progress Claim 1",
+    "Notes": "Payment due within 30 days",
+    "Total": {
+      "ExTax": 4545.45,
+      "IncTax": 5000.00,
+      "Tax": 454.55,
+      "ReverseChargeTax": 0.00,
+      "AmountApplied": 0.00,
+      "BalanceDue": 5000.00
+    },
+    "IsRetainage": false,
+    "Retainage": [],
+    "RetainageRebate": null,
+    "IsPaid": false,
+    "DatePaid": null,
+    "Currency": "AUD",
+    "DateCreated": "2024-01-20T10:00:00Z",
+    "DateModified": "2024-01-20T16:00:00Z",
+    "CustomFields": [],
+    "CostCenters": [
+      {
+        "ID": 1,
+        "Name": "Labor",
+        "JobID": 100,
+        "RecurringInvoiceID": null,
+        "SectionID": 1,
+        "CostCenter": {
+          "ID": 5,
+          "Name": "Labor"
+        },
+        "Total": {
+          "ExTax": 4545.45,
+          "IncTax": 5000.00
+        },
+        "Claim": {
+          "ExTax": 4545.45,
+          "IncTax": 5000.00,
+          "Percent": 100.0
+        },
+        "Items": [
+          {
+            "ID": 1,
+            "Item": {
+              "ID": 10,
+              "PartNo": "LAB-001",
+              "Name": "Standard Labor",
+              "Type": "Labor"
+            },
+            "Quantity": {
+              "Total": 8.0,
+              "Remaining": 0.0,
+              "Claimed": 8.0
+            },
+            "UnitPrice": {
+              "ExTax": 568.18,
+              "IncTax": 625.00
+            },
+            "Total": {
+              "ExTax": 4545.45,
+              "IncTax": 5000.00
+            }
+          }
+        ]
+      }
+    ]
   }
 }

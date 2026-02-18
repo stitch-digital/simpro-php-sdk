@@ -37,7 +37,7 @@ final readonly class LaborItem
             hours: isset($data['Hours']) ? (float) $data['Hours'] : null,
             unitCost: isset($data['UnitCost']) ? (float) $data['UnitCost'] : null,
             totalCost: isset($data['TotalCost']) ? (float) $data['TotalCost'] : null,
-            dateCreated: isset($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
+            dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
         );
     }
 }

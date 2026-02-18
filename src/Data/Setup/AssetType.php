@@ -42,14 +42,14 @@ final readonly class AssetType
         return new self(
             id: (int) $data['ID'],
             name: $data['Name'] ?? null,
-            reference: isset($data['Reference']) ? AssetTypeReference::fromArray($data['Reference']) : null,
+            reference: ! empty($data['Reference']) ? AssetTypeReference::fromArray($data['Reference']) : null,
             regType: (int) ($data['RegType'] ?? 0),
-            jobCostCenter: isset($data['JobCostCenter']) ? Reference::fromArray($data['JobCostCenter']) : null,
-            quoteCostCenter: isset($data['QuoteCostCenter']) ? Reference::fromArray($data['QuoteCostCenter']) : null,
-            defaultTechnician: isset($data['DefaultTechnician']) ? StaffReference::fromArray($data['DefaultTechnician']) : null,
+            jobCostCenter: ! empty($data['JobCostCenter']) ? Reference::fromArray($data['JobCostCenter']) : null,
+            quoteCostCenter: ! empty($data['QuoteCostCenter']) ? Reference::fromArray($data['QuoteCostCenter']) : null,
+            defaultTechnician: ! empty($data['DefaultTechnician']) ? StaffReference::fromArray($data['DefaultTechnician']) : null,
             description: $data['Description'] ?? null,
             archived: (bool) ($data['Archived'] ?? false),
-            serviceLevels: isset($data['ServiceLevels'])
+            serviceLevels: ! empty($data['ServiceLevels'])
                 ? array_map(fn (array $item): AssetTypeServiceLevel => AssetTypeServiceLevel::fromArray($item), $data['ServiceLevels'])
                 : null,
         );

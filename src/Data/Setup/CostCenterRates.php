@@ -22,8 +22,8 @@ final readonly class CostCenterRates
     public static function fromArray(array $data): self
     {
         return new self(
-            serviceFee: isset($data['ServiceFee']['ID']) ? Reference::fromArray($data['ServiceFee']) : null,
-            laborRate: isset($data['LaborRate']['ID']) ? Reference::fromArray($data['LaborRate']) : null,
+            serviceFee: ! empty($data['ServiceFee']['ID']) ? Reference::fromArray($data['ServiceFee']) : null,
+            laborRate: ! empty($data['LaborRate']['ID']) ? Reference::fromArray($data['LaborRate']) : null,
         );
     }
 }
