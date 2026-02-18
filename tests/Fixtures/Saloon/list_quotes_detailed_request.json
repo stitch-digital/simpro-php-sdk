@@ -1,0 +1,41 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Result-Total": "1",
+        "Result-Pages": "1"
+    },
+    "data": [
+        {
+            "ID": 1,
+            "Type": "Project",
+            "Name": "Kitchen Quote",
+            "Site": {
+                "ID": 10,
+                "Name": "123 Main St"
+            },
+            "Customer": {
+                "ID": 5,
+                "CompanyName": "Acme Corp",
+                "GivenName": "John",
+                "FamilyName": "Smith"
+            },
+            "Status": {
+                "ID": 1,
+                "Name": "Approved",
+                "Color": "#00FF00"
+            },
+            "Stage": "Won",
+            "OrderNo": "QTE-001",
+            "Description": "Full kitchen renovation quote",
+            "DateIssued": "2024-01-10",
+            "DueDate": "2024-02-28",
+            "Total": {
+                "ExTax": 13636.36,
+                "Tax": 1363.64,
+                "IncTax": 15000.00
+            },
+            "DateModified": "2024-01-15T14:20:00Z"
+        }
+    ]
+}

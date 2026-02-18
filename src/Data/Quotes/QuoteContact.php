@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Data\Quotes;
 
-final readonly class QuoteCustomer
+final readonly class QuoteContact
 {
     public function __construct(
         public int $id,
-        public ?string $companyName,
         public ?string $givenName,
         public ?string $familyName,
     ) {}
@@ -17,7 +16,6 @@ final readonly class QuoteCustomer
     {
         return new self(
             id: (int) ($data['ID'] ?? 0),
-            companyName: $data['CompanyName'] ?? null,
             givenName: $data['GivenName'] ?? null,
             familyName: $data['FamilyName'] ?? null,
         );

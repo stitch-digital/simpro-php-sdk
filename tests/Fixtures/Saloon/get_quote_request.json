@@ -1,34 +1,160 @@
 {
-  "statusCode": 200,
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "data": {
-    "ID": 1,
-    "Name": "Kitchen Quote",
-    "Site": {
-      "ID": 10,
-      "Name": "123 Main St"
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json"
     },
-    "Customer": {
-      "ID": 5,
-      "CompanyName": "Acme Corp",
-      "Type": "Company"
-    },
-    "Status": "Approved",
-    "Stage": "Won",
-    "OrderNo": "QTE-001",
-    "Description": "Full kitchen renovation quote",
-    "Notes": "Valid for 30 days",
-    "DateIssued": "2024-01-10",
-    "DueDate": "2024-02-28",
-    "ExpiryDate": "2024-02-10",
-    "Totals": {
-      "TotalExTax": 13636.36,
-      "TotalIncTax": 15000.00,
-      "TotalTax": 1363.64,
-      "TotalCost": 10000.00
-    },
-    "DateModified": "2024-01-15T14:20:00Z"
-  }
+    "data": {
+        "ID": 1,
+        "Type": "Project",
+        "Name": "Kitchen Quote",
+        "Site": {
+            "ID": 10,
+            "Name": "123 Main St"
+        },
+        "Customer": {
+            "ID": 5,
+            "CompanyName": "Acme Corp",
+            "GivenName": "John",
+            "FamilyName": "Smith"
+        },
+        "AdditionalCustomers": [],
+        "CustomerContact": {
+            "ID": 20,
+            "GivenName": "Jane",
+            "FamilyName": "Doe"
+        },
+        "AdditionalContacts": [],
+        "SiteContact": {
+            "ID": 21,
+            "GivenName": "Bob",
+            "FamilyName": "Jones"
+        },
+        "ConvertedFromLead": {
+            "ID": 50,
+            "LeadName": "Kitchen Lead",
+            "DateCreated": "2023-12-01"
+        },
+        "Salesperson": {
+            "ID": 100,
+            "Name": "Alice Sales"
+        },
+        "ProjectManager": {
+            "ID": 101,
+            "Name": "Bob Manager"
+        },
+        "Technicians": [
+            {
+                "ID": 102,
+                "Name": "Charlie Tech",
+                "Type": "employee"
+            }
+        ],
+        "Technician": {
+            "ID": 102,
+            "Name": "Charlie Tech",
+            "Type": "employee"
+        },
+        "Status": {
+            "ID": 1,
+            "Name": "Approved",
+            "Color": "#00FF00"
+        },
+        "Stage": "Won",
+        "OrderNo": "QTE-001",
+        "RequestNo": "REQ-001",
+        "Description": "Full kitchen renovation quote",
+        "Notes": "Valid for 30 days",
+        "DateIssued": "2024-01-10",
+        "DueDate": "2024-02-28",
+        "DateApproved": "2024-01-15",
+        "ValidityDays": 30,
+        "IsClosed": false,
+        "ArchiveReason": {
+            "ID": 0,
+            "ArchiveReason": ""
+        },
+        "CustomerStage": "Active",
+        "JobNo": "J-1234",
+        "IsVariation": false,
+        "LinkedJobId": 0,
+        "Forecast": {
+            "Year": 2024,
+            "Month": 3,
+            "Percent": 80
+        },
+        "Total": {
+            "ExTax": 13636.36,
+            "Tax": 1363.64,
+            "IncTax": 15000.00
+        },
+        "Totals": {
+            "MaterialsCost": {
+                "Estimate": 5000.00,
+                "Revized": 5200.00
+            },
+            "ResourcesCost": {
+                "Total": {
+                    "Estimate": 3000.00,
+                    "Revized": 3100.00
+                },
+                "Labor": {
+                    "Estimate": 2000.00,
+                    "Revized": 2100.00
+                }
+            },
+            "MaterialsMarkup": {
+                "Estimate": 2500.00,
+                "Revized": 2600.00
+            },
+            "ResourcesMarkup": {
+                "Total": {
+                    "Estimate": 1500.00,
+                    "Revized": 1550.00
+                }
+            },
+            "Adjusted": {
+                "Estimate": 12000.00,
+                "Revized": 12450.00
+            },
+            "MembershipDiscount": 0.00,
+            "Discount": 500.00,
+            "STCs": 0.00,
+            "VEECs": 0.00,
+            "GrossProfitLoss": {
+                "Estimate": 4000.00,
+                "Revized": 4150.00
+            },
+            "GrossMargin": {
+                "Estimate": 33.33,
+                "Revized": 33.33
+            },
+            "NettProfitLoss": {
+                "Estimate": 3500.00,
+                "Revized": 3650.00
+            },
+            "NettMargin": {
+                "Estimate": 29.17,
+                "Revized": 29.32
+            }
+        },
+        "Tags": [
+            {
+                "ID": 1,
+                "Name": "Renovation"
+            },
+            {
+                "ID": 2,
+                "Name": "Kitchen"
+            }
+        ],
+        "AutoAdjustStatus": true,
+        "CustomFields": [],
+        "STC": {
+            "STCsEligible": false,
+            "VEECsEligible": false,
+            "STCValue": 0.00,
+            "VEECValue": 0.00
+        },
+        "DateModified": "2024-01-15T14:20:00Z"
+    }
 }

@@ -12,8 +12,10 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CreateQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\DeleteQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\GetQuoteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Quotes\ListQuotesDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\ListQuotesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\UpdateQuoteRequest;
+use Simpro\PhpSdk\Simpro\Scopes\Quotes\QuoteScope;
 
 /**
  * @property AbstractSimproConnector $connector
@@ -30,9 +32,7 @@ final class QuoteResource extends BaseResource
     /**
      * List all quotes.
      *
-     * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
-     *
-     * @param  array<string, mixed>  $filters  Initial filters to apply
+     * @param  array<string, mixed>  $filters
      */
     public function list(array $filters = []): QueryBuilder
     {
@@ -47,6 +47,34 @@ final class QuoteResource extends BaseResource
         }
 
         return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all quotes with detailed information.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListQuotesDetailedRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * Get a scope for a specific quote to access nested resources.
+     */
+    public function quote(int|string $quoteId): QuoteScope
+    {
+        return new QuoteScope($this->connector, $this->companyId, $quoteId);
     }
 
     /**

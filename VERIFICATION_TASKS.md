@@ -303,20 +303,83 @@ Many Simpro API list endpoints support returning the full detailed DTO instead o
 
 ---
 
-### 8. Quotes Resource
-**Files:** `src/Resources/QuoteResource.php`, `src/Data/Quotes/`
+### 8. Quotes Resource ✅ VERIFIED
+**Files:** `src/Resources/QuoteResource.php`, `src/Resources/Quotes/`, `src/Data/Quotes/`, `src/Scopes/Quotes/`
 
 | Check | Status | Notes |
 |-------|--------|-------|
-| List endpoint | [ ] | GET /api/v1.0/companies/{companyID}/quotes/ |
-| Get endpoint | [ ] | GET /api/v1.0/companies/{companyID}/quotes/{quoteID} |
-| Create endpoint | [ ] | POST /api/v1.0/companies/{companyID}/quotes/ |
-| Update endpoint | [ ] | PATCH /api/v1.0/companies/{companyID}/quotes/{quoteID} |
-| Delete endpoint | [ ] | DELETE /api/v1.0/companies/{companyID}/quotes/{quoteID} |
-| Response DTO (List) | [ ] | |
-| Response DTO (Detail) | [ ] | |
-| Request body DTO | [ ] | |
-| Tests | [ ] | |
+| List endpoint | [x] | GET /api/v1.0/companies/{companyID}/quotes/ |
+| Get endpoint | [x] | GET /api/v1.0/companies/{companyID}/quotes/{quoteID} |
+| Create endpoint | [x] | POST /api/v1.0/companies/{companyID}/quotes/ |
+| Update endpoint | [x] | PATCH /api/v1.0/companies/{companyID}/quotes/{quoteID} |
+| Delete endpoint | [x] | DELETE /api/v1.0/companies/{companyID}/quotes/{quoteID} |
+| Response DTO (List) | [x] | QuoteListItem |
+| Response DTO (Detail) | [x] | Quote - ~25 new fields added |
+| Detailed list support | [x] | listDetailed() added |
+| Request body DTO | [x] | Uses array |
+| Tests | [x] | Updated fixtures and assertions |
+
+**Major fixes applied:**
+- `QuoteCustomer`: Removed `type`, added `givenName`, `familyName`
+- `QuoteTotals`: Rewritten with nested `JobCostBreakdown`, `JobResourcesCost`, `JobResourcesMarkup`
+- `Quote`: Added ~25 fields: `type`, `additionalCustomers`, `customerContact`, `additionalContacts`, `siteContact`, `convertedFromLead`, `salesperson`, `projectManager`, `technicians`, `technician`, `dateApproved`, `validityDays`, `requestNo`, `isClosed`, `archiveReason`, `customerStage`, `jobNo`, `isVariation`, `linkedJobId`, `forecast`, `tags`, `autoAdjustStatus`, `customFields`, `stc`
+- Status is now polymorphic (`QuoteStatus|string|null`)
+- Total is now polymorphic (`QuoteTotal|float|null`)
+- Created 6 new supporting DTOs: `QuoteContact`, `QuoteConvertedFromLead`, `QuoteArchiveReasonRef`, `QuoteForecast`, `QuoteStatus`, `QuoteStc`
+
+#### 8.1 Quote Sections ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | |
+| Update endpoint | [x] | |
+| Delete endpoint | [x] | |
+| DTOs | [x] | QuoteSectionListItem, QuoteSection |
+
+#### 8.2 Quote Cost Centers ✅ VERIFIED
+| Check | Status | Notes |
+|-------|--------|-------|
+| List endpoint | [x] | |
+| Get endpoint | [x] | |
+| Create endpoint | [x] | |
+| Update endpoint | [x] | |
+| Delete endpoint | [x] | |
+| DTOs | [x] | Reuses Job CostCenter/CostCenterListItem DTOs |
+
+#### 8.3 Quote Cost Center Sub-resources ✅ VERIFIED
+- [x] Assets (List, Get, Create, Update)
+- [x] Catalogs (List, Get, Create, Update, Delete)
+- [x] ContractorJobs (List, Get, Create, Update, Delete)
+- [x] Labor (List, Get, Create, Update, Delete)
+- [x] OneOffs (List, Get, Create, Update, Delete)
+- [x] Prebuilds (List, Get, Create, Delete)
+- [x] Schedules (List, Get, Create, Update, Delete)
+- [x] ServiceFees (List, Get, Create, Update, Delete)
+- [x] Tasks (List, Get)
+- [x] WorkOrders (List, Get, Create, Update)
+
+#### 8.4 Quote Attachments ✅ VERIFIED
+- [x] Files (List, Get, Create)
+- [x] Folders (List, Get, Create)
+
+#### 8.5 Quote Custom Fields ✅ VERIFIED
+- [x] List, Get (reuses JobCustomFieldValue DTO)
+
+#### 8.6 Quote Notes ✅ VERIFIED
+- [x] List, Get, Create, Update, Delete
+- [x] QuoteNote DTO with subject, note, dates, assignTo, createdBy
+
+#### 8.7 Quote Lock ✅ VERIFIED
+- [x] Create (POST), Delete
+
+#### 8.8 Quote Tasks ✅ VERIFIED
+- [x] List, Get
+- [x] QuoteTask DTO with subject, description, notes, assignees, isBillable, percentComplete
+
+#### 8.9 Quote Timelines ✅ VERIFIED
+- [x] List
+- [x] QuoteTimeline DTO with type, message, staff, date
 
 ---
 
@@ -780,7 +843,7 @@ Verify these shared DTOs are accurate across all usages:
 | Schedules          | [x]      | 0            | 0               |
 | Jobs               | [x]      | 12           | 12              |
 | Customers          | [x]      | 8            | 8               |
-| Quotes             | [ ]      | 0            | 0               |
+| Quotes             | [x]      | 25+          | 25+             |
 | Invoices           | [ ]      | 0            | 0               |
 | Employees          | [ ]      | 0            | 0               |
 | Reports            | [ ]      | 0            | 0               |
