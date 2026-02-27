@@ -1,0 +1,44 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 501,
+      "Staff": {
+        "ID": 10,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 10
+      },
+      "WorkOrderDate": "2026-02-20",
+      "Project": {
+        "ID": 1001,
+        "Name": "Office Fitout",
+        "SectionID": 5,
+        "CostCenterID": 12,
+        "CostCenterName": "Labour"
+      }
+    },
+    {
+      "ID": 502,
+      "Staff": {
+        "ID": 20,
+        "Name": "Jane Doe",
+        "Type": "contractor",
+        "TypeId": 20
+      },
+      "WorkOrderDate": "2026-02-21",
+      "Project": {
+        "ID": 2002,
+        "Name": "HVAC Install",
+        "SectionID": 8,
+        "CostCenterID": 15,
+        "CostCenterName": "Materials"
+      }
+    }
+  ]
+}

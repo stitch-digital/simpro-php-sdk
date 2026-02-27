@@ -1,0 +1,52 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 101,
+      "CostCenter": {
+        "ID": 5,
+        "Name": "Labour"
+      },
+      "Name": "Main Labour Cost Centre",
+      "Job": {
+        "ID": 1001,
+        "Type": "Project",
+        "Name": "Office Fitout",
+        "Stage": "In Progress",
+        "Status": "Active"
+      },
+      "Section": {
+        "ID": 10,
+        "Name": "Section A"
+      },
+      "DateModified": "2026-02-15T10:30:00+00:00",
+      "_href": "/api/v1.0/companies/0/jobs/1001/sections/10/costCenters/101"
+    },
+    {
+      "ID": 202,
+      "CostCenter": {
+        "ID": 8,
+        "Name": "Materials"
+      },
+      "Name": "Materials Cost Centre",
+      "Job": {
+        "ID": 2002,
+        "Type": "Service",
+        "Name": "HVAC Maintenance",
+        "Stage": "Pending",
+        "Status": "Open"
+      },
+      "Section": {
+        "ID": 20,
+        "Name": "Section B"
+      },
+      "DateModified": "2026-02-20T14:00:00+00:00",
+      "_href": "/api/v1.0/companies/0/jobs/2002/sections/20/costCenters/202"
+    }
+  ]
+}

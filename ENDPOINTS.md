@@ -34,8 +34,10 @@ This file serves as the single source of truth for SDK development progress, arc
 | Info | 1 | 0 | 1 |
 | Reports | 2 | 0 | 2 |
 | Setup | 186 | ~0 | ~186 |
-| **Other** | 0 | ~679 | ~679 |
-| **Total** | **399** | **967** | **1366** |
+| JobCostCenters | 1 | 0 | 1 |
+| JobWorkOrders | 1 | 1 | 2 |
+| **Other** | 0 | ~677 | ~677 |
+| **Total** | **401** | **965** | **1366** |
 
 ### Implemented Resources Summary
 
@@ -55,6 +57,8 @@ This file serves as the single source of truth for SDK development progress, arc
 | Employees | `list()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 29 | 8 |
 | CurrentUser | `get()` | 1 | 1 |
 | Reports | `jobCostToCompleteFinancial()`, `jobCostToCompleteOperations()` | 2 | 2 |
+| JobCostCenters | `list()` | 1 | 2 |
+| JobWorkOrders | `list()`, `listDetailed()` | 2 | 5 |
 | Setup | Webhooks, TaxCodes, PaymentMethods, PaymentTerms, CustomerGroups, Zones, AccountingCategories, BusinessGroups, ChartOfAccounts, CostCenters, CustomFields (19 types), AssetTypes (deep nesting), Labor (5 resources), Materials (5 resources), Activities, ArchiveReasons, AssetServiceLevels, Commissions, Currencies, CustomerProfiles, Defaults, ResponseTimes, SecurityGroups, StatusCodes, Tags, TaskCategories, Teams | 186 | 75+ |
 
 ---
@@ -2054,14 +2058,14 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: JobCostCenters
 
-- [ ] `GET /api/v1.0/companies/{companyID}/jobCostCenters/`
+- [x] `GET /api/v1.0/companies/{companyID}/jobCostCenters/`
   - **Description**: List all cost centers.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
 ### Nested: JobWorkOrders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/jobWorkOrders/`
+- [x] `GET /api/v1.0/companies/{companyID}/jobWorkOrders/`
   - **Description**: List all job work orders.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object

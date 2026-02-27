@@ -1,0 +1,97 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 501,
+      "Staff": {
+        "ID": 10,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 10
+      },
+      "WorkOrderDate": "2026-02-20",
+      "Project": {
+        "ID": 1001,
+        "Name": "Office Fitout",
+        "SectionID": 5,
+        "CostCenterID": 12,
+        "CostCenterName": "Labour"
+      },
+      "DescriptionNotes": "Install new electrical wiring in meeting rooms",
+      "MaterialNotes": "Use CAT6 cables only",
+      "Approved": true,
+      "Materials": [
+        {
+          "ID": 301,
+          "Name": "CAT6 Cable 100m",
+          "Quantity": 5
+        }
+      ],
+      "Blocks": [
+        {
+          "Hrs": 4.5,
+          "StartTime": "08:00 AM",
+          "ISO8601StartTime": "2026-02-20T08:00:00+10:00",
+          "EndTime": "12:30 PM",
+          "ISO8601EndTime": "2026-02-20T12:30:00+10:00",
+          "ScheduleRate": {
+            "ID": 1,
+            "Name": "Standard"
+          }
+        }
+      ],
+      "ScheduledHrs": 4.5,
+      "ScheduledStartTime": "08:00 AM",
+      "ISO8601ScheduledStartTime": "2026-02-20T08:00:00+10:00",
+      "ScheduledEndTime": "12:30 PM",
+      "ISO8601ScheduledEndTime": "2026-02-20T12:30:00+10:00",
+      "DateModified": "2026-02-19T14:30:00+10:00",
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 1,
+            "Name": "Priority",
+            "Type": "Text",
+            "IsMandatory": false,
+            "ListItems": null
+          },
+          "Value": "High"
+        }
+      ]
+    },
+    {
+      "ID": 502,
+      "Staff": {
+        "ID": 20,
+        "Name": "Jane Doe",
+        "Type": "contractor",
+        "TypeId": 20
+      },
+      "WorkOrderDate": "2026-02-21",
+      "Project": {
+        "ID": 2002,
+        "Name": "HVAC Install",
+        "SectionID": 8,
+        "CostCenterID": 15,
+        "CostCenterName": "Materials"
+      },
+      "DescriptionNotes": "Replace HVAC units on level 3",
+      "MaterialNotes": null,
+      "Approved": false,
+      "Materials": [],
+      "Blocks": [],
+      "ScheduledHrs": 8.0,
+      "ScheduledStartTime": "07:00 AM",
+      "ISO8601ScheduledStartTime": "2026-02-21T07:00:00+10:00",
+      "ScheduledEndTime": "03:00 PM",
+      "ISO8601ScheduledEndTime": "2026-02-21T15:00:00+10:00",
+      "DateModified": "2026-02-20T09:00:00+10:00",
+      "CustomFields": []
+    }
+  ]
+}
