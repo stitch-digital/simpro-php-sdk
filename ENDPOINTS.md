@@ -48,7 +48,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Companies | `list()`, `listDetailed()`, `get()`, `getDefault()`, `findByName()` | 3 | 6 |
 | ActivitySchedules | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 2 |
 | Jobs | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 126 | 47+ |
-| Customers | `list()`, `listCompanies()`, `listCompaniesDetailed()`, `getCompany()`, `createCompany()`, `updateCompany()`, `deleteCompany()` | 41 | 30+ |
+| Customers | `list()`, `listDetailed()`, `listCompanies()`, `listCompaniesDetailed()`, `getCompany()`, `createCompany()`, `updateCompany()`, `deleteCompany()` | 42 | 30+ |
 | ↳ Individuals | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` | (included above) | |
 | ↳ Contacts | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + customFields | (included above) | |
 | ↳ Contracts | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + inflation, laborRates, serviceLevels, customFields | (included above) | |

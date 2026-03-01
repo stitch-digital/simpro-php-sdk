@@ -1,0 +1,125 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 5,
+      "_href": "/api/v1.0/companies/0/customers/companies/5",
+      "CompanyName": "11 Howard Hotel",
+      "GivenName": "",
+      "FamilyName": "",
+      "Phone": "",
+      "Address": {
+        "Address": "11 Howard Street",
+        "City": "New York",
+        "State": "NY",
+        "PostalCode": "10013",
+        "Country": "United States"
+      },
+      "BillingAddress": {
+        "Address": "11 Howard Street",
+        "City": "New York",
+        "State": "NY",
+        "PostalCode": "10013",
+        "Country": "United States"
+      },
+      "CustomerType": "Customer",
+      "Tags": [],
+      "AmountOwing": 0,
+      "Profile": {
+        "Notes": "",
+        "CustomerProfile": null,
+        "CustomerGroup": null,
+        "AccountManager": {
+          "ID": 16,
+          "Name": "Sarah Glosenger"
+        },
+        "Currency": {
+          "ID": "USD",
+          "Name": "US Dollar",
+          "Visible": true
+        },
+        "ServiceJobCostCenter": null
+      },
+      "Banking": {
+        "AccountName": "",
+        "RoutingNo": "",
+        "AccountNo": "",
+        "PaymentMethod": null,
+        "PaymentTermID": 11,
+        "PaymentTerms": {
+          "Days": 30,
+          "Type": "Invoice"
+        },
+        "CreditLimit": -1,
+        "OnStop": false,
+        "Retention": "exGST",
+        "VendorOrderNoRequired": false
+      },
+      "Archived": false,
+      "Sites": [
+        {
+          "ID": 3755,
+          "Name": "11 Howard Hotel"
+        }
+      ],
+      "Contracts": [],
+      "Contacts": [],
+      "ResponseTimes": [],
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 2,
+            "Name": "Sales Tax Exemption #",
+            "Type": "Text",
+            "IsMandatory": false,
+            "ListItems": []
+          },
+          "Value": null
+        }
+      ],
+      "Email": "",
+      "DateModified": "2025-11-15T20:10:30-05:00",
+      "DateCreated": "2025-09-22T14:51:18-04:00"
+    },
+    {
+      "ID": 10,
+      "_href": "/api/v1.0/companies/0/customers/individuals/10",
+      "CompanyName": "",
+      "GivenName": "Jane",
+      "FamilyName": "Smith",
+      "Phone": "555-1234",
+      "Address": {
+        "Address": "42 Maple Ave",
+        "City": "Boston",
+        "State": "MA",
+        "PostalCode": "02101",
+        "Country": "United States"
+      },
+      "BillingAddress": null,
+      "CustomerType": "Customer",
+      "Tags": [
+        {
+          "ID": 1,
+          "Name": "Residential"
+        }
+      ],
+      "AmountOwing": 250.50,
+      "Profile": null,
+      "Banking": null,
+      "Archived": false,
+      "Sites": [],
+      "Contracts": [],
+      "Contacts": [],
+      "ResponseTimes": [],
+      "CustomFields": [],
+      "Email": "jane.smith@email.com",
+      "DateModified": "2025-12-01T10:00:00-05:00",
+      "DateCreated": "2025-06-15T09:30:00-04:00"
+    }
+  ]
+}

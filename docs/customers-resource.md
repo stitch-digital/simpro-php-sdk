@@ -17,7 +17,37 @@ foreach ($customers->items() as $customer) {
 }
 ```
 
-**Note:** For full customer details (email, phone, address, etc.), use `getCompany()` to retrieve individual customers by ID.
+**Note:** For full customer details, use `listDetailed()` below or `getCompany()` to retrieve individual customers by ID.
+
+### List All Customers with Full Details
+
+Returns all customers (both companies and individuals) with all available fields in a single request:
+
+```php
+$customers = $connector->customers(companyId: 0)->listDetailed();
+
+foreach ($customers->items() as $customer) {
+    $name = $customer->companyName ?: "{$customer->givenName} {$customer->familyName}";
+    echo "{$customer->id}: {$name}\n";
+    echo "  Email: {$customer->email}\n";
+    echo "  Phone: {$customer->phone}\n";
+    echo "  Amount Owing: {$customer->amountOwing}\n";
+
+    if ($customer->address) {
+        echo "  City: {$customer->address->city}\n";
+    }
+
+    foreach ($customer->tags ?? [] as $tag) {
+        echo "  Tag: {$tag->name}\n";
+    }
+
+    foreach ($customer->sites ?? [] as $site) {
+        echo "  Site: {$site->name}\n";
+    }
+}
+```
+
+**Note:** This method requests all available columns from the API (ID, _href, CompanyName, GivenName, FamilyName, Phone, Address, BillingAddress, CustomerType, Tags, AmountOwing, Profile, Banking, Archived, Sites, Contracts, Contacts, ResponseTimes, CustomFields, Email, DateModified, DateCreated), returning `CustomerCompanyListDetailedItem` objects. Use this when you need full details for all customer types to avoid N+1 queries.
 
 ### List Company Customers Only
 
@@ -282,11 +312,11 @@ Lightweight object returned by `list()` and `listCompanies()`. Contains only min
 | `givenName` | `string` | Given name (for individuals) |
 | `familyName` | `string` | Family name (for individuals) |
 
-**Note:** For full customer details, use `listCompaniesDetailed()` for bulk retrieval or `getCompany()` for individual customers.
+**Note:** For full customer details, use `listDetailed()` or `listCompaniesDetailed()` for bulk retrieval, or `getCompany()` for individual customers.
 
 ### CustomerCompanyListDetailedItem (Detailed List Response)
 
-Detailed object returned by `listCompaniesDetailed()` with all available columns:
+Detailed object returned by `listDetailed()` and `listCompaniesDetailed()` with all available columns:
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -671,7 +701,7 @@ foreach ($builder->items() as $customer) {
 
 ### Avoiding N+1 Queries
 
-When you need full details for multiple customers, use `listCompaniesDetailed()`:
+When you need full details for multiple customers, use `listDetailed()` (all customer types) or `listCompaniesDetailed()` (company customers only):
 
 ```php
 // Recommended: Use listCompaniesDetailed() for full data in a single request

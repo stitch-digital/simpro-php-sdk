@@ -14,6 +14,7 @@ use Simpro\PhpSdk\Simpro\Requests\Customers\DeleteCompanyCustomerRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\GetCompanyCustomerRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\ListCompanyCustomersDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\ListCompanyCustomersRequest;
+use Simpro\PhpSdk\Simpro\Requests\Customers\ListCustomersDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\ListCustomersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\UpdateCompanyCustomerRequest;
 use Simpro\PhpSdk\Simpro\Resources\Customers\CustomerIndividualResource;
@@ -41,6 +42,40 @@ final class CustomerResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListCustomersRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all customers (both companies and individuals) with all available columns.
+     *
+     * Returns CustomerCompanyListDetailedItem DTOs with all available columns including:
+     * Address, BillingAddress, CustomerType, Tags, AmountOwing, Profile, Banking,
+     * Sites, Contracts, Contacts, ResponseTimes, CustomFields, and timestamps.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     *
+     * @example
+     * // Get all customers with full details
+     * $customers = $connector->customers(companyId: 0)->listDetailed()->all();
+     *
+     * // With fluent search
+     * $result = $connector->customers(companyId: 0)->listDetailed()
+     *     ->search(Search::make()->column('CompanyName')->find('Acme'))
+     *     ->orderByDesc('DateModified')
+     *     ->collect();
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListCustomersDetailedRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
