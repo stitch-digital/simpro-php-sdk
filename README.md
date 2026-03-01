@@ -812,6 +812,7 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 - **[Employees](docs/employees-resource.md)** - Employee management with full CRUD operations
 - **[CurrentUser](docs/current-user-resource.md)** - Get authenticated user information
 - **[Reports](docs/reports-resource.md)** - Access job cost-to-complete reports (financial and operations)
+- **[Notes](docs/notes-resource.md)** - List customer notes across all customers with basic and detailed views (read-only)
 - **[Setup](docs/setup-resource.md)** - Configure system settings: webhooks, tax codes, payment methods, custom fields, labor rates, and more
 
 More resources will be added as development continues.

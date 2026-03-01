@@ -1,0 +1,72 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 101,
+      "Subject": "Initial consultation",
+      "Visibility": {
+        "Customer": true,
+        "Admin": false
+      },
+      "Customer": {
+        "ID": 201,
+        "CompanyName": "Acme Corp",
+        "GivenName": "John",
+        "FamilyName": "Doe"
+      },
+      "_href": "/api/v1.0/companies/0/customers/201/notes/101",
+      "Note": "<p>Discussed project requirements and timeline.</p>",
+      "DateCreated": "2026-02-15T10:30:00+11:00",
+      "FollowUpDate": "2026-03-01T09:00:00+11:00",
+      "Attachments": [
+        {
+          "_href": "/api/v1.0/companies/0/customers/201/notes/101/attachments/1",
+          "FileName": "proposal.pdf"
+        }
+      ],
+      "AssignTo": {
+        "ID": 10,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 10
+      },
+      "SubmittedBy": {
+        "ID": 15,
+        "Name": "Sarah Connor",
+        "Type": "employee",
+        "TypeId": 15
+      }
+    },
+    {
+      "ID": 102,
+      "Subject": "Follow-up required",
+      "Visibility": {
+        "Customer": false,
+        "Admin": true
+      },
+      "Customer": {
+        "ID": 202,
+        "CompanyName": "Beta Industries",
+        "GivenName": "Jane",
+        "FamilyName": "Smith"
+      },
+      "_href": "/api/v1.0/companies/0/customers/202/notes/102",
+      "Note": "<p>Customer requested a revised quote.</p>",
+      "DateCreated": "2026-02-20T14:00:00+11:00",
+      "FollowUpDate": null,
+      "Attachments": [],
+      "AssignTo": null,
+      "SubmittedBy": {
+        "ID": 10,
+        "Name": "John Smith",
+        "Type": "employee",
+        "TypeId": 10
+      }
+    }
+  ]
+}

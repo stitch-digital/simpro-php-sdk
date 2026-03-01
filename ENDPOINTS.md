@@ -36,8 +36,9 @@ This file serves as the single source of truth for SDK development progress, arc
 | Setup | 186 | ~0 | ~186 |
 | JobCostCenters | 1 | 0 | 1 |
 | JobWorkOrders | 1 | 1 | 2 |
-| **Other** | 0 | ~677 | ~677 |
-| **Total** | **401** | **965** | **1366** |
+| Notes | 1 | 1 | 2 |
+| **Other** | 0 | ~676 | ~676 |
+| **Total** | **402** | **964** | **1366** |
 
 ### Implemented Resources Summary
 
@@ -59,6 +60,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Reports | `jobCostToCompleteFinancial()`, `jobCostToCompleteOperations()` | 2 | 2 |
 | JobCostCenters | `list()` | 1 | 2 |
 | JobWorkOrders | `list()`, `listDetailed()` | 2 | 5 |
+| Notes | `customers()`, `customersDetailed()` | 2 | 4 |
 | Setup | Webhooks, TaxCodes, PaymentMethods, PaymentTerms, CustomerGroups, Zones, AccountingCategories, BusinessGroups, ChartOfAccounts, CostCenters, CustomFields (19 types), AssetTypes (deep nesting), Labor (5 resources), Materials (5 resources), Activities, ArchiveReasons, AssetServiceLevels, Commissions, Currencies, CustomerProfiles, Defaults, ResponseTimes, SecurityGroups, StatusCodes, Tags, TaskCategories, Teams | 186 | 75+ |
 
 ---
@@ -81,6 +83,7 @@ Track documentation for each implemented resource:
 | CurrentUser | [x] `docs/current-user-resource.md` | [x] | COMPLETE |
 | Reports | [x] `docs/reports-resource.md` | [x] | COMPLETE |
 | Setup | [x] `docs/setup-resource.md` | [x] | COMPLETE |
+| Notes | [x] `docs/notes-resource.md` | [x] | COMPLETE |
 
 ### Documentation Workflow
 
@@ -3048,7 +3051,7 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Customers
 
-- [ ] `GET /api/v1.0/companies/{companyID}/notes/customers/`
+- [x] `GET /api/v1.0/companies/{companyID}/notes/customers/`
   - **Description**: List all notes.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
