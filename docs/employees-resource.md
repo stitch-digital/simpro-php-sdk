@@ -439,6 +439,150 @@ foreach ($recentlyModified as $employee) {
 }
 ```
 
+## Nested Resources
+
+Employees have several nested resources accessible via the `employee()` scope method:
+
+```php
+$scope = $connector->employees(companyId: 0)->employee(employeeId: 123);
+```
+
+### Timesheets
+
+List timesheets for an employee:
+
+```php
+$timesheets = $connector->employees(0)->employee(123)->timesheets()->list()->all();
+
+foreach ($timesheets as $timesheet) {
+    echo "{$timesheet->id}: {$timesheet->date}\n";
+}
+```
+
+### Custom Fields
+
+Manage custom field values for an employee:
+
+```php
+// List all custom fields
+$fields = $connector->employees(0)->employee(123)->customFields()->list()->all();
+
+// Get a specific custom field
+$field = $connector->employees(0)->employee(123)->customFields()->get(1);
+
+// Update a custom field value
+$connector->employees(0)->employee(123)->customFields()->update(1, [
+    'Value' => 'New Value',
+]);
+```
+
+### Licences
+
+Full CRUD operations on employee licences:
+
+```php
+// List licences
+$licences = $connector->employees(0)->employee(123)->licences()->list()->all();
+
+// Get a specific licence
+$licence = $connector->employees(0)->employee(123)->licences()->get(456);
+
+// Create a licence
+$licenceId = $connector->employees(0)->employee(123)->licences()->create([
+    'Name' => 'Electrical Licence',
+    'LicenceNo' => 'EL-12345',
+    'ExpiryDate' => '2027-01-01',
+]);
+
+// Update a licence
+$connector->employees(0)->employee(123)->licences()->update(456, [
+    'ExpiryDate' => '2028-01-01',
+]);
+
+// Delete a licence
+$connector->employees(0)->employee(123)->licences()->delete(456);
+```
+
+#### Licence Attachment Files
+
+Manage file attachments on a specific licence:
+
+```php
+$scope = $connector->employees(0)->employee(123)->licence(456);
+
+// List attachments
+$files = $scope->attachmentFiles()->list()->all();
+
+// Get a specific file
+$file = $scope->attachmentFiles()->get(789);
+
+// Create an attachment
+$fileId = $scope->attachmentFiles()->create([...]);
+
+// Update an attachment
+$scope->attachmentFiles()->update(789, [...]);
+
+// Delete an attachment
+$scope->attachmentFiles()->delete(789);
+```
+
+### Attachment Folders
+
+Manage attachment folders for an employee:
+
+```php
+// List folders
+$folders = $connector->employees(0)->employee(123)->attachmentFolders()->list()->all();
+
+// Get a specific folder
+$folder = $connector->employees(0)->employee(123)->attachmentFolders()->get(10);
+
+// Create a folder
+$folderId = $connector->employees(0)->employee(123)->attachmentFolders()->create([
+    'Name' => 'Certifications',
+]);
+
+// Update a folder
+$connector->employees(0)->employee(123)->attachmentFolders()->update(10, [
+    'Name' => 'Updated Folder Name',
+]);
+
+// Delete a folder
+$connector->employees(0)->employee(123)->attachmentFolders()->delete(10);
+```
+
+### Attachment Files
+
+Manage file attachments for an employee:
+
+```php
+// List files
+$files = $connector->employees(0)->employee(123)->attachmentFiles()->list()->all();
+
+// Get a specific file
+$file = $connector->employees(0)->employee(123)->attachmentFiles()->get(789);
+
+// Create a file
+$fileId = $connector->employees(0)->employee(123)->attachmentFiles()->create([...]);
+
+// Update a file
+$connector->employees(0)->employee(123)->attachmentFiles()->update(789, [...]);
+
+// Delete a file
+$connector->employees(0)->employee(123)->attachmentFiles()->delete(789);
+```
+
+### Nested Resources Summary
+
+| Resource | List | Get | Create | Update | Delete |
+|----------|------|-----|--------|--------|--------|
+| Timesheets | ✓ | | | | |
+| Custom Fields | ✓ | ✓ | | ✓ | |
+| Licences | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Licence Attachments | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Attachment Folders | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Attachment Files | ✓ | ✓ | ✓ | ✓ | ✓ |
+
 ## Performance Considerations
 
 ### Pagination

@@ -73,17 +73,19 @@ Track documentation for each implemented resource:
 |----------|-------------------|---------------|--------|
 | Info | [x] `docs/info-resource.md` | [x] | COMPLETE |
 | Companies | [x] `docs/companies-resource.md` | [x] | COMPLETE |
-| ActivitySchedules | [ ] `docs/activity-schedules-resource.md` | [ ] | PENDING |
+| ActivitySchedules | [x] `docs/activity-schedules-resource.md` | [x] | COMPLETE |
 | Jobs | [x] `docs/jobs-resource.md` | [x] | COMPLETE |
 | Customers | [x] `docs/customers-resource.md` | [x] | COMPLETE |
 | Quotes | [x] `docs/quotes-resource.md` | [x] | COMPLETE |
 | Invoices | [x] `docs/invoices-resource.md` | [x] | COMPLETE |
 | Schedules | [x] `docs/schedules-resource.md` | [x] | COMPLETE |
-| Employees | [x] `docs/employees-resource.md` | [x] | NEEDS UPDATE (nested resources) |
+| Employees | [x] `docs/employees-resource.md` | [x] | COMPLETE |
 | CurrentUser | [x] `docs/current-user-resource.md` | [x] | COMPLETE |
 | Reports | [x] `docs/reports-resource.md` | [x] | COMPLETE |
 | Setup | [x] `docs/setup-resource.md` | [x] | COMPLETE |
 | Notes | [x] `docs/notes-resource.md` | [x] | COMPLETE |
+| JobCostCenters | [x] `docs/job-cost-centers-resource.md` | [x] | COMPLETE |
+| JobWorkOrders | [x] `docs/job-work-orders-resource.md` | [x] | COMPLETE |
 
 ### Documentation Workflow
 

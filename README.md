@@ -809,10 +809,13 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 - **[Quotes](docs/quotes-resource.md)** - Quote management with full CRUD operations
 - **[Invoices](docs/invoices-resource.md)** - Invoice management with full CRUD operations
 - **[Schedules](docs/schedules-resource.md)** - View job and activity schedules (read-only)
-- **[Employees](docs/employees-resource.md)** - Employee management with full CRUD operations
+- **[Activity Schedules](docs/activity-schedules-resource.md)** - Manage scheduled activities for staff members (full CRUD)
+- **[Employees](docs/employees-resource.md)** - Employee management with full CRUD operations and nested resources (timesheets, licences, custom fields, attachments)
 - **[CurrentUser](docs/current-user-resource.md)** - Get authenticated user information
 - **[Reports](docs/reports-resource.md)** - Access job cost-to-complete reports (financial and operations)
 - **[Notes](docs/notes-resource.md)** - List customer notes across all customers with basic and detailed views (read-only)
+- **[Job Cost Centers](docs/job-cost-centers-resource.md)** - List cost centers across all jobs (read-only)
+- **[Job Work Orders](docs/job-work-orders-resource.md)** - List work orders across all jobs with basic and detailed views (read-only)
 - **[Setup](docs/setup-resource.md)** - Configure system settings: webhooks, tax codes, payment methods, custom fields, labor rates, and more
 
 More resources will be added as development continues.
