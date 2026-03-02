@@ -39,6 +39,8 @@ final class QueryBuilder
     /** @var array<string, string> */
     private array $filters = [];
 
+    private ?string $ifModifiedSince = null;
+
     private ?SimproPaginator $paginator = null;
 
     public function __construct(
@@ -212,6 +214,16 @@ final class QueryBuilder
     }
 
     /**
+     * Set the If-Modified-Since header on the request.
+     */
+    public function ifModifiedSince(string $date): self
+    {
+        $this->ifModifiedSince = $date;
+
+        return $this;
+    }
+
+    /**
      * Add a raw filter parameter.
      */
     public function filter(string $key, string|int|float|bool $value): self
@@ -318,6 +330,11 @@ final class QueryBuilder
         // Apply raw filters
         foreach ($this->filters as $key => $value) {
             $this->request->query()->add($key, $value);
+        }
+
+        // Apply If-Modified-Since header
+        if ($this->ifModifiedSince !== null) {
+            $this->request->headers()->add('If-Modified-Since', $this->ifModifiedSince);
         }
     }
 }
