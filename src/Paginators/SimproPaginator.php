@@ -19,11 +19,7 @@ final class SimproPaginator extends PagedPaginator
 
     protected function isLastPage(Response $response): bool
     {
-        $currentPage = $this->currentPage;
-
-        $totalPages = $this->getTotalPages($response);
-
-        return $currentPage >= $totalPages;
+        return $this->currentPage >= $this->getTotalPages($response);
     }
 
     protected function getPageItems(Response $response, Request $request): array
@@ -64,7 +60,7 @@ final class SimproPaginator extends PagedPaginator
 
     protected function applyPagination(Request $request): Request
     {
-        $request->query()->add('page', $this->currentPage);
+        $request->query()->add('page', $this->page);
 
         if ($this->perPageLimit !== null) {
             $request->query()->add('pageSize', $this->perPageLimit);
