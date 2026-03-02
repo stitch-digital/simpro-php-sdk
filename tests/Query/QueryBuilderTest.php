@@ -428,6 +428,39 @@ describe('QueryBuilder method forwarding', function () {
     });
 });
 
+describe('QueryBuilder::ifModifiedSince()', function () {
+    it('sets the If-Modified-Since header on the request', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        $date = 'Sun, 01 Mar 2026 00:00:00 GMT';
+
+        $builder = $this->sdk->companies()->list()
+            ->ifModifiedSince($date);
+
+        // Trigger paginator creation which applies the header
+        $builder->first();
+
+        $pendingRequest = MockClient::getGlobal()->getLastPendingRequest();
+
+        expect($pendingRequest->headers()->get('If-Modified-Since'))->toBe($date);
+    });
+
+    it('is fluently chainable with other methods', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        $result = $this->sdk->companies()->list()
+            ->ifModifiedSince('Sun, 01 Mar 2026 00:00:00 GMT')
+            ->orderByDesc('Name')
+            ->first();
+
+        expect($result)->toBeInstanceOf(CompanyListItem::class);
+    });
+});
+
 describe('QueryBuilder full fluent chain', function () {
     it('supports complete fluent chain with search, order, and collect', function () {
         MockClient::global([
