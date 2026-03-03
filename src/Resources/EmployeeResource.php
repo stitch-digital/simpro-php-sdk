@@ -12,6 +12,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Employees\CreateEmployeeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\DeleteEmployeeRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\GetEmployeeRequest;
+use Simpro\PhpSdk\Simpro\Requests\Employees\ListEmployeesDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\ListEmployeesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Employees\UpdateEmployeeRequest;
 use Simpro\PhpSdk\Simpro\Scopes\Employees\EmployeeScope;
@@ -38,6 +39,30 @@ final class EmployeeResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListEmployeesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all employees with all available columns.
+     *
+     * Returns Employee DTOs with full nested data including Address, PrimaryContact,
+     * EmergencyContact, AccountSetup, UserProfile, AssignedCostCenters, Zones,
+     * CustomFields, Banking, PayRates, and timestamps.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListEmployeesDetailedRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
