@@ -38,6 +38,7 @@ final class ListJobsDetailedRequest extends Request implements Paginatable
     protected function defaultQuery(): array
     {
         return [
+            'display' => 'all',
             'columns' => implode(',', [
                 'ID',
                 'Type',
