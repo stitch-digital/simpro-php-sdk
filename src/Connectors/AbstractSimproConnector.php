@@ -16,6 +16,7 @@ use Simpro\PhpSdk\Simpro\Concerns\HasSimproCaching;
 use Simpro\PhpSdk\Simpro\Concerns\HasSimproRateLimits;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsActivitySchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsContractorsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCurrentUserEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCustomersEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsEmployeesEndpoints;
@@ -49,6 +50,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use HasTimeout;
     use SupportsActivitySchedulesEndpoints;
     use SupportsCompaniesEndpoints;
+    use SupportsContractorsEndpoints;
     use SupportsCurrentUserEndpoints;
     use SupportsCustomersEndpoints;
     use SupportsEmployeesEndpoints;

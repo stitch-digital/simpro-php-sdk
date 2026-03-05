@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2026-01-30 | **Progress:** 399/1366 endpoints (29.2%)
+> **Last Updated:** 2026-03-05 | **Progress:** 431/1366 endpoints (31.5%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -30,6 +30,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Invoices | 5 | ~20 | ~25 |
 | Schedules | 2 | ~28 | ~30 |
 | Employees | 29 | ~0 | ~29 |
+| Contractors | 29 | ~11 | ~40 |
 | CurrentUser | 1 | 0 | 1 |
 | Info | 1 | 0 | 1 |
 | Reports | 2 | 0 | 2 |
@@ -37,8 +38,8 @@ This file serves as the single source of truth for SDK development progress, arc
 | JobCostCenters | 1 | 0 | 1 |
 | JobWorkOrders | 1 | 1 | 2 |
 | Notes | 1 | 1 | 2 |
-| **Other** | 0 | ~676 | ~676 |
-| **Total** | **402** | **964** | **1366** |
+| **Other** | 0 | ~647 | ~647 |
+| **Total** | **431** | **935** | **1366** |
 
 ### Implemented Resources Summary
 
@@ -56,6 +57,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Invoices | `list()`, `get()`, `create()`, `update()`, `delete()` | 5 | 5 |
 | Schedules | `list()`, `get()` | 2 | 4 |
 | Employees | `list()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 29 | 8 |
+| Contractors | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + nested resources | 29 | 13 |
 | CurrentUser | `get()` | 1 | 1 |
 | Reports | `jobCostToCompleteFinancial()`, `jobCostToCompleteOperations()` | 2 | 2 |
 | JobCostCenters | `list()` | 1 | 2 |
@@ -80,6 +82,7 @@ Track documentation for each implemented resource:
 | Invoices | [x] `docs/invoices-resource.md` | [x] | COMPLETE |
 | Schedules | [x] `docs/schedules-resource.md` | [x] | COMPLETE |
 | Employees | [x] `docs/employees-resource.md` | [x] | COMPLETE |
+| Contractors | [ ] `docs/contractors-resource.md` | [ ] | TODO |
 | CurrentUser | [x] `docs/current-user-resource.md` | [x] | COMPLETE |
 | Reports | [x] `docs/reports-resource.md` | [x] | COMPLETE |
 | Setup | [x] `docs/setup-resource.md` | [x] | COMPLETE |
@@ -298,7 +301,7 @@ This section outlines the phased approach for implementing the remaining endpoin
 
 | Resource | Endpoints | Description |
 |----------|-----------|-------------|
-| Contractors | ~40 | Subcontractor management |
+| Contractors | ~40 (29 done) | Subcontractor management |
 | RecurringJobs/Invoices | ~50 | Automation |
 | CustomerAssets | ~30 | Asset tracking |
 | Reports | ~20 | Business intelligence |
@@ -1000,159 +1003,159 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: Contractors
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/`
   - **Description**: List all contractors.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/contractors/`
+- [x] `POST /api/v1.0/companies/{companyID}/contractors/`
   - **Description**: Create a new contractor.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}`
   - **Description**: Retrieve details for a specific contractor.
   - **Parameters**: `companyID`, `contractorID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}`
   - **Description**: Update a contractor.
   - **Parameters**: `companyID`, `contractorID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}`
   - **Description**: Delete a contractor.
   - **Parameters**: `companyID`, `contractorID`
   - **Response**: No Content
 
 #### Attachments > files
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/`
   - **Description**: List all contractor attachments.
   - **Parameters**: `companyID`, `contractorID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/`
+- [x] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/`
   - **Description**: Create a new contractor attachment.
   - **Parameters**: `companyID`, `contractorID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/{fileID}`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/{fileID}`
   - **Description**: Retrieve details for a specific contractor attachment.
   - **Parameters**: `companyID`, `contractorID`, `fileID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/{fileID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/{fileID}`
   - **Description**: Update a contractor attachment.
   - **Parameters**: `companyID`, `contractorID`, `fileID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/{fileID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/files/{fileID}`
   - **Description**: Delete a contractor attachment.
   - **Parameters**: `companyID`, `contractorID`, `fileID`
   - **Response**: No Content
 
 #### Attachments > folders
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/`
   - **Description**: List all contractor attachment folders.
   - **Parameters**: `companyID`, `contractorID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/`
+- [x] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/`
   - **Description**: Create a new contractor attachment folder.
   - **Parameters**: `companyID`, `contractorID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/{folderID}`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/{folderID}`
   - **Description**: Retrieve details for a specific contractor attachment folder.
   - **Parameters**: `companyID`, `contractorID`, `folderID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/{folderID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/{folderID}`
   - **Description**: Update a contractor attachment folder.
   - **Parameters**: `companyID`, `contractorID`, `folderID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/{folderID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/attachments/folders/{folderID}`
   - **Description**: Delete a contractor attachment folder.
   - **Parameters**: `companyID`, `contractorID`, `folderID`
   - **Response**: No Content
 
 #### CustomFields
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/customFields/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/customFields/`
   - **Description**: List all contractor custom fields.
   - **Parameters**: `companyID`, `contractorID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/customFields/{customFieldID}`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/customFields/{customFieldID}`
   - **Description**: Retrieve details for a specific contractor custom field.
   - **Parameters**: `companyID`, `contractorID`, `customFieldID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/customFields/{customFieldID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/customFields/{customFieldID}`
   - **Description**: Update a contractor custom field.
   - **Parameters**: `companyID`, `contractorID`, `customFieldID`
   - **Response**: No Content
 
 #### Licences
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/`
   - **Description**: List all contractor licences.
   - **Parameters**: `companyID`, `contractorID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/`
+- [x] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/`
   - **Description**: Create a new contractor licence.
   - **Parameters**: `companyID`, `contractorID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}`
   - **Description**: Retrieve details for a specific contractor licence.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}`
   - **Description**: Update a contractor licence.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}`
   - **Description**: Delete a contractor licence.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`
   - **Response**: No Content
 
 #### Licences > attachments > files
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/`
   - **Description**: List all contractor licence attachments.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/`
+- [x] `POST /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/`
   - **Description**: Create a new contractor licence attachment.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/{fileID}`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/{fileID}`
   - **Description**: Retrieve details for a specific contractor licence attachment.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`, `fileID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/{fileID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/{fileID}`
   - **Description**: Update a contractor licence attachment.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`, `fileID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/{fileID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/contractors/{contractorID}/licences/{licenceID}/attachments/files/{fileID}`
   - **Description**: Delete a contractor licence attachment.
   - **Parameters**: `companyID`, `contractorID`, `licenceID`, `fileID`
   - **Response**: No Content
 
 #### Timesheets
 
-- [ ] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/timesheets/`
+- [x] `GET /api/v1.0/companies/{companyID}/contractors/{contractorID}/timesheets/`
   - **Description**: List all contractor timesheets.
   - **Parameters**: `companyID`, `contractorID`, `search`?, `columns`?, `UID`?, `StartDate`?, `EndDate`?, `Includes`?, `ScheduleType`?
   - **Response**: Array of object

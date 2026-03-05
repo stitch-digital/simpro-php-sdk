@@ -1,0 +1,103 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1665,
+    "Name": "Bright Spark Electrical Limited",
+    "Position": "",
+    "Availability": [],
+    "Address": {
+      "Address": "10 Industrial Way",
+      "City": "London",
+      "State": "",
+      "PostalCode": "SW1A 1AA",
+      "Country": "United Kingdom"
+    },
+    "DateOfHire": "2024-09-20",
+    "DateOfBirth": null,
+    "PrimaryContact": {
+      "Email": "test@example.com",
+      "SecondaryEmail": "",
+      "WorkPhone": "01234 567 890",
+      "Extension": "",
+      "CellPhone": "07700 900123",
+      "Fax": "",
+      "PreferredNotificationMethod": null
+    },
+    "EmergencyContact": {
+      "Name": "Billy Bright",
+      "Relationship": "Director",
+      "WorkPhone": "01234 567 891",
+      "CellPhone": "07700 900124",
+      "AltPhone": "",
+      "Address": "10 Industrial Way, London"
+    },
+    "AccountSetup": {
+      "Username": "employee1665",
+      "IsMobility": false,
+      "SecurityGroup": null,
+      "MobileSecurityGroup": {
+        "ID": 3,
+        "Name": "Contractors"
+      }
+    },
+    "UserProfile": {
+      "IsSalesperson": false,
+      "IsProjectManager": false,
+      "StorageDevice": {},
+      "PreferredLanguage": "en_GB"
+    },
+    "DateCreated": "2024-09-20T15:26:19+01:00",
+    "DateModified": "2024-09-20T15:34:00+01:00",
+    "Archived": false,
+    "AssignedCostCenters": [
+      {"ID": 500, "Name": "P - Electrical"},
+      {"ID": 504, "Name": "P - Fire Alarm"}
+    ],
+    "Zones": [],
+    "DefaultZone": {},
+    "DefaultCompany": {"ID": 198, "Name": "Stitch Digital"},
+    "Licences": [],
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 354,
+          "Name": "SimForma Account Required",
+          "Type": "List",
+          "IsMandatory": false,
+          "ListItems": ["Yes", "No"]
+        },
+        "Value": null
+      }
+    ],
+    "EIN": "",
+    "MaskedSSN": null,
+    "CompanyNumber": "12345678",
+    "ContactName": "Billy Bright",
+    "Currency": "GBP",
+    "Banking": {
+      "AccountName": "Bright Spark Electrical",
+      "RoutingNo": "20-30-40",
+      "AccountNo": "12345678",
+      "PaymentTermID": 934,
+      "PaymentTerms": {
+        "Days": 0,
+        "Type": "Invoice"
+      }
+    },
+    "Rates": {
+      "PayRate": 0,
+      "EmploymentCost": 0,
+      "Overhead": 0,
+      "TaxCode": {
+        "ID": 13,
+        "Code": "T1",
+        "Type": "Single",
+        "Rate": 23
+      }
+    },
+    "DisplayOrder": 0
+  }
+}
