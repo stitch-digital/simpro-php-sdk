@@ -47,9 +47,9 @@ final class JobWorkOrderResource extends BaseResource
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
-    public function listDetailed(array $filters = []): QueryBuilder
+    public function listDetailed(array $filters = [], bool $includeMaterials = true): QueryBuilder
     {
-        $request = new ListJobWorkOrdersDetailedRequest($this->companyId);
+        $request = new ListJobWorkOrdersDetailedRequest($this->companyId, $includeMaterials);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

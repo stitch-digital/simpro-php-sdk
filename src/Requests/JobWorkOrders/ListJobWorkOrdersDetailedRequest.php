@@ -16,6 +16,7 @@ final class ListJobWorkOrdersDetailedRequest extends Request implements Paginata
 
     public function __construct(
         private readonly int $companyId,
+        private readonly bool $includeMaterials = true,
     ) {}
 
     public function resolveEndpoint(): string
@@ -28,14 +29,20 @@ final class ListJobWorkOrdersDetailedRequest extends Request implements Paginata
      */
     protected function defaultQuery(): array
     {
+        $columns = [
+            'ID', 'Staff', 'WorkOrderDate', 'DescriptionNotes', 'MaterialNotes',
+            'Approved', 'Blocks', 'ScheduledHrs',
+            'ScheduledStartTime', 'ISO8601ScheduledStartTime',
+            'ScheduledEndTime', 'ISO8601ScheduledEndTime',
+            'DateModified', 'CustomFields', 'Project',
+        ];
+
+        if ($this->includeMaterials) {
+            array_splice($columns, 6, 0, ['Materials']);
+        }
+
         return [
-            'columns' => implode(',', [
-                'ID', 'Staff', 'WorkOrderDate', 'DescriptionNotes', 'MaterialNotes',
-                'Approved', 'Materials', 'Blocks', 'ScheduledHrs',
-                'ScheduledStartTime', 'ISO8601ScheduledStartTime',
-                'ScheduledEndTime', 'ISO8601ScheduledEndTime',
-                'DateModified', 'CustomFields', 'Project',
-            ]),
+            'columns' => implode(',', $columns),
         ];
     }
 

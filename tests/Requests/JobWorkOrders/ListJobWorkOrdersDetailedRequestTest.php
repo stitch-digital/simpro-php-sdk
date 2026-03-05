@@ -39,6 +39,20 @@ it('includes columns query parameter', function () {
         ->and($query['columns'])->toContain('Project');
 });
 
+it('excludes Materials column when includeMaterials is false', function () {
+    MockClient::global([
+        ListJobWorkOrdersDetailedRequest::class => MockResponse::fixture('list_job_work_orders_detailed_request'),
+    ]);
+
+    $request = new ListJobWorkOrdersDetailedRequest(companyId: 0, includeMaterials: false);
+    $this->sdk->send($request);
+
+    $query = $request->query()->all();
+
+    expect($query)->toHaveKey('columns')
+        ->and($query['columns'])->not->toContain('Materials');
+});
+
 it('parses list job work orders detailed response correctly', function () {
     MockClient::global([
         ListJobWorkOrdersDetailedRequest::class => MockResponse::fixture('list_job_work_orders_detailed_request'),
