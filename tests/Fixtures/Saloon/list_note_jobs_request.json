@@ -1,0 +1,33 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 2007,
+      "Subject": "Email notification Job Scheduled",
+      "Visibility": {
+        "Customer": false,
+        "Admin": true
+      },
+      "Job": {
+        "ID": 52405,
+        "Name": "TEST templates"
+      },
+      "_href": "/api/v1.0/companies/0/jobs/52405/notes/2007"
+    },
+    {
+      "ID": 2001,
+      "Subject": "Reached out to subcontractor",
+      "Visibility": {
+        "Customer": true,
+        "Admin": true
+      },
+      "Job": {},
+      "_href": "/api/v1.0/companies/0/jobs/52535/notes/2001"
+    }
+  ]
+}

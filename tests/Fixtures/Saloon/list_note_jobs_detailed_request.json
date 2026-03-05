@@ -1,0 +1,65 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 2007,
+      "Subject": "Email notification Job Scheduled",
+      "Visibility": {
+        "Customer": false,
+        "Admin": true
+      },
+      "Job": {
+        "ID": 52405,
+        "Name": "TEST templates"
+      },
+      "_href": "/api/v1.0/companies/0/jobs/52405/notes/2007",
+      "Note": "<div style=\"font-size: 10pt;\">Job has been scheduled for next week.</div>",
+      "DateCreated": "2026-03-05T10:38:23+00:00",
+      "FollowUpDate": "2026-03-12",
+      "Attachments": [
+        {
+          "_href": "/common/getAttachment.php?location=abc123&filename=schedule.pdf&download=0&thumbnail=0&export=0&v=1",
+          "FileName": "schedule.pdf"
+        }
+      ],
+      "AssignTo": {
+        "ID": 1446,
+        "Name": "John Trickett",
+        "Type": "employee",
+        "TypeId": 1446
+      },
+      "SubmittedBy": {
+        "ID": 2350,
+        "Name": "b.koshkarov@iqtechnology.io",
+        "Type": "employee",
+        "TypeId": 2350
+      }
+    },
+    {
+      "ID": 2001,
+      "Subject": "Reached out to subcontractor",
+      "Visibility": {
+        "Customer": true,
+        "Admin": true
+      },
+      "Job": {},
+      "_href": "/api/v1.0/companies/0/jobs/52535/notes/2001",
+      "Note": "<div style=\"font-size: 10pt;\">Waiting to hear back.</div>",
+      "DateCreated": "2026-02-24T12:21:11+00:00",
+      "FollowUpDate": null,
+      "Attachments": [],
+      "AssignTo": {},
+      "SubmittedBy": {
+        "ID": 1446,
+        "Name": "John Trickett",
+        "Type": "employee",
+        "TypeId": 1446
+      }
+    }
+  ]
+}

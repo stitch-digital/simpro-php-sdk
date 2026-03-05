@@ -37,7 +37,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Setup | 186 | ~0 | ~186 |
 | JobCostCenters | 1 | 0 | 1 |
 | JobWorkOrders | 1 | 1 | 2 |
-| Notes | 1 | 1 | 2 |
+| Notes | 2 | 0 | 2 |
 | **Other** | 0 | ~647 | ~647 |
 | **Total** | **431** | **935** | **1366** |
 
@@ -62,7 +62,7 @@ This file serves as the single source of truth for SDK development progress, arc
 | Reports | `jobCostToCompleteFinancial()`, `jobCostToCompleteOperations()` | 2 | 2 |
 | JobCostCenters | `list()` | 1 | 2 |
 | JobWorkOrders | `list()`, `listDetailed()` | 2 | 5 |
-| Notes | `customers()`, `customersDetailed()` | 2 | 4 |
+| Notes | `customers()`, `customersDetailed()`, `jobs()`, `jobsDetailed()` | 4 | 7 |
 | Setup | Webhooks, TaxCodes, PaymentMethods, PaymentTerms, CustomerGroups, Zones, AccountingCategories, BusinessGroups, ChartOfAccounts, CostCenters, CustomFields (19 types), AssetTypes (deep nesting), Labor (5 resources), Materials (5 resources), Activities, ArchiveReasons, AssetServiceLevels, Commissions, Currencies, CustomerProfiles, Defaults, ResponseTimes, SecurityGroups, StatusCodes, Tags, TaskCategories, Teams | 186 | 75+ |
 
 ---
@@ -3063,7 +3063,7 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Jobs
 
-- [ ] `GET /api/v1.0/companies/{companyID}/notes/jobs/`
+- [x] `GET /api/v1.0/companies/{companyID}/notes/jobs/`
   - **Description**: List all notes.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
