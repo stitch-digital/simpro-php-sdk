@@ -6461,10 +6461,11 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: Sites
 
-- [ ] `GET /api/v1.0/companies/{companyID}/sites/`
+- [x] `GET /api/v1.0/companies/{companyID}/sites/`
   - **Description**: List all sites.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
+  - **Implemented**: `ListSitesRequest`, `ListSitesDetailedRequest` (with columns parameter)
 
 - [ ] `POST /api/v1.0/companies/{companyID}/sites/`
   - **Description**: Create a new site.

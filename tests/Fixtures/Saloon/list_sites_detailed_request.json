@@ -1,0 +1,77 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "1",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 31427,
+      "Name": "Head Office",
+      "Address": {
+        "Address": "Old Street",
+        "City": "",
+        "State": "Manchester",
+        "PostalCode": "M10 9KC",
+        "Country": "United Kingdom"
+      },
+      "BillingAddress": {
+        "Address": "",
+        "City": "",
+        "State": "",
+        "PostalCode": ""
+      },
+      "BillingContact": "",
+      "PrimaryContact": {
+        "Contact": {
+          "ID": 10837,
+          "GivenName": "Joe",
+          "FamilyName": "Bloggs",
+          "Email": "dave@test.com"
+        },
+        "Title": "",
+        "GivenName": "Joe",
+        "FamilyName": "Bloggs",
+        "Email": "dave@test.com",
+        "WorkPhone": "",
+        "CellPhone": "",
+        "Fax": "",
+        "Position": "Manager",
+        "PreferredNotificationMethod": ""
+      },
+      "PublicNotes": "",
+      "PrivateNotes": "",
+      "Zone": {
+        "ID": 39,
+        "Name": "North"
+      },
+      "PreferredTechs": [],
+      "PreferredTechnicians": [],
+      "DateModified": "2024-12-17T14:05:21+00:00",
+      "Customers": [
+        {
+          "ID": 14946,
+          "CompanyName": "Test Titans Club",
+          "GivenName": "",
+          "FamilyName": ""
+        }
+      ],
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 459,
+            "Name": "Clearance Data Link",
+            "Type": "Hyperlink",
+            "IsMandatory": false,
+            "ListItems": []
+          },
+          "Value": null
+        }
+      ],
+      "Rates": {
+        "ServiceFee": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "3",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 31427,
+      "Name": "Head Office"
+    },
+    {
+      "ID": 31840,
+      "Name": "AE Test (site) (updated)"
+    },
+    {
+      "ID": 31874,
+      "Name": "Exampleton Fitness"
+    }
+  ]
+}
