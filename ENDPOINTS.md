@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2026-03-05 | **Progress:** 432/1366 endpoints (31.6%)
+> **Last Updated:** 2026-03-05 | **Progress:** 433/1366 endpoints (31.7%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -7131,7 +7131,7 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: Tasks
 
-- [ ] `GET /api/v1.0/companies/{companyID}/tasks/`
+- [x] `GET /api/v1.0/companies/{companyID}/tasks/`
   - **Description**: List all tasks.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object

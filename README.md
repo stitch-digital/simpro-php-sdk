@@ -818,6 +818,7 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 - **[Job Cost Centers](docs/job-cost-centers-resource.md)** - List cost centers across all jobs (read-only)
 - **[Job Work Orders](docs/job-work-orders-resource.md)** - List work orders across all jobs with basic and detailed views (read-only)
 - **[Setup](docs/setup-resource.md)** - Configure system settings: webhooks, tax codes, payment methods, custom fields, labor rates, and more
+- **[Tasks](docs/tasks-resource.md)** - List tasks across all jobs and customers with basic and detailed views (read-only)
 
 More resources will be added as development continues.
 
