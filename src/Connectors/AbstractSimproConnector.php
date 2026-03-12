@@ -32,6 +32,7 @@ use Simpro\PhpSdk\Simpro\Concerns\SupportsReportsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsSchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsSetupEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsSitesEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsTasksEndpoints;
 use Simpro\PhpSdk\Simpro\Exceptions\ValidationException;
 use Simpro\PhpSdk\Simpro\Paginators\SimproPaginator;
 use Simpro\PhpSdk\Simpro\RateLimit\RateLimitConfig;
@@ -67,6 +68,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use SupportsSchedulesEndpoints;
     use SupportsSetupEndpoints;
     use SupportsSitesEndpoints;
+    use SupportsTasksEndpoints;
 
     /**
      * Request timeout in seconds.
