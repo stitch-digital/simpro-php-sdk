@@ -18,6 +18,7 @@ use Simpro\PhpSdk\Simpro\Concerns\SupportsActivitySchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCompaniesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsContractorsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCurrentUserEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsCustomerAssetsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsCustomersEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsEmployeesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsInfoEndpoints;
@@ -52,6 +53,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use SupportsCompaniesEndpoints;
     use SupportsContractorsEndpoints;
     use SupportsCurrentUserEndpoints;
+    use SupportsCustomerAssetsEndpoints;
     use SupportsCustomersEndpoints;
     use SupportsEmployeesEndpoints;
     use SupportsInfoEndpoints;
