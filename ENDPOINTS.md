@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2026-03-05 | **Progress:** 431/1366 endpoints (31.5%)
+> **Last Updated:** 2026-03-05 | **Progress:** 432/1366 endpoints (31.6%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -1233,7 +1233,7 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: CustomerAssets
 
-- [ ] `GET /api/v1.0/companies/{companyID}/customerAssets/`
+- [x] `GET /api/v1.0/companies/{companyID}/customerAssets/`
   - **Description**: List all customer assets with sites.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
