@@ -1,0 +1,178 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Result-Total": "2",
+        "Result-Pages": "1"
+    },
+    "data": [
+        {
+            "ID": 79527,
+            "Subject": "Please Order and Send Tom Burchall 23.03",
+            "CreatedBy": {
+                "ID": 1055,
+                "Name": "Tiani Driver",
+                "Type": "employee",
+                "TypeId": 1055
+            },
+            "AssignedTo": {
+                "ID": 3578,
+                "Name": "Stores",
+                "Type": "employee",
+                "TypeId": 3578
+            },
+            "Assignees": [
+                {
+                    "ID": 3578,
+                    "Name": "Stores",
+                    "Type": "employee",
+                    "TypeId": 3578
+                }
+            ],
+            "AssignedToCustomer": false,
+            "CompletedBy": null,
+            "Associated": {
+                "Job": {
+                    "ID": 470624,
+                    "CostCenter": {}
+                },
+                "Quote": {},
+                "Customer": {
+                    "ID": 6468,
+                    "CompanyName": "OCS M&E Services LTD - Southwark",
+                    "GivenName": "",
+                    "FamilyName": ""
+                },
+                "Contact": {},
+                "Site": {
+                    "ID": 22875,
+                    "Name": "Southwark Registry Office"
+                }
+            },
+            "IsBillable": false,
+            "ShowOnWorkOrder": false,
+            "EmailNotifications": true,
+            "Description": "",
+            "StartDate": null,
+            "DueDate": null,
+            "CompletedDate": null,
+            "Notes": "",
+            "Status": "Pending",
+            "Priority": "High",
+            "Category": {},
+            "Estimated": {
+                "Hours": 0,
+                "Minutes": 0,
+                "Seconds": 0
+            },
+            "Actual": {
+                "Hours": 0,
+                "Minutes": 0,
+                "Seconds": 0
+            },
+            "ParentTask": {},
+            "SubTasks": [],
+            "CustomFields": [
+                {
+                    "CustomField": {
+                        "ID": 138,
+                        "Name": "Autogenerate Approved Certificate?",
+                        "Type": "List",
+                        "IsMandatory": false,
+                        "ListItems": [
+                            "Yes",
+                            "No"
+                        ]
+                    },
+                    "Value": null
+                }
+            ],
+            "PercentComplete": "",
+            "DateModified": "2026-03-12T13:25:49+00:00"
+        },
+        {
+            "ID": 79524,
+            "Subject": "Jaz Quote",
+            "CreatedBy": {
+                "ID": 323,
+                "Name": "Jazmine Strzelecki",
+                "Type": "employee",
+                "TypeId": 323
+            },
+            "AssignedTo": {
+                "ID": 323,
+                "Name": "Jazmine Strzelecki",
+                "Type": "employee",
+                "TypeId": 323
+            },
+            "Assignees": [
+                {
+                    "ID": 323,
+                    "Name": "Jazmine Strzelecki",
+                    "Type": "employee",
+                    "TypeId": 323
+                }
+            ],
+            "AssignedToCustomer": false,
+            "CompletedBy": null,
+            "Associated": {
+                "Job": {
+                    "ID": 469383,
+                    "CostCenter": {}
+                },
+                "Quote": {},
+                "Customer": {
+                    "ID": 3939,
+                    "CompanyName": "Curo",
+                    "GivenName": "",
+                    "FamilyName": ""
+                },
+                "Contact": {},
+                "Site": {
+                    "ID": 4177,
+                    "Name": "Internal Areas 1-16 Beau House"
+                }
+            },
+            "IsBillable": false,
+            "ShowOnWorkOrder": false,
+            "EmailNotifications": false,
+            "Description": "",
+            "StartDate": null,
+            "DueDate": null,
+            "CompletedDate": null,
+            "Notes": "",
+            "Status": "Pending",
+            "Priority": "Medium",
+            "Category": {},
+            "Estimated": {
+                "Hours": 0,
+                "Minutes": 0,
+                "Seconds": 0
+            },
+            "Actual": {
+                "Hours": 0,
+                "Minutes": 0,
+                "Seconds": 0
+            },
+            "ParentTask": {},
+            "SubTasks": [],
+            "CustomFields": [
+                {
+                    "CustomField": {
+                        "ID": 138,
+                        "Name": "Autogenerate Approved Certificate?",
+                        "Type": "List",
+                        "IsMandatory": false,
+                        "ListItems": [
+                            "Yes",
+                            "No"
+                        ]
+                    },
+                    "Value": null
+                }
+            ],
+            "PercentComplete": "",
+            "DateModified": "2026-03-12T13:02:17+00:00"
+        }
+    ]
+}
