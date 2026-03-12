@@ -1,0 +1,102 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Result-Total": "2",
+        "Result-Pages": "1"
+    },
+    "data": [
+        {
+            "ID": 66898,
+            "AssetType": {
+                "ID": 79,
+                "Name": "Automatic Door Operator"
+            },
+            "DisplayOrder": 0,
+            "CustomerContract": null,
+            "StartDate": "2026-01-08",
+            "LastTest": {
+                "Result": "Pass",
+                "Date": "2026-03-02",
+                "ServiceLevel": {
+                    "ID": 4,
+                    "Name": "Yearly"
+                }
+            },
+            "Archived": false,
+            "CustomFields": [
+                {
+                    "CustomField": {
+                        "ID": 219,
+                        "Name": "Operator Manufacture",
+                        "Type": "List",
+                        "ListItems": [
+                            "Record",
+                            "Sesamo",
+                            "GEZE"
+                        ]
+                    },
+                    "Value": "Sesamo"
+                },
+                {
+                    "CustomField": {
+                        "ID": 220,
+                        "Name": "Operator Model No.",
+                        "Type": "Text",
+                        "ListItems": null
+                    },
+                    "Value": "Pro swing"
+                }
+            ],
+            "ParentID": null,
+            "DateModified": "2026-03-02T11:29:34+00:00",
+            "Site": {
+                "ID": 6128,
+                "Name": "Bowhayes Lodge"
+            }
+        },
+        {
+            "ID": 115,
+            "AssetType": {
+                "ID": 80,
+                "Name": "Dry Risers"
+            },
+            "DisplayOrder": 1,
+            "CustomerContract": {
+                "ID": 4790,
+                "Name": "Worcestershire County Cricket Club - 12 Month Service Contract",
+                "StartDate": "2019-09-01",
+                "EndDate": "",
+                "ContractNo": "1093",
+                "Expired": false
+            },
+            "StartDate": "2020-09-01",
+            "LastTest": {
+                "Result": "No Test",
+                "Date": null,
+                "ServiceLevel": {
+                    "ID": 4,
+                    "Name": "Yearly"
+                }
+            },
+            "Archived": false,
+            "CustomFields": [
+                {
+                    "CustomField": {
+                        "ID": 171,
+                        "Name": "No. Dry Risers",
+                        "Type": "Text",
+                        "ListItems": null
+                    },
+                    "Value": null
+                }
+            ],
+            "ParentID": null,
+            "DateModified": "2025-09-04T11:11:08+01:00",
+            "Site": {
+                "ID": 764,
+                "Name": "New Road Worcester WR2 4QQ"
+            }
+        }
+    ]
+}

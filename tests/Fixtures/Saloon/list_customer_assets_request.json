@@ -1,0 +1,46 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Result-Total": "2",
+        "Result-Pages": "1"
+    },
+    "data": [
+        {
+            "ID": 66898,
+            "AssetType": {
+                "ID": 79,
+                "Name": "Automatic Door Operator"
+            },
+            "Site": {
+                "ID": 6128,
+                "Name": "Bowhayes Lodge"
+            },
+            "ServiceLevels": [
+                {
+                    "ID": 4,
+                    "Name": "Yearly",
+                    "ServiceDate": "2027-02-28"
+                }
+            ]
+        },
+        {
+            "ID": 115,
+            "AssetType": {
+                "ID": 80,
+                "Name": "Dry Risers"
+            },
+            "Site": {
+                "ID": 764,
+                "Name": "New Road Worcester WR2 4QQ"
+            },
+            "ServiceLevels": [
+                {
+                    "ID": 4,
+                    "Name": "Yearly",
+                    "ServiceDate": "2026-09-01"
+                }
+            ]
+        }
+    ]
+}
