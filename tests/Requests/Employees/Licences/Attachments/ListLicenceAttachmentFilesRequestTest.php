@@ -30,12 +30,12 @@ it('parses list licence attachment files response correctly', function () {
     expect($dto)->toBeArray()
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(Attachment::class)
-        ->and($dto[0]->id)->toBe(1)
+        ->and($dto[0]->id)->toBe('1')
         ->and($dto[0]->filename)->toBe('licence-scan.pdf')
         ->and($dto[0]->mimeType)->toBe('application/pdf')
         ->and($dto[0]->default)->toBeFalse()
         ->and($dto[1])->toBeInstanceOf(Attachment::class)
-        ->and($dto[1]->id)->toBe(2)
+        ->and($dto[1]->id)->toBe('2')
         ->and($dto[1]->filename)->toBe('certificate.jpg')
         ->and($dto[1]->default)->toBeTrue();
 });

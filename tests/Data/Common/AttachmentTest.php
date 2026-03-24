@@ -27,7 +27,8 @@ it('creates attachment from array with all fields', function () {
         'Email' => false,
     ]);
 
-    expect($attachment->id)->toBe(1)
+    expect($attachment->id)->toBe('1')
+
         ->and($attachment->filename)->toBe('invoice.pdf')
         ->and($attachment->mimeType)->toBe('application/pdf')
         ->and($attachment->fileSizeBytes)->toBe(102400)

@@ -19,7 +19,7 @@ use DateTimeImmutable;
 final readonly class Attachment
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public ?string $filename = null,
         public ?string $mimeType = null,
         public ?int $fileSizeBytes = null,
@@ -38,7 +38,7 @@ final readonly class Attachment
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['ID'],
+            id: (string) $data['ID'],
             filename: $data['Filename'] ?? $data['FileName'] ?? null,
             mimeType: $data['MimeType'] ?? $data['ContentType'] ?? null,
             fileSizeBytes: isset($data['FileSizeBytes']) ? (int) $data['FileSizeBytes'] : (! empty($data['Size']) ? (int) $data['Size'] : null),

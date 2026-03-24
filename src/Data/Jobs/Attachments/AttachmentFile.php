@@ -10,7 +10,7 @@ use Saloon\Http\Response;
 final readonly class AttachmentFile
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public ?string $name,
         public ?string $filename,
         public ?string $mimeType,
@@ -29,7 +29,7 @@ final readonly class AttachmentFile
     public static function fromArray(array $data): self
     {
         return new self(
-            id: $data['ID'],
+            id: (string) $data['ID'],
             name: $data['Name'] ?? null,
             filename: $data['Filename'] ?? null,
             mimeType: $data['MimeType'] ?? null,

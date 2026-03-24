@@ -28,7 +28,7 @@ it('parses get employee attachment file response correctly', function () {
     $dto = $response->dto();
 
     expect($dto)->toBeInstanceOf(Attachment::class)
-        ->and($dto->id)->toBe(1)
+        ->and($dto->id)->toBe('1')
         ->and($dto->filename)->toBe('resume.pdf')
         ->and($dto->mimeType)->toBe('application/pdf')
         ->and($dto->fileSizeBytes)->toBe(102400)
