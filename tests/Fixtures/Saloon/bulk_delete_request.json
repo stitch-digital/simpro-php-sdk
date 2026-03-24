@@ -1,0 +1,10 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": [
+    "2 section(s) deleted.",
+    "1 section(s) not found in project."
+  ]
+}
