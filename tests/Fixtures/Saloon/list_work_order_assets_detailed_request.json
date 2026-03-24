@@ -1,0 +1,33 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json"
+    },
+    "data": [
+        {
+            "Asset": {
+                "ID": 827,
+                "AssetType": {
+                    "ID": 455,
+                    "Name": "Emergency Lighting"
+                }
+            },
+            "ServiceLevel": {
+                "ID": 223,
+                "Name": "Monthly"
+            },
+            "Result": "Pass",
+            "Notes": "TEST",
+            "FailurePoints": [],
+            "TestReadings": [
+                {
+                    "TestReading": {
+                        "ID": 4164,
+                        "Name": "State"
+                    },
+                    "Value": null
+                }
+            ]
+        }
+    ]
+}

@@ -23,10 +23,10 @@ final class WorkOrderCustomFieldResource extends BaseResource
     public function __construct(
         AbstractSimproConnector $connector,
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
     ) {
         parent::__construct($connector);
     }
@@ -60,7 +60,7 @@ final class WorkOrderCustomFieldResource extends BaseResource
     /**
      * Get a specific custom field.
      */
-    public function get(int|string $customFieldId): JobCustomFieldValue
+    public function get(int $customFieldId): JobCustomFieldValue
     {
         $request = new GetWorkOrderCustomFieldRequest(
             $this->companyId,
@@ -79,7 +79,7 @@ final class WorkOrderCustomFieldResource extends BaseResource
      *
      * @param  array<string, mixed>  $data
      */
-    public function update(int|string $customFieldId, array $data): Response
+    public function update(int $customFieldId, array $data): Response
     {
         $request = new UpdateWorkOrderCustomFieldRequest(
             $this->companyId,

@@ -13,10 +13,10 @@ final class DeleteWorkOrderAttachmentFileRequest extends Request
 
     public function __construct(
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
         private readonly int|string $fileId,
     ) {}
 

@@ -21,11 +21,11 @@ final class WorkOrderAssetScope extends AbstractScope
     public function __construct(
         AbstractSimproConnector $connector,
         int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
-        private readonly int|string $assetId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
+        private readonly int $assetId,
     ) {
         parent::__construct($connector, $companyId);
     }
@@ -49,7 +49,7 @@ final class WorkOrderAssetScope extends AbstractScope
     /**
      * Navigate to a specific test result scope for accessing attachments.
      */
-    public function testResult(int|string $testResultId): TestResultScope
+    public function testResult(int $testResultId): TestResultScope
     {
         return new TestResultScope(
             $this->connector,

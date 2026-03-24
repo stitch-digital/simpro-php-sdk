@@ -7,7 +7,7 @@ namespace Simpro\PhpSdk\Simpro\Resources\Quotes\CostCenters;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrder;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\WorkOrders\CreateQuoteCostCenterWorkOrderRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\WorkOrders\GetQuoteCostCenterWorkOrderRequest;
@@ -53,7 +53,7 @@ final class QuoteCostCenterWorkOrderResource extends BaseResource
     /**
      * Get a specific work order.
      */
-    public function get(int|string $workOrderId): WorkOrder
+    public function get(int|string $workOrderId): WorkOrderListItem
     {
         $request = new GetQuoteCostCenterWorkOrderRequest($this->companyId, $this->quoteId, $this->sectionId, $this->costCenterId, $workOrderId);
 

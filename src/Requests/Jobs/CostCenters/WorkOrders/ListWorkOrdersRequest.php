@@ -8,7 +8,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrder;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 
 final class ListWorkOrdersRequest extends Request implements Paginatable
 {
@@ -16,9 +16,9 @@ final class ListWorkOrdersRequest extends Request implements Paginatable
 
     public function __construct(
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
     ) {}
 
     public function resolveEndpoint(): string
@@ -27,15 +27,13 @@ final class ListWorkOrdersRequest extends Request implements Paginatable
     }
 
     /**
-     * @return array<WorkOrder>
+     * @return array<WorkOrderListItem>
      */
     public function createDtoFromResponse(Response $response): array
     {
-        $data = $response->json();
-
         return array_map(
-            fn (array $item) => WorkOrder::fromArray($item),
-            $data
+            fn (array $item) => WorkOrderListItem::fromArray($item),
+            $response->json()
         );
     }
 }

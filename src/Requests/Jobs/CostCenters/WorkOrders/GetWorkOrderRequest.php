@@ -7,7 +7,7 @@ namespace Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrder;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 
 final class GetWorkOrderRequest extends Request
 {
@@ -15,10 +15,10 @@ final class GetWorkOrderRequest extends Request
 
     public function __construct(
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
     ) {}
 
     public function resolveEndpoint(): string
@@ -26,8 +26,8 @@ final class GetWorkOrderRequest extends Request
         return "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/workOrders/{$this->workOrderId}";
     }
 
-    public function createDtoFromResponse(Response $response): WorkOrder
+    public function createDtoFromResponse(Response $response): WorkOrderListItem
     {
-        return WorkOrder::fromResponse($response);
+        return WorkOrderListItem::fromArray($response->json());
     }
 }

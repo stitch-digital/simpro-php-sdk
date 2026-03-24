@@ -25,12 +25,12 @@ final class TestResultAttachmentFileResource extends BaseResource
     public function __construct(
         AbstractSimproConnector $connector,
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
-        private readonly int|string $assetId,
-        private readonly int|string $testResultId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
+        private readonly int $assetId,
+        private readonly int $testResultId,
     ) {
         parent::__construct($connector);
     }

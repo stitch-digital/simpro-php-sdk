@@ -7,10 +7,11 @@ namespace Simpro\PhpSdk\Simpro\Resources\Jobs\CostCenters;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrder;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\CreateWorkOrderRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\GetWorkOrderRequest;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\ListWorkOrdersDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\ListWorkOrdersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\UpdateWorkOrderRequest;
 
@@ -24,9 +25,9 @@ final class WorkOrderResource extends BaseResource
     public function __construct(
         AbstractSimproConnector $connector,
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
     ) {
         parent::__construct($connector);
     }
@@ -51,9 +52,28 @@ final class WorkOrderResource extends BaseResource
     }
 
     /**
+     * List all work orders with detailed information.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function listDetailed(array $filters = [], bool $includeMaterials = true): QueryBuilder
+    {
+        $request = new ListWorkOrdersDetailedRequest($this->companyId, $this->jobId, $this->sectionId, $this->costCenterId, $includeMaterials);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
      * Get a specific work order.
      */
-    public function get(int|string $workOrderId): WorkOrder
+    public function get(int $workOrderId): WorkOrderListItem
     {
         $request = new GetWorkOrderRequest($this->companyId, $this->jobId, $this->sectionId, $this->costCenterId, $workOrderId);
 
@@ -78,7 +98,7 @@ final class WorkOrderResource extends BaseResource
      *
      * @param  array<string, mixed>  $data
      */
-    public function update(int|string $workOrderId, array $data): Response
+    public function update(int $workOrderId, array $data): Response
     {
         $request = new UpdateWorkOrderRequest($this->companyId, $this->jobId, $this->sectionId, $this->costCenterId, $workOrderId, $data);
 

@@ -24,10 +24,10 @@ final class WorkOrderScope extends AbstractScope
     public function __construct(
         AbstractSimproConnector $connector,
         int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
     ) {
         parent::__construct($connector, $companyId);
     }
@@ -50,7 +50,7 @@ final class WorkOrderScope extends AbstractScope
     /**
      * Navigate to a specific asset scope for accessing test results.
      */
-    public function asset(int|string $assetId): WorkOrderAssetScope
+    public function asset(int $assetId): WorkOrderAssetScope
     {
         return new WorkOrderAssetScope(
             $this->connector,

@@ -7,7 +7,7 @@ namespace Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\WorkOrders;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrder;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 
 final class GetQuoteCostCenterWorkOrderRequest extends Request
 {
@@ -26,8 +26,8 @@ final class GetQuoteCostCenterWorkOrderRequest extends Request
         return "/api/v1.0/companies/{$this->companyId}/quotes/{$this->quoteId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/workOrders/{$this->workOrderId}";
     }
 
-    public function createDtoFromResponse(Response $response): WorkOrder
+    public function createDtoFromResponse(Response $response): WorkOrderListItem
     {
-        return WorkOrder::fromResponse($response);
+        return WorkOrderListItem::fromArray($response->json());
     }
 }

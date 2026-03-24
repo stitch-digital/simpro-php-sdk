@@ -11,6 +11,7 @@ use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderAsset;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\DeleteWorkOrderAssetRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\GetWorkOrderAssetRequest;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\ListWorkOrderAssetsDetailedRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\ListWorkOrderAssetsRequest;
 
 /**
@@ -23,10 +24,10 @@ final class WorkOrderAssetResource extends BaseResource
     public function __construct(
         AbstractSimproConnector $connector,
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
     ) {
         parent::__construct($connector);
     }
@@ -58,9 +59,35 @@ final class WorkOrderAssetResource extends BaseResource
     }
 
     /**
+     * List all assets with detailed information.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListWorkOrderAssetsDetailedRequest(
+            $this->companyId,
+            $this->jobId,
+            $this->sectionId,
+            $this->costCenterId,
+            $this->workOrderId
+        );
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
      * Get a specific work order asset.
      */
-    public function get(int|string $assetId): WorkOrderAsset
+    public function get(int $assetId): WorkOrderAsset
     {
         $request = new GetWorkOrderAssetRequest(
             $this->companyId,
@@ -77,7 +104,7 @@ final class WorkOrderAssetResource extends BaseResource
     /**
      * Delete a work order asset.
      */
-    public function delete(int|string $assetId): Response
+    public function delete(int $assetId): Response
     {
         $request = new DeleteWorkOrderAssetRequest(
             $this->companyId,

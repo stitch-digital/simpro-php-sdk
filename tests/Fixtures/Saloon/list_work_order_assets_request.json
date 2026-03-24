@@ -1,0 +1,18 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json"
+    },
+    "data": [
+        {
+            "Asset": {
+                "ID": 827,
+                "AssetType": {
+                    "ID": 455,
+                    "Name": "Emergency Lighting"
+                }
+            },
+            "Result": "Pass"
+        }
+    ]
+}

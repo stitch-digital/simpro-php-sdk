@@ -8,7 +8,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrder;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 
 final class ListQuoteCostCenterWorkOrdersRequest extends Request implements Paginatable
 {
@@ -27,15 +27,13 @@ final class ListQuoteCostCenterWorkOrdersRequest extends Request implements Pagi
     }
 
     /**
-     * @return array<WorkOrder>
+     * @return array<WorkOrderListItem>
      */
     public function createDtoFromResponse(Response $response): array
     {
-        $data = $response->json();
-
         return array_map(
-            fn (array $item) => WorkOrder::fromArray($item),
-            $data
+            fn (array $item) => WorkOrderListItem::fromArray($item),
+            $response->json()
         );
     }
 }

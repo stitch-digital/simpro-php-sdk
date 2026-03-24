@@ -6,7 +6,7 @@ namespace Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders;
 
 use Simpro\PhpSdk\Simpro\Data\Common\Reference;
 
-final readonly class WorkOrderAsset
+final readonly class WorkOrderAssetReference
 {
     public function __construct(
         public ?int $assetId = null,

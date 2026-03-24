@@ -8,9 +8,9 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderAsset;
+use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderAssetDetailed;
 
-final class ListWorkOrderAssetsRequest extends Request implements Paginatable
+final class ListWorkOrderAssetsDetailedRequest extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 
@@ -28,12 +28,22 @@ final class ListWorkOrderAssetsRequest extends Request implements Paginatable
     }
 
     /**
-     * @return array<WorkOrderAsset>
+     * @return array<string, string>
+     */
+    protected function defaultQuery(): array
+    {
+        return [
+            'columns' => 'Asset,ServiceLevel,Result,Notes,FailurePoints,TestReadings',
+        ];
+    }
+
+    /**
+     * @return array<WorkOrderAssetDetailed>
      */
     public function createDtoFromResponse(Response $response): array
     {
         return array_map(
-            fn (array $item) => WorkOrderAsset::fromArray($item),
+            fn (array $item) => WorkOrderAssetDetailed::fromArray($item),
             $response->json()
         );
     }

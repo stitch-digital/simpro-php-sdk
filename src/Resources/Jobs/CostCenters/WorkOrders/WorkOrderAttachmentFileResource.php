@@ -25,10 +25,10 @@ final class WorkOrderAttachmentFileResource extends BaseResource
     public function __construct(
         AbstractSimproConnector $connector,
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
-        private readonly int|string $workOrderId,
+        private readonly int $jobId,
+        private readonly int $sectionId,
+        private readonly int $costCenterId,
+        private readonly int $workOrderId,
     ) {
         parent::__construct($connector);
     }
