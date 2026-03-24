@@ -1,0 +1,26 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": [
+    {
+      "status": 201,
+      "headers": {
+        "Batch-ID": 0,
+        "Resource-ID": 1882,
+        "Location": "/api/v1.0/companies/0/contractors/1882"
+      },
+      "body": null
+    },
+    {
+      "status": 201,
+      "headers": {
+        "Batch-ID": 1,
+        "Resource-ID": 1883,
+        "Location": "/api/v1.0/companies/0/contractors/1883"
+      },
+      "body": null
+    }
+  ]
+}
