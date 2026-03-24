@@ -7,8 +7,12 @@ namespace Simpro\PhpSdk\Simpro\Resources\Setup;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Setup\CustomField;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractCreateCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractDeleteCustomFieldRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\CustomFields\AbstractGetCustomFieldRequest;
@@ -29,6 +33,8 @@ abstract class AbstractCustomFieldResource extends BaseResource
     ) {
         parent::__construct($connector);
     }
+
+    abstract protected function getCustomFieldResourcePath(): string;
 
     abstract protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest;
 
@@ -132,5 +138,53 @@ abstract class AbstractCustomFieldResource extends BaseResource
         $request = $this->createDeleteRequest($this->companyId, $customFieldId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple custom fields in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/setup/customFields/{$this->getCustomFieldResourcePath()}",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Update multiple custom fields in a single request.
+     *
+     * Each item in the data array must include an 'ID' key.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkUpdate(array $data): BulkResponse
+    {
+        $request = new BulkUpdateRequest(
+            "/api/v1.0/companies/{$this->companyId}/setup/customFields/{$this->getCustomFieldResourcePath()}",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Delete multiple custom fields in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/setup/customFields/{$this->getCustomFieldResourcePath()}",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

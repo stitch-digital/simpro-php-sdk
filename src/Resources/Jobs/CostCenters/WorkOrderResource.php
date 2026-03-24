@@ -7,8 +7,11 @@ namespace Simpro\PhpSdk\Simpro\Resources\Jobs\CostCenters;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderListItem;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\CreateWorkOrderRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\GetWorkOrderRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\ListWorkOrdersDetailedRequest;
@@ -103,5 +106,37 @@ final class WorkOrderResource extends BaseResource
         $request = new UpdateWorkOrderRequest($this->companyId, $this->jobId, $this->sectionId, $this->costCenterId, $workOrderId, $data);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple work orders in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/workOrders",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Update multiple work orders in a single request.
+     *
+     * Each item in the data array must include an 'ID' key.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkUpdate(array $data): BulkResponse
+    {
+        $request = new BulkUpdateRequest(
+            "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/workOrders",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

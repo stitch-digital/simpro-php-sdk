@@ -7,8 +7,12 @@ namespace Simpro\PhpSdk\Simpro\Resources\Customers;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Customers\Contacts\Contact;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\Contacts\CreateContactRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\Contacts\DeleteContactRequest;
 use Simpro\PhpSdk\Simpro\Requests\Customers\Contacts\GetContactRequest;
@@ -122,5 +126,53 @@ final class ContactResource extends BaseResource
         $request = new DeleteContactRequest($this->companyId, $this->customerId, $contactId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple contacts in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/customers/{$this->customerId}/contacts",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Update multiple contacts in a single request.
+     *
+     * Each item in the data array must include an 'ID' key.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkUpdate(array $data): BulkResponse
+    {
+        $request = new BulkUpdateRequest(
+            "/api/v1.0/companies/{$this->companyId}/customers/{$this->customerId}/contacts",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Delete multiple contacts in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/customers/{$this->customerId}/contacts",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

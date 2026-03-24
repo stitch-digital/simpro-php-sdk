@@ -7,8 +7,11 @@ namespace Simpro\PhpSdk\Simpro\Resources\Jobs\CostCenters;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\Assets\Asset;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\Assets\BulkReplaceAssetsRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\Assets\CreateAssetRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\Assets\DeleteAssetRequest;
@@ -94,5 +97,36 @@ final class AssetResource extends BaseResource
         $request = new DeleteAssetRequest($this->companyId, $this->jobId, $this->sectionId, $this->costCenterId, $assetId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple assets in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/assets",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Delete multiple assets in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/assets",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

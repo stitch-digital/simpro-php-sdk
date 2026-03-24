@@ -23,6 +23,11 @@ use Simpro\PhpSdk\Simpro\Resources\Setup\AbstractCustomFieldResource;
  */
 final class SiteCustomFieldResource extends AbstractCustomFieldResource
 {
+    protected function getCustomFieldResourcePath(): string
+    {
+        return 'sites';
+    }
+
     protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest
     {
         return new ListSiteCustomFieldsRequest($companyId);

@@ -23,6 +23,11 @@ use Simpro\PhpSdk\Simpro\Resources\Setup\AbstractCustomFieldResource;
  */
 final class ContractorJobCustomFieldResource extends AbstractCustomFieldResource
 {
+    protected function getCustomFieldResourcePath(): string
+    {
+        return 'contractorJobs';
+    }
+
     protected function createListRequest(int $companyId): AbstractListCustomFieldsRequest
     {
         return new ListContractorJobCustomFieldsRequest($companyId);

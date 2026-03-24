@@ -7,8 +7,11 @@ namespace Simpro\PhpSdk\Simpro\Resources\Quotes\CostCenters;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\Prebuilds\PrebuildItem;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\Prebuilds\CreateQuoteCostCenterPrebuildRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\Prebuilds\DeleteQuoteCostCenterPrebuildRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\Prebuilds\GetQuoteCostCenterPrebuildRequest;
@@ -81,5 +84,36 @@ final class QuoteCostCenterPrebuildResource extends BaseResource
         $request = new DeleteQuoteCostCenterPrebuildRequest($this->companyId, $this->quoteId, $this->sectionId, $this->costCenterId, $prebuildId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple quote cost center prebuilds in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/quotes/{$this->quoteId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/prebuilds",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Delete multiple quote cost center prebuilds in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/quotes/{$this->quoteId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/prebuilds",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

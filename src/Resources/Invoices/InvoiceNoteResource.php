@@ -7,8 +7,12 @@ namespace Simpro\PhpSdk\Simpro\Resources\Invoices;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Invoices\Notes\InvoiceNote;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\Notes\CreateInvoiceNoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\Notes\DeleteInvoiceNoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\Notes\GetInvoiceNoteRequest;
@@ -93,5 +97,53 @@ final class InvoiceNoteResource extends BaseResource
         $request = new DeleteInvoiceNoteRequest($this->companyId, $this->invoiceId, $noteId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple invoice notes in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/invoices/{$this->invoiceId}/notes",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Update multiple invoice notes in a single request.
+     *
+     * Each item in the data array must include an 'ID' key.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkUpdate(array $data): BulkResponse
+    {
+        $request = new BulkUpdateRequest(
+            "/api/v1.0/companies/{$this->companyId}/invoices/{$this->invoiceId}/notes",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Delete multiple invoice notes in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/invoices/{$this->invoiceId}/notes",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

@@ -6,8 +6,10 @@ namespace Simpro\PhpSdk\Simpro\Resources\Quotes;
 
 use Saloon\Http\BaseResource;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Jobs\Attachments\AttachmentFile;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\Attachments\Files\CreateQuoteAttachmentFileRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\Attachments\Files\GetQuoteAttachmentFileRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\Attachments\Files\ListQuoteAttachmentFilesRequest;
@@ -55,6 +57,21 @@ final class QuoteAttachmentFileResource extends BaseResource
     public function create(array $data): int
     {
         $request = new CreateQuoteAttachmentFileRequest($this->companyId, $this->quoteId, $data);
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Create multiple quote attachment files in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/quotes/{$this->quoteId}/attachments/files",
+            $data,
+        );
 
         return $this->connector->send($request)->dto();
     }

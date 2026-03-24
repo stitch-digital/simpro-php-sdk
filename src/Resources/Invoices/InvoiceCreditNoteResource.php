@@ -7,8 +7,11 @@ namespace Simpro\PhpSdk\Simpro\Resources\Invoices;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Invoices\CreditNotes\CreditNote;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\CreditNotes\CreateInvoiceCreditNoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\CreditNotes\GetInvoiceCreditNoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Invoices\CreditNotes\ListInvoiceCreditNotesRequest;
@@ -82,5 +85,37 @@ final class InvoiceCreditNoteResource extends BaseResource
         $request = new UpdateInvoiceCreditNoteRequest($this->companyId, $this->invoiceId, $creditNoteId, $data);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple invoice credit notes in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/invoices/{$this->invoiceId}/creditNotes",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Update multiple invoice credit notes in a single request.
+     *
+     * Each item in the data array must include an 'ID' key.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkUpdate(array $data): BulkResponse
+    {
+        $request = new BulkUpdateRequest(
+            "/api/v1.0/companies/{$this->companyId}/invoices/{$this->invoiceId}/creditNotes",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

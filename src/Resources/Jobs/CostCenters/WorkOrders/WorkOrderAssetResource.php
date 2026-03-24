@@ -9,6 +9,7 @@ use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\WorkOrders\WorkOrderAsset;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\DeleteWorkOrderAssetRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\GetWorkOrderAssetRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\WorkOrders\Assets\ListWorkOrderAssetsDetailedRequest;
@@ -116,5 +117,21 @@ final class WorkOrderAssetResource extends BaseResource
         );
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Delete multiple work order assets in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/workOrders/{$this->workOrderId}/assets",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }

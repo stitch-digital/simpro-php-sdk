@@ -7,8 +7,12 @@ namespace Simpro\PhpSdk\Simpro\Resources\Setup\Materials;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
+use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
 use Simpro\PhpSdk\Simpro\Data\Setup\StockTakeReason;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\StockTakeReasons\CreateStockTakeReasonRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\StockTakeReasons\DeleteStockTakeReasonRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\Materials\StockTakeReasons\GetStockTakeReasonRequest;
@@ -96,5 +100,53 @@ final class StockTakeReasonResource extends BaseResource
         $request = new DeleteStockTakeReasonRequest($this->companyId, $optionId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Create multiple stock take reasons in a single request.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkCreate(array $data): BulkResponse
+    {
+        $request = new BulkCreateRequest(
+            "/api/v1.0/companies/{$this->companyId}/setup/materials/stockTakeReasons",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Update multiple stock take reasons in a single request.
+     *
+     * Each item in the data array must include an 'ID' key.
+     *
+     * @param  array<int, array<string, mixed>>  $data
+     */
+    public function bulkUpdate(array $data): BulkResponse
+    {
+        $request = new BulkUpdateRequest(
+            "/api/v1.0/companies/{$this->companyId}/setup/materials/stockTakeReasons",
+            $data,
+        );
+
+        return $this->connector->send($request)->dto();
+    }
+
+    /**
+     * Delete multiple stock take reasons in a single request.
+     *
+     * @param  array<int, int|string>  $ids
+     * @return array<int, string>
+     */
+    public function bulkDelete(array $ids): array
+    {
+        $request = new BulkDeleteRequest(
+            "/api/v1.0/companies/{$this->companyId}/setup/materials/stockTakeReasons",
+            $ids,
+        );
+
+        return $this->connector->send($request)->dto();
     }
 }
