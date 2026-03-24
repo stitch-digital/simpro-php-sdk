@@ -25,7 +25,7 @@ final readonly class BulkResponseItem
     public function __construct(
         public int $status,
         public int $batchId,
-        public int $resourceId,
+        public int|string $resourceId,
         public ?string $location,
         public mixed $body,
     ) {}
@@ -47,7 +47,7 @@ final readonly class BulkResponse
 
     public static function fromResponse(Response $response): self;
 
-    /** @return array<int> */
+    /** @return array<int, int|string> */
     public function resourceIds(): array;
 
     public function allSuccessful(): bool;
@@ -65,21 +65,24 @@ All in `src/Requests/Bulk/`.
 
 - **Method:** POST
 - **Endpoint:** `{baseEndpoint}/multiple/`
-- **Body:** Array of item arrays (passed directly)
+- **Constructor:** `string $endpoint`, `@param array<int, array<string, mixed>> $data`
+- **Body:** `$data` passed directly (returns `array<int, array<string, mixed>>` from `defaultBody()`)
 - **DTO:** `BulkResponse`
 
 #### `BulkUpdateRequest`
 
 - **Method:** PATCH
 - **Endpoint:** `{baseEndpoint}/multiple/`
-- **Body:** Array of item arrays (each must include `ID`)
+- **Constructor:** `string $endpoint`, `@param array<int, array<string, mixed>> $data`
+- **Body:** `$data` passed directly (each item must include `ID`)
 - **DTO:** `BulkResponse`
 
 #### `BulkDeleteRequest`
 
 - **Method:** POST
 - **Endpoint:** `{baseEndpoint}/delete/`
-- **Body:** `{'IDs': [...]}` — array of int or string IDs
+- **Constructor:** `string $endpoint`, `@param array<int, int|string> $ids`
+- **Body:** `['IDs' => $ids]` (returns `array{IDs: array<int, int|string>}` from `defaultBody()`)
 - **DTO:** `array<string>` (message strings from API)
 
 Each class accepts `string $endpoint` and the data/IDs in its constructor, appends the appropriate suffix in `resolveEndpoint()`.
@@ -132,8 +135,12 @@ The full list of affected resources (60+) spans all directories under `src/Resou
 
 **Exclusions:** Resources where bulk operations don't make semantic sense:
 - Lock resources (`JobLockResource`, `QuoteLockResource`, `CostCenterLockResource`) — these toggle a lock state, not create/delete resources
-- `CurrencyResource` — only has `update()`, no ID-based create/delete
-- Custom field value resources (e.g., `CustomerCustomFieldResource`, `JobCustomFieldResource`) — these only have `update()` for setting field values, not CRUD on the fields themselves
+- `CurrencyResource` — currencies are system-managed reference data, not user-created entities; bulk operations are not meaningful here
+- Custom field value resources (e.g., `CustomerCustomFieldResource`, `JobCustomFieldResource`) — these only have `update()` for setting field values on an entity, not CRUD on the fields themselves
+
+**Inclusions (note):** Setup custom field *definition* resources (the 14+ resources extending `AbstractCustomFieldResource` in `src/Resources/Setup/`) DO get bulk operations — these manage field definitions and have full CRUD.
+
+**Error handling:** The `BulkResponse` DTO only applies when the API returns a 200 response with per-item results. If the entire request fails (non-2xx), the existing `AbstractSimproConnector` error handling throws before DTO mapping occurs.
 
 ## Usage Examples
 
