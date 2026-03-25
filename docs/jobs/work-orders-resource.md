@@ -259,6 +259,8 @@ $customFields = $connector->jobs(companyId: 0)
 
 ### Mobile Signatures
 
+Returns `MobileSignature` DTOs with nullable `technician` and `client` properties.
+
 ```php
 // List mobile signatures
 $signatures = $connector->jobs(companyId: 0)
@@ -269,6 +271,10 @@ $signatures = $connector->jobs(companyId: 0)
     ->mobileSignatures()
     ->list()
     ->all();
+
+// Each signature has:
+// $signature->technician  (nullable string)
+// $signature->client      (nullable string)
 ```
 
 ## Deep Nesting - Asset Test Results (Level 6)

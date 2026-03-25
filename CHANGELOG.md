@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fixed `MobileSignature` DTO to match actual API response structure (`Technician` and `Client` fields)
+
 ### Changed
 - Refactored package from Uptick to Simpro
 - Updated package name to `stitch-digital/simpro-php-sdk`
