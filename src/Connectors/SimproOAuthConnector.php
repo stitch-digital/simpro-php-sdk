@@ -78,6 +78,7 @@ final class SimproOAuthConnector extends AbstractSimproConnector
             ->setDefaultScopes($this->scopes)
             ->setAuthorizeEndpoint($baseUrl.'/oauth2/login?client_id='.$this->clientId)
             ->setTokenEndpoint($baseUrl.'/oauth2/token')
-            ->setUserEndpoint('user');
+            ->setUserEndpoint('user')
+            ->setAllowBaseUrlOverride();
     }
 }
