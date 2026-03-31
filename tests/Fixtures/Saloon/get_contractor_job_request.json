@@ -1,0 +1,44 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1630,
+    "ProjectType": "Jobs",
+    "Contractor": {
+      "ID": 327,
+      "Name": "Marcus Hughes",
+      "ContactName": "Marcus Hughes"
+    },
+    "CreatedBy": null,
+    "Status": "Pending",
+    "Description": "",
+    "DateIssued": "2023-03-31",
+    "DueDate": "",
+    "ContractorSupplyMaterials": false,
+    "Materials": 0,
+    "Currency": "GBP",
+    "ExchangeRate": 1,
+    "Labor": null,
+    "TaxCode": {
+      "ID": 3,
+      "Code": "VAT",
+      "Type": "Single",
+      "Rate": 20
+    },
+    "Retention": {
+      "Amount": 0,
+      "PerClaim": 0,
+      "PeriodMonths": 12
+    },
+    "Total": {
+      "ExTax": 77.38,
+      "IncTax": 92.86,
+      "ReverseChargeTax": 0
+    },
+    "CustomFields": [],
+    "DateModified": "2023-03-31T16:19:03+01:00",
+    "_href": "/api/v1.0/companies/0/jobs/414786/sections/15311/costCenters/15615/contractorJobs/1630"
+  }
+}

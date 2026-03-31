@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\ContractorJobs;
+namespace Simpro\PhpSdk\Simpro\Data\ContractorJobs;
 
 use DateTimeImmutable;
 use Saloon\Http\Response;
-use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobContractor;
-use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobCreatedBy;
-use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobRetention;
-use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobTaxCode;
-use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobTotal;
 
-final readonly class ContractorJob
+final readonly class ContractorJobDetail
 {
     /**
      * @param  array<mixed>  $customFields
@@ -34,9 +29,9 @@ final readonly class ContractorJob
         public ?ContractorJobTaxCode $taxCode,
         public ?ContractorJobRetention $retention,
         public ?ContractorJobTotal $total,
-        public ?ContractorJobItems $items,
         public array $customFields,
         public ?DateTimeImmutable $dateModified,
+        public string $href,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -66,9 +61,9 @@ final readonly class ContractorJob
             taxCode: ! empty($data['TaxCode']) ? ContractorJobTaxCode::fromArray($data['TaxCode']) : null,
             retention: ! empty($data['Retention']) ? ContractorJobRetention::fromArray($data['Retention']) : null,
             total: ! empty($data['Total']) ? ContractorJobTotal::fromArray($data['Total']) : null,
-            items: ! empty($data['Items']) ? ContractorJobItems::fromArray($data['Items']) : null,
             customFields: $data['CustomFields'] ?? [],
             dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            href: $data['_href'] ?? '',
         );
     }
 }

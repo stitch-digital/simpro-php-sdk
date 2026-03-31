@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\ContractorJobs;
+namespace Simpro\PhpSdk\Simpro\Requests\ContractorJobs;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
-use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\ContractorJobs\ContractorJobListItem;
+use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobListItem;
 
 final class ListContractorJobsRequest extends Request implements Paginatable
 {
@@ -16,14 +16,11 @@ final class ListContractorJobsRequest extends Request implements Paginatable
 
     public function __construct(
         private readonly int $companyId,
-        private readonly int|string $jobId,
-        private readonly int|string $sectionId,
-        private readonly int|string $costCenterId,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return "/api/v1.0/companies/{$this->companyId}/jobs/{$this->jobId}/sections/{$this->sectionId}/costCenters/{$this->costCenterId}/contractorJobs/";
+        return "/api/v1.0/companies/{$this->companyId}/contractorJobs/";
     }
 
     /**

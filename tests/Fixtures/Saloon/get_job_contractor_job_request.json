@@ -1,0 +1,81 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 1630,
+    "ProjectType": "",
+    "Contractor": {
+      "ID": 327,
+      "Name": "Marcus Hughes",
+      "ContactName": "Marcus Hughes"
+    },
+    "CreatedBy": null,
+    "Status": "Pending",
+    "Description": "",
+    "DateIssued": "2023-03-31",
+    "DueDate": "",
+    "ContractorSupplyMaterials": false,
+    "Materials": 0,
+    "Currency": "GBP",
+    "ExchangeRate": 1,
+    "Labor": null,
+    "TaxCode": {
+      "ID": 3,
+      "Code": "VAT",
+      "Type": "Single",
+      "Rate": 20
+    },
+    "Retention": {
+      "Amount": 0,
+      "PerClaim": 0,
+      "PeriodMonths": 12
+    },
+    "Total": {
+      "ExTax": 0,
+      "IncTax": 0,
+      "ReverseChargeTax": 0
+    },
+    "Items": {
+      "Catalogs": [
+        {
+          "ID": 1,
+          "Catalog": {
+            "ID": 10,
+            "PartNo": "CAT-001",
+            "Name": "Copper pipe"
+          },
+          "Price": {
+            "Labor": 25.00,
+            "Material": 10.50
+          },
+          "Qty": {
+            "Assigned": 5,
+            "Remaining": 3
+          }
+        }
+      ],
+      "Prebuilds": [
+        {
+          "ID": 2,
+          "Prebuild": {
+            "ID": 20,
+            "PartNo": "PB-001",
+            "Name": "Standard fitting kit"
+          },
+          "Price": {
+            "Labor": 15.00,
+            "Material": 8.00
+          },
+          "Qty": {
+            "Assigned": 2,
+            "Remaining": 1
+          }
+        }
+      ]
+    },
+    "CustomFields": [],
+    "DateModified": "2023-03-31T16:19:03+01:00"
+  }
+}

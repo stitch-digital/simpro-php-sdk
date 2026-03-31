@@ -1,0 +1,42 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1630,
+      "ProjectType": "Jobs",
+      "Contractor": {
+        "ID": 327,
+        "Name": "Marcus Hughes",
+        "ContactName": "Marcus Hughes"
+      },
+      "CreatedBy": null,
+      "Total": {
+        "ExTax": 77.38,
+        "IncTax": 92.86,
+        "ReverseChargeTax": 0
+      },
+      "_href": "/api/v1.0/companies/0/jobs/414786/sections/15311/costCenters/15615/contractorJobs/1630"
+    },
+    {
+      "ID": 1629,
+      "ProjectType": "Jobs",
+      "Contractor": {
+        "ID": 536,
+        "Name": "Daniel Pearson",
+        "ContactName": "Daniel Pearson"
+      },
+      "CreatedBy": null,
+      "Total": {
+        "ExTax": 35,
+        "IncTax": 35,
+        "ReverseChargeTax": 0
+      },
+      "_href": "/api/v1.0/companies/0/jobs/413917/sections/14404/costCenters/14673/contractorJobs/1629"
+    }
+  ]
+}
