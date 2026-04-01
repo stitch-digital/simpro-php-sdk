@@ -1,0 +1,60 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 2007,
+      "Subject": "Email notification Job Scheduled",
+      "Note": "<div style=\"font-size: 10pt;\">Job has been scheduled for next week.</div>",
+      "DateCreated": "2026-03-05T10:38:23+00:00",
+      "FollowUpDate": "2026-03-12",
+      "Visibility": {
+        "Customer": false,
+        "Admin": true
+      },
+      "Attachments": [
+        {
+          "_href": "/common/getAttachment.php?location=abc123&filename=schedule.pdf&download=0&thumbnail=0&export=0&v=1",
+          "FileName": "schedule.pdf"
+        }
+      ],
+      "AssignTo": {
+        "ID": 1446,
+        "Name": "John Trickett",
+        "Type": "employee",
+        "TypeId": 1446
+      },
+      "SubmittedBy": {
+        "ID": 2350,
+        "Name": "b.koshkarov@iqtechnology.io",
+        "Type": "employee",
+        "TypeId": 2350
+      },
+      "Reference": "JN-001"
+    },
+    {
+      "ID": 2001,
+      "Subject": "Reached out to subcontractor",
+      "Note": "<div style=\"font-size: 10pt;\">Waiting to hear back.</div>",
+      "DateCreated": "2026-02-24T12:21:11+00:00",
+      "FollowUpDate": null,
+      "Visibility": {
+        "Customer": true,
+        "Admin": true
+      },
+      "Attachments": [],
+      "AssignTo": {},
+      "SubmittedBy": {
+        "ID": 1446,
+        "Name": "John Trickett",
+        "Type": "employee",
+        "TypeId": 1446
+      },
+      "Reference": null
+    }
+  ]
+}
