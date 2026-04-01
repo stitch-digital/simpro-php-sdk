@@ -136,72 +136,72 @@ describe('Search::endsWith()', function () {
 });
 
 describe('Search::lessThan()', function () {
-    it('prefixes value with <', function () {
+    it('wraps value with lt() operator', function () {
         $search = Search::make()->column('ID')->lessThan(10);
 
-        expect($search->getValue())->toBe('<10');
+        expect($search->getValue())->toBe('lt(10)');
     });
 });
 
 describe('Search::lessThanOrEqual()', function () {
-    it('prefixes value with <=', function () {
+    it('wraps value with le() operator', function () {
         $search = Search::make()->column('ID')->lessThanOrEqual(10);
 
-        expect($search->getValue())->toBe('<=10');
+        expect($search->getValue())->toBe('le(10)');
     });
 });
 
 describe('Search::greaterThan()', function () {
-    it('prefixes value with >', function () {
+    it('wraps value with gt() operator', function () {
         $search = Search::make()->column('ID')->greaterThan(10);
 
-        expect($search->getValue())->toBe('>10');
+        expect($search->getValue())->toBe('gt(10)');
     });
 });
 
 describe('Search::greaterThanOrEqual()', function () {
-    it('prefixes value with >=', function () {
+    it('wraps value with ge() operator', function () {
         $search = Search::make()->column('ID')->greaterThanOrEqual(10);
 
-        expect($search->getValue())->toBe('>=10');
+        expect($search->getValue())->toBe('ge(10)');
     });
 });
 
 describe('Search::notEqual()', function () {
-    it('prefixes value with !=', function () {
+    it('wraps value with ne() operator', function () {
         $search = Search::make()->column('Status')->notEqual('Cancelled');
 
-        expect($search->getValue())->toBe('!=Cancelled');
+        expect($search->getValue())->toBe('ne(Cancelled)');
     });
 
     it('handles null value', function () {
         $search = Search::make()->column('Status')->notEqual(null);
 
-        expect($search->getValue())->toBe('!=null');
+        expect($search->getValue())->toBe('ne()');
     });
 });
 
 describe('Search::between()', function () {
-    it('formats range with tilde separator', function () {
+    it('wraps values with between() operator', function () {
         $search = Search::make()->column('ID')->between(1, 100);
 
-        expect($search->getValue())->toBe('1~100');
+        expect($search->getValue())->toBe('between(1,100)');
     });
 });
 
 describe('Search::in()', function () {
-    it('joins values with commas', function () {
+    it('wraps values with in() operator', function () {
         $search = Search::make()->column('Status')->in(['Active', 'Pending', 'New']);
 
-        expect($search->getValue())->toBe('Active,Pending,New');
+        expect($search->getValue())->toBe('in(Active,Pending,New)');
     });
 });
 
 describe('Search::notIn()', function () {
-    it('prefixes each value with != and joins with commas', function () {
+    it('wraps values with !in() operator', function () {
         $search = Search::make()->column('Status')->notIn(['Cancelled', 'Deleted']);
 
-        expect($search->getValue())->toBe('!=Cancelled,!=Deleted');
+        expect($search->getValue())->toBe('!in(Cancelled,Deleted)');
     });
 });
 
