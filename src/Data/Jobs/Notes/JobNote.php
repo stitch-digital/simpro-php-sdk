@@ -22,6 +22,7 @@ final readonly class JobNote
         public ?JobNoteVisibility $visibility,
         public ?StaffReference $assignTo,
         public ?array $attachments,
+        public ?StaffReference $submittedBy,
         public ?int $createdById,
         public ?string $createdByName,
         public ?DateTimeImmutable $dateModified,
@@ -46,6 +47,7 @@ final readonly class JobNote
                 fn (array $item) => JobNoteAttachment::fromArray($item),
                 $data['Attachments']
             ) : null,
+            submittedBy: ! empty($data['SubmittedBy']) ? StaffReference::fromArray($data['SubmittedBy']) : null,
             createdById: isset($data['CreatedBy']['ID']) ? (int) $data['CreatedBy']['ID'] : null,
             createdByName: $data['CreatedBy']['Name'] ?? null,
             dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
