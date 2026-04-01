@@ -14,6 +14,7 @@ use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\Notes\CreateJobNoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\Notes\GetJobNoteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Jobs\Notes\ListDetailedJobNotesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\Notes\ListJobNotesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\Notes\UpdateJobNoteRequest;
 
@@ -40,6 +41,29 @@ final class JobNoteResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListJobNotesRequest($this->companyId, $this->jobId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all notes for this job with full details.
+     *
+     * Returns a QueryBuilder that supports fluent search, ordering, and filtering.
+     * Returns full JobNote DTOs with all fields including SubmittedBy, Visibility, etc.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedJobNotesRequest($this->companyId, $this->jobId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
