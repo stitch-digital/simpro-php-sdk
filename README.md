@@ -883,14 +883,14 @@ The `Search` class provides these methods:
 | `find($value)` | Wildcard search | `%25Test%25` |
 | `startsWith($value)` | Starts with | `Test%25` |
 | `endsWith($value)` | Ends with | `%25Test` |
-| `lessThan($value)` | Less than | `<10` |
-| `lessThanOrEqual($value)` | Less than or equal | `<=10` |
-| `greaterThan($value)` | Greater than | `>10` |
-| `greaterThanOrEqual($value)` | Greater than or equal | `>=10` |
-| `notEqual($value)` | Not equal | `!=Cancelled` |
-| `between($min, $max)` | Range | `1~100` |
-| `in($array)` | In list | `Active,Pending` |
-| `notIn($array)` | Not in list | `!=Cancelled,!=Deleted` |
+| `lessThan($value)` | Less than | `lt(10)` |
+| `lessThanOrEqual($value)` | Less than or equal | `le(10)` |
+| `greaterThan($value)` | Greater than | `gt(10)` |
+| `greaterThanOrEqual($value)` | Greater than or equal | `ge(10)` |
+| `notEqual($value)` | Not equal | `ne(Cancelled)` |
+| `between($min, $max)` | Range | `between(1,100)` |
+| `in($array)` | In list | `in(Active,Pending)` |
+| `notIn($array)` | Not in list | `!in(Cancelled,Deleted)` |
 
 ### Using Laravel Collections
 

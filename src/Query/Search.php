@@ -144,91 +144,91 @@ final class Search
     }
 
     /**
-     * Less than comparison (<value).
+     * Less than comparison: lt(value).
      */
     public function lessThan(string|int|float $value): self
     {
-        $this->value = '<'.$this->formatValue($value);
+        $this->value = 'lt('.$this->formatValue($value).')';
 
         return $this;
     }
 
     /**
-     * Less than or equal comparison (<=value).
+     * Less than or equal comparison: le(value).
      */
     public function lessThanOrEqual(string|int|float $value): self
     {
-        $this->value = '<='.$this->formatValue($value);
+        $this->value = 'le('.$this->formatValue($value).')';
 
         return $this;
     }
 
     /**
-     * Greater than comparison (>value).
+     * Greater than comparison: gt(value).
      */
     public function greaterThan(string|int|float $value): self
     {
-        $this->value = '>'.$this->formatValue($value);
+        $this->value = 'gt('.$this->formatValue($value).')';
 
         return $this;
     }
 
     /**
-     * Greater than or equal comparison (>=value).
+     * Greater than or equal comparison: ge(value).
      */
     public function greaterThanOrEqual(string|int|float $value): self
     {
-        $this->value = '>='.$this->formatValue($value);
+        $this->value = 'ge('.$this->formatValue($value).')';
 
         return $this;
     }
 
     /**
-     * Not equal comparison (!=value).
+     * Not equal comparison: ne(value).
      */
     public function notEqual(string|int|float|bool|null $value): self
     {
         if ($value === null) {
-            $this->value = '!=null';
+            $this->value = 'ne()';
         } else {
-            $this->value = '!='.$this->formatValue($value);
+            $this->value = 'ne('.$this->formatValue($value).')';
         }
 
         return $this;
     }
 
     /**
-     * Between range comparison (min~max).
+     * Between range comparison: between(min,max).
      */
     public function between(string|int|float $min, string|int|float $max): self
     {
-        $this->value = $this->formatValue($min).'~'.$this->formatValue($max);
+        $this->value = 'between('.$this->formatValue($min).','.$this->formatValue($max).')';
 
         return $this;
     }
 
     /**
-     * Value is in a list (value1,value2,value3).
+     * Value is in a list: in(value1,value2,value3).
      *
      * @param  array<string|int|float>  $values
      */
     public function in(array $values): self
     {
         $formatted = array_map(fn ($v) => $this->formatValue($v), $values);
-        $this->value = implode(',', $formatted);
+        $this->value = 'in('.implode(',', $formatted).')';
 
         return $this;
     }
 
     /**
-     * Value is not in a list (!=value1,!=value2).
+     * Value is not in a list: !in(value1,value2,value3).
      *
      * @param  array<string|int|float>  $values
      */
     public function notIn(array $values): self
     {
-        $formatted = array_map(fn ($v) => '!='.$this->formatValue($v), $values);
-        $this->value = implode(',', $formatted);
+        $formatted = array_map(fn ($v) => $this->formatValue($v), $values);
+        $this->value = '!in('.implode(',', $formatted).')';
 
         return $this;
     }
