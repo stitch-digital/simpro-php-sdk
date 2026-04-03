@@ -7,6 +7,7 @@ namespace Simpro\PhpSdk\Simpro\Resources\Setup;
 use Saloon\Http\BaseResource;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
+use Simpro\PhpSdk\Simpro\Requests\Setup\TaxCodes\ListDetailedTaxCodesRequest;
 use Simpro\PhpSdk\Simpro\Requests\Setup\TaxCodes\ListTaxCodesRequest;
 
 /**
@@ -31,6 +32,28 @@ final class TaxCodeResource extends BaseResource
     public function list(array $filters = []): QueryBuilder
     {
         $request = new ListTaxCodesRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all tax codes with full details.
+     *
+     * Returns DetailedTaxCode DTOs with all fields including Name, ReverseTaxEnabled, etc.
+     *
+     * @param  array<string, mixed>  $filters  Initial filters to apply
+     */
+    public function listDetailed(array $filters = []): QueryBuilder
+    {
+        $request = new ListDetailedTaxCodesRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {

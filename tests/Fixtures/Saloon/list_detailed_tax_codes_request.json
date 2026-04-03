@@ -1,0 +1,46 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "3",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Code": "GST",
+      "Name": "Goods and Services Tax",
+      "Rate": 10.0,
+      "ReverseTaxEnabled": false,
+      "IsPartIncomeDefault": false,
+      "IsLaborIncomeDefault": false,
+      "Archived": false,
+      "DateModified": "2023-05-09T11:58:27+01:00",
+      "_href": "/api/v1.0/companies/0/setup/accounts/taxCodes/singles/1"
+    },
+    {
+      "ID": 2,
+      "Code": "EXEMPT",
+      "Name": "Tax Free",
+      "Rate": 0.0,
+      "ReverseTaxEnabled": false,
+      "IsPartIncomeDefault": false,
+      "IsLaborIncomeDefault": false,
+      "Archived": false,
+      "DateModified": "2021-11-08T16:30:42+00:00",
+      "_href": "/api/v1.0/companies/0/setup/accounts/taxCodes/singles/2"
+    },
+    {
+      "ID": 3,
+      "Code": "VAT",
+      "Name": "VAT",
+      "Rate": 20.0,
+      "ReverseTaxEnabled": false,
+      "IsPartIncomeDefault": true,
+      "IsLaborIncomeDefault": true,
+      "Archived": false,
+      "DateModified": "2019-08-25T13:12:08+01:00",
+      "_href": "/api/v1.0/companies/0/setup/accounts/taxCodes/singles/3"
+    }
+  ]
+}
