@@ -1,0 +1,88 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Count": "1",
+    "Result-Total": "1"
+  },
+  "data": [
+    {
+      "ID": 5001,
+      "ContractorJobs": [30130, 29859],
+      "Contractor": {
+        "ID": 4285,
+        "Name": "Bright Spark Electrical Limited",
+        "Address": {
+          "Address": "10 Industrial Way",
+          "City": "London",
+          "State": "",
+          "PostalCode": "SW1A 1AA",
+          "Country": "United Kingdom"
+        },
+        "PrimaryContact": {
+          "Email": "test@example.com",
+          "WorkPhone": "01234 567 890",
+          "CellPhone": "07700 900123"
+        },
+        "ContactName": "Billy Bright",
+        "Banking": {
+          "AccountName": "Bright Spark Electrical",
+          "RoutingNo": "20-30-40",
+          "AccountNo": "12345678",
+          "PaymentTermID": 934,
+          "PaymentTerms": {
+            "Days": 30,
+            "Type": "Invoice"
+          }
+        }
+      },
+      "InvoiceNo": "INV-001",
+      "DateIssued": "2026-04-01",
+      "DueDate": "2026-05-01",
+      "DatePaid": null,
+      "Currency": "GBP",
+      "ExchangeRate": 1.0,
+      "Category": {
+        "ID": 1,
+        "Name": "Standard"
+      },
+      "Notes": "Test invoice",
+      "CostCenters": [
+        {
+          "ContractorJob": 30130,
+          "CostCenter": {
+            "ID": 500,
+            "Name": "P - Electrical"
+          },
+          "Labour": {
+            "ExTax": 1000.00,
+            "IncTax": 1200.00,
+            "Tax": 200.00
+          },
+          "Material": {
+            "ExTax": 500.00,
+            "IncTax": 600.00,
+            "Tax": 100.00
+          },
+          "TaxCode": {
+            "ID": 13,
+            "Code": "T1",
+            "Rate": 20.0
+          },
+          "Complete": false
+        }
+      ],
+      "Retentions": [],
+      "Variances": [],
+      "Total": {
+        "ExTax": 1500.00,
+        "IncTax": 1800.00,
+        "Tax": 300.00
+      },
+      "CustomFields": [],
+      "DateModified": "2026-04-10T12:00:00+01:00",
+      "CISDeduction": 0,
+      "RCTDeduction": 0
+    }
+  ]
+}
