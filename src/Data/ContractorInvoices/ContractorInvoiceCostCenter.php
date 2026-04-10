@@ -32,7 +32,7 @@ final readonly class ContractorInvoiceCostCenter
             contractorJob: isset($data['ContractorJob']) ? (int) $data['ContractorJob'] : null,
             costCenter: ! empty($data['CostCenter']) ? Reference::fromArray($data['CostCenter']) : null,
             description: $data['Description'] ?? null,
-            jobNo: $data['JobNo'] ?? null,
+            jobNo: isset($data['JobNo']) ? (string) $data['JobNo'] : null,
             material: ! empty($data['Material']) ? ContractorInvoiceTotal::fromArray($data['Material']) : null,
             labour: ! empty($data['Labour']) ? ContractorInvoiceTotal::fromArray($data['Labour']) : null,
             lineTotal: ! empty($data['LineTotal']) ? ContractorInvoiceTotal::fromArray($data['LineTotal']) : null,

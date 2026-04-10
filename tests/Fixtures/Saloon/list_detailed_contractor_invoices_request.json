@@ -31,7 +31,7 @@
           "AccountNo": "12345678",
           "PaymentTermID": 934,
           "PaymentTerms": {
-            "Days": "30",
+            "Days": 30,
             "Type": "Invoice"
           }
         }
@@ -54,6 +54,8 @@
             "ID": 500,
             "Name": "P - Electrical"
           },
+          "Description": "Electrical Works",
+          "JobNo": 470181,
           "Labour": {
             "ExTax": 1000.00,
             "IncTax": 1200.00,
