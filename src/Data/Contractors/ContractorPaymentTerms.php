@@ -17,7 +17,7 @@ final readonly class ContractorPaymentTerms
     public static function fromArray(array $data): self
     {
         return new self(
-            days: $data['Days'] ?? null,
+            days: isset($data['Days']) ? (int) $data['Days'] : null,
             type: $data['Type'] ?? null,
         );
     }

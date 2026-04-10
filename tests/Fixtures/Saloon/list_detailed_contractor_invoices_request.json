@@ -31,7 +31,7 @@
           "AccountNo": "12345678",
           "PaymentTermID": 934,
           "PaymentTerms": {
-            "Days": 30,
+            "Days": "30",
             "Type": "Invoice"
           }
         }
