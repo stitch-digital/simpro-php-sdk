@@ -23,8 +23,8 @@ final readonly class BulkResponseItem
 
         return new self(
             status: $data['status'],
-            batchId: (int) $headers['Batch-ID'],
-            resourceId: $headers['Resource-ID'],
+            batchId: (int) ($headers['Batch-ID'] ?? 0),
+            resourceId: $headers['Resource-ID'] ?? 0,
             location: $headers['Location'] ?? null,
             body: $data['body'],
         );
