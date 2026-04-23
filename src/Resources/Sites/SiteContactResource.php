@@ -2,45 +2,47 @@
 
 declare(strict_types=1);
 
-namespace Simpro\PhpSdk\Simpro\Resources;
+namespace Simpro\PhpSdk\Simpro\Resources\Sites;
 
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use Simpro\PhpSdk\Simpro\Connectors\AbstractSimproConnector;
 use Simpro\PhpSdk\Simpro\Data\Bulk\BulkResponse;
-use Simpro\PhpSdk\Simpro\Data\Sites\SiteListDetailedItem;
+use Simpro\PhpSdk\Simpro\Data\Sites\Contacts\SiteContact;
 use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
-use Simpro\PhpSdk\Simpro\Requests\Sites\CreateSiteRequest;
-use Simpro\PhpSdk\Simpro\Requests\Sites\DeleteSiteRequest;
-use Simpro\PhpSdk\Simpro\Requests\Sites\GetSiteRequest;
-use Simpro\PhpSdk\Simpro\Requests\Sites\ListSitesDetailedRequest;
-use Simpro\PhpSdk\Simpro\Requests\Sites\ListSitesRequest;
-use Simpro\PhpSdk\Simpro\Requests\Sites\UpdateSiteRequest;
-use Simpro\PhpSdk\Simpro\Scopes\Sites\SiteScope;
+use Simpro\PhpSdk\Simpro\Requests\Sites\Contacts\CreateSiteContactRequest;
+use Simpro\PhpSdk\Simpro\Requests\Sites\Contacts\DeleteSiteContactRequest;
+use Simpro\PhpSdk\Simpro\Requests\Sites\Contacts\GetSiteContactRequest;
+use Simpro\PhpSdk\Simpro\Requests\Sites\Contacts\ListSiteContactsDetailedRequest;
+use Simpro\PhpSdk\Simpro\Requests\Sites\Contacts\ListSiteContactsRequest;
+use Simpro\PhpSdk\Simpro\Requests\Sites\Contacts\UpdateSiteContactRequest;
 
 /**
+ * Resource for managing site contacts.
+ *
  * @property AbstractSimproConnector $connector
  */
-final class SiteResource extends BaseResource
+final class SiteContactResource extends BaseResource
 {
     public function __construct(
         AbstractSimproConnector $connector,
         private readonly int $companyId,
+        private readonly int|string $siteId,
     ) {
         parent::__construct($connector);
     }
 
     /**
-     * List all sites.
+     * List all contacts for this site.
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function list(array $filters = []): QueryBuilder
     {
-        $request = new ListSitesRequest($this->companyId);
+        $request = new ListSiteContactsRequest($this->companyId, $this->siteId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
@@ -54,13 +56,13 @@ final class SiteResource extends BaseResource
     }
 
     /**
-     * List all sites with all available columns.
+     * List all contacts for this site with all available columns.
      *
      * @param  array<string, mixed>  $filters  Initial filters to apply
      */
     public function listDetailed(array $filters = []): QueryBuilder
     {
-        $request = new ListSitesDetailedRequest($this->companyId);
+        $request = new ListSiteContactsDetailedRequest($this->companyId, $this->siteId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
@@ -74,28 +76,13 @@ final class SiteResource extends BaseResource
     }
 
     /**
-     * Get a scope for a specific site to access nested resources.
+     * Get a specific site contact.
      *
-     * @example
-     * // Access site contacts
-     * $connector->sites(companyId: 0)->site(siteId: 123)->contacts()->list();
-     *
-     * // Access site custom fields
-     * $connector->sites(companyId: 0)->site(siteId: 123)->customFields()->list();
+     * @param  array<string>|null  $columns  Optional columns to retrieve
      */
-    public function site(int|string $siteId): SiteScope
+    public function get(int|string $contactId, ?array $columns = null): SiteContact
     {
-        return new SiteScope($this->connector, $this->companyId, $siteId);
-    }
-
-    /**
-     * Get detailed information for a specific site.
-     *
-     * @param  array<string>|null  $columns
-     */
-    public function get(int|string $siteId, ?array $columns = null): SiteListDetailedItem
-    {
-        $request = new GetSiteRequest($this->companyId, $siteId);
+        $request = new GetSiteContactRequest($this->companyId, $this->siteId, $contactId);
 
         if ($columns !== null) {
             $request->query()->add('columns', implode(',', $columns));
@@ -105,49 +92,49 @@ final class SiteResource extends BaseResource
     }
 
     /**
-     * Create a new site.
+     * Create a new site contact.
      *
      * @param  array<string, mixed>  $data
-     * @return int The ID of the created site
+     * @return int The ID of the created contact
      */
     public function create(array $data): int
     {
-        $request = new CreateSiteRequest($this->companyId, $data);
+        $request = new CreateSiteContactRequest($this->companyId, $this->siteId, $data);
 
         return $this->connector->send($request)->dto();
     }
 
     /**
-     * Update an existing site.
+     * Update an existing site contact.
      *
      * @param  array<string, mixed>  $data
      */
-    public function update(int|string $siteId, array $data): Response
+    public function update(int|string $contactId, array $data): Response
     {
-        $request = new UpdateSiteRequest($this->companyId, $siteId, $data);
+        $request = new UpdateSiteContactRequest($this->companyId, $this->siteId, $contactId, $data);
 
         return $this->connector->send($request);
     }
 
     /**
-     * Delete a site.
+     * Delete a site contact.
      */
-    public function delete(int|string $siteId): Response
+    public function delete(int|string $contactId): Response
     {
-        $request = new DeleteSiteRequest($this->companyId, $siteId);
+        $request = new DeleteSiteContactRequest($this->companyId, $this->siteId, $contactId);
 
         return $this->connector->send($request);
     }
 
     /**
-     * Create multiple sites in a single request.
+     * Create multiple site contacts in a single request.
      *
      * @param  array<int, array<string, mixed>>  $data
      */
     public function bulkCreate(array $data): BulkResponse
     {
         $request = new BulkCreateRequest(
-            "/api/v1.0/companies/{$this->companyId}/sites",
+            "/api/v1.0/companies/{$this->companyId}/sites/{$this->siteId}/contacts",
             $data,
         );
 
@@ -155,14 +142,14 @@ final class SiteResource extends BaseResource
     }
 
     /**
-     * Update multiple sites in a single request.
+     * Update multiple site contacts in a single request.
      *
      * @param  array<int, array<string, mixed>>  $data
      */
     public function bulkUpdate(array $data): BulkResponse
     {
         $request = new BulkUpdateRequest(
-            "/api/v1.0/companies/{$this->companyId}/sites",
+            "/api/v1.0/companies/{$this->companyId}/sites/{$this->siteId}/contacts",
             $data,
         );
 
@@ -170,7 +157,7 @@ final class SiteResource extends BaseResource
     }
 
     /**
-     * Delete multiple sites in a single request.
+     * Delete multiple site contacts in a single request.
      *
      * @param  array<int, int|string>  $ids
      * @return array<int, string>
@@ -178,7 +165,7 @@ final class SiteResource extends BaseResource
     public function bulkDelete(array $ids): array
     {
         $request = new BulkDeleteRequest(
-            "/api/v1.0/companies/{$this->companyId}/sites",
+            "/api/v1.0/companies/{$this->companyId}/sites/{$this->siteId}/contacts",
             $ids,
         );
 
