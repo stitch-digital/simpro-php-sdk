@@ -5,14 +5,28 @@ declare(strict_types=1);
 namespace Simpro\PhpSdk\Simpro\Auth;
 
 use DateTimeImmutable;
-use RuntimeException;
-use Saloon\Enums\Method;
-use Saloon\Helpers\OAuth2\OAuthConfig;
+use InvalidArgumentException;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Traits\Body\HasFormBody;
+use Simpro\PhpSdk\Simpro\Auth\Requests\GetPasswordAccessTokenRequest;
+use Simpro\PhpSdk\Simpro\Auth\Requests\GetPasswordRefreshTokenRequest;
 
+/**
+ * Adds OAuth 2.0 Resource Owner Password Credentials grant support to a Saloon
+ * connector (RFC 6749 §4.3).
+ *
+ * Consuming connectors MUST also `use Saloon\Traits\OAuth2\HasOAuthConfig;`
+ * which provides the cached `oauthConfig()` accessor and the abstract
+ * `defaultOauthConfig()` contract this trait relies on. We deliberately do not
+ * `use HasOAuthConfig;` from within this trait because Saloon's grant traits
+ * follow the same convention of leaving the host class responsible for
+ * composing the OAuth config trait.
+ *
+ * @mixin \Saloon\Traits\OAuth2\HasOAuthConfig
+ * @mixin \Saloon\Http\Connector
+ *
+ * @phpstan-ignore trait.unused
+ */
 trait PasswordGrant
 {
     /**
@@ -22,15 +36,11 @@ trait PasswordGrant
         string $username,
         string $password,
     ): AccessTokenAuthenticator {
-        $config = $this->resolveOauthConfig();
-
-        $response = $this->send($this->createTokenRequest([
-            'grant_type' => 'password',
-            'client_id' => $config->getClientId(),
-            'client_secret' => $config->getClientSecret(),
-            'username' => $username,
-            'password' => $password,
-        ]));
+        $response = $this->send(new GetPasswordAccessTokenRequest(
+            $this->oauthConfig(),
+            $username,
+            $password,
+        ));
 
         return $this->createAuthenticatorFromResponse($response);
     }
@@ -44,59 +54,21 @@ trait PasswordGrant
         $refreshToken = $authenticator->getRefreshToken();
 
         if ($refreshToken === null || $refreshToken === '') {
-            throw new RuntimeException('Cannot refresh access token: no refresh token present.');
+            throw new InvalidArgumentException('Cannot refresh access token: no refresh token present.');
         }
 
-        $config = $this->resolveOauthConfig();
-
-        $response = $this->send($this->createTokenRequest([
-            'grant_type' => 'refresh_token',
-            'client_id' => $config->getClientId(),
-            'client_secret' => $config->getClientSecret(),
-            'refresh_token' => $refreshToken,
-        ]));
+        $response = $this->send(new GetPasswordRefreshTokenRequest(
+            $this->oauthConfig(),
+            $refreshToken,
+        ));
 
         return $this->createAuthenticatorFromResponse($response);
     }
 
-    protected function resolveOauthConfig(): OAuthConfig
-    {
-        return $this->defaultOauthConfig();
-    }
-
-    /**
-     * @param  array<string, string>  $body
-     */
-    private function createTokenRequest(array $body): Request
-    {
-        $endpoint = $this->resolveOauthConfig()->getTokenEndpoint();
-
-        return new class($endpoint, $body) extends Request
-        {
-            use HasFormBody;
-
-            protected Method $method = Method::POST;
-
-            /** @param array<string, string> $body */
-            public function __construct(
-                private readonly string $endpoint,
-                private readonly array $body,
-            ) {}
-
-            public function resolveEndpoint(): string
-            {
-                return $this->endpoint;
-            }
-
-            protected function defaultBody(): array
-            {
-                return $this->body;
-            }
-        };
-    }
-
     private function createAuthenticatorFromResponse(Response $response): AccessTokenAuthenticator
     {
+        $response->throw();
+
         /** @var array{access_token: string, refresh_token?: string, expires_in?: int} $data */
         $data = $response->json();
 
@@ -110,6 +82,4 @@ trait PasswordGrant
             expiresAt: $expiresAt,
         );
     }
-
-    abstract protected function defaultOauthConfig(): OAuthConfig;
 }
