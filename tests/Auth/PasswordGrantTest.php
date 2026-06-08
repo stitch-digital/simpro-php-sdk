@@ -134,7 +134,7 @@ test('it throws InvalidArgumentException when refreshing without a refresh token
         ->toThrow(InvalidArgumentException::class);
 });
 
-test('it handles a response that omits expires_in by setting expiresAt to null', function () {
+test('it defaults expiresAt to one hour from now when expires_in is omitted', function () {
     $connector = new PasswordGrantTestConnector(
         baseUrl: 'https://test.simprosuite.com',
         clientId: 'test-client-id',
@@ -151,12 +151,22 @@ test('it handles a response that omits expires_in by setting expiresAt to null',
 
     $connector->withMockClient($mockClient);
 
+    $before = new DateTimeImmutable;
+
     $authenticator = $connector->getAccessTokenViaPassword(
         'meredith.jones@ssecltd.co.uk',
         's3cret',
     );
 
-    expect($authenticator->getExpiresAt())->toBeNull();
+    $expiresAt = $authenticator->getExpiresAt();
+
+    expect($expiresAt)->not->toBeNull()
+        ->and($authenticator->hasNotExpired())->toBeTrue();
+
+    $expected = $before->getTimestamp() + 3600;
+    $actual = $expiresAt->getTimestamp();
+
+    expect(abs($actual - $expected))->toBeLessThanOrEqual(5);
 });
 
 test('it throws when the token endpoint returns 4xx', function () {

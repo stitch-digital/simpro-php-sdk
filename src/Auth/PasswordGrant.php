@@ -72,9 +72,8 @@ trait PasswordGrant
         /** @var array{access_token: string, refresh_token?: string, expires_in?: int} $data */
         $data = $response->json();
 
-        $expiresAt = isset($data['expires_in'])
-            ? new DateTimeImmutable('+'.$data['expires_in'].' seconds')
-            : null;
+        $expiresIn = $data['expires_in'] ?? 3600;
+        $expiresAt = new DateTimeImmutable('+'.$expiresIn.' seconds');
 
         return new AccessTokenAuthenticator(
             accessToken: $data['access_token'],
