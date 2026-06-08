@@ -12,8 +12,8 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\CreateContractorInvoiceRequest;
 use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\DeleteContractorInvoiceRequest;
 use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\GetContractorInvoiceRequest;
-use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\ListDetailedContractorInvoicesRequest;
 use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\ListContractorInvoicesRequest;
+use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\ListDetailedContractorInvoicesRequest;
 use Simpro\PhpSdk\Simpro\Requests\ContractorInvoices\UpdateContractorInvoiceRequest;
 use Simpro\PhpSdk\Simpro\Scopes\ContractorInvoices\ContractorInvoiceScope;
 

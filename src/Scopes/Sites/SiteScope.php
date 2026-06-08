@@ -38,14 +38,6 @@ final class SiteScope extends AbstractScope
     }
 
     /**
-     * Navigate to a specific contact scope.
-     */
-    public function contact(int|string $contactId): SiteContactScope
-    {
-        return new SiteContactScope($this->connector, $this->companyId, $this->siteId, $contactId);
-    }
-
-    /**
      * Access custom fields for this site.
      */
     public function customFields(): SiteCustomFieldResource

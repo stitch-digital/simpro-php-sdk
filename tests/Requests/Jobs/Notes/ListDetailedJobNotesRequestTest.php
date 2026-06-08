@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 use Simpro\PhpSdk\Simpro\Data\Jobs\Notes\JobNote;
 use Simpro\PhpSdk\Simpro\Data\Jobs\Notes\JobNoteAttachment;
 use Simpro\PhpSdk\Simpro\Data\Jobs\Notes\JobNoteVisibility;
-use Simpro\PhpSdk\Simpro\Data\Common\StaffReference;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\Notes\ListDetailedJobNotesRequest;
 
 it('sends list detailed job notes request to correct endpoint', function () {
