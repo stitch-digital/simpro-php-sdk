@@ -33,7 +33,6 @@ final class ListTasksDetailedRequest extends Request implements Paginatable
                 'ID',
                 'Subject',
                 'CreatedBy',
-                'AssignedTo',
                 'Assignees',
                 'AssignedToCustomer',
                 'CompletedBy',
@@ -56,6 +55,7 @@ final class ListTasksDetailedRequest extends Request implements Paginatable
                 'CustomFields',
                 'PercentComplete',
                 'DateModified',
+                'CreatedDate',
             ]),
         ];
     }

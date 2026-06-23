@@ -42,6 +42,7 @@ final readonly class TaskListDetailedItem
         public ?array $customFields = null,
         public ?string $percentComplete = null,
         public ?DateTimeImmutable $dateModified = null,
+        public ?string $createdDate = null,
     ) {}
 
     /**
@@ -94,10 +95,11 @@ final readonly class TaskListDetailedItem
             customFields: isset($data['CustomFields']) && is_array($data['CustomFields'])
                 ? array_map(fn (array $item) => CustomField::fromArray($item), $data['CustomFields'])
                 : null,
-            percentComplete: $data['PercentComplete'] !== '' ? ($data['PercentComplete'] ?? null) : null,
+            percentComplete: ! empty($data['PercentComplete']) ? $data['PercentComplete'] : null,
             dateModified: isset($data['DateModified'])
                 ? new DateTimeImmutable($data['DateModified'])
                 : null,
+            createdDate: $data['CreatedDate'] ?? null,
         );
     }
 }
