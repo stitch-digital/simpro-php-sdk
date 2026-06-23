@@ -39,7 +39,6 @@ it('includes all columns in the request query', function () {
         ->and($query['columns'])->toContain('ID')
         ->and($query['columns'])->toContain('Subject')
         ->and($query['columns'])->toContain('CreatedBy')
-        ->and($query['columns'])->toContain('AssignedTo')
         ->and($query['columns'])->toContain('Assignees')
         ->and($query['columns'])->toContain('AssignedToCustomer')
         ->and($query['columns'])->toContain('CompletedBy')
@@ -61,7 +60,12 @@ it('includes all columns in the request query', function () {
         ->and($query['columns'])->toContain('SubTasks')
         ->and($query['columns'])->toContain('CustomFields')
         ->and($query['columns'])->toContain('PercentComplete')
-        ->and($query['columns'])->toContain('DateModified');
+        ->and($query['columns'])->toContain('DateModified')
+        ->and($query['columns'])->toContain('CreatedDate');
+
+    $columns = explode(',', $query['columns']);
+
+    expect($columns)->not->toContain('AssignedTo');
 });
 
 it('parses list tasks detailed response correctly', function () {
@@ -184,6 +188,19 @@ it('parses custom fields correctly', function () {
         ->and($dto[0]->customFields[0]->name)->toBe('Autogenerate Approved Certificate?')
         ->and($dto[0]->customFields[0]->type)->toBe('List')
         ->and($dto[0]->customFields[0]->value)->toBeNull();
+});
+
+it('parses created date correctly', function () {
+    MockClient::global([
+        ListTasksDetailedRequest::class => MockResponse::fixture('list_tasks_detailed_request'),
+    ]);
+
+    $request = new ListTasksDetailedRequest(0);
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto[0]->createdDate)->toBe('2026-03-01')
+        ->and($dto[1]->createdDate)->toBe('2026-03-02');
 });
 
 it('parses date modified correctly', function () {

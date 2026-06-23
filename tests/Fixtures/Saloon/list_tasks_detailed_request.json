@@ -88,7 +88,8 @@
                 }
             ],
             "PercentComplete": "",
-            "DateModified": "2026-03-12T13:25:49+00:00"
+            "DateModified": "2026-03-12T13:25:49+00:00",
+            "CreatedDate": "2026-03-01"
         },
         {
             "ID": 79524,
@@ -172,7 +173,8 @@
                 }
             ],
             "PercentComplete": "",
-            "DateModified": "2026-03-12T13:02:17+00:00"
+            "DateModified": "2026-03-12T13:02:17+00:00",
+            "CreatedDate": "2026-03-02"
         }
     ]
 }
