@@ -1,0 +1,28 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ResponseTime": {
+        "ID": 12,
+        "Name": "4 Hours"
+      },
+      "Days": 0,
+      "Hours": 4,
+      "Minutes": 0
+    },
+    {
+      "ResponseTime": {
+        "ID": 26,
+        "Name": "P6 - 7 Days"
+      },
+      "Days": 7,
+      "Hours": 0,
+      "Minutes": 0
+    }
+  ]
+}
