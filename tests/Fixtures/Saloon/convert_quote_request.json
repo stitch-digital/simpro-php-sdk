@@ -1,0 +1,10 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "data": {
+        "ID": 480999,
+        "Href": "/api/v1.0/companies/0/jobs/480999"
+    }
+}
