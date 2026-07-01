@@ -13,6 +13,7 @@ use Simpro\PhpSdk\Simpro\Query\QueryBuilder;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
+use Simpro\PhpSdk\Simpro\Requests\Quotes\ConvertQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CreateQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\DeleteQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\GetQuoteRequest;
@@ -130,6 +131,18 @@ final class QuoteResource extends BaseResource
         $request = new DeleteQuoteRequest($this->companyId, $quoteId);
 
         return $this->connector->send($request);
+    }
+
+    /**
+     * Convert an approved quote to a job.
+     *
+     * @return int The ID of the created job
+     */
+    public function convert(int|string $quoteId): int
+    {
+        $request = new ConvertQuoteRequest($this->companyId, $quoteId);
+
+        return $request->createDtoFromResponse($this->connector->send($request));
     }
 
     /**
