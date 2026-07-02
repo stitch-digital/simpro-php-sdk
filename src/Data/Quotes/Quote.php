@@ -17,6 +17,7 @@ final readonly class Quote
      * @param  array<StaffReference>|null  $technicians
      * @param  array<Reference>|null  $tags
      * @param  array<mixed>|null  $customFields
+     * @param  array<mixed>|null  $sections
      */
     public function __construct(
         public int $id,
@@ -57,6 +58,7 @@ final readonly class Quote
         public ?array $customFields,
         public ?QuoteStc $stc,
         public ?DateTimeImmutable $dateModified,
+        public ?array $sections = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -137,6 +139,7 @@ final readonly class Quote
             customFields: $data['CustomFields'] ?? null,
             stc: ! empty($data['STC']) ? QuoteStc::fromArray($data['STC']) : null,
             dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
+            sections: $data['Sections'] ?? null,
         );
     }
 }

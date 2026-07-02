@@ -39,8 +39,9 @@ final class ListQuotesDetailedRequest extends Request implements Paginatable
                 'IsClosed', 'ArchiveReason', 'CustomerStage', 'JobNo',
                 'IsVariation', 'LinkedJobId', 'Forecast',
                 'Total', 'Totals', 'Tags', 'AutoAdjustStatus',
-                'CustomFields', 'STC', 'DateModified',
+                'CustomFields', 'Sections', 'STC', 'DateModified',
             ]),
+            'display' => 'all',
         ];
     }
 
