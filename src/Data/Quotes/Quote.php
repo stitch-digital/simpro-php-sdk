@@ -123,7 +123,7 @@ final readonly class Quote
             isClosed: $data['IsClosed'] ?? null,
             archiveReason: ! empty($data['ArchiveReason']) ? QuoteArchiveReasonRef::fromArray($data['ArchiveReason']) : null,
             customerStage: $data['CustomerStage'] ?? null,
-            jobNo: $data['JobNo'] ?? null,
+            jobNo: isset($data['JobNo']) ? (string) $data['JobNo'] : null,
             isVariation: $data['IsVariation'] ?? null,
             linkedJobId: isset($data['LinkedJobId']) ? (int) $data['LinkedJobId'] : null,
             forecast: ! empty($data['Forecast']) ? QuoteForecast::fromArray($data['Forecast']) : null,
