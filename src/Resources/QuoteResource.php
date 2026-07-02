@@ -14,6 +14,7 @@ use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkCreateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkDeleteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Bulk\BulkUpdateRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\ConvertQuoteRequest;
+use Simpro\PhpSdk\Simpro\Requests\Quotes\CostCenters\ListAllQuoteCostCentersRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\CreateQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\DeleteQuoteRequest;
 use Simpro\PhpSdk\Simpro\Requests\Quotes\GetQuoteRequest;
@@ -62,6 +63,26 @@ final class QuoteResource extends BaseResource
     public function listDetailed(array $filters = []): QueryBuilder
     {
         $request = new ListQuotesDetailedRequest($this->companyId);
+
+        foreach ($filters as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
+
+            $request->query()->add($key, (string) $value);
+        }
+
+        return new QueryBuilder($this->connector, $request);
+    }
+
+    /**
+     * List all quote cost centres for the company (across all quotes).
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function costCenters(array $filters = []): QueryBuilder
+    {
+        $request = new ListAllQuoteCostCentersRequest($this->companyId);
 
         foreach ($filters as $key => $value) {
             if (is_array($value)) {
