@@ -54,6 +54,7 @@ it('parses get quote response correctly', function () {
         ->and($dto->status->color)->toBe('#00FF00')
         ->and($dto->stage)->toBe('Won')
         ->and($dto->orderNo)->toBe('QTE-001')
+        ->and($dto->jobNo)->toBe('J-1234')
         ->and($dto->validityDays)->toBe(30)
         ->and($dto->isClosed)->toBeFalse()
         ->and($dto->isVariation)->toBeFalse()
@@ -71,4 +72,21 @@ it('parses get quote response correctly', function () {
         ->and($dto->autoAdjustStatus)->toBeTrue()
         ->and($dto->stc)->not->toBeNull()
         ->and($dto->stc->stcsEligible)->toBeFalse();
+});
+
+it('casts integer JobNo to string', function () {
+    $dto = Quote::fromArray([
+        'ID' => 1,
+        'JobNo' => 470181,
+    ]);
+
+    expect($dto->jobNo)->toBe('470181');
+});
+
+it('handles null JobNo', function () {
+    $dto = Quote::fromArray([
+        'ID' => 1,
+    ]);
+
+    expect($dto->jobNo)->toBeNull();
 });
