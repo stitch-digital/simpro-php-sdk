@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.17] - 2026-07-09
+
 ### Fixed
+- `CreateAttachmentFileRequest::createDtoFromResponse()` now throws `RuntimeException` when the Simpro response omits `ID`, returns a non-numeric value, or returns a non-positive integer. Previously the missing/invalid case silently returned `0`, which surfaced downstream as a bogus `simpro_attachment_id` and 404s on later DELETE calls.
 - Fixed `MobileSignature` DTO to match actual API response structure (`Technician` and `Client` fields)
 
 ### Changed

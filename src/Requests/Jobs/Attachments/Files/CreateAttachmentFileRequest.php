@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Simpro\PhpSdk\Simpro\Requests\Jobs\Attachments\Files;
 
+use RuntimeException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -41,7 +42,24 @@ final class CreateAttachmentFileRequest extends Request implements HasBody
     public function createDtoFromResponse(Response $response): int
     {
         $data = $response->json();
+        $id = $data['ID'] ?? null;
 
-        return (int) $data['ID'];
+        if (! is_int($id) && ! (is_string($id) && ctype_digit($id))) {
+            throw new RuntimeException(sprintf(
+                'Simpro create-attachment response missing numeric ID (got %s)',
+                json_encode($data),
+            ));
+        }
+
+        $intId = (int) $id;
+
+        if ($intId <= 0) {
+            throw new RuntimeException(sprintf(
+                'Simpro create-attachment response returned non-positive ID (got %s)',
+                json_encode($data),
+            ));
+        }
+
+        return $intId;
     }
 }
