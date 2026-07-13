@@ -22,7 +22,7 @@ it('sends create job attachment file request to correct endpoint', function () {
     expect($response->status())->toBe(201);
 });
 
-it('returns created attachment ID when the response body carries a valid integer ID', function () {
+it('returns a legacy integer ID as a string', function () {
     MockClient::global([
         CreateAttachmentFileRequest::class => MockResponse::make(['ID' => 1234], 201),
     ]);
@@ -30,10 +30,10 @@ it('returns created attachment ID when the response body carries a valid integer
     $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
     $id = $this->sdk->send($request)->dto();
 
-    expect($id)->toBe(1234);
+    expect($id)->toBe('1234');
 });
 
-it('accepts a numeric string ID and returns it as an int', function () {
+it('returns a numeric string ID unchanged', function () {
     MockClient::global([
         CreateAttachmentFileRequest::class => MockResponse::make(['ID' => '5678'], 201),
     ]);
@@ -41,7 +41,21 @@ it('accepts a numeric string ID and returns it as an int', function () {
     $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
     $id = $this->sdk->send($request)->dto();
 
-    expect($id)->toBe(5678);
+    expect($id)->toBe('5678');
+});
+
+it('returns an opaque alphanumeric ID unchanged', function () {
+    MockClient::global([
+        CreateAttachmentFileRequest::class => MockResponse::make(
+            ['ID' => 'Uk6fROW33VldTBT1nQgr7JDTj7YDujswrFoSsTFSss8'],
+            201,
+        ),
+    ]);
+
+    $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
+    $id = $this->sdk->send($request)->dto();
+
+    expect($id)->toBe('Uk6fROW33VldTBT1nQgr7JDTj7YDujswrFoSsTFSss8');
 });
 
 it('throws when the response body has no ID field', function () {
@@ -52,10 +66,10 @@ it('throws when the response body has no ID field', function () {
     $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
 
     expect(fn () => $this->sdk->send($request)->dto())
-        ->toThrow(RuntimeException::class, 'missing numeric ID');
+        ->toThrow(RuntimeException::class, 'missing ID');
 });
 
-it('throws when the response body ID is zero', function () {
+it('throws when the response body ID is integer zero', function () {
     MockClient::global([
         CreateAttachmentFileRequest::class => MockResponse::make(['ID' => 0], 201),
     ]);
@@ -63,16 +77,27 @@ it('throws when the response body ID is zero', function () {
     $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
 
     expect(fn () => $this->sdk->send($request)->dto())
-        ->toThrow(RuntimeException::class, 'non-positive ID');
+        ->toThrow(RuntimeException::class, 'empty/zero ID');
 });
 
-it('throws when the response body ID is a non-numeric string', function () {
+it('throws when the response body ID is the string zero', function () {
     MockClient::global([
-        CreateAttachmentFileRequest::class => MockResponse::make(['ID' => 'abc'], 201),
+        CreateAttachmentFileRequest::class => MockResponse::make(['ID' => '0'], 201),
     ]);
 
     $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
 
     expect(fn () => $this->sdk->send($request)->dto())
-        ->toThrow(RuntimeException::class, 'missing numeric ID');
+        ->toThrow(RuntimeException::class, 'empty/zero ID');
+});
+
+it('throws when the response body ID is an empty string', function () {
+    MockClient::global([
+        CreateAttachmentFileRequest::class => MockResponse::make(['ID' => ''], 201),
+    ]);
+
+    $request = new CreateAttachmentFileRequest(0, 4711, ['Filename' => 'report.pdf']);
+
+    expect(fn () => $this->sdk->send($request)->dto())
+        ->toThrow(RuntimeException::class, 'empty/zero ID');
 });

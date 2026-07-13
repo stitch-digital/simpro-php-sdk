@@ -68,9 +68,9 @@ final class AttachmentFileResource extends BaseResource
      * Create a new attachment file.
      *
      * @param  array<string, mixed>  $data
-     * @return int The ID of the created file
+     * @return string The ID of the created file
      */
-    public function create(array $data): int
+    public function create(array $data): string
     {
         $request = new CreateAttachmentFileRequest($this->companyId, $this->jobId, $data);
 

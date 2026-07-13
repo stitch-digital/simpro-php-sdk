@@ -39,27 +39,27 @@ final class CreateAttachmentFileRequest extends Request implements HasBody
         return $this->data;
     }
 
-    public function createDtoFromResponse(Response $response): int
+    public function createDtoFromResponse(Response $response): string
     {
         $data = $response->json();
         $id = $data['ID'] ?? null;
 
-        if (! is_int($id) && ! (is_string($id) && ctype_digit($id))) {
+        if (! is_int($id) && ! is_string($id)) {
             throw new RuntimeException(sprintf(
-                'Simpro create-attachment response missing numeric ID (got %s)',
+                'Simpro create-attachment response missing ID (got %s)',
                 json_encode($data),
             ));
         }
 
-        $intId = (int) $id;
+        $id = (string) $id;
 
-        if ($intId <= 0) {
+        if ($id === '' || $id === '0') {
             throw new RuntimeException(sprintf(
-                'Simpro create-attachment response returned non-positive ID (got %s)',
+                'Simpro create-attachment response returned an empty/zero ID (got %s)',
                 json_encode($data),
             ));
         }
 
-        return $intId;
+        return $id;
     }
 }
