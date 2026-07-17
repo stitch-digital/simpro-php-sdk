@@ -26,6 +26,7 @@ use Simpro\PhpSdk\Simpro\Concerns\SupportsEmployeesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsInfoEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsInvoicesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsJobCostCentersEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsJobLogsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsJobsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsJobWorkOrdersEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsNotesEndpoints;
@@ -65,6 +66,7 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use SupportsInfoEndpoints;
     use SupportsInvoicesEndpoints;
     use SupportsJobCostCentersEndpoints;
+    use SupportsJobLogsEndpoints;
     use SupportsJobsEndpoints;
     use SupportsJobWorkOrdersEndpoints;
     use SupportsNotesEndpoints;
