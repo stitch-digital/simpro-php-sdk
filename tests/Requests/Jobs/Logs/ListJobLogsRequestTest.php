@@ -18,6 +18,22 @@ it('sends the request to the job logs endpoint', function () {
         ->and($this->sdk->send($request)->status())->toBe(200);
 });
 
+it('sends a single-encoded status-change wildcard filter on the wire', function () {
+    MockClient::global([
+        ListJobLogsRequest::class => MockResponse::fixture('list_job_logs_request'),
+    ]);
+
+    $this->sdk->jobLogs(0)->list()
+        ->where('Message', 'like', 'Updated Status')
+        ->orderByAsc('ID')
+        ->first();
+
+    $query = MockClient::getGlobal()->getLastPendingRequest()->getUri()->getQuery();
+
+    expect($query)->toContain('Message=%25Updated+Status%25')
+        ->and($query)->not->toContain('%2525');
+});
+
 it('parses the response into JobLog DTOs', function () {
     MockClient::global([
         ListJobLogsRequest::class => MockResponse::fixture('list_job_logs_request'),

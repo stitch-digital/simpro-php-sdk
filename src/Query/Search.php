@@ -106,11 +106,12 @@ final class Search
 
     /**
      * Wildcard search (%value%).
-     * URL encodes the % symbols for API compatibility.
+     * Uses raw % wildcards; the HTTP client URL-encodes them once when the
+     * request is sent, so the API receives %25 on the wire (a real wildcard).
      */
     public function find(string $value): self
     {
-        $this->value = '%25'.$value.'%25';
+        $this->value = '%'.$value.'%';
 
         return $this;
     }
@@ -128,7 +129,7 @@ final class Search
      */
     public function startsWith(string $value): self
     {
-        $this->value = $value.'%25';
+        $this->value = $value.'%';
 
         return $this;
     }
@@ -138,7 +139,7 @@ final class Search
      */
     public function endsWith(string $value): self
     {
-        $this->value = '%25'.$value;
+        $this->value = '%'.$value;
 
         return $this;
     }

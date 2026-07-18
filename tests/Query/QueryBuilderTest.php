@@ -163,6 +163,47 @@ describe('QueryBuilder::where()', function () {
     });
 });
 
+describe('QueryBuilder wildcard wire encoding', function () {
+    it('single-encodes wildcards on the wire for like', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        $this->sdk->companies()->list()->where('Name', 'like', 'Test')->first();
+
+        $query = MockClient::getGlobal()->getLastPendingRequest()->getUri()->getQuery();
+
+        expect($query)->toContain('Name=%25Test%25')
+            ->and($query)->not->toContain('%2525');
+    });
+
+    it('single-encodes the trailing wildcard on the wire for starts with', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        $this->sdk->companies()->list()->where('Name', 'starts with', 'Test')->first();
+
+        $query = MockClient::getGlobal()->getLastPendingRequest()->getUri()->getQuery();
+
+        expect($query)->toContain('Name=Test%25')
+            ->and($query)->not->toContain('%2525');
+    });
+
+    it('single-encodes the leading wildcard on the wire for ends with', function () {
+        MockClient::global([
+            ListCompaniesRequest::class => MockResponse::fixture('list_companies_request'),
+        ]);
+
+        $this->sdk->companies()->list()->where('Name', 'ends with', 'Test')->first();
+
+        $query = MockClient::getGlobal()->getLastPendingRequest()->getUri()->getQuery();
+
+        expect($query)->toContain('Name=%25Test')
+            ->and($query)->not->toContain('%2525');
+    });
+});
+
 describe('QueryBuilder::logic()', function () {
     it('sets search logic to all', function () {
         MockClient::global([

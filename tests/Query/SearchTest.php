@@ -104,10 +104,10 @@ describe('Search::equals()', function () {
 });
 
 describe('Search::find()', function () {
-    it('wraps value with URL-encoded wildcards', function () {
+    it('wraps value with raw wildcards (HTTP client encodes once)', function () {
         $search = Search::make()->column('Name')->find('Test');
 
-        expect($search->getValue())->toBe('%25Test%25');
+        expect($search->getValue())->toBe('%Test%');
     });
 });
 
@@ -115,7 +115,7 @@ describe('Search::like()', function () {
     it('is an alias for find', function () {
         $search = Search::make()->column('Name')->like('Test');
 
-        expect($search->getValue())->toBe('%25Test%25');
+        expect($search->getValue())->toBe('%Test%');
     });
 });
 
@@ -123,7 +123,7 @@ describe('Search::startsWith()', function () {
     it('adds trailing wildcard', function () {
         $search = Search::make()->column('Name')->startsWith('Test');
 
-        expect($search->getValue())->toBe('Test%25');
+        expect($search->getValue())->toBe('Test%');
     });
 });
 
@@ -131,7 +131,7 @@ describe('Search::endsWith()', function () {
     it('adds leading wildcard', function () {
         $search = Search::make()->column('Name')->endsWith('Test');
 
-        expect($search->getValue())->toBe('%25Test');
+        expect($search->getValue())->toBe('%Test');
     });
 });
 
