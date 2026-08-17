@@ -45,6 +45,6 @@ it('parses the response into JobLog DTOs', function () {
         ->and($dto[0])->toBeInstanceOf(JobLog::class)
         ->and($dto[0]->id)->toBe(3609009)
         ->and($dto[0]->jobId)->toBe(481833)
-        ->and($dto[0]->staff->name)->toBe('Garry Phillips')
+        ->and($dto[0]->staff->name)->toBe('Chris Bennett')
         ->and($dto[1]->id)->toBe(3609020);
 });

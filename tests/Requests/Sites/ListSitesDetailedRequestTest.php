@@ -149,7 +149,7 @@ it('parses customers correctly', function () {
         ->and($dto[0]->customers)->toHaveCount(1)
         ->and($dto[0]->customers[0])->toBeInstanceOf(SiteCustomerReference::class)
         ->and($dto[0]->customers[0]->id)->toBe(14946)
-        ->and($dto[0]->customers[0]->companyName)->toBe('Test Titans Club');
+        ->and($dto[0]->customers[0]->companyName)->toBe('Riverside Sports Club');
 });
 
 it('parses custom fields correctly', function () {

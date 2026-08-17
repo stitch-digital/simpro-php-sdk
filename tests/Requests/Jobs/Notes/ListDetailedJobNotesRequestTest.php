@@ -103,10 +103,10 @@ it('parses submittedBy correctly', function () {
 
     expect($dto[0]->submittedBy)->toBeInstanceOf(StaffReference::class)
         ->and($dto[0]->submittedBy->id)->toBe(2350)
-        ->and($dto[0]->submittedBy->name)->toBe('b.koshkarov@iqtechnology.io')
+        ->and($dto[0]->submittedBy->name)->toBe('j.doe@example.com')
         ->and($dto[1]->submittedBy)->toBeInstanceOf(StaffReference::class)
         ->and($dto[1]->submittedBy->id)->toBe(1446)
-        ->and($dto[1]->submittedBy->name)->toBe('John Trickett');
+        ->and($dto[1]->submittedBy->name)->toBe('Taylor Reed');
 });
 
 it('parses assignTo correctly', function () {
@@ -119,6 +119,6 @@ it('parses assignTo correctly', function () {
 
     expect($dto[0]->assignTo)->toBeInstanceOf(StaffReference::class)
         ->and($dto[0]->assignTo->id)->toBe(1446)
-        ->and($dto[0]->assignTo->name)->toBe('John Trickett')
+        ->and($dto[0]->assignTo->name)->toBe('Taylor Reed')
         ->and($dto[1]->assignTo)->toBeNull();
 });

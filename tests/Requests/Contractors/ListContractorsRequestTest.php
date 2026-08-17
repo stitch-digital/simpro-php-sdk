@@ -31,7 +31,7 @@ it('parses list contractors response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(ContractorListItem::class)
         ->and($dto[0]->id)->toBe(1)
-        ->and($dto[0]->name)->toBe('Bright Spark Electrical Limited')
+        ->and($dto[0]->name)->toBe('Peak Electrical Limited')
         ->and($dto[1])->toBeInstanceOf(ContractorListItem::class)
         ->and($dto[1]->id)->toBe(2)
         ->and($dto[1]->name)->toBe('ABC Plumbing Services');

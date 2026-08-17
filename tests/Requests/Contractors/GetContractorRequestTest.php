@@ -35,7 +35,7 @@ it('parses get contractor response correctly', function () {
 
     expect($dto)->toBeInstanceOf(Contractor::class)
         ->and($dto->id)->toBe(1665)
-        ->and($dto->name)->toBe('Bright Spark Electrical Limited')
+        ->and($dto->name)->toBe('Peak Electrical Limited')
         ->and($dto->position)->toBe('')
         ->and($dto->dateOfHire)->toBe('2024-09-20')
         ->and($dto->dateOfBirth)->toBeNull()
@@ -43,7 +43,7 @@ it('parses get contractor response correctly', function () {
         ->and($dto->maskedSSN)->toBeNull()
         ->and($dto->ein)->toBe('')
         ->and($dto->companyNumber)->toBe('12345678')
-        ->and($dto->contactName)->toBe('Billy Bright')
+        ->and($dto->contactName)->toBe('Sam Porter')
         ->and($dto->currency)->toBe('GBP')
         ->and($dto->displayOrder)->toBe(0);
 });
@@ -90,7 +90,7 @@ it('parses contractor emergency contact correctly', function () {
     $dto = $response->dto();
 
     expect($dto->emergencyContact)->toBeInstanceOf(ContractorEmergencyContact::class)
-        ->and($dto->emergencyContact->name)->toBe('Billy Bright')
+        ->and($dto->emergencyContact->name)->toBe('Sam Porter')
         ->and($dto->emergencyContact->relationship)->toBe('Director');
 });
 
@@ -136,7 +136,7 @@ it('parses contractor banking correctly', function () {
     $dto = $response->dto();
 
     expect($dto->banking)->toBeInstanceOf(ContractorBanking::class)
-        ->and($dto->banking->accountName)->toBe('Bright Spark Electrical')
+        ->and($dto->banking->accountName)->toBe('Peak Electrical')
         ->and($dto->banking->routingNo)->toBe('20-30-40')
         ->and($dto->banking->accountNo)->toBe('12345678')
         ->and($dto->banking->paymentTermId)->toBe(934)
@@ -193,7 +193,7 @@ it('parses contractor default company correctly', function () {
 
     expect($dto->defaultCompany)->not->toBeNull()
         ->and($dto->defaultCompany->id)->toBe(198)
-        ->and($dto->defaultCompany->name)->toBe('Stitch Digital');
+        ->and($dto->defaultCompany->name)->toBe('Example Company');
 });
 
 it('parses contractor custom fields correctly', function () {
@@ -208,7 +208,7 @@ it('parses contractor custom fields correctly', function () {
     expect($dto->customFields)->toBeArray()
         ->and($dto->customFields)->toHaveCount(1)
         ->and($dto->customFields[0]->id)->toBe(354)
-        ->and($dto->customFields[0]->name)->toBe('SimForma Account Required')
+        ->and($dto->customFields[0]->name)->toBe('Portal Account Required')
         ->and($dto->customFields[0]->type)->toBe('List')
         ->and($dto->customFields[0]->value)->toBeNull();
 });

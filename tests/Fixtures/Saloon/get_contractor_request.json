@@ -5,7 +5,7 @@
   },
   "data": {
     "ID": 1665,
-    "Name": "Bright Spark Electrical Limited",
+    "Name": "Peak Electrical Limited",
     "Position": "",
     "Availability": [],
     "Address": {
@@ -27,7 +27,7 @@
       "PreferredNotificationMethod": null
     },
     "EmergencyContact": {
-      "Name": "Billy Bright",
+      "Name": "Sam Porter",
       "Relationship": "Director",
       "WorkPhone": "01234 567 891",
       "CellPhone": "07700 900124",
@@ -58,13 +58,13 @@
     ],
     "Zones": [],
     "DefaultZone": {},
-    "DefaultCompany": {"ID": 198, "Name": "Stitch Digital"},
+    "DefaultCompany": {"ID": 198, "Name": "Example Company"},
     "Licences": [],
     "CustomFields": [
       {
         "CustomField": {
           "ID": 354,
-          "Name": "SimForma Account Required",
+          "Name": "Portal Account Required",
           "Type": "List",
           "IsMandatory": false,
           "ListItems": ["Yes", "No"]
@@ -75,10 +75,10 @@
     "EIN": "",
     "MaskedSSN": null,
     "CompanyNumber": "12345678",
-    "ContactName": "Billy Bright",
+    "ContactName": "Sam Porter",
     "Currency": "GBP",
     "Banking": {
-      "AccountName": "Bright Spark Electrical",
+      "AccountName": "Peak Electrical",
       "RoutingNo": "20-30-40",
       "AccountNo": "12345678",
       "PaymentTermID": 934,

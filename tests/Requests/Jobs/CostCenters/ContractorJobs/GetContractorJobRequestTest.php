@@ -32,7 +32,7 @@ it('parses get job contractor job response correctly', function () {
         ->and($dto->projectType)->toBe('')
         ->and($dto->contractor)->not->toBeNull()
         ->and($dto->contractor->id)->toBe(327)
-        ->and($dto->contractor->name)->toBe('Marcus Hughes')
+        ->and($dto->contractor->name)->toBe('Alex Rivera')
         ->and($dto->createdBy)->toBeNull()
         ->and($dto->status)->toBe('Pending')
         ->and($dto->contractorSupplyMaterials)->toBeFalse()

@@ -52,7 +52,7 @@
             "DateModified": "2026-03-02T11:29:34+00:00",
             "Site": {
                 "ID": 6128,
-                "Name": "Bowhayes Lodge"
+                "Name": "Elmtree Lodge"
             }
         },
         {
@@ -64,7 +64,7 @@
             "DisplayOrder": 1,
             "CustomerContract": {
                 "ID": 4790,
-                "Name": "Worcestershire County Cricket Club - 12 Month Service Contract",
+                "Name": "Riverside Sports Club - 12 Month Service Contract",
                 "StartDate": "2019-09-01",
                 "EndDate": "",
                 "ContractNo": "1093",
@@ -95,7 +95,7 @@
             "DateModified": "2025-09-04T11:11:08+01:00",
             "Site": {
                 "ID": 764,
-                "Name": "New Road Worcester WR2 4QQ"
+                "Name": "Riverside Ground, Newtown NT1 2AB"
             }
         }
     ]

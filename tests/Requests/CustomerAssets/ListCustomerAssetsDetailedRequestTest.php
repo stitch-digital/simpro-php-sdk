@@ -119,7 +119,7 @@ it('parses customer contract correctly', function () {
 
     expect($dto[1]->customerContract)->toBeInstanceOf(CustomerAssetContract::class)
         ->and($dto[1]->customerContract->id)->toBe(4790)
-        ->and($dto[1]->customerContract->name)->toBe('Worcestershire County Cricket Club - 12 Month Service Contract')
+        ->and($dto[1]->customerContract->name)->toBe('Riverside Sports Club - 12 Month Service Contract')
         ->and($dto[1]->customerContract->startDate)->toBe('2019-09-01')
         ->and($dto[1]->customerContract->endDate)->toBeNull()
         ->and($dto[1]->customerContract->contractNo)->toBe('1093')
@@ -168,5 +168,5 @@ it('parses site correctly', function () {
 
     expect($dto[0]->site)->toBeInstanceOf(Reference::class)
         ->and($dto[0]->site->id)->toBe(6128)
-        ->and($dto[0]->site->name)->toBe('Bowhayes Lodge');
+        ->and($dto[0]->site->name)->toBe('Elmtree Lodge');
 });

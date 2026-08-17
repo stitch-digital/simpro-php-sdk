@@ -24,13 +24,13 @@
       ],
       "AssignTo": {
         "ID": 1446,
-        "Name": "John Trickett",
+        "Name": "Taylor Reed",
         "Type": "employee",
         "TypeId": 1446
       },
       "SubmittedBy": {
         "ID": 2350,
-        "Name": "b.koshkarov@iqtechnology.io",
+        "Name": "j.doe@example.com",
         "Type": "employee",
         "TypeId": 2350
       },
@@ -50,7 +50,7 @@
       "AssignTo": {},
       "SubmittedBy": {
         "ID": 1446,
-        "Name": "John Trickett",
+        "Name": "Taylor Reed",
         "Type": "employee",
         "TypeId": 1446
       },
