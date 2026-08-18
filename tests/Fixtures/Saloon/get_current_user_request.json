@@ -5,14 +5,14 @@
   },
   "data": {
     "ID": 705,
-    "Name": "Seen Services - Automation Platform",
+    "Name": "Example Services - Automation Platform",
     "Type": "employee",
     "TypeID": 705,
     "PreferredLanguage": "en_GB",
     "AccessibleCompanies": [
       {
         "ID": 0,
-        "Name": "Seen Services"
+        "Name": "Example Services"
       }
     ]
   }

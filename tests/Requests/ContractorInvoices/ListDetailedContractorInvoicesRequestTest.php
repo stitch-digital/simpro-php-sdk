@@ -51,9 +51,9 @@ it('parses contractor invoice contractor banking with payment terms as object', 
     $contractor = $dto[0]->contractor;
     expect($contractor)->toBeInstanceOf(ContractorInvoiceContractor::class)
         ->and($contractor->id)->toBe(4285)
-        ->and($contractor->name)->toBe('Bright Spark Electrical Limited')
+        ->and($contractor->name)->toBe('Peak Electrical Limited')
         ->and($contractor->banking)->toBeInstanceOf(ContractorInvoiceContractorBanking::class)
-        ->and($contractor->banking->accountName)->toBe('Bright Spark Electrical')
+        ->and($contractor->banking->accountName)->toBe('Peak Electrical')
         ->and($contractor->banking->routingNo)->toBe('20-30-40')
         ->and($contractor->banking->accountNo)->toBe('12345678')
         ->and($contractor->banking->paymentTermId)->toBe(934)

@@ -56,7 +56,7 @@ test('it exchanges username and password for an access token', function () {
     $connector->withMockClient($mockClient);
 
     $authenticator = $connector->getAccessTokenViaPassword(
-        'meredith.jones@ssecltd.co.uk',
+        'user@example.com',
         's3cret',
     );
 
@@ -72,7 +72,7 @@ test('it exchanges username and password for an access token', function () {
         'grant_type' => 'password',
         'client_id' => 'test-client-id',
         'client_secret' => 'test-client-secret',
-        'username' => 'meredith.jones@ssecltd.co.uk',
+        'username' => 'user@example.com',
         'password' => 's3cret',
     ]);
 });
@@ -154,7 +154,7 @@ test('it defaults expiresAt to one hour from now when expires_in is omitted', fu
     $before = new DateTimeImmutable;
 
     $authenticator = $connector->getAccessTokenViaPassword(
-        'meredith.jones@ssecltd.co.uk',
+        'user@example.com',
         's3cret',
     );
 
@@ -185,7 +185,7 @@ test('it throws when the token endpoint returns 4xx', function () {
     $connector->withMockClient($mockClient);
 
     expect(fn () => $connector->getAccessTokenViaPassword(
-        'meredith.jones@ssecltd.co.uk',
+        'user@example.com',
         'wrong-password',
     ))->toThrow(RequestException::class);
 });

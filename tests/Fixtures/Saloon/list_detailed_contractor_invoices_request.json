@@ -11,7 +11,7 @@
       "ContractorJobs": [30130, 29859],
       "Contractor": {
         "ID": 4285,
-        "Name": "Bright Spark Electrical Limited",
+        "Name": "Peak Electrical Limited",
         "Address": {
           "Address": "10 Industrial Way",
           "City": "London",
@@ -24,9 +24,9 @@
           "WorkPhone": "01234 567 890",
           "CellPhone": "07700 900123"
         },
-        "ContactName": "Billy Bright",
+        "ContactName": "Sam Porter",
         "Banking": {
-          "AccountName": "Bright Spark Electrical",
+          "AccountName": "Peak Electrical",
           "RoutingNo": "20-30-40",
           "AccountNo": "12345678",
           "PaymentTermID": 934,

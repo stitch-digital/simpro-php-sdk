@@ -63,7 +63,7 @@ it('parses site correctly', function () {
 
     expect($dto[0]->site)->toBeInstanceOf(Reference::class)
         ->and($dto[0]->site->id)->toBe(6128)
-        ->and($dto[0]->site->name)->toBe('Bowhayes Lodge');
+        ->and($dto[0]->site->name)->toBe('Elmtree Lodge');
 });
 
 it('parses service levels correctly', function () {

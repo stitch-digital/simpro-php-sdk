@@ -81,7 +81,7 @@ it('parses list tasks detailed response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(TaskListDetailedItem::class)
         ->and($dto[0]->id)->toBe(79527)
-        ->and($dto[0]->subject)->toBe('Please Order and Send Tom Burchall 23.03')
+        ->and($dto[0]->subject)->toBe('Please Order and Send Dana Wells 23.03')
         ->and($dto[0]->status)->toBe('Pending')
         ->and($dto[0]->priority)->toBe('High')
         ->and($dto[0]->assignedToCustomer)->toBeFalse()
@@ -101,7 +101,7 @@ it('parses created by correctly', function () {
 
     expect($dto[0]->createdBy)->toBeInstanceOf(TaskAssignee::class)
         ->and($dto[0]->createdBy->id)->toBe(1055)
-        ->and($dto[0]->createdBy->name)->toBe('Tiani Driver')
+        ->and($dto[0]->createdBy->name)->toBe('Casey Morgan')
         ->and($dto[0]->createdBy->type)->toBe('employee')
         ->and($dto[0]->createdBy->typeId)->toBe(1055);
 });
@@ -121,7 +121,7 @@ it('parses associated job and customer correctly', function () {
         ->and($dto[0]->associated->job->costCenter)->toBeNull()
         ->and($dto[0]->associated->customer)->toBeInstanceOf(TaskAssociatedCustomer::class)
         ->and($dto[0]->associated->customer->id)->toBe(6468)
-        ->and($dto[0]->associated->customer->companyName)->toBe('OCS M&E Services LTD - Southwark');
+        ->and($dto[0]->associated->customer->companyName)->toBe('Northside M&E Services Ltd');
 });
 
 it('parses associated site and empty references correctly', function () {
@@ -135,7 +135,7 @@ it('parses associated site and empty references correctly', function () {
 
     expect($dto[0]->associated->site)->toBeInstanceOf(Reference::class)
         ->and($dto[0]->associated->site->id)->toBe(22875)
-        ->and($dto[0]->associated->site->name)->toBe('Southwark Registry Office')
+        ->and($dto[0]->associated->site->name)->toBe('Central Registry Office')
         ->and($dto[0]->associated->quote)->toBeNull()
         ->and($dto[0]->associated->contact)->toBeNull();
 });

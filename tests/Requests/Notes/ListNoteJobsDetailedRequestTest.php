@@ -60,15 +60,15 @@ it('parses list note jobs detailed response correctly', function () {
         ->and($dto[0]->attachments[0]->filename)->toBe('schedule.pdf')
         ->and($dto[0]->assignTo)->toBeInstanceOf(StaffReference::class)
         ->and($dto[0]->assignTo->id)->toBe(1446)
-        ->and($dto[0]->assignTo->name)->toBe('John Trickett')
+        ->and($dto[0]->assignTo->name)->toBe('Taylor Reed')
         ->and($dto[0]->submittedBy)->toBeInstanceOf(StaffReference::class)
         ->and($dto[0]->submittedBy->id)->toBe(2350)
-        ->and($dto[0]->submittedBy->name)->toBe('b.koshkarov@iqtechnology.io')
+        ->and($dto[0]->submittedBy->name)->toBe('j.doe@example.com')
         ->and($dto[1])->toBeInstanceOf(JobNoteDetailedListItem::class)
         ->and($dto[1]->id)->toBe(2001)
         ->and($dto[1]->followUpDate)->toBeNull()
         ->and($dto[1]->attachments)->toBeEmpty()
         ->and($dto[1]->assignTo)->toBeNull()
         ->and($dto[1]->submittedBy)->toBeInstanceOf(StaffReference::class)
-        ->and($dto[1]->submittedBy->name)->toBe('John Trickett');
+        ->and($dto[1]->submittedBy->name)->toBe('Taylor Reed');
 });

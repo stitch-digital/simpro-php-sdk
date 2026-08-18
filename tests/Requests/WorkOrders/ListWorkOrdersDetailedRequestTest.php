@@ -67,7 +67,7 @@ it('parses list work orders detailed response correctly', function () {
         ->and($dto[0]->id)->toBe(2851)
         ->and($dto[0]->staff)->toBeInstanceOf(StaffReference::class)
         ->and($dto[0]->staff->id)->toBe(1446)
-        ->and($dto[0]->staff->name)->toBe('John Trickett')
+        ->and($dto[0]->staff->name)->toBe('Taylor Reed')
         ->and($dto[0]->workOrderDate)->toBe('2025-11-17')
         ->and($dto[0]->descriptionNotes)->toBe('')
         ->and($dto[0]->approved)->toBeTrue()

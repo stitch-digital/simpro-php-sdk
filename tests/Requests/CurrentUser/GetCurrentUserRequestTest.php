@@ -30,14 +30,14 @@ it('parses get current user response correctly', function () {
 
     expect($dto)->toBeInstanceOf(CurrentUser::class)
         ->and($dto->id)->toBe(705)
-        ->and($dto->name)->toBe('Seen Services - Automation Platform')
+        ->and($dto->name)->toBe('Example Services - Automation Platform')
         ->and($dto->type)->toBe('employee')
         ->and($dto->typeId)->toBe(705)
         ->and($dto->preferredLanguage)->toBe('en_GB')
         ->and($dto->accessibleCompanies)->toHaveCount(1)
         ->and($dto->accessibleCompanies[0])->toBeInstanceOf(Reference::class)
         ->and($dto->accessibleCompanies[0]->id)->toBe(0)
-        ->and($dto->accessibleCompanies[0]->name)->toBe('Seen Services');
+        ->and($dto->accessibleCompanies[0]->name)->toBe('Example Services');
 });
 
 it('can access current user via resource', function () {
@@ -48,5 +48,5 @@ it('can access current user via resource', function () {
     $user = $this->sdk->currentUser()->get();
 
     expect($user)->toBeInstanceOf(CurrentUser::class)
-        ->and($user->name)->toBe('Seen Services - Automation Platform');
+        ->and($user->name)->toBe('Example Services - Automation Platform');
 });

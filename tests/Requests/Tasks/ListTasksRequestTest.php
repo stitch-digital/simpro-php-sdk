@@ -33,10 +33,10 @@ it('parses list tasks response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(TaskListItem::class)
         ->and($dto[0]->id)->toBe(79527)
-        ->and($dto[0]->subject)->toBe('Please Order and Send Tom Burchall 23.03')
+        ->and($dto[0]->subject)->toBe('Please Order and Send Dana Wells 23.03')
         ->and($dto[1])->toBeInstanceOf(TaskListItem::class)
         ->and($dto[1]->id)->toBe(79524)
-        ->and($dto[1]->subject)->toBe('Jaz Quote');
+        ->and($dto[1]->subject)->toBe('Robin Quote');
 });
 
 it('parses assigned to correctly', function () {

@@ -9,19 +9,19 @@
     {
       "ID": 5,
       "_href": "/api/v1.0/companies/0/customers/companies/5",
-      "CompanyName": "11 Howard Hotel",
+      "CompanyName": "Grandview Hotel",
       "GivenName": "",
       "FamilyName": "",
       "Phone": "",
       "Address": {
-        "Address": "11 Howard Street",
+        "Address": "24 Parkview Street",
         "City": "New York",
         "State": "NY",
         "PostalCode": "10013",
         "Country": "United States"
       },
       "BillingAddress": {
-        "Address": "11 Howard Street",
+        "Address": "24 Parkview Street",
         "City": "New York",
         "State": "NY",
         "PostalCode": "10013",
@@ -36,7 +36,7 @@
         "CustomerGroup": null,
         "AccountManager": {
           "ID": 16,
-          "Name": "Sarah Glosenger"
+          "Name": "Erin Hayes"
         },
         "Currency": {
           "ID": "USD",
@@ -64,7 +64,7 @@
       "Sites": [
         {
           "ID": 3755,
-          "Name": "11 Howard Hotel"
+          "Name": "Grandview Hotel"
         }
       ],
       "Contracts": [],

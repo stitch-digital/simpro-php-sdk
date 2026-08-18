@@ -66,7 +66,7 @@ it('parses list customers detailed response correctly', function () {
         ->and($dto)->toHaveCount(2)
         ->and($dto[0])->toBeInstanceOf(CustomerCompanyListDetailedItem::class)
         ->and($dto[0]->id)->toBe(5)
-        ->and($dto[0]->companyName)->toBe('11 Howard Hotel')
+        ->and($dto[0]->companyName)->toBe('Grandview Hotel')
         ->and($dto[0]->href)->toBe('/api/v1.0/companies/0/customers/companies/5')
         ->and($dto[0]->archived)->toBeFalse();
 });
@@ -81,11 +81,11 @@ it('parses company customer with address fields', function () {
     $dto = $response->dto();
 
     expect($dto[0]->address)->not->toBeNull()
-        ->and($dto[0]->address->address)->toBe('11 Howard Street')
+        ->and($dto[0]->address->address)->toBe('24 Parkview Street')
         ->and($dto[0]->address->city)->toBe('New York')
         ->and($dto[0]->address->state)->toBe('NY')
         ->and($dto[0]->billingAddress)->not->toBeNull()
-        ->and($dto[0]->billingAddress->address)->toBe('11 Howard Street');
+        ->and($dto[0]->billingAddress->address)->toBe('24 Parkview Street');
 });
 
 it('parses individual customer correctly', function () {
@@ -122,7 +122,7 @@ it('parses profile with account manager correctly', function () {
     expect($dto[0]->profile)->not->toBeNull()
         ->and($dto[0]->profile->accountManager)->not->toBeNull()
         ->and($dto[0]->profile->accountManager->id)->toBe(16)
-        ->and($dto[0]->profile->accountManager->name)->toBe('Sarah Glosenger')
+        ->and($dto[0]->profile->accountManager->name)->toBe('Erin Hayes')
         ->and($dto[0]->profile->currency)->not->toBeNull()
         ->and($dto[0]->profile->currency->name)->toBe('US Dollar');
 });
