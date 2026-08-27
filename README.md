@@ -5,11 +5,11 @@
 
 This package is an unofficial PHP SDK for the Simpro API, built with [Saloon](https://docs.saloon.dev/).
 
-⚠️ **Active Development Notice**
+✅ **Stable Release**
 
-This package is under active development. The API, features, and internal structure may change at any time.
+This package is stable and ready for production use. It follows [semantic versioning](https://semver.org/), so breaking changes will only ever land in a new major version.
 
-A stable, production-ready release has **not** yet been tagged. Until a `v1.0.0` (or similar) release is published, this SDK should be considered **experimental** and used with caution in production environments.
+New API resources and endpoints are still being added, but existing ones will not change in a backwards-incompatible way within the `1.x` line.
 
 <div align="center">
   <a href="https://www.simprogroup.com">
@@ -76,8 +76,6 @@ foreach ($companies->items() as $company) {
 ```
 
 Behind the scenes, the SDK uses [Saloon](https://docs.saloon.dev/) v3 to make HTTP requests.
-
-**Note:** This SDK is in early development. API resources and endpoints are being actively developed.
 
 ## Authentication Methods
 
@@ -820,7 +818,7 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 - **[Setup](docs/setup-resource.md)** - Configure system settings: webhooks, tax codes, payment methods, custom fields, labor rates, and more
 - **[Tasks](docs/tasks-resource.md)** - List tasks across all jobs and customers with basic and detailed views (read-only)
 
-More resources will be added as development continues.
+Additional resources are added in minor releases as coverage of the Simpro API expands.
 
 ## Pagination and Querying
 
