@@ -6,6 +6,7 @@ namespace Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\ContractorJobs;
 
 use DateTimeImmutable;
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\CustomField;
 use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobContractor;
 use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobCreatedBy;
 use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobRetention;
@@ -15,7 +16,7 @@ use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobTotal;
 final readonly class ContractorJob
 {
     /**
-     * @param  array<mixed>  $customFields
+     * @param  array<CustomField>  $customFields
      */
     public function __construct(
         public int $id,
@@ -67,7 +68,7 @@ final readonly class ContractorJob
             retention: ! empty($data['Retention']) ? ContractorJobRetention::fromArray($data['Retention']) : null,
             total: ! empty($data['Total']) ? ContractorJobTotal::fromArray($data['Total']) : null,
             items: ! empty($data['Items']) ? ContractorJobItems::fromArray($data['Items']) : null,
-            customFields: $data['CustomFields'] ?? [],
+            customFields: array_map(fn (array $item) => CustomField::fromArray($item), $data['CustomFields'] ?? []),
             dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
         );
     }

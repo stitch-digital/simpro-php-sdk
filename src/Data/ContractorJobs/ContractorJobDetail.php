@@ -6,11 +6,12 @@ namespace Simpro\PhpSdk\Simpro\Data\ContractorJobs;
 
 use DateTimeImmutable;
 use Saloon\Http\Response;
+use Simpro\PhpSdk\Simpro\Data\Common\CustomField;
 
 final readonly class ContractorJobDetail
 {
     /**
-     * @param  array<mixed>  $customFields
+     * @param  array<CustomField>  $customFields
      */
     public function __construct(
         public int $id,
@@ -61,7 +62,7 @@ final readonly class ContractorJobDetail
             taxCode: ! empty($data['TaxCode']) ? ContractorJobTaxCode::fromArray($data['TaxCode']) : null,
             retention: ! empty($data['Retention']) ? ContractorJobRetention::fromArray($data['Retention']) : null,
             total: ! empty($data['Total']) ? ContractorJobTotal::fromArray($data['Total']) : null,
-            customFields: $data['CustomFields'] ?? [],
+            customFields: array_map(fn (array $item) => CustomField::fromArray($item), $data['CustomFields'] ?? []),
             dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
             href: $data['_href'] ?? '',
         );

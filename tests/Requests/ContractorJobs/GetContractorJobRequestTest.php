@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Simpro\PhpSdk\Simpro\Data\Common\CustomField;
 use Simpro\PhpSdk\Simpro\Data\ContractorJobs\ContractorJobDetail;
 use Simpro\PhpSdk\Simpro\Requests\ContractorJobs\GetContractorJobRequest;
 
@@ -54,8 +55,11 @@ it('parses get contractor job response correctly', function () {
         ->and($dto->retention->periodMonths)->toBe(12)
         ->and($dto->total->exTax)->toBe(77.38)
         ->and($dto->total->incTax)->toBe(92.86)
-        ->and($dto->customFields)->toBeArray()
-        ->and($dto->customFields)->toBeEmpty()
+        ->and($dto->customFields)->toHaveCount(1)
+        ->and($dto->customFields[0])->toBeInstanceOf(CustomField::class)
+        ->and($dto->customFields[0]->name)->toBe('Service Category')
+        ->and($dto->customFields[0]->value)->toBeNull()
+        ->and($dto->customFields[0]->hasValue())->toBeFalse()
         ->and($dto->dateModified)->not->toBeNull()
         ->and($dto->href)->toBe('/api/v1.0/companies/0/jobs/414786/sections/15311/costCenters/15615/contractorJobs/1630');
 });

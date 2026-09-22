@@ -40,7 +40,21 @@
         "IncTax": 92.86,
         "ReverseChargeTax": 0
       },
-      "CustomFields": [],
+      "CustomFields": [
+        {
+          "CustomField": {
+            "ID": 120,
+            "Name": "Service Category",
+            "Type": "List",
+            "IsMandatory": false,
+            "ListItems": [
+              "Installation",
+              "Maintenance"
+            ]
+          },
+          "Value": "Maintenance"
+        }
+      ],
       "DateModified": "2023-03-31T16:19:03+01:00",
       "_href": "/api/v1.0/companies/0/jobs/414786/sections/15311/costCenters/15615/contractorJobs/1630"
     }

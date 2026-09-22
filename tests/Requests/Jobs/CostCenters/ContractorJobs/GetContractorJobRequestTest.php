@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Simpro\PhpSdk\Simpro\Data\Common\CustomField;
 use Simpro\PhpSdk\Simpro\Data\Jobs\CostCenters\ContractorJobs\ContractorJob;
 use Simpro\PhpSdk\Simpro\Requests\Jobs\CostCenters\ContractorJobs\GetContractorJobRequest;
 
@@ -58,6 +59,9 @@ it('parses get job contractor job response correctly', function () {
         ->and($dto->items->prebuilds[0]->prebuildName)->toBe('Standard fitting kit')
         ->and($dto->items->prebuilds[0]->priceLabor)->toBe(15.0)
         ->and($dto->items->prebuilds[0]->qtyAssigned)->toBe(2.0)
-        ->and($dto->customFields)->toBeEmpty()
+        ->and($dto->customFields)->toHaveCount(1)
+        ->and($dto->customFields[0])->toBeInstanceOf(CustomField::class)
+        ->and($dto->customFields[0]->id)->toBe(120)
+        ->and($dto->customFields[0]->value)->toBe('Maintenance')
         ->and($dto->dateModified)->not->toBeNull();
 });
