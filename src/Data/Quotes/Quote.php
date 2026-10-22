@@ -127,7 +127,7 @@ final readonly class Quote
             customerStage: $data['CustomerStage'] ?? null,
             jobNo: isset($data['JobNo']) ? (string) $data['JobNo'] : null,
             isVariation: $data['IsVariation'] ?? null,
-            linkedJobId: isset($data['LinkedJobId']) ? (int) $data['LinkedJobId'] : null,
+            linkedJobId: isset($data['LinkedJobID']) ? (int) $data['LinkedJobID'] : null,
             forecast: ! empty($data['Forecast']) ? QuoteForecast::fromArray($data['Forecast']) : null,
             total: $total,
             totals: ! empty($data['Totals']) ? QuoteTotals::fromArray($data['Totals']) : null,

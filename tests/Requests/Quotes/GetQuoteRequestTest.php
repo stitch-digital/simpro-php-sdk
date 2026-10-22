@@ -90,3 +90,22 @@ it('handles null JobNo', function () {
 
     expect($dto->jobNo)->toBeNull();
 });
+
+it('reads LinkedJobID into linkedJobId', function () {
+    $dto = Quote::fromArray([
+        'ID' => 1,
+        'IsVariation' => true,
+        'LinkedJobID' => 478975,
+    ]);
+
+    expect($dto->linkedJobId)->toBe(478975);
+});
+
+it('handles null LinkedJobID', function () {
+    $dto = Quote::fromArray([
+        'ID' => 1,
+        'LinkedJobID' => null,
+    ]);
+
+    expect($dto->linkedJobId)->toBeNull();
+});

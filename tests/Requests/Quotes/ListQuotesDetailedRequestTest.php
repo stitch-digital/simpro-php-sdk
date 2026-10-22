@@ -38,3 +38,10 @@ it('parses list quotes detailed response correctly', function () {
         ->and($dto[0]->status->name)->toBe('Approved')
         ->and($dto[0]->total->incTax)->toBe(15000.00);
 });
+
+it('requests the LinkedJobID column by the name Simpro accepts', function () {
+    $columns = explode(',', (new ListQuotesDetailedRequest(0))->query()->get('columns'));
+
+    expect($columns)->toContain('LinkedJobID')
+        ->and($columns)->not->toContain('LinkedJobId');
+});
