@@ -76,7 +76,7 @@
         "CustomerStage": "Active",
         "JobNo": "J-1234",
         "IsVariation": false,
-        "LinkedJobId": 0,
+        "LinkedJobID": null,
         "Forecast": {
             "Year": 2024,
             "Month": 3,

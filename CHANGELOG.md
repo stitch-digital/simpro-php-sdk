@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `BulkResponseItem::errors()`, `errorMessage()` and `isLocked()`. A failed item's body is nested in the 200 envelope as a JSON *string*, so callers that read `$item->body` directly saw a string and silently fell back to reporting the bare status code — losing both the real message (e.g. `"/ProjectManager: Must be an integer"`) and the ability to tell a retryable lock apart from a payload validation failure. An already-decoded array body is still accepted.
 
+## [1.1.23] - 2026-10-22
+
+### Fixed
+- `Quote::fromArray()` now reads `LinkedJobID`, the key Simpro actually returns, so `Quote::$linkedJobId` is populated. It previously read `LinkedJobId` and was always `null`. Simpro only sets the field on variation quotes, where it names the job the variation belongs to.
+- `ListQuotesDetailedRequest` default columns now request `LinkedJobID`. `LinkedJobId` is rejected by Simpro with `"Invalid columns found."`, so any call relying on the default column list failed.
+
 ## [1.1.17] - 2026-07-09
 
 ### Fixed

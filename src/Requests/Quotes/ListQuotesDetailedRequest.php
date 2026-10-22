@@ -37,7 +37,7 @@ final class ListQuotesDetailedRequest extends Request implements Paginatable
                 'OrderNo', 'RequestNo', 'Description', 'Notes',
                 'DateIssued', 'DueDate', 'DateApproved', 'ValidityDays',
                 'IsClosed', 'ArchiveReason', 'CustomerStage', 'JobNo',
-                'IsVariation', 'LinkedJobId', 'Forecast',
+                'IsVariation', 'LinkedJobID', 'Forecast',
                 'Total', 'Totals', 'Tags', 'AutoAdjustStatus',
                 'CustomFields', 'Sections', 'STC', 'DateModified',
             ]),
