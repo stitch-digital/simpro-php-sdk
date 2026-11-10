@@ -55,6 +55,7 @@ final class ListIndividualCustomersDetailedRequest extends Request implements Pa
                 'Archived',
                 'Sites',
                 'CustomFields',
+                'ResponseTimes',
                 'Email',
                 'DateModified',
                 'DateCreated',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Simpro\PhpSdk\Simpro\Data\Customers\CustomerIndividual;
+use Simpro\PhpSdk\Simpro\Data\Customers\CustomerResponseTime;
 use Simpro\PhpSdk\Simpro\Requests\Customers\Individuals\ListIndividualCustomersDetailedRequest;
 
 it('sends list individual customers detailed request to correct endpoint', function () {
@@ -46,6 +47,7 @@ it('includes all columns in the request query', function () {
         ->and($query['columns'])->toContain('Archived')
         ->and($query['columns'])->toContain('Sites')
         ->and($query['columns'])->toContain('CustomFields')
+        ->and($query['columns'])->toContain('ResponseTimes')
         ->and($query['columns'])->toContain('Email')
         ->and($query['columns'])->toContain('DateModified')
         ->and($query['columns'])->toContain('DateCreated')
@@ -202,6 +204,24 @@ it('parses custom fields correctly', function () {
         ->and($dto[0]->customFields[0]->value)->toBe('MEM-12345')
         ->and($dto[1]->customFields)->toBeArray()
         ->and($dto[1]->customFields)->toBeEmpty();
+});
+
+it('parses response times correctly', function () {
+    MockClient::global([
+        ListIndividualCustomersDetailedRequest::class => MockResponse::fixture('list_individual_customers_detailed_request'),
+    ]);
+
+    $request = new ListIndividualCustomersDetailedRequest(0);
+    $response = $this->sdk->send($request);
+    $dto = $response->dto();
+
+    expect($dto[0]->responseTimes)->toBeArray()
+        ->and($dto[0]->responseTimes)->toHaveCount(1)
+        ->and($dto[0]->responseTimes[0])->toBeInstanceOf(CustomerResponseTime::class)
+        ->and($dto[0]->responseTimes[0]->id)->toBe(3)
+        ->and($dto[0]->responseTimes[0]->name)->toBe('Next Day')
+        ->and($dto[1]->responseTimes)->toBeArray()
+        ->and($dto[1]->responseTimes)->toBeEmpty();
 });
 
 it('parses dates correctly', function () {
