@@ -22,6 +22,7 @@ final readonly class CustomerIndividual
      * @param  array<Reference>|null  $tags
      * @param  array<Reference>|null  $sites
      * @param  array<CustomField>|null  $customFields
+     * @param  array<CustomerResponseTime>|null  $responseTimes
      */
     public function __construct(
         public int $id,
@@ -43,6 +44,7 @@ final readonly class CustomerIndividual
         public bool $archived,
         public ?array $sites,
         public ?array $customFields,
+        public ?array $responseTimes,
         public string $email,
         public ?DateTimeImmutable $dateModified,
         public ?DateTimeImmutable $dateCreated,
@@ -81,6 +83,10 @@ final readonly class CustomerIndividual
             archived: $data['Archived'] ?? false,
             sites: isset($data['Sites']) ? array_map(fn (array $item) => Reference::fromArray($item), $data['Sites']) : null,
             customFields: isset($data['CustomFields']) ? array_map(fn (array $item) => CustomField::fromArray($item), $data['CustomFields']) : null,
+            responseTimes: isset($data['ResponseTimes']) && is_array($data['ResponseTimes']) ? array_map(
+                fn (array $item) => CustomerResponseTime::fromArray($item),
+                $data['ResponseTimes']
+            ) : null,
             email: $data['Email'] ?? '',
             dateModified: ! empty($data['DateModified']) ? new DateTimeImmutable($data['DateModified']) : null,
             dateCreated: ! empty($data['DateCreated']) ? new DateTimeImmutable($data['DateCreated']) : null,
