@@ -56,6 +56,7 @@ it('parses get recurring invoice response correctly', function () {
         ->and($dto->salesperson->name)->toBe('Emma Harper')
         ->and($dto->projectManager)->toBeNull()
         ->and($dto->technicians[0]->id)->toBe(21)
+        ->and($dto->technician)->toBeNull()
         ->and($dto->pricingTier->defaultMarkup)->toBe(25.0)
         ->and($dto->laborOverhead)->toBe(0.0)
         ->and($dto->laborType->name)->toBe('Standard Labour')

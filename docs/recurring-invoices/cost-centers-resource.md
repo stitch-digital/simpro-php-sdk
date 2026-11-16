@@ -109,7 +109,7 @@ $response = $connector->recurringInvoices(companyId: 0)
 | `site` | `?Reference` |
 | `description`, `notes`, `orderNo` | `?string` |
 | `displayOrder` | `?int` |
-| `itemsLocked`, `revizedLocked` | `?bool` |
+| `itemsLocked`, `revisedLocked`, `revizedLocked` | `?bool` | `revisedLocked` is Simpro's deprecated spelling
 | `total` | `?Money` |
 | `totals` | `?JobTotals` |
 | `dateModified` | `?DateTimeImmutable` |

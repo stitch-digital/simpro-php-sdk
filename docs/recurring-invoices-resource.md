@@ -204,6 +204,7 @@ The DTOs hydrate these with `tryFrom`, so a value Simpro adds later reads as `nu
 | `paymentTerms` | `?RecurringInvoicePaymentTerms` | `days`, `type` (deprecated pair) |
 | `salesperson`, `projectManager` | `?StaffReference` | |
 | `technicians` | `?StaffReference[]` | |
+| `technician` | `?StaffReference` | Deprecated by Simpro in favour of `technicians` |
 | `pricingTier` | `?PricingTier` | `id`, `name`, `defaultMarkup` |
 | `laborOverhead` | `?float` | |
 | `laborType` | `?Reference` | |

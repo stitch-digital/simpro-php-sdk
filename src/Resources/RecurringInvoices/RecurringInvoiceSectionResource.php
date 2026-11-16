@@ -20,7 +20,7 @@ use Simpro\PhpSdk\Simpro\Requests\RecurringInvoices\Sections\ListSectionsRequest
 use Simpro\PhpSdk\Simpro\Requests\RecurringInvoices\Sections\UpdateSectionRequest;
 
 /**
- * Resource for managing sections within a recurring invoice recurring invoice.
+ * Resource for managing sections within a recurring invoice.
  *
  * @property AbstractSimproConnector $connector
  */

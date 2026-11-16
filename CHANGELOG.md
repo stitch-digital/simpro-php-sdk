@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-16
+
 ### Added
 - Recurring invoices: `$connector->recurringInvoices($companyId)` with `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` and the bulk methods over `/recurringInvoices/`; a `RecurringInvoice` DTO carrying every GET field, `RecurringInvoiceListItem`, and the `RecurringInvoiceType`, `RecurringFrequency` and `InvoiceDatePeriod` enums.
 - Recurring invoice sections and cost centers: `->recurringInvoice($id)->sections()` and `->section($id)->costCenters()`, each with CRUD and bulk methods, and `Section`, `SectionListItem`, `CostCenter`, `CostCenterListItem` DTOs.

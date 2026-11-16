@@ -13,6 +13,8 @@ use Simpro\PhpSdk\Simpro\Data\Jobs\JobTotals;
 /**
  * A cost center on a recurring invoice section: the line's Simpro cost centre, its totals and its lock state.
  *
+ * `revisedLocked` is Simpro's deprecated spelling of `revizedLocked`; both are returned.
+ *
  * Based on swagger: GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}
  */
 final readonly class CostCenter
@@ -29,6 +31,7 @@ final readonly class CostCenter
         public ?string $orderNo,
         public ?int $displayOrder,
         public ?bool $itemsLocked,
+        public ?bool $revisedLocked,
         public ?bool $revizedLocked,
         public ?Money $total,
         public ?JobTotals $totals,
@@ -57,6 +60,7 @@ final readonly class CostCenter
             orderNo: $data['OrderNo'] ?? null,
             displayOrder: isset($data['DisplayOrder']) ? (int) $data['DisplayOrder'] : null,
             itemsLocked: isset($data['ItemsLocked']) ? (bool) $data['ItemsLocked'] : null,
+            revisedLocked: isset($data['RevisedLocked']) ? (bool) $data['RevisedLocked'] : null,
             revizedLocked: isset($data['RevizedLocked']) ? (bool) $data['RevizedLocked'] : null,
             total: ! empty($data['Total']) && is_array($data['Total']) ? Money::fromArray($data['Total']) : null,
             totals: ! empty($data['Totals']) ? JobTotals::fromArray($data['Totals']) : null,

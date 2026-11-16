@@ -38,6 +38,7 @@ it('parses get recurring invoice cost center response correctly', function () {
         ->and($dto->orderNo)->toBe('PO-1')
         ->and($dto->displayOrder)->toBe(1)
         ->and($dto->itemsLocked)->toBeFalse()
+        ->and($dto->revisedLocked)->toBeFalse()
         ->and($dto->revizedLocked)->toBeFalse()
         ->and($dto->total->exTax)->toBe(18.75)
         ->and($dto->total->taxCode->id)->toBe(6)

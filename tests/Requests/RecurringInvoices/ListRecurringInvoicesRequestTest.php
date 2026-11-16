@@ -50,7 +50,7 @@ it('requests every column for the detailed list and hydrates full DTOs', functio
     $columns = explode(',', $request->query()->get('columns'));
 
     expect($request->query()->get('display'))->toBe('all')
-        ->and($columns)->toContain('InflationRate', 'InflationAnniversaryDate', 'NextRecurringDate', 'CustomerContract', 'Archived')
+        ->and($columns)->toContain('InflationRate', 'InflationAnniversaryDate', 'NextRecurringDate', 'CustomerContract', 'Technician', 'Archived')
         ->and($dto)->toHaveCount(1)
         ->and($dto[0])->toBeInstanceOf(RecurringInvoice::class)
         ->and($dto[0]->name)->toBe('Qolsys subscription');

@@ -14,6 +14,9 @@ use Simpro\PhpSdk\Simpro\Data\RecurringInvoices\RecurringInvoice;
  * Request to list recurring invoices with every column the detail endpoint returns.
  *
  * Uses display=all and the full columns list so each item hydrates a RecurringInvoice DTO.
+ *
+ * Note: display=all returns every record without pagination, which suits sync work
+ * but should be used carefully for large datasets.
  */
 final class ListRecurringInvoicesDetailedRequest extends Request implements Paginatable
 {
@@ -60,6 +63,7 @@ final class ListRecurringInvoicesDetailedRequest extends Request implements Pagi
                 'Salesperson',
                 'ProjectManager',
                 'Technicians',
+                'Technician',
                 'PricingTier',
                 'LaborOverhead',
                 'LaborType',

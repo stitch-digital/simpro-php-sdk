@@ -18,6 +18,8 @@ use Simpro\PhpSdk\Simpro\Data\Setup\FitTime;
 /**
  * A recurring invoice template.
  *
+ * `technician` is Simpro's deprecated singular field; `technicians` is the current one.
+ *
  * Based on swagger: GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}
  */
 final readonly class RecurringInvoice
@@ -53,6 +55,7 @@ final readonly class RecurringInvoice
         public ?StaffReference $salesperson,
         public ?StaffReference $projectManager,
         public ?array $technicians,
+        public ?StaffReference $technician,
         public ?PricingTier $pricingTier,
         public ?float $laborOverhead,
         public ?Reference $laborType,
@@ -114,6 +117,7 @@ final readonly class RecurringInvoice
                 fn (array $item) => StaffReference::fromArray($item),
                 $data['Technicians']
             ) : null,
+            technician: ! empty($data['Technician']) ? StaffReference::fromArray($data['Technician']) : null,
             pricingTier: ! empty($data['PricingTier']) ? PricingTier::fromArray($data['PricingTier']) : null,
             laborOverhead: isset($data['LaborOverhead']) ? (float) $data['LaborOverhead'] : null,
             laborType: ! empty($data['LaborType']) ? Reference::fromArray($data['LaborType']) : null,
