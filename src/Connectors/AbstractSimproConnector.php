@@ -32,6 +32,8 @@ use Simpro\PhpSdk\Simpro\Concerns\SupportsJobWorkOrdersEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsNotesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsPrebuildsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsQuotesEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsRecurringInvoiceCostCentersEndpoints;
+use Simpro\PhpSdk\Simpro\Concerns\SupportsRecurringInvoicesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsReportsEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsSchedulesEndpoints;
 use Simpro\PhpSdk\Simpro\Concerns\SupportsSetupEndpoints;
@@ -72,6 +74,8 @@ abstract class AbstractSimproConnector extends \Saloon\Http\Connector implements
     use SupportsNotesEndpoints;
     use SupportsPrebuildsEndpoints;
     use SupportsQuotesEndpoints;
+    use SupportsRecurringInvoiceCostCentersEndpoints;
+    use SupportsRecurringInvoicesEndpoints;
     use SupportsReportsEndpoints;
     use SupportsSchedulesEndpoints;
     use SupportsSetupEndpoints;

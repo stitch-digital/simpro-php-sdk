@@ -1,6 +1,6 @@
 # Simpro API Endpoints Implementation Tracker
 
-> **Last Updated:** 2026-03-05 | **Progress:** 433/1366 endpoints (31.7%)
+> **Last Updated:** 2026-11-16 | **Progress:** 474/1366 endpoints (34.7%)
 
 This file serves as the single source of truth for SDK development progress, architecture decisions, and documentation requirements.
 
@@ -36,10 +36,12 @@ This file serves as the single source of truth for SDK development progress, arc
 | Reports | 2 | 0 | 2 |
 | Setup | 186 | ~0 | ~186 |
 | JobCostCenters | 1 | 0 | 1 |
+| RecurringInvoices | 40 | ~22 | ~62 |
+| RecurringInvoiceCostCenters | 1 | 0 | 1 |
 | JobWorkOrders | 1 | 1 | 2 |
 | Notes | 2 | 0 | 2 |
-| **Other** | 0 | ~647 | ~647 |
-| **Total** | **431** | **935** | **1366** |
+| **Other** | 0 | ~606 | ~606 |
+| **Total** | **472** | **894** | **1366** |
 
 ### Implemented Resources Summary
 
@@ -61,6 +63,8 @@ This file serves as the single source of truth for SDK development progress, arc
 | CurrentUser | `get()` | 1 | 1 |
 | Reports | `jobCostToCompleteFinancial()`, `jobCostToCompleteOperations()` | 2 | 2 |
 | JobCostCenters | `list()` | 1 | 2 |
+| RecurringInvoices | `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` + bulk; nested sections, cost centers, catalogs, labor, one-offs, prebuilds, service fees | 41 | 30+ |
+| RecurringInvoiceCostCenters | `list()` | 1 | 2 |
 | JobWorkOrders | `list()`, `listDetailed()` | 2 | 5 |
 | Notes | `customers()`, `customersDetailed()`, `jobs()`, `jobsDetailed()` | 4 | 7 |
 | Setup | Webhooks, TaxCodes, PaymentMethods, PaymentTerms, CustomerGroups, Zones, AccountingCategories, BusinessGroups, ChartOfAccounts, CostCenters, CustomFields (19 types), AssetTypes (deep nesting), Labor (5 resources), Materials (5 resources), Activities, ArchiveReasons, AssetServiceLevels, Commissions, Currencies, CustomerProfiles, Defaults, ResponseTimes, SecurityGroups, StatusCodes, Tags, TaskCategories, Teams | 186 | 75+ |
@@ -88,6 +92,8 @@ Track documentation for each implemented resource:
 | Setup | [x] `docs/setup-resource.md` | [x] | COMPLETE |
 | Notes | [x] `docs/notes-resource.md` | [x] | COMPLETE |
 | JobCostCenters | [x] `docs/job-cost-centers-resource.md` | [x] | COMPLETE |
+| RecurringInvoices | [x] `docs/recurring-invoices-resource.md` + `docs/recurring-invoices/` | [x] | COMPLETE |
+| RecurringInvoiceCostCenters | [x] `docs/recurring-invoice-cost-centers-resource.md` | [x] | COMPLETE |
 | JobWorkOrders | [x] `docs/job-work-orders-resource.md` | [x] | COMPLETE |
 
 ### Documentation Workflow
@@ -302,7 +308,7 @@ This section outlines the phased approach for implementing the remaining endpoin
 | Resource | Endpoints | Description |
 |----------|-----------|-------------|
 | Contractors | ~40 (29 done) | Subcontractor management |
-| RecurringJobs/Invoices | ~50 | Automation |
+| RecurringJobs/Invoices | ~50 (41 done) | Automation |
 | CustomerAssets | ~30 | Asset tracking |
 | Reports | ~20 | Business intelligence |
 | Setup | ~100 | System configuration |
@@ -4067,34 +4073,34 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 ### Nested: RecurringInvoiceCostCenters
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoiceCostCenters/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoiceCostCenters/`
   - **Description**: List all cost centers.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
 ### Nested: RecurringInvoices
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/`
   - **Description**: List all recurring invoices.
   - **Parameters**: `companyID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/`
   - **Description**: Create a new recurring invoice.
   - **Parameters**: `companyID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}`
   - **Description**: Retrieve details for a specific recurring invoice.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}`
   - **Description**: Update a recurring invoice.
   - **Parameters**: `companyID`, `recurringInvoiceID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}`
   - **Description**: Delete a recurring invoice.
   - **Parameters**: `companyID`, `recurringInvoiceID`
   - **Response**: No Content
@@ -4172,189 +4178,189 @@ This section contains the detailed checklist of all Simpro API endpoints and the
 
 #### Sections
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/`
   - **Description**: List all recurring invoice sections.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/`
   - **Description**: Create a new recurring invoice section.
   - **Parameters**: `companyID`, `recurringInvoiceID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}`
   - **Description**: Retrieve details for a specific recurring invoice section.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}`
   - **Description**: Update a recurring invoice section.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}`
   - **Description**: Delete a recurring invoice section.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`
   - **Response**: No Content
 
 #### Sections > costCenters
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/`
   - **Description**: List all recurring invoice cost centers.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/`
   - **Description**: Create a new recurring invoice cost center.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}`
   - **Description**: Retrieve details for a specific recurring invoice cost center.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}`
   - **Description**: Update a recurring invoice cost center.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}`
   - **Description**: Delete a recurring invoice cost center.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: No Content
 
 #### Sections > costCenters > catalogs
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/`
   - **Description**: List all recurring invoice cost center catalog items.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/`
   - **Description**: Create a new recurring invoice cost center catalog item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/{catalogID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/{catalogID}`
   - **Description**: Retrieve details for a specific recurring invoice cost center catalog item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `catalogID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/{catalogID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/{catalogID}`
   - **Description**: Update a recurring invoice cost center catalog item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `catalogID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/{catalogID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/catalogs/{catalogID}`
   - **Description**: Delete a recurring invoice cost center catalog item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `catalogID`
   - **Response**: No Content
 
 #### Sections > costCenters > labor
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/`
   - **Description**: List all recurring invoice cost center labor items.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/`
   - **Description**: Create a new recurring invoice cost center labor item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/{laborID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/{laborID}`
   - **Description**: Retrieve details for a specific recurring invoice cost center labor item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `laborID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/{laborID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/{laborID}`
   - **Description**: Update a recurring invoice cost center labor item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `laborID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/{laborID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/labor/{laborID}`
   - **Description**: Delete a recurring invoice cost center labor item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `laborID`
   - **Response**: No Content
 
 #### Sections > costCenters > oneOffs
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/`
   - **Description**: List all recurring invoice cost center one-off items.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/`
   - **Description**: Create a new recurring invoice cost center one-off item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/{oneOffID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/{oneOffID}`
   - **Description**: Retrieve details for a specific recurring invoice cost center one-off item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `oneOffID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/{oneOffID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/{oneOffID}`
   - **Description**: Update a recurring invoice cost center one-off item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `oneOffID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/{oneOffID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/oneOffs/{oneOffID}`
   - **Description**: Delete a recurring invoice cost center one-off item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `oneOffID`
   - **Response**: No Content
 
 #### Sections > costCenters > prebuilds
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/`
   - **Description**: List all recurring invoice cost center prebuild items.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/`
   - **Description**: Create a new recurring invoice cost center prebuild item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/{prebuildID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/{prebuildID}`
   - **Description**: Retrieve details for a specific recurring invoice cost center prebuild item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `prebuildID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/{prebuildID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/{prebuildID}`
   - **Description**: Update a recurring invoice cost center prebuild item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `prebuildID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/{prebuildID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/prebuilds/{prebuildID}`
   - **Description**: Delete a recurring invoice cost center prebuild item.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `prebuildID`
   - **Response**: No Content
 
 #### Sections > costCenters > serviceFees
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/`
   - **Description**: List all recurring invoice cost center service fees.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `search`?, `columns`?, `pageSize`?, `page`?, `orderby`?, `limit`?
   - **Response**: Array of object
 
-- [ ] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/`
+- [x] `POST /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/`
   - **Description**: Create a new recurring invoice cost center service fee.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`
   - **Response**: Created
 
-- [ ] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/{serviceFeeID}`
+- [x] `GET /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/{serviceFeeID}`
   - **Description**: Retrieve details for a specific recurring invoice cost center service fee.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `serviceFeeID`, `columns`?
   - **Response**: object
 
-- [ ] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/{serviceFeeID}`
+- [x] `PATCH /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/{serviceFeeID}`
   - **Description**: Update a recurring invoice cost center service fee.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `serviceFeeID`
   - **Response**: No Content
 
-- [ ] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/{serviceFeeID}`
+- [x] `DELETE /api/v1.0/companies/{companyID}/recurringInvoices/{recurringInvoiceID}/sections/{sectionID}/costCenters/{costCenterID}/serviceFees/{serviceFeeID}`
   - **Description**: Delete a recurring invoice cost center service fee.
   - **Parameters**: `companyID`, `recurringInvoiceID`, `sectionID`, `costCenterID`, `serviceFeeID`
   - **Response**: No Content

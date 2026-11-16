@@ -1,0 +1,31 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "1",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 8401,
+      "LaborType": {
+        "ID": 4,
+        "Name": "Standard Labour"
+      },
+      "Discount": 0.0,
+      "SellPrice": {
+        "ExTax": 18.75,
+        "IncTax": 22.5,
+        "ExDiscountExTax": 18.75,
+        "ExDiscountIncTax": 22.5
+      },
+      "Total": {
+        "Qty": 1.0,
+        "Amount": {
+          "ExTax": 18.75,
+          "IncTax": 22.5
+        }
+      }
+    }
+  ]
+}

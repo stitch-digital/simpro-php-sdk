@@ -1,0 +1,28 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 501,
+      "Description": "<p>Monthly Qolsys monitoring and maintenance</p>",
+      "Total": {
+        "ExTax": 29.17,
+        "Tax": 5.83,
+        "IncTax": 35.0
+      }
+    },
+    {
+      "ID": 502,
+      "Description": "Monthly Qolsys monitoring",
+      "Total": {
+        "ExTax": 18.75,
+        "Tax": 3.75,
+        "IncTax": 22.5
+      }
+    }
+  ]
+}

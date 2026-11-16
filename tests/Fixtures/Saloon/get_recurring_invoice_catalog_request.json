@@ -1,0 +1,57 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 8301,
+    "Catalog": {
+      "ID": 1200,
+      "PartNo": "QS-IQ4",
+      "Name": "Qolsys IQ Panel 4"
+    },
+    "BillableItem": true,
+    "BillableStatus": "Billable",
+    "EstimatedTime": 0.0,
+    "FitTime": {
+      "ID": 2,
+      "Name": "Normal",
+      "Multiplier": 1.0
+    },
+    "LaborCost": 0.0,
+    "BasePrice": 12.0,
+    "Markup": 56.25,
+    "SalesTaxCode": {
+      "ID": 6,
+      "Code": "VAT20",
+      "Type": "Single",
+      "Rate": 20.0
+    },
+    "Totals": {
+      "PriceEx": 18.75,
+      "PriceInc": 22.5,
+      "EstimatedTime": 0.0
+    },
+    "DisplayOrder": 1,
+    "DateModified": "2026-11-16T09:30:00+00:00",
+    "Discount": 0.0,
+    "SellPrice": {
+      "ExTax": 18.75,
+      "IncTax": 22.5,
+      "ExDiscountExTax": 18.75,
+      "ExDiscountIncTax": 22.5
+    },
+    "Total": {
+      "Qty": 1.0,
+      "Amount": {
+        "ExTax": 18.75,
+        "IncTax": 22.5
+      }
+    },
+    "IncomeAccount": {
+      "ID": 40,
+      "Name": "Monitoring income",
+      "Number": "4010"
+    }
+  }
+}
