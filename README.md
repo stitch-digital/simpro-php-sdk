@@ -488,6 +488,7 @@ use Simpro\PhpSdk\Simpro\Connectors\SimproApiKeyConnector;
  * @method static \Simpro\PhpSdk\Simpro\Resources\CompanyResource companies()
  * @method static \Simpro\PhpSdk\Simpro\Resources\JobResource jobs()
  * @method static \Simpro\PhpSdk\Simpro\Resources\CustomerResource customers()
+ * @method static \Simpro\PhpSdk\Simpro\Resources\RecurringInvoiceResource recurringInvoices()
  *
  * @see SimproApiKeyConnector
  */
@@ -814,6 +815,8 @@ The SDK provides resource-based APIs for working with different Simpro entities.
 - **[Reports](docs/reports-resource.md)** - Access job cost-to-complete reports (financial and operations)
 - **[Notes](docs/notes-resource.md)** - List customer notes across all customers with basic and detailed views (read-only)
 - **[Job Cost Centers](docs/job-cost-centers-resource.md)** - List cost centers across all jobs (read-only)
+- **[Recurring Invoices](docs/recurring-invoices-resource.md)** - Recurring invoice templates with full CRUD operations and nested sections, cost centers and line items (one-offs, service fees, catalogs, labor, prebuilds)
+- **[Recurring Invoice Cost Centers](docs/recurring-invoice-cost-centers-resource.md)** - List cost centers across all recurring invoices (read-only)
 - **[Job Work Orders](docs/job-work-orders-resource.md)** - List work orders across all jobs with basic and detailed views (read-only)
 - **[Setup](docs/setup-resource.md)** - Configure system settings: webhooks, tax codes, payment methods, custom fields, labor rates, and more
 - **[Tasks](docs/tasks-resource.md)** - List tasks across all jobs and customers with basic and detailed views (read-only)

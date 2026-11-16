@@ -1,0 +1,154 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 501,
+    "Type": "Service",
+    "Customer": {
+      "ID": 2048,
+      "CompanyName": "",
+      "GivenName": "Priya",
+      "FamilyName": "Nair"
+    },
+    "CustomerContract": {
+      "ID": 77,
+      "Name": "Qolsys service agreement",
+      "StartDate": "2026-11-01",
+      "EndDate": null,
+      "ContractNo": "QS-0042"
+    },
+    "CustomerContact": {
+      "ID": 310,
+      "GivenName": "Priya",
+      "FamilyName": "Nair"
+    },
+    "AdditionalContacts": [
+      {
+        "ID": 311,
+        "GivenName": "Dev",
+        "FamilyName": "Nair"
+      }
+    ],
+    "Site": {
+      "ID": 9001,
+      "Name": "14 Orchard Close, GL2 4XY"
+    },
+    "SiteContact": null,
+    "RequestNo": "",
+    "Name": "Qolsys subscription",
+    "OrderNo": "PO-1",
+    "Description": "<p>Monthly Qolsys monitoring and maintenance</p>",
+    "Notes": "Collected by Direct Debit",
+    "RecurringStartDate": "2026-12-01",
+    "NextRecurringDate": "2027-01-01",
+    "RecurringQuantity": 1,
+    "InvoiceDatePeriod": "Advance",
+    "RecurringFrequency": "month",
+    "Tags": [
+      {
+        "ID": 12,
+        "Name": "Qolsys household"
+      }
+    ],
+    "PaymentTermID": 3,
+    "PaymentTerms": {
+      "Days": 14,
+      "Type": "Invoice"
+    },
+    "Salesperson": {
+      "ID": 15,
+      "Name": "Emma Harper",
+      "Type": "employee",
+      "TypeId": 15
+    },
+    "ProjectManager": null,
+    "Technicians": [
+      {
+        "ID": 21,
+        "Name": "Sam Field",
+        "Type": "employee",
+        "TypeId": 21
+      }
+    ],
+    "Technician": null,
+    "PricingTier": {
+      "ID": 1,
+      "Name": "Standard",
+      "DefaultMarkup": 25.0
+    },
+    "LaborOverhead": 0.0,
+    "LaborType": {
+      "ID": 4,
+      "Name": "Standard Labour"
+    },
+    "LaborFitTime": {
+      "ID": 2,
+      "Name": "Normal",
+      "Multiplier": 1.0
+    },
+    "ItemTaxCode": {
+      "ID": 6,
+      "Code": "VAT20",
+      "Type": "Single",
+      "Rate": 20.0
+    },
+    "LabourTaxCode": {
+      "ID": 6,
+      "Code": "VAT20",
+      "Type": "Single",
+      "Rate": 20.0
+    },
+    "MaterialMarkup": null,
+    "InflationRate": 4.0,
+    "InflationAnniversaryDate": "2027-12-01T00:00:00+00:00",
+    "DateModified": "2026-11-16T09:30:00+00:00",
+    "Total": {
+      "ExTax": 29.17,
+      "Tax": 5.83,
+      "IncTax": 35.0
+    },
+    "Totals": {
+      "MaterialsCost": {
+        "Estimate": 12.0,
+        "Revised": 12.0,
+        "Revized": 12.0
+      },
+      "ResourcesCost": {
+        "Total": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "Labor": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "LaborHours": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "PlantAndEquipment": { "Estimate": 0.0, "Revized": 0.0 },
+        "PlantAndEquipmentHours": { "Estimate": 0.0, "Revized": 0.0 },
+        "Overhead": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 }
+      },
+      "MaterialsMarkup": { "Estimate": 17.17, "Revised": 17.17, "Revized": 17.17 },
+      "ResourcesMarkup": {
+        "Total": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "Labor": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "PlantAndEquipment": { "Estimate": 0.0, "Revized": 0.0 }
+      },
+      "Adjusted": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+      "Discount": 0.0,
+      "GrossProfitLoss": { "Estimate": 17.17, "Revised": 17.17, "Revized": 17.17 },
+      "GrossMargin": { "Estimate": 58.86, "Revised": 58.86, "Revized": 58.86 },
+      "NettProfitLoss": { "Estimate": 17.17, "Revised": 17.17, "Revized": 17.17 },
+      "NettMargin": { "Estimate": 58.86, "Revised": 58.86, "Revized": 58.86 }
+    },
+    "CustomFields": [
+      {
+        "CustomField": {
+          "ID": 91,
+          "Name": "Cover",
+          "Type": "List",
+          "ListItems": ["Subscription", "Subscription with maintenance"],
+          "IsMandatory": false
+        },
+        "Value": "Subscription with maintenance"
+      }
+    ],
+    "Archived": false,
+    "Removed": false
+  }
+}

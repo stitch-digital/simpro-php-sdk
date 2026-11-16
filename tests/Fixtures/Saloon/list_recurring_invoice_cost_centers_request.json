@@ -1,0 +1,48 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 7001,
+      "CostCenter": {
+        "ID": 458,
+        "Name": "Monitoring - Intruder Alarms"
+      },
+      "Name": "Monitoring - Intruder Alarms",
+      "RecurringInvoice": {
+        "ID": 501,
+        "Type": "Service",
+        "Name": "Qolsys subscription"
+      },
+      "Section": {
+        "ID": 61,
+        "Name": ""
+      },
+      "DateModified": "2026-11-16T09:30:00+00:00",
+      "_href": "/api/v1.0/companies/0/recurringInvoices/501/sections/61/costCenters/7001"
+    },
+    {
+      "ID": 7002,
+      "CostCenter": {
+        "ID": 485,
+        "Name": "PPM - Intruder Alarms"
+      },
+      "Name": "PPM - Intruder Alarms",
+      "RecurringInvoice": {
+        "ID": 501,
+        "Type": "Service",
+        "Name": "Qolsys subscription"
+      },
+      "Section": {
+        "ID": 61,
+        "Name": ""
+      },
+      "DateModified": "2026-11-16T09:30:00+00:00",
+      "_href": "/api/v1.0/companies/0/recurringInvoices/501/sections/61/costCenters/7002"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 61,
+    "Name": "Monthly charges",
+    "Description": "Subscription and maintenance",
+    "DisplayOrder": 1,
+    "DateModified": "2026-11-16T09:30:00+00:00"
+  }
+}

@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Recurring invoices: `$connector->recurringInvoices($companyId)` with `list()`, `listDetailed()`, `get()`, `create()`, `update()`, `delete()` and the bulk methods over `/recurringInvoices/`; a `RecurringInvoice` DTO carrying every GET field, `RecurringInvoiceListItem`, and the `RecurringInvoiceType`, `RecurringFrequency` and `InvoiceDatePeriod` enums.
+- Recurring invoice sections and cost centers: `->recurringInvoice($id)->sections()` and `->section($id)->costCenters()`, each with CRUD and bulk methods, and `Section`, `SectionListItem`, `CostCenter`, `CostCenterListItem` DTOs.
+- Recurring invoice cost-center line items: `->costCenter($id)->oneOffs()`, `serviceFees()`, `catalogs()`, `labor()` and `prebuilds()`, each with CRUD and bulk methods and list/detail DTOs; the shared `BillableStatus` enum, `IncomeAccount` and `PartReference` DTOs in `Data\Common`, and `OneOffType` (`Material|Labour`, Simpro's spelling on recurring invoices).
+- `$connector->recurringInvoiceCostCenters($companyId)->list()` over the company-wide `/recurringInvoiceCostCenters/` list.
 - `BulkResponseItem::errors()`, `errorMessage()` and `isLocked()`. A failed item's body is nested in the 200 envelope as a JSON *string*, so callers that read `$item->body` directly saw a string and silently fell back to reporting the bare status code — losing both the real message (e.g. `"/ProjectManager: Must be an integer"`) and the ability to tell a retryable lock apart from a payload validation failure. An already-decoded array body is still accepted.
 
 ## [1.1.23] - 2026-10-22

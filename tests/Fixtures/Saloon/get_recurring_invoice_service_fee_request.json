@@ -1,0 +1,55 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 8201,
+    "ServiceFee": {
+      "ID": 33,
+      "Name": "Maintenance visit"
+    },
+    "BillableItem": true,
+    "BillableStatus": "Billable",
+    "FitTime": {
+      "ID": 2,
+      "Name": "Normal",
+      "Multiplier": 1.0
+    },
+    "BasePrice": 10.42,
+    "Markup": 0.0,
+    "LaborCost": 0.0,
+    "SalesTaxCode": {
+      "ID": 6,
+      "Code": "VAT20",
+      "Type": "Single",
+      "Rate": 20.0
+    },
+    "Totals": {
+      "PriceEx": 18.75,
+      "PriceInc": 22.5,
+      "EstimatedTime": 0.0
+    },
+    "DisplayOrder": 1,
+    "DateModified": "2026-11-16T09:30:00+00:00",
+    "Discount": 0.0,
+    "SellPrice": {
+      "ExTax": 18.75,
+      "IncTax": 22.5,
+      "ExDiscountExTax": 18.75,
+      "ExDiscountIncTax": 22.5
+    },
+    "Total": {
+      "Qty": 1.0,
+      "Amount": {
+        "ExTax": 18.75,
+        "IncTax": 22.5
+      }
+    },
+    "IncomeAccount": {
+      "ID": 40,
+      "Name": "Monitoring income",
+      "Number": "4010"
+    }
+  }
+}

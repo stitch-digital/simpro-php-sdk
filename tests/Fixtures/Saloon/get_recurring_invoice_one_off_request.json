@@ -1,0 +1,49 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 8101,
+    "Type": "Material",
+    "Billable": true,
+    "BillableStatus": "Billable",
+    "InventoryItem": 0,
+    "PartNo": "",
+    "Vendor": null,
+    "Description": "Qolsys subscription",
+    "EstimatedCost": 12.0,
+    "Markup": 56.25,
+    "LaborCost": 0.0,
+    "EstimatedTime": 0.0,
+    "SalesTaxCode": {
+      "ID": 6,
+      "Code": "VAT20",
+      "Type": "Single",
+      "Rate": 20.0
+    },
+    "ActualCost": 0.0,
+    "ActualCostDate": null,
+    "DisplayOrder": 1,
+    "DateModified": "2026-11-16T09:30:00+00:00",
+    "Discount": 0.0,
+    "SellPrice": {
+      "ExTax": 18.75,
+      "IncTax": 22.5,
+      "ExDiscountExTax": 18.75,
+      "ExDiscountIncTax": 22.5
+    },
+    "Total": {
+      "Qty": 1.0,
+      "Amount": {
+        "ExTax": 18.75,
+        "IncTax": 22.5
+      }
+    },
+    "IncomeAccount": {
+      "ID": 40,
+      "Name": "Monitoring income",
+      "Number": "4010"
+    }
+  }
+}

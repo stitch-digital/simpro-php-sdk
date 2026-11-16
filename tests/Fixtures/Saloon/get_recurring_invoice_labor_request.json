@@ -1,0 +1,43 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 8401,
+    "LaborType": {
+      "ID": 4,
+      "Name": "Standard Labour"
+    },
+    "LaborRate": 45.0,
+    "LaborMarkup": 0.0,
+    "SalesTaxCode": {
+      "ID": 6,
+      "Code": "VAT20",
+      "Type": "Single",
+      "Rate": 20.0
+    },
+    "ProjectedTime": 1.0,
+    "Ticked": false,
+    "DateModified": "2026-11-16T09:30:00+00:00",
+    "Discount": 0.0,
+    "SellPrice": {
+      "ExTax": 18.75,
+      "IncTax": 22.5,
+      "ExDiscountExTax": 18.75,
+      "ExDiscountIncTax": 22.5
+    },
+    "Total": {
+      "Qty": 1.0,
+      "Amount": {
+        "ExTax": 18.75,
+        "IncTax": 22.5
+      }
+    },
+    "IncomeAccount": {
+      "ID": 40,
+      "Name": "Monitoring income",
+      "Number": "4010"
+    }
+  }
+}

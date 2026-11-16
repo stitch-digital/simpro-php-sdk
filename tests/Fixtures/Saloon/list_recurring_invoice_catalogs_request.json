@@ -1,0 +1,35 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "1",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 8301,
+      "Catalog": {
+        "ID": 1200,
+        "PartNo": "QS-IQ4",
+        "Name": "Qolsys IQ Panel 4"
+      },
+      "BillableStatus": "Billable",
+      "BasePrice": 12.0,
+      "Markup": 56.25,
+      "Discount": 0.0,
+      "SellPrice": {
+        "ExTax": 18.75,
+        "IncTax": 22.5,
+        "ExDiscountExTax": 18.75,
+        "ExDiscountIncTax": 22.5
+      },
+      "Total": {
+        "Qty": 1.0,
+        "Amount": {
+          "ExTax": 18.75,
+          "IncTax": 22.5
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Result-Total": "2",
+    "Result-Pages": "1"
+  },
+  "data": [
+    {
+      "ID": 7001,
+      "CostCenter": { "ID": 458, "Name": "Monitoring - Intruder Alarms" },
+      "RecurringID": 501,
+      "Name": "Monitoring - Intruder Alarms",
+      "DisplayOrder": 1,
+      "Total": {
+        "ExTax": 18.75,
+        "Tax": 3.75,
+        "IncTax": 22.5,
+        "TaxCode": { "ID": 6, "Code": "VAT20", "Type": "Single", "Rate": 20.0 }
+      }
+    },
+    {
+      "ID": 7002,
+      "CostCenter": { "ID": 485, "Name": "PPM - Intruder Alarms" },
+      "RecurringID": 501,
+      "Name": "PPM - Intruder Alarms",
+      "DisplayOrder": 2,
+      "Total": {
+        "ExTax": 10.42,
+        "Tax": 2.08,
+        "IncTax": 12.5,
+        "TaxCode": { "ID": 6, "Code": "VAT20", "Type": "Single", "Rate": 20.0 }
+      }
+    }
+  ]
+}

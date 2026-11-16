@@ -1,0 +1,51 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": {
+    "ID": 7001,
+    "CostCenter": { "ID": 458, "Name": "Monitoring - Intruder Alarms" },
+    "RecurringID": 501,
+    "Name": "Monitoring - Intruder Alarms",
+    "Header": "Qolsys subscription",
+    "Site": { "ID": 9001, "Name": "14 Orchard Close, GL2 4XY" },
+    "Description": "<p>Qolsys monitoring</p>",
+    "Notes": "",
+    "OrderNo": "PO-1",
+    "DisplayOrder": 1,
+    "ItemsLocked": false,
+    "RevisedLocked": false,
+    "RevizedLocked": false,
+    "Total": {
+      "ExTax": 18.75,
+      "Tax": 3.75,
+      "IncTax": 22.5,
+      "TaxCode": { "ID": 6, "Code": "VAT20", "Type": "Single", "Rate": 20.0 }
+    },
+    "Totals": {
+      "MaterialsCost": { "Estimate": 12.0, "Revised": 12.0, "Revized": 12.0 },
+      "ResourcesCost": {
+        "Total": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "Labor": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "LaborHours": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "PlantAndEquipment": { "Estimate": 0.0, "Revized": 0.0 },
+        "PlantAndEquipmentHours": { "Estimate": 0.0, "Revized": 0.0 },
+        "Overhead": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 }
+      },
+      "MaterialsMarkup": { "Estimate": 6.75, "Revised": 6.75, "Revized": 6.75 },
+      "ResourcesMarkup": {
+        "Total": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "Labor": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+        "PlantAndEquipment": { "Estimate": 0.0, "Revized": 0.0 }
+      },
+      "Adjusted": { "Estimate": 0.0, "Revised": 0.0, "Revized": 0.0 },
+      "Discount": 0.0,
+      "GrossProfitLoss": { "Estimate": 6.75, "Revised": 6.75, "Revized": 6.75 },
+      "GrossMargin": { "Estimate": 36.0, "Revised": 36.0, "Revized": 36.0 },
+      "NettProfitLoss": { "Estimate": 6.75, "Revised": 6.75, "Revized": 6.75 },
+      "NettMargin": { "Estimate": 36.0, "Revised": 36.0, "Revized": 36.0 }
+    },
+    "DateModified": "2026-11-16T09:30:00+00:00"
+  }
+}
